@@ -34,6 +34,7 @@ h1,h2,h3{line-height:1.2;font-weight:700}
 #nav.scrolled{background:rgba(4,4,14,0.92);border-color:var(--bd);backdrop-filter:blur(20px)}
 .nav-inner{max-width:1280px;margin:0 auto;padding:0 2rem;height:64px;display:flex;align-items:center;gap:2rem}
 .nav-brand{display:flex;align-items:center;gap:0.6rem;text-decoration:none}
+.nav-logo-img{height:28px;width:auto;margin-right:0.4rem;filter:drop-shadow(0 0 6px rgba(40,168,136,0.5))}
 .nav-logo{font-family:'JetBrains Mono',monospace;font-size:1.1rem;font-weight:700;color:var(--gold);letter-spacing:2px;border:1px solid var(--gold);padding:2px 8px;border-radius:4px}
 .nav-title{font-size:1rem;font-weight:600;color:var(--txt)}
 .nav-by{font-size:0.78rem;color:var(--tdim);margin-left:0.2rem}
@@ -363,6 +364,7 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
 <nav id="nav">
   <div class="nav-inner">
     <a href="#" class="nav-brand">
+      <img src="/logo.png" alt="Pithonix AI" class="nav-logo-img">
       <span class="nav-logo">GCC</span>
       <span class="nav-title">Playbook</span>
       <span class="nav-by">by <strong>Pithonix.ai</strong></span>
@@ -746,9 +748,16 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
   <div class="wrap">
     <div class="footer-inner">
       <div class="footer-brand">
-        <div class="fb-logo">GCC PLAYBOOK · PITHONIX.AI</div>
-        <p>India's first AI-native Global Capability Centre intelligence platform. Built by Pithonix — the Enterprise Nervous System for modern GCCs.</p>
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem">
+          <img src="/logo.png" alt="Pithonix AI" style="height:40px;width:auto;filter:drop-shadow(0 0 8px rgba(40,168,136,0.5))">
+          <div>
+            <div class="fb-logo">GCC PLAYBOOK · PITHONIX.AI</div>
+            <div style="font-size:0.75rem;color:var(--tdim);margin-top:2px;letter-spacing:1px">ENTERPRISE NERVOUS SYSTEM</div>
+          </div>
+        </div>
+        <p>India's first AI-native Global Capability Centre intelligence platform. Built by Pithonix AI — the Enterprise Nervous System for modern GCCs.</p>
         <p style="margin-top:0.75rem;font-size:0.78rem;color:var(--tdim)">DPIIT Recognised Startup · Hyderabad, India</p>
+        <a href="mailto:info@pithonix.ai" style="display:inline-block;margin-top:0.6rem;font-size:0.83rem;color:var(--teal);text-decoration:none">✉ info@pithonix.ai</a>
       </div>
       <div class="footer-col">
         <h4>Platform</h4>
@@ -768,8 +777,8 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2025 Pithonix AI Pvt Ltd · Hyderabad, India · All rights reserved</span>
-      <span style="color:var(--tdim)">Built by Jeet · Powered by JEET + HARI + GOT</span>
+      <span>© 2026 Pithonix AI Pvt Ltd · Hyderabad, India · All rights reserved · <a href="mailto:info@pithonix.ai" style="color:var(--tdim);text-decoration:none">info@pithonix.ai</a></span>
+      <span style="color:var(--tdim)">Built by PITHONIX AI · Powered by JEET + HARI + GOT</span>
     </div>
   </div>
 </footer>
