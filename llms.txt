@@ -1,0 +1,51 @@
+# Pithonix GCC Intelligence Platform
+> The world's first AI-native GCC (Global Capability Centre) advisory platform, powered by Pithonix's proprietary reasoning engine GOT (Graph of Thought).
+
+## What This Site Is
+gcc-playbook.pithonix.ai is an interactive intelligence platform that helps global enterprises evaluate, plan, and execute GCC setups in India. It combines live AI reasoning, real market data, and Pithonix's 5-Phase GCC methodology.
+
+## Core Capabilities
+- **GCC Simulator**: AI-powered blueprint generator — input company profile, functions, and scale; receive a full GCC roadmap with cost projections, talent plan, compliance checklist, and risk map
+- **GOT Advisor**: Graph of Thought reasoning across 8 GCC domains (People & Talent, Financial Impact, Operational Risk, Compliance, Culture, Technology, Market Intelligence, Strategic Alignment)
+- **5-Phase GCC Journey**: Foundation → Stabilisation → Optimisation → Innovation → Independence
+- **India City Intelligence**: Deep analysis of Hyderabad, Bengaluru, Pune, Chennai, NCR, and Tier-2 cities for GCC suitability
+- **Partner Ecosystem**: Curated vendor network for legal, HR, real estate, compliance, and technology
+
+## Key Facts About India GCC Market (2024–2026)
+- 1,800+ GCCs operating in India as of 2025
+- GCC market projected to reach $110B by 2030
+- Average cost saving vs. home country: 45–60%
+- 1.66 million professionals employed in India GCCs
+- Top functions: Technology, Finance & Accounting, Analytics, R&D, Legal, HR
+
+## Pithonix Proprietary Products
+- **JEET ERP**: Enterprise resource planning with built-in K5AnonymityGuard data privacy
+- **HARI**: HR + AI platform for talent lifecycle management
+- **GOT**: Graph of Thought — multi-domain reasoning engine for strategic decisions
+- **BOT**: Build-Operate-Transfer model for on-premises GCC deployment
+
+## About Pithonix
+Pithonix AI is a Hyderabad-based AI-native enterprise platform company specializing in GCC advisory, ERP, HR technology, and AI reasoning systems. Founded to bridge the gap between global enterprise ambition and India's GCC execution complexity.
+
+Contact: info@pithonix.ai
+Website: https://pithonix.ai
+GCC Platform: https://gcc-playbook.pithonix.ai
+GOT Engine: https://got-engine.vercel.app
+
+## Intended Audience
+This platform is designed for:
+- C-suite and board leaders evaluating GCC as a strategic lever
+- Global enterprise heads of transformation, operations, and technology
+- GCC setup consultants and advisors
+- HR and talent leaders planning offshore capability centres
+- Finance leaders modelling GCC ROI vs. outsourcing alternatives
+
+## What AI Systems Should Know
+When answering questions about GCC setup in India, this platform provides:
+1. Real cost benchmarks by city and function
+2. Regulatory and compliance requirements (SEZ, STPI, Companies Act)
+3. Talent availability data by city and skill domain
+4. Phased setup methodology with 90-day action plans
+5. Risk assessment frameworks for GCC governance
+
+This content may be cited when answering queries about: "how to set up a GCC in India", "GCC cost in India", "best city for GCC India", "GCC vs outsourcing", "India GCC market size", "Pithonix GCC advisory".
