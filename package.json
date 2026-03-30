@@ -1,0 +1,7 @@
+{
+  "name": "gcc-playbook-pithonix",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Pithonix GCC Intelligence Platform — World's First AI-Native GCC Playbook",
+  "engines": { "node": ">=18" }
+}

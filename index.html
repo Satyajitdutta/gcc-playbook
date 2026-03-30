@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GCC Playbook — Pithonix.ai | AI-Native Global Capability Centre Platform</title>
+<meta name="description" content="India's first AI-powered GCC Intelligence Platform. Custom blueprints, cost projections, talent intelligence — powered by JEET, HARI and Graph of Thought.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  --bg:#04040e;--s1:#07071a;--s2:#0b0b22;--s3:#0f0f2a;
+  --bd:#1e1e3a;--bd2:#2a2a4a;
+  --gold:#e8b84b;--gold2:#f5d47a;--golddim:rgba(232,184,75,0.15);
+  --blue:#3a7fd4;--teal:#28a888;--orange:#e8623a;--purple:#8860d4;
+  --red:#d04545;--green:#3aaa5a;
+  --txt:#c8c8e4;--tdim:#6060a0;--tmed:#9090c0;
+  --glow-gold:0 0 20px rgba(232,184,75,0.4);
+  --glow-blue:0 0 20px rgba(58,127,212,0.4);
+  --r:12px;--r2:20px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden}
+#bg-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;opacity:0.5}
+.wrap{max-width:1200px;margin:0 auto;padding:0 2rem;position:relative;z-index:2}
+h1,h2,h3{line-height:1.2;font-weight:700}
+.gold{color:var(--gold)}
+.mono{font-family:'JetBrains Mono',monospace}
+
+/* ── NAV ── */
+#nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:background 0.3s,border-color 0.3s;border-bottom:1px solid transparent;backdrop-filter:blur(0px)}
+#nav.scrolled{background:rgba(4,4,14,0.92);border-color:var(--bd);backdrop-filter:blur(20px)}
+.nav-inner{max-width:1280px;margin:0 auto;padding:0 2rem;height:64px;display:flex;align-items:center;gap:2rem}
+.nav-brand{display:flex;align-items:center;gap:0.6rem;text-decoration:none}
+.nav-logo{font-family:'JetBrains Mono',monospace;font-size:1.1rem;font-weight:700;color:var(--gold);letter-spacing:2px;border:1px solid var(--gold);padding:2px 8px;border-radius:4px}
+.nav-title{font-size:1rem;font-weight:600;color:var(--txt)}
+.nav-by{font-size:0.78rem;color:var(--tdim);margin-left:0.2rem}
+.nav-by strong{color:var(--tmed)}
+.nav-links{display:flex;gap:1.8rem;margin-left:auto}
+.nav-links a{color:var(--tmed);text-decoration:none;font-size:0.88rem;font-weight:500;transition:color 0.2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{background:var(--gold);color:#04040e;font-weight:700;font-size:0.85rem;padding:0.5rem 1.2rem;border-radius:6px;text-decoration:none;white-space:nowrap;transition:background 0.2s,transform 0.2s}
+.nav-cta:hover{background:var(--gold2);transform:translateY(-1px)}
+
+/* ── HERO ── */
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:7rem 2rem 4rem;position:relative;z-index:2}
+.hero-badge{font-family:'JetBrains Mono',monospace;font-size:0.72rem;letter-spacing:3px;color:var(--gold);border:1px solid rgba(232,184,75,0.3);padding:0.4rem 1.2rem;border-radius:20px;margin-bottom:2rem;display:inline-block;animation:fadeUp 0.8s ease both}
+#hero h1{font-size:clamp(2.8rem,6vw,5.5rem);margin-bottom:1.5rem;animation:fadeUp 0.8s 0.1s ease both}
+#hero h1 span{background:linear-gradient(135deg,var(--gold),#f5d47a,var(--orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:clamp(1rem,1.8vw,1.25rem);color:var(--tmed);max-width:680px;margin-bottom:2.5rem;animation:fadeUp 0.8s 0.2s ease both}
+.hero-ctas{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:4rem;animation:fadeUp 0.8s 0.3s ease both}
+.btn-primary{background:linear-gradient(135deg,var(--gold),#d4a438);color:#04040e;font-weight:700;font-size:1rem;padding:0.85rem 2rem;border-radius:8px;text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;box-shadow:var(--glow-gold)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(232,184,75,0.6)}
+.btn-secondary{background:rgba(255,255,255,0.05);color:var(--txt);font-weight:600;font-size:1rem;padding:0.85rem 2rem;border-radius:8px;text-decoration:none;border:1px solid var(--bd2);transition:border-color 0.2s,background 0.2s}
+.btn-secondary:hover{border-color:var(--gold);background:rgba(232,184,75,0.08)}
+.hero-stats{display:flex;gap:1.5rem;flex-wrap:wrap;justify-content:center;animation:fadeUp 0.8s 0.4s ease both}
+.stat-pill{background:rgba(255,255,255,0.04);border:1px solid var(--bd);border-radius:12px;padding:1rem 1.5rem;text-align:center;backdrop-filter:blur(10px);transition:border-color 0.3s,transform 0.3s}
+.stat-pill:hover{border-color:rgba(232,184,75,0.4);transform:translateY(-3px)}
+.stat-n{font-family:'JetBrains Mono',monospace;font-size:1.6rem;font-weight:700;color:var(--gold);display:block}
+.stat-l{font-size:0.78rem;color:var(--tdim);letter-spacing:1px;text-transform:uppercase}
+.scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);color:var(--tdim);font-size:0.8rem;animation:bob 2s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── TICKER ── */
+.ticker-wrap{background:rgba(232,184,75,0.06);border-top:1px solid rgba(232,184,75,0.15);border-bottom:1px solid rgba(232,184,75,0.15);overflow:hidden;padding:0.7rem 0;position:relative;z-index:2}
+.ticker-track{display:flex;width:max-content;animation:tick 60s linear infinite}
+.ticker-track:hover{animation-play-state:paused}
+.ticker-item{font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:var(--gold);white-space:nowrap;padding:0 2.5rem;letter-spacing:1px}
+.ticker-sep{color:rgba(232,184,75,0.3)}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── SECTION BASE ── */
+section{position:relative;z-index:2;padding:6rem 0}
+.section-label{font-family:'JetBrains Mono',monospace;font-size:0.72rem;letter-spacing:3px;color:var(--gold);margin-bottom:1rem;text-transform:uppercase}
+.section-title{font-size:clamp(1.8rem,3.5vw,2.8rem);margin-bottom:1rem}
+.section-sub{font-size:1.05rem;color:var(--tmed);max-width:600px;margin-bottom:3rem}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+/* ── SIMULATOR ── */
+#simulator{background:linear-gradient(180deg,var(--bg) 0%,var(--s1) 100%)}
+.sim-wrap{background:rgba(255,255,255,0.02);border:1px solid var(--bd);border-radius:var(--r2);overflow:hidden}
+.sim-header{padding:2rem 2.5rem 1.5rem;border-bottom:1px solid var(--bd)}
+.sim-header h2{font-size:1.7rem;margin-bottom:0.3rem}
+.sim-header p{color:var(--tmed);font-size:0.95rem}
+.sim-steps{display:flex;gap:0;border-bottom:1px solid var(--bd)}
+.sim-step-tab{flex:1;padding:1rem;text-align:center;font-size:0.82rem;font-weight:600;color:var(--tdim);border-right:1px solid var(--bd);cursor:pointer;transition:all 0.2s;position:relative;letter-spacing:0.5px}
+.sim-step-tab:last-child{border-right:none}
+.sim-step-tab.active{color:var(--gold);background:rgba(232,184,75,0.06)}
+.sim-step-tab.done{color:var(--teal)}
+.sim-step-tab .step-num{display:block;font-family:'JetBrains Mono',monospace;font-size:1.1rem;font-weight:700;margin-bottom:0.2rem}
+.sim-step-tab.done .step-num::after{content:'✓';color:var(--teal)}
+.sim-body{padding:2.5rem}
+.sim-pane{display:none}
+.sim-pane.active{display:block}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;margin-bottom:2rem}
+.form-group label{display:block;font-size:0.82rem;font-weight:600;color:var(--tmed);margin-bottom:0.5rem;letter-spacing:0.5px;text-transform:uppercase}
+.form-group select,.form-group input,.form-group textarea{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--bd);color:var(--txt);padding:0.75rem 1rem;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.95rem;transition:border-color 0.2s;outline:none}
+.form-group select:focus,.form-group input:focus,.form-group textarea:focus{border-color:var(--gold)}
+.form-group select option{background:#0d0d1a}
+.func-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.75rem;margin-bottom:2rem}
+.func-chip{display:flex;align-items:center;gap:0.6rem;padding:0.75rem 1rem;border:1px solid var(--bd);border-radius:8px;cursor:pointer;transition:all 0.2s;font-size:0.9rem;font-weight:500}
+.func-chip:hover{border-color:var(--bd2)}
+.func-chip input{display:none}
+.func-chip .chip-icon{font-size:1.1rem}
+.func-chip.checked{border-color:var(--gold);background:rgba(232,184,75,0.08);color:var(--gold)}
+.priority-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:2rem}
+.priority-card{padding:1.2rem;border:1px solid var(--bd);border-radius:10px;cursor:pointer;transition:all 0.2s}
+.priority-card:hover{border-color:var(--bd2)}
+.priority-card.selected{border-color:var(--gold);background:rgba(232,184,75,0.06)}
+.priority-card h4{font-size:0.95rem;margin-bottom:0.2rem}
+.priority-card p{font-size:0.8rem;color:var(--tdim)}
+.sim-nav{display:flex;gap:1rem;justify-content:flex-end;margin-top:1rem}
+.btn-sim-next{background:var(--gold);color:#04040e;font-weight:700;padding:0.75rem 2rem;border:none;border-radius:8px;cursor:pointer;font-size:0.95rem;font-family:'DM Sans',sans-serif;transition:transform 0.2s,opacity 0.2s}
+.btn-sim-next:hover{transform:translateY(-1px);opacity:0.9}
+.btn-sim-back{background:transparent;color:var(--tmed);font-weight:600;padding:0.75rem 1.5rem;border:1px solid var(--bd);border-radius:8px;cursor:pointer;font-size:0.95rem;font-family:'DM Sans',sans-serif;transition:border-color 0.2s}
+.btn-sim-back:hover{border-color:var(--gold)}
+
+/* Simulator Output */
+.sim-loading{text-align:center;padding:4rem 2rem}
+.sim-loading .spin-big{width:48px;height:48px;border:3px solid var(--bd);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 1.5rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sim-output{display:none}
+.blueprint-header{display:flex;align-items:flex-start;gap:2rem;margin-bottom:2rem;flex-wrap:wrap}
+.city-card{background:linear-gradient(135deg,rgba(232,184,75,0.1),rgba(232,184,75,0.04));border:1px solid rgba(232,184,75,0.3);border-radius:12px;padding:1.5rem;min-width:200px;text-align:center}
+.city-flag{font-size:2.5rem;margin-bottom:0.5rem}
+.city-name{font-size:1.5rem;font-weight:700;color:var(--gold);margin-bottom:0.2rem}
+.city-tag{font-size:0.75rem;color:var(--tdim);letter-spacing:1px;text-transform:uppercase}
+.city-reason{font-size:0.88rem;color:var(--tmed);margin-top:0.6rem;text-align:left}
+.blueprint-meta{flex:1;min-width:280px}
+.bm-row{display:flex;justify-content:space-between;align-items:center;padding:0.6rem 0;border-bottom:1px solid var(--bd);font-size:0.9rem}
+.bm-row:last-child{border-bottom:none}
+.bm-key{color:var(--tdim)}
+.bm-val{font-weight:600;color:var(--txt)}
+.bm-val.gold{color:var(--gold)}
+.bm-val.green{color:var(--teal)}
+.chart-wrap{margin:2rem 0;background:rgba(255,255,255,0.02);border:1px solid var(--bd);border-radius:12px;padding:1.5rem}
+.chart-wrap h3{font-size:1rem;margin-bottom:1rem;color:var(--tmed)}
+.risks-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-bottom:2rem}
+.risk-card{background:rgba(255,255,255,0.02);border:1px solid var(--bd);border-radius:10px;padding:1.2rem}
+.risk-top{display:flex;align-items:center;gap:0.6rem;margin-bottom:0.5rem}
+.risk-badge{font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:4px;font-family:'JetBrains Mono',monospace;letter-spacing:1px}
+.risk-high{background:rgba(208,69,69,0.15);color:#e06060;border:1px solid rgba(208,69,69,0.3)}
+.risk-med{background:rgba(232,184,75,0.12);color:var(--gold);border:1px solid rgba(232,184,75,0.3)}
+.risk-low{background:rgba(40,168,136,0.12);color:var(--teal);border:1px solid rgba(40,168,136,0.3)}
+.risk-name{font-weight:600;font-size:0.92rem}
+.risk-mit{font-size:0.83rem;color:var(--tmed)}
+.actions-list{list-style:none;margin-bottom:2rem}
+.actions-list li{display:flex;align-items:flex-start;gap:0.75rem;padding:0.7rem 0;border-bottom:1px solid var(--bd);font-size:0.9rem}
+.actions-list li:last-child{border-bottom:none}
+.action-num{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--gold);background:rgba(232,184,75,0.1);border:1px solid rgba(232,184,75,0.2);border-radius:4px;padding:2px 6px;white-space:nowrap;margin-top:1px}
+.pithonix-rec{background:linear-gradient(135deg,rgba(136,96,212,0.1),rgba(58,127,212,0.08));border:1px solid rgba(136,96,212,0.3);border-radius:12px;padding:1.5rem;margin-bottom:2rem}
+.pithonix-rec h3{color:var(--purple);margin-bottom:0.75rem;font-size:1rem}
+.pmod-row{display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:0.75rem}
+.pmod{background:rgba(136,96,212,0.12);border:1px solid rgba(136,96,212,0.25);color:#b090e4;padding:0.3rem 0.75rem;border-radius:20px;font-size:0.82rem;font-weight:600}
+.insight-box{background:linear-gradient(135deg,rgba(40,168,136,0.08),rgba(40,168,136,0.03));border:1px solid rgba(40,168,136,0.25);border-radius:12px;padding:1.5rem}
+.insight-box .insight-label{font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:2px;color:var(--teal);margin-bottom:0.5rem}
+.insight-box p{font-size:0.95rem;color:var(--txt)}
+.btn-restart{background:transparent;color:var(--tdim);border:1px solid var(--bd);padding:0.6rem 1.2rem;border-radius:8px;cursor:pointer;font-size:0.85rem;font-family:'DM Sans',sans-serif;margin-top:1.5rem;transition:border-color 0.2s}
+.btn-restart:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ── PITHONIX EDGE ── */
+#edge{background:var(--s1)}
+.edge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem}
+.edge-card{background:rgba(255,255,255,0.02);border:1px solid var(--bd);border-radius:var(--r);padding:2rem;position:relative;overflow:hidden;transition:border-color 0.3s,transform 0.3s;cursor:default}
+.edge-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent,var(--gold))}
+.edge-card:hover{border-color:var(--accent,var(--gold));transform:translateY(-4px)}
+.edge-icon{font-size:2rem;margin-bottom:1rem}
+.edge-card h3{font-size:1.05rem;margin-bottom:0.5rem}
+.edge-card p{font-size:0.88rem;color:var(--tmed);line-height:1.6}
+.edge-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:1px;color:var(--accent,var(--gold));border:1px solid rgba(232,184,75,0.2);padding:2px 8px;border-radius:4px;margin-top:1rem}
+
+/* ── JOURNEY ── */
+#journey{background:var(--bg)}
+.phase-tabs{display:flex;gap:0;border:1px solid var(--bd);border-radius:10px;overflow:hidden;margin-bottom:2rem;flex-wrap:wrap}
+.phase-tab{flex:1;padding:0.9rem 0.5rem;text-align:center;cursor:pointer;font-size:0.82rem;font-weight:600;color:var(--tdim);transition:all 0.2s;border-right:1px solid var(--bd);min-width:120px}
+.phase-tab:last-child{border-right:none}
+.phase-tab.active{background:rgba(232,184,75,0.08);color:var(--gold)}
+.phase-tab .phase-n{font-family:'JetBrains Mono',monospace;font-size:1rem;font-weight:700;display:block;margin-bottom:0.2rem}
+.phase-content{display:none;animation:fadeIn 0.3s ease}
+.phase-content.active{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.phase-left h3{font-size:1.4rem;margin-bottom:0.5rem}
+.phase-left .phase-period{font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--gold);letter-spacing:1px;margin-bottom:1rem}
+.phase-left p{color:var(--tmed);font-size:0.95rem;margin-bottom:1.5rem}
+.phase-fte{display:flex;align-items:center;gap:1rem;background:rgba(255,255,255,0.03);border:1px solid var(--bd);border-radius:8px;padding:1rem}
+.phase-fte .fte-num{font-family:'JetBrains Mono',monospace;font-size:1.4rem;font-weight:700;color:var(--gold)}
+.phase-fte .fte-lbl{font-size:0.8rem;color:var(--tdim)}
+.activity-list{list-style:none}
+.activity-list li{display:flex;align-items:flex-start;gap:0.6rem;padding:0.5rem 0;font-size:0.88rem;color:var(--tmed);border-bottom:1px solid rgba(255,255,255,0.04)}
+.activity-list li::before{content:'→';color:var(--gold);flex-shrink:0;margin-top:1px}
+.pithonix-role{margin-top:1.5rem;background:rgba(136,96,212,0.07);border:1px solid rgba(136,96,212,0.2);border-radius:8px;padding:1rem}
+.pithonix-role h4{font-size:0.82rem;color:var(--purple);margin-bottom:0.4rem;letter-spacing:0.5px}
+.pithonix-role p{font-size:0.85rem;color:var(--tmed)}
+
+/* ── CITIES ── */
+#cities{background:var(--s1)}
+.city-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem}
+.city-block{background:rgba(255,255,255,0.02);border:1px solid var(--bd);border-radius:var(--r);padding:1.5rem;transition:all 0.3s;position:relative;overflow:hidden}
+.city-block.primary{border-color:rgba(232,184,75,0.35);background:rgba(232,184,75,0.04)}
+.city-block.primary::after{content:'RECOMMENDED';position:absolute;top:0.8rem;right:0.8rem;font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:1px;color:var(--gold);background:rgba(232,184,75,0.1);padding:2px 6px;border-radius:3px}
+.city-block:hover{transform:translateY(-3px);border-color:rgba(232,184,75,0.3)}
+.city-block h3{font-size:1.15rem;margin-bottom:0.3rem}
+.city-state{font-size:0.8rem;color:var(--tdim);margin-bottom:1rem}
+.city-stat{display:flex;justify-content:space-between;align-items:center;padding:0.4rem 0;border-bottom:1px solid var(--bd);font-size:0.85rem}
+.city-stat:last-of-type{border-bottom:none}
+.city-stat .cs-k{color:var(--tdim)}
+.city-stat .cs-v{font-weight:600;font-family:'JetBrains Mono',monospace;font-size:0.82rem;color:var(--txt)}
+.city-tags{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:1rem}
+.city-tag-pill{font-size:0.72rem;padding:2px 8px;border-radius:4px;background:rgba(58,127,212,0.1);border:1px solid rgba(58,127,212,0.2);color:#7aabf0}
+
+/* ── MARKET ── */
+#market{background:var(--bg);padding:5rem 0}
+.market-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem}
+.market-card{text-align:center;padding:2rem 1.5rem;background:rgba(255,255,255,0.02);border:1px solid var(--bd);border-radius:var(--r);transition:all 0.3s}
+.market-card:hover{border-color:rgba(232,184,75,0.3);transform:translateY(-3px)}
+.market-num{font-family:'JetBrains Mono',monospace;font-size:2.2rem;font-weight:700;color:var(--gold);display:block;margin-bottom:0.3rem}
+.market-lbl{font-size:0.82rem;color:var(--tdim);letter-spacing:0.5px}
+.market-sub{font-size:0.75rem;color:rgba(232,184,75,0.5);margin-top:0.3rem;font-family:'JetBrains Mono',monospace}
+
+/* ── PARTNERS ── */
+#partners{background:var(--s2)}
+.cat-tabs{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:2rem}
+.cat-tab{padding:0.5rem 1.1rem;border:1px solid var(--bd);border-radius:20px;font-size:0.82rem;font-weight:600;color:var(--tdim);cursor:pointer;transition:all 0.2s}
+.cat-tab.active,.cat-tab:hover{border-color:var(--gold);color:var(--gold);background:rgba(232,184,75,0.08)}
+.vendor-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.2rem;margin-bottom:3rem}
+.vendor-card{background:rgba(255,255,255,0.02);border:1px solid var(--bd);border-radius:var(--r);padding:1.5rem;transition:border-color 0.2s;display:none}
+.vendor-card.show{display:block}
+.vendor-empty{border-style:dashed;text-align:center;cursor:pointer}
+.vendor-empty:hover{border-color:var(--gold)}
+.vendor-empty .ve-icon{font-size:2rem;margin-bottom:0.5rem;opacity:0.4}
+.vendor-empty .ve-txt{font-size:0.82rem;color:var(--tdim)}
+.vendor-empty .ve-cta{display:inline-block;margin-top:0.75rem;font-size:0.78rem;color:var(--gold);font-weight:600;cursor:pointer}
+
+/* Partner Form */
+.partner-form-wrap{background:rgba(255,255,255,0.02);border:1px solid var(--bd);border-radius:var(--r2);padding:2.5rem}
+.partner-form-wrap h3{font-size:1.4rem;margin-bottom:0.5rem}
+.partner-form-wrap p{color:var(--tmed);font-size:0.9rem;margin-bottom:2rem}
+.partner-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.2rem}
+.partner-form .full{grid-column:1/-1}
+.partner-form textarea{height:100px;resize:vertical}
+.btn-partner{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;font-weight:700;padding:0.85rem 2rem;border:none;border-radius:8px;cursor:pointer;font-size:0.95rem;font-family:'DM Sans',sans-serif;transition:transform 0.2s,opacity 0.2s}
+.btn-partner:hover{transform:translateY(-1px);opacity:0.9}
+.form-success{display:none;text-align:center;padding:2rem;color:var(--teal)}
+.form-success .fs-icon{font-size:2.5rem;margin-bottom:0.75rem}
+
+/* ── CONTACT ── */
+#contact{background:linear-gradient(135deg,var(--s3),var(--bg));text-align:center;padding:6rem 2rem}
+#contact h2{font-size:clamp(2rem,4vw,3rem);margin-bottom:1rem}
+#contact p{color:var(--tmed);max-width:560px;margin:0 auto 2.5rem;font-size:1.05rem}
+.contact-ctas{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn-contact{background:var(--gold);color:#04040e;font-weight:700;padding:1rem 2.5rem;border-radius:8px;text-decoration:none;font-size:1rem;transition:transform 0.2s}
+.btn-contact:hover{transform:translateY(-2px)}
+.btn-contact-sec{background:transparent;color:var(--txt);border:1px solid var(--bd);padding:1rem 2rem;border-radius:8px;text-decoration:none;font-size:1rem;transition:border-color 0.2s}
+.btn-contact-sec:hover{border-color:var(--gold)}
+
+/* ── FOOTER ── */
+footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z-index:2;position:relative}
+.footer-inner{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:2rem}
+.footer-brand .fb-logo{font-family:'JetBrains Mono',monospace;font-size:0.85rem;color:var(--gold);border:1px solid rgba(232,184,75,0.3);padding:3px 8px;border-radius:4px;display:inline-block;margin-bottom:0.75rem}
+.footer-brand p{font-size:0.85rem;color:var(--tdim);max-width:340px;line-height:1.7}
+.footer-col h4{font-size:0.85rem;font-weight:700;color:var(--tmed);margin-bottom:1rem;letter-spacing:0.5px}
+.footer-col a{display:block;font-size:0.85rem;color:var(--tdim);text-decoration:none;margin-bottom:0.5rem;transition:color 0.2s}
+.footer-col a:hover{color:var(--gold)}
+.footer-bottom{border-top:1px solid var(--bd);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:gap;font-size:0.8rem;color:var(--tdim)}
+
+/* ── GOT ADVISOR WIDGET ── */
+#got-btn{position:fixed;bottom:2rem;right:2rem;z-index:200;background:linear-gradient(135deg,#0d0d24,#14142e);border:1px solid rgba(232,184,75,0.5);color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:0.78rem;font-weight:700;letter-spacing:1px;padding:0.65rem 1.1rem;border-radius:30px;cursor:pointer;display:flex;align-items:center;gap:0.5rem;box-shadow:0 0 20px rgba(232,184,75,0.2),0 4px 20px rgba(0,0,0,0.5);transition:all 0.2s}
+#got-btn:hover{box-shadow:0 0 30px rgba(232,184,75,0.4),0 4px 20px rgba(0,0,0,0.5);transform:translateY(-2px)}
+#got-btn .got-pulse{width:8px;height:8px;border-radius:50%;background:var(--gold);animation:gpulse 1.5s ease-in-out infinite}
+@keyframes gpulse{0%,100%{box-shadow:0 0 0 0 rgba(232,184,75,0.6)}50%{box-shadow:0 0 0 6px rgba(232,184,75,0)}}
+#got-overlay{display:none;position:fixed;inset:0;background:rgba(4,4,14,0.7);z-index:198;backdrop-filter:blur(4px)}
+#got-panel{display:none;position:fixed;bottom:0;left:0;right:0;z-index:199;background:var(--s1);border-top:1px solid rgba(232,184,75,0.25);border-radius:20px 20px 0 0;padding:1.5rem;max-height:80vh;overflow-y:auto;animation:slideUp 0.3s ease}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.got-panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem}
+.got-panel-head h3{font-family:'JetBrains Mono',monospace;font-size:0.9rem;color:var(--gold);letter-spacing:2px}
+.got-panel-head span{color:var(--tdim);font-size:0.8rem}
+.got-close{background:none;border:none;color:var(--tdim);font-size:1.2rem;cursor:pointer;padding:0.2rem 0.5rem}
+.got-close:hover{color:var(--txt)}
+.got-scenarios{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.2rem}
+.got-chip{background:rgba(255,255,255,0.03);border:1px solid var(--bd);border-radius:20px;padding:0.4rem 0.9rem;font-size:0.82rem;color:var(--tmed);cursor:pointer;transition:all 0.2s}
+.got-chip:hover,.got-chip.active{border-color:var(--gold);background:rgba(232,184,75,0.08);color:var(--gold)}
+.got-input-row{display:flex;gap:0.75rem;margin-bottom:1.2rem}
+.got-input-row input{flex:1;background:rgba(255,255,255,0.04);border:1px solid var(--bd);color:var(--txt);padding:0.7rem 1rem;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none}
+.got-input-row input:focus{border-color:var(--gold)}
+.got-input-row button{background:var(--gold);color:#04040e;font-weight:700;border:none;padding:0.7rem 1.2rem;border-radius:8px;cursor:pointer;font-size:0.88rem;white-space:nowrap;transition:opacity 0.2s}
+.got-input-row button:hover{opacity:0.85}
+.got-loading{text-align:center;padding:2rem;display:none}
+.got-loading .sp{width:32px;height:32px;border:2px solid var(--bd);border-top-color:var(--gold);border-radius:50%;animation:spin 0.7s linear infinite;margin:0 auto 0.75rem}
+.got-result{display:none}
+.got-result-inner{background:rgba(255,255,255,0.02);border:1px solid var(--bd);border-radius:12px;padding:1.5rem}
+.got-domain-pills{display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:1rem}
+.got-dp{font-family:'JetBrains Mono',monospace;font-size:0.68rem;padding:2px 8px;border-radius:4px;background:rgba(232,184,75,0.1);border:1px solid rgba(232,184,75,0.2);color:rgba(232,184,75,0.8)}
+.got-answer p{font-size:0.9rem;color:var(--txt);margin-bottom:0.9rem;line-height:1.7}
+.got-answer p:last-child{margin-bottom:0}
+.got-footer{display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--bd)}
+.got-footer a{font-size:0.8rem;color:var(--teal);text-decoration:none}
+.got-footer a:hover{text-decoration:underline}
+.got-footer button{background:none;border:1px solid var(--bd);color:var(--tdim);font-size:0.78rem;padding:0.3rem 0.8rem;border-radius:6px;cursor:pointer}
+.got-footer button:hover{border-color:var(--gold);color:var(--gold)}
+
+/* Holographic shimmer on featured elements */
+.holo{position:relative;overflow:hidden}
+.holo::after{content:'';position:absolute;top:-50%;left:-60%;width:60%;height:200%;background:linear-gradient(90deg,transparent,rgba(232,184,75,0.06),transparent);transform:skewX(-20deg);animation:shimmer 4s ease-in-out infinite}
+@keyframes shimmer{0%,100%{left:-60%}50%{left:120%}}
+
+@media(max-width:768px){
+  .nav-links{display:none}
+  .phase-content.active{grid-template-columns:1fr}
+  .footer-inner{grid-template-columns:1fr}
+  .blueprint-header{flex-direction:column}
+  .priority-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<!-- GOT ADVISOR WIDGET -->
+<button id="got-btn" onclick="toggleGOT()"><span class="got-pulse"></span>◉ GOT Advisor</button>
+<div id="got-overlay" onclick="toggleGOT()"></div>
+<div id="got-panel">
+  <div class="got-panel-head">
+    <h3>◉ GOT — GCC INTELLIGENCE ADVISOR</h3>
+    <div style="display:flex;align-items:center;gap:1rem">
+      <span>Powered by Graph of Thought · Pithonix.ai</span>
+      <button class="got-close" onclick="toggleGOT()">✕</button>
+    </div>
+  </div>
+  <p style="font-size:0.83rem;color:var(--tdim);margin-bottom:1rem">Select a GCC question or type your own — GOT reasons across 8 domains simultaneously.</p>
+  <div class="got-scenarios">
+    <div class="got-chip" onclick="selectGOTScenario(this,'Should we set up a GCC in India or expand our current outsourcing model? What are the real trade-offs across cost, control, talent, and strategic value?')">Set up GCC vs Outsourcing?</div>
+    <div class="got-chip" onclick="selectGOTScenario(this,'How do we assess if our company is ready to set up a GCC in India? What are the key readiness criteria across people, finance, technology, and governance?')">Are we GCC-ready?</div>
+    <div class="got-chip" onclick="selectGOTScenario(this,'Which Indian city should we choose for our GCC — Hyderabad, Bengaluru, Pune, or Chennai? What factors matter most and what hidden trade-offs should we know?')">Which city is right for us?</div>
+    <div class="got-chip" onclick="selectGOTScenario(this,'What are the hidden risks in a GCC setup that most consultants do not warn you about? Cover talent, compliance, culture, and operational risks.')">Hidden GCC risks?</div>
+    <div class="got-chip" onclick="selectGOTScenario(this,'How will AI and automation transform GCC operations by 2030? Which GCC functions will be disrupted first and what should companies do now to prepare?')">AI & the future of GCCs</div>
+    <div class="got-chip" onclick="selectGOTScenario(this,'What is the real total cost of setting up and running a GCC in India for 5 years, including hidden costs that most business cases miss?')">True cost of a GCC?</div>
+  </div>
+  <div class="got-input-row">
+    <input id="got-q" type="text" placeholder="Or type your GCC question…" onkeydown="if(event.key==='Enter')runGOTAdvisor()">
+    <button onclick="runGOTAdvisor()">Ask GOT →</button>
+  </div>
+  <div class="got-loading" id="got-loading"><div class="sp"></div><p style="color:var(--tmed);font-size:0.85rem">GOT is reasoning across 8 GCC domains…</p></div>
+  <div class="got-result" id="got-result">
+    <div class="got-result-inner">
+      <div class="got-domain-pills">
+        <span class="got-dp">PEOPLE & TALENT</span><span class="got-dp">FINANCIAL IMPACT</span><span class="got-dp">OPERATIONAL RISK</span><span class="got-dp">COMPLIANCE</span><span class="got-dp">CULTURE</span><span class="got-dp">TECHNOLOGY</span><span class="got-dp">MARKET INTEL</span><span class="got-dp">STRATEGIC ALIGNMENT</span>
+      </div>
+      <div class="got-answer" id="got-answer"></div>
+      <div class="got-footer">
+        <a href="https://got-engine.vercel.app" target="_blank">Open Full GOT Engine for deep graph analysis →</a>
+        <button onclick="clearGOT()">Ask another →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-brand">
+      <span class="nav-logo">GCC</span>
+      <span class="nav-title">Playbook</span>
+      <span class="nav-by">by <strong>Pithonix.ai</strong></span>
+    </a>
+    <div class="nav-links">
+      <a href="#simulator">Simulator</a>
+      <a href="#journey">Playbook</a>
+      <a href="#cities">India Intel</a>
+      <a href="#partners">Partners</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="#contact" class="nav-cta">Book a Call →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-badge mono">PITHONIX · GCC INTELLIGENCE PLATFORM · INDIA · 2025</div>
+  <h1>Your GCC. Built Right.<br><span>First Time.</span></h1>
+  <p class="hero-sub">India's first AI-native GCC intelligence platform. From business case to full operations — powered by JEET, HARI, and Graph of Thought reasoning across every domain.</p>
+  <div class="hero-ctas">
+    <a href="#simulator" class="btn-primary">Launch GCC Simulator →</a>
+    <a href="#journey" class="btn-secondary">Explore the Playbook</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-pill">
+      <span class="stat-n" data-count="1800" data-suffix="+">0</span>
+      <span class="stat-l">GCCs in India</span>
+    </div>
+    <div class="stat-pill">
+      <span class="stat-n" data-prefix="$" data-count="46" data-suffix="B+">0</span>
+      <span class="stat-l">Revenue Generated</span>
+    </div>
+    <div class="stat-pill">
+      <span class="stat-n" data-count="70" data-suffix="%" data-pre="Up to ">0</span>
+      <span class="stat-l">Cost Arbitrage vs US</span>
+    </div>
+    <div class="stat-pill">
+      <span class="stat-n" data-prefix="$" data-count="100" data-suffix="B">0</span>
+      <span class="stat-l">2030 Market Target</span>
+    </div>
+    <div class="stat-pill">
+      <span class="stat-n" data-count="36" data-suffix=" / 2wks">0</span>
+      <span class="stat-l">New GCCs Opening</span>
+    </div>
+  </div>
+  <div class="scroll-hint">↓ scroll to explore</div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track" id="ticker"></div>
+</div>
+
+<!-- SIMULATOR -->
+<section id="simulator">
+  <div class="wrap">
+    <div class="section-label">AI-POWERED SIMULATOR</div>
+    <h2 class="section-title">GCC Blueprint <span class="gold">Simulator</span></h2>
+    <p class="section-sub">Enter your company parameters. Receive a custom, data-driven GCC blueprint generated by Gemini AI — city recommendation, cost projections, risk map, and 5-year roadmap.</p>
+    <div class="sim-wrap reveal">
+      <div class="sim-header">
+        <h2>Build Your Custom GCC Blueprint</h2>
+        <p>Takes 2 minutes · Powered by Gemini AI · Based on real India GCC data</p>
+      </div>
+      <div class="sim-steps">
+        <div class="sim-step-tab active" data-step="1"><span class="step-num">01</span>Company Profile</div>
+        <div class="sim-step-tab" data-step="2"><span class="step-num">02</span>GCC Functions</div>
+        <div class="sim-step-tab" data-step="3"><span class="step-num">03</span>Scale & Ambition</div>
+        <div class="sim-step-tab" data-step="4"><span class="step-num">04</span>Your Blueprint</div>
+      </div>
+      <div class="sim-body">
+
+        <!-- Step 1 -->
+        <div class="sim-pane active" id="pane1">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Industry</label>
+              <select id="f-industry">
+                <option value="">Select industry</option>
+                <option>BFSI (Banking, Financial Services, Insurance)</option>
+                <option>Technology / SaaS</option>
+                <option>Healthcare & Life Sciences</option>
+                <option>Retail / E-Commerce</option>
+                <option>Automotive / Manufacturing</option>
+                <option>Consumer Packaged Goods (CPG)</option>
+                <option>Energy & Utilities</option>
+                <option>Professional Services</option>
+                <option>Telecom / Media</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Headquarters Country</label>
+              <select id="f-country">
+                <option value="">Select country</option>
+                <option>United States</option>
+                <option>United Kingdom</option>
+                <option>Germany</option>
+                <option>UAE / GCC Region</option>
+                <option>Australia</option>
+                <option>Singapore</option>
+                <option>Japan</option>
+                <option>Canada</option>
+                <option>Netherlands</option>
+                <option>Other Europe</option>
+                <option>Other APAC</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Annual Revenue</label>
+              <select id="f-revenue">
+                <option value="">Select range</option>
+                <option>$50M – $100M</option>
+                <option>$100M – $500M</option>
+                <option>$500M – $1B</option>
+                <option>$1B – $5B</option>
+                <option>$5B+</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>GCC Maturity</label>
+              <select id="f-maturity">
+                <option value="">Select stage</option>
+                <option>No GCC — evaluating feasibility</option>
+                <option>Business case approved — ready to start</option>
+                <option>Early GCC (0–2 years) — scaling</option>
+                <option>Existing GCC — transforming</option>
+              </select>
+            </div>
+          </div>
+          <div class="sim-nav"><button class="btn-sim-next" onclick="goStep(2)">Next: GCC Functions →</button></div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="sim-pane" id="pane2">
+          <p style="color:var(--tmed);font-size:0.9rem;margin-bottom:1.2rem">Select all functions your GCC will run (multi-select)</p>
+          <div class="func-grid">
+            <label class="func-chip" onclick="toggleChip(this)"><input type="checkbox" value="Technology Hub (Engineering, AI/ML, Cloud, DevOps, Product, QA)"><span class="chip-icon">💻</span>Technology Hub</label>
+            <label class="func-chip" onclick="toggleChip(this)"><input type="checkbox" value="Finance & Accounting (FP&A, R2R, P2P, Tax, Treasury)"><span class="chip-icon">📊</span>Finance & Accounting</label>
+            <label class="func-chip" onclick="toggleChip(this)"><input type="checkbox" value="Human Resources (TA, HRBP, L&D, Payroll, HR Analytics)"><span class="chip-icon">👥</span>Human Resources</label>
+            <label class="func-chip" onclick="toggleChip(this)"><input type="checkbox" value="Procurement & Supply Chain (Sourcing, Category Management, Vendor Mgmt)"><span class="chip-icon">🔗</span>Procurement</label>
+            <label class="func-chip" onclick="toggleChip(this)"><input type="checkbox" value="Marketing Operations (Demand Gen, Content Ops, Campaign Analytics)"><span class="chip-icon">📣</span>Marketing Ops</label>
+            <label class="func-chip" onclick="toggleChip(this)"><input type="checkbox" value="Sales Operations (Revenue Ops, CRM Governance, Sales Enablement)"><span class="chip-icon">📈</span>Sales Operations</label>
+            <label class="func-chip" onclick="toggleChip(this)"><input type="checkbox" value="Data & Analytics (BI, Data Engineering, Data Science, Reporting)"><span class="chip-icon">🧠</span>Data & Analytics</label>
+            <label class="func-chip" onclick="toggleChip(this)"><input type="checkbox" value="Legal & Compliance (Contracts, Regulatory, Risk Management)"><span class="chip-icon">⚖️</span>Legal & Compliance</label>
+            <label class="func-chip" onclick="toggleChip(this)"><input type="checkbox" value="Customer Experience & Support (CX, L1/L2 Support, Service Desk)"><span class="chip-icon">🎧</span>Customer Experience</label>
+            <label class="func-chip" onclick="toggleChip(this)"><input type="checkbox" value="Engineering R&D (Product Innovation, Patent Development, Deep Tech Research)"><span class="chip-icon">🔬</span>Engineering R&D</label>
+          </div>
+          <div class="sim-nav">
+            <button class="btn-sim-back" onclick="goStep(1)">← Back</button>
+            <button class="btn-sim-next" onclick="goStep(3)">Next: Scale & Ambition →</button>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="sim-pane" id="pane3">
+          <div class="form-grid" style="margin-bottom:1.5rem">
+            <div class="form-group">
+              <label>Year 1 FTE Target</label>
+              <select id="f-fte">
+                <option value="">Select headcount</option>
+                <option>10–30 FTEs (Pilot)</option>
+                <option>30–80 FTEs (Small Launch)</option>
+                <option>80–150 FTEs (Scaled Launch)</option>
+                <option>150–300 FTEs (Large Launch)</option>
+                <option>300+ FTEs (Full Scale from Day 1)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Setup Timeline</label>
+              <select id="f-timeline">
+                <option value="">Select preference</option>
+                <option>Aggressive (12 months)</option>
+                <option>Balanced (18–24 months)</option>
+                <option>Conservative (24–36 months)</option>
+              </select>
+            </div>
+          </div>
+          <p style="color:var(--tmed);font-size:0.88rem;margin-bottom:1rem">What matters most for your GCC?</p>
+          <div class="priority-grid">
+            <div class="priority-card" onclick="selectPriority(this,'Cost Leadership')">
+              <h4>💰 Cost Leadership</h4>
+              <p>Maximum cost arbitrage, operational efficiency, ROI-first decisions</p>
+            </div>
+            <div class="priority-card" onclick="selectPriority(this,'Talent Quality')">
+              <h4>🎓 Talent Quality</h4>
+              <p>Best engineers & specialists, deep-tech expertise, CoE development</p>
+            </div>
+            <div class="priority-card" onclick="selectPriority(this,'Speed to Value')">
+              <h4>⚡ Speed to Value</h4>
+              <p>Fastest ramp-up, productivity from Day 1, lean setup approach</p>
+            </div>
+            <div class="priority-card" onclick="selectPriority(this,'Innovation Engine')">
+              <h4>🚀 Innovation Engine</h4>
+              <p>R&D hub, IP creation, AI/ML excellence, startup ecosystem access</p>
+            </div>
+          </div>
+          <div class="sim-nav">
+            <button class="btn-sim-back" onclick="goStep(2)">← Back</button>
+            <button class="btn-sim-next" onclick="generateBlueprint()">Generate My Blueprint →</button>
+          </div>
+        </div>
+
+        <!-- Step 4: Output -->
+        <div class="sim-pane" id="pane4">
+          <div class="sim-loading" id="sim-loading">
+            <div class="spin-big"></div>
+            <p style="color:var(--tmed);font-size:0.95rem">Gemini AI is building your custom GCC blueprint…</p>
+            <p style="color:var(--tdim);font-size:0.82rem;margin-top:0.4rem">Analysing India GCC data · Mapping talent pools · Calculating 5-year projections</p>
+          </div>
+          <div class="sim-output" id="sim-output">
+            <div class="blueprint-header">
+              <div class="city-card">
+                <div class="city-flag" id="out-flag">🏙️</div>
+                <div class="city-name" id="out-city">—</div>
+                <div class="city-tag">PRIMARY RECOMMENDATION</div>
+                <div class="city-reason" id="out-city-reason">—</div>
+              </div>
+              <div class="blueprint-meta" id="out-meta"></div>
+            </div>
+            <div class="chart-wrap">
+              <h3>5-Year Financial Projection</h3>
+              <canvas id="projChart" height="120"></canvas>
+            </div>
+            <h3 style="margin-bottom:1rem;font-size:1rem">Top Risks & Mitigations</h3>
+            <div class="risks-grid" id="out-risks"></div>
+            <h3 style="margin-bottom:0.75rem;font-size:1rem">Phase 0 Priority Actions (First 90 Days)</h3>
+            <ul class="actions-list" id="out-actions"></ul>
+            <div class="pithonix-rec" id="out-pithonix">
+              <h3>Pithonix Intelligence Layer</h3>
+              <div class="pmod-row" id="out-pmods"></div>
+              <p id="out-pfit" style="font-size:0.88rem;color:var(--tmed)"></p>
+            </div>
+            <div class="insight-box">
+              <div class="insight-label">◉ HIDDEN INSIGHT — WHAT MOST CONSULTANTS MISS</div>
+              <p id="out-insight"></p>
+            </div>
+            <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+              <button class="btn-restart" onclick="restartSim()">← Build Another Blueprint</button>
+              <a href="#contact" class="btn-primary" style="font-size:0.88rem;padding:0.65rem 1.5rem">Speak to Pithonix GCC Team →</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PITHONIX EDGE -->
+<section id="edge">
+  <div class="wrap">
+    <div class="section-label">THE PITHONIX DIFFERENCE</div>
+    <h2 class="section-title">Not Just a Setup Firm.<br>Your <span class="gold">Intelligence Operating System.</span></h2>
+    <p class="section-sub">Every other GCC partner hands you a playbook and walks away. Pithonix runs the intelligence layer of your GCC — continuously, autonomously, with full data sovereignty.</p>
+    <div class="edge-grid">
+      <div class="edge-card holo reveal" style="--accent:var(--gold)">
+        <div class="edge-icon">⚡</div>
+        <h3>JEET ERP</h3>
+        <p>The Enterprise Nervous System — replaces 30–60 fragmented HR, Finance, and Operations tools with one unified AI platform. Built for GCC command and control.</p>
+        <span class="edge-tag">ENTERPRISE NERVOUS SYSTEM</span>
+      </div>
+      <div class="edge-card holo reveal" style="--accent:var(--blue)">
+        <div class="edge-icon">🧬</div>
+        <h3>HARI</h3>
+        <p>HR & People Intelligence vertical. Talent matching, retention prediction, attrition signals, compensation benchmarking — 25 AI agents running continuously across your GCC workforce.</p>
+        <span class="edge-tag" style="color:var(--blue);border-color:rgba(58,127,212,0.3)">25 AI AGENTS · ALWAYS ON</span>
+      </div>
+      <div class="edge-card holo reveal" style="--accent:var(--teal)">
+        <div class="edge-icon">🕸️</div>
+        <h3>GOT — Graph of Thought</h3>
+        <p>Proprietary multi-domain reasoning engine. Explores 8 GCC domains simultaneously — People, Finance, Compliance, Culture, Strategy — finding cross-domain signals no single agent could detect.</p>
+        <span class="edge-tag" style="color:var(--teal);border-color:rgba(40,168,136,0.3)">8-DOMAIN CAUSAL REASONING</span>
+      </div>
+      <div class="edge-card holo reveal" style="--accent:var(--purple)">
+        <div class="edge-icon">🔒</div>
+        <h3>BOT Model + K5AnonymityGuard</h3>
+        <p>Build, Operate, Transfer. Your GCC data never leaves your premises. Pithonix deploys on-site, operates intelligently, then transfers full ownership. DPIIT Recognised Startup.</p>
+        <span class="edge-tag" style="color:var(--purple);border-color:rgba(136,96,212,0.3)">ZERO DATA LEAVES PREMISES</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNEY PHASES -->
+<section id="journey">
+  <div class="wrap">
+    <div class="section-label">THE 5-PHASE PLAYBOOK</div>
+    <h2 class="section-title">From Zero to <span class="gold">Hub of Excellence</span></h2>
+    <p class="section-sub">A proven, phased approach built on data from 1,800+ India GCCs — with Pithonix intelligence activated at every stage.</p>
+    <div class="phase-tabs">
+      <div class="phase-tab active" onclick="showPhase(0)"><span class="phase-n">0</span>Foundation</div>
+      <div class="phase-tab" onclick="showPhase(1)"><span class="phase-n">1</span>Launch</div>
+      <div class="phase-tab" onclick="showPhase(2)"><span class="phase-n">2</span>Scale</div>
+      <div class="phase-tab" onclick="showPhase(3)"><span class="phase-n">3</span>Optimise</div>
+      <div class="phase-tab" onclick="showPhase(4)"><span class="phase-n">4</span>Hub of Excellence</div>
+    </div>
+    <div id="phase-panels"></div>
+  </div>
+</section>
+
+<!-- INDIA CITY INTELLIGENCE -->
+<section id="cities">
+  <div class="wrap">
+    <div class="section-label">INDIA CITY INTELLIGENCE</div>
+    <h2 class="section-title">Where to Build Your <span class="gold">GCC</span></h2>
+    <p class="section-sub">Real data across India's top GCC destinations. Hyderabad leads on the Pithonix GCC Readiness Index — optimal balance of talent, cost, and infrastructure.</p>
+    <div class="city-grid" id="city-grid"></div>
+  </div>
+</section>
+
+<!-- MARKET NUMBERS -->
+<section id="market">
+  <div class="wrap">
+    <div class="section-label">INDIA GCC MARKET INTELLIGENCE</div>
+    <h2 class="section-title" style="margin-bottom:0.5rem">The Numbers That <span class="gold">Matter</span></h2>
+    <p class="section-sub">Live market intelligence from India's GCC ecosystem — updated from NASSCOM, Zinnov, and GCC Framework Report 2025.</p>
+    <div class="market-grid" id="market-grid"></div>
+  </div>
+</section>
+
+<!-- PARTNER ECOSYSTEM -->
+<section id="partners">
+  <div class="wrap">
+    <div class="section-label">PARTNER ECOSYSTEM</div>
+    <h2 class="section-title">The Pithonix GCC <span class="gold">Partner Network</span></h2>
+    <p class="section-sub" style="margin-bottom:2rem">Best-in-class vendors across every GCC setup discipline. If a client chooses your city, your category, or your capability — they find you here first.</p>
+    <div class="cat-tabs" id="cat-tabs"></div>
+    <div class="vendor-grid" id="vendor-grid"></div>
+    <div class="partner-form-wrap reveal">
+      <h3>Become a Pithonix GCC Partner</h3>
+      <p>Join the network of trusted vendors powering India's fastest-growing GCC ecosystem. We match your services to active GCC prospects at exactly the right stage of their journey.</p>
+      <div class="partner-form" id="partner-form">
+        <div class="form-group"><label>Company Name</label><input type="text" id="pf-company" placeholder="Acme Solutions Pvt Ltd"></div>
+        <div class="form-group"><label>Category</label>
+          <select id="pf-category">
+            <option value="">Select category</option>
+            <option>Real Estate & Workspace</option>
+            <option>Legal & Compliance</option>
+            <option>Recruitment & Staffing</option>
+            <option>IT Infrastructure</option>
+            <option>Payroll & Benefits</option>
+            <option>Training & L&D</option>
+            <option>Banking & Finance</option>
+            <option>Technology Partner</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Contact Person</label><input type="text" id="pf-name" placeholder="Ravi Kumar"></div>
+        <div class="form-group"><label>Business Email</label><input type="email" id="pf-email" placeholder="ravi@acme.com"></div>
+        <div class="form-group"><label>Website (optional)</label><input type="url" id="pf-web" placeholder="https://"></div>
+        <div class="form-group"><label>Phone (optional)</label><input type="tel" id="pf-phone" placeholder="+91 98xxx xxxxx"></div>
+        <div class="form-group full"><label>Brief Description (max 200 chars)</label><textarea id="pf-desc" placeholder="What GCC services do you offer and what makes you unique?" maxlength="200"></textarea></div>
+        <div style="grid-column:1/-1;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap">
+          <button class="btn-partner" onclick="submitPartner()">Submit Partnership Application →</button>
+          <span style="font-size:0.8rem;color:var(--tdim)">Pithonix team reviews within 48 hours</span>
+        </div>
+      </div>
+      <div class="form-success" id="partner-success">
+        <div class="fs-icon">✓</div>
+        <h3 style="color:var(--teal);margin-bottom:0.5rem">Application Received</h3>
+        <p style="color:var(--tmed);font-size:0.9rem">Our GCC partnerships team will review your profile and reach out within 48 hours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label" style="text-align:center">READY TO BUILD YOUR GCC?</div>
+  <h2>Let's Start Your <span class="gold">GCC Journey.</span></h2>
+  <p>Pithonix handles end-to-end GCC setup — entity formation, talent acquisition, technology infrastructure, compliance, and the AI intelligence layer that runs it all.</p>
+  <div class="contact-ctas">
+    <a href="mailto:jeet@pithonix.ai?subject=GCC%20Setup%20Enquiry" class="btn-contact">Book a GCC Strategy Call →</a>
+    <a href="https://pithonix.ai" target="_blank" class="btn-contact-sec">Explore Pithonix.ai</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="fb-logo">GCC PLAYBOOK · PITHONIX.AI</div>
+        <p>India's first AI-native Global Capability Centre intelligence platform. Built by Pithonix — the Enterprise Nervous System for modern GCCs.</p>
+        <p style="margin-top:0.75rem;font-size:0.78rem;color:var(--tdim)">DPIIT Recognised Startup · Hyderabad, India</p>
+      </div>
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <a href="#simulator">GCC Simulator</a>
+        <a href="#journey">5-Phase Playbook</a>
+        <a href="#cities">India City Guide</a>
+        <a href="#market">Market Intelligence</a>
+        <a href="#partners">Partner Ecosystem</a>
+      </div>
+      <div class="footer-col">
+        <h4>Pithonix</h4>
+        <a href="https://pithonix.ai" target="_blank">Pithonix.ai</a>
+        <a href="mailto:jeet@pithonix.ai">Contact Us</a>
+        <a href="https://pithonix.ai" target="_blank">JEET ERP</a>
+        <a href="https://pithonix.ai" target="_blank">HARI</a>
+        <a href="https://got-engine.vercel.app" target="_blank">GOT Engine</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Pithonix AI Pvt Ltd · Hyderabad, India · All rights reserved</span>
+      <span style="color:var(--tdim)">Built by Jeet · Powered by JEET + HARI + GOT</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── CANVAS PARTICLE BACKGROUND ──
+(function(){
+  var c=document.getElementById('bg-canvas'),ctx=c.getContext('2d');
+  var W,H,pts=[];
+  function resize(){W=c.width=window.innerWidth;H=c.height=window.innerHeight}
+  resize();window.addEventListener('resize',resize);
+  function rnd(a,b){return a+Math.random()*(b-a)}
+  for(var i=0;i<90;i++) pts.push({x:rnd(0,W),y:rnd(0,H),vx:rnd(-0.15,0.15),vy:rnd(-0.12,0.12),r:rnd(0.8,2.2),o:rnd(0.2,0.7)});
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(var i=0;i<pts.length;i++){
+      var p=pts[i];
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0)p.x=W;if(p.x>W)p.x=0;
+      if(p.y<0)p.y=H;if(p.y>H)p.y=0;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(232,184,75,'+p.o+')';ctx.fill();
+      for(var j=i+1;j<pts.length;j++){
+        var q=pts[j],dx=p.x-q.x,dy=p.y-q.y,d=Math.sqrt(dx*dx+dy*dy);
+        if(d<130){
+          ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);
+          var alpha=(1-d/130)*0.12;
+          ctx.strokeStyle='rgba(58,127,212,'+alpha+')';ctx.lineWidth=0.6;ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ── NAV SCROLL ──
+window.addEventListener('scroll',function(){
+  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>40);
+});
+
+// ── TICKER ──
+(function(){
+  var items=['1,800+ GCCs Operating in India','$46B+ Annual GCC Revenue','2.16M Professionals Employed','36 New GCCs Every 2 Weeks','5.4M STEM Graduates Annually','55–70% Cost Arbitrage vs US & UK','$182B Total Economic Impact','$100B GCC Revenue Target by 2030','177,000+ Registered Startups','119 Unicorns in India','33% of Fortune 500 Have India GCCs','89% English-Speaking Tech Talent','Median GCC Employee Age: 28 Years','97% Maintained SLAs During COVID','13% CAGR in Engineering R&D'];
+  var html=items.map(function(t){return'<span class="ticker-item">'+t+'<span class="ticker-sep"> ◆ </span></span>';}).join('');
+  var el=document.getElementById('ticker');
+  el.innerHTML=html+html;
+})();
+
+// ── ANIMATED COUNTERS ──
+function animateCounters(){
+  document.querySelectorAll('.stat-n[data-count]').forEach(function(el){
+    var target=parseInt(el.dataset.count),pre=el.dataset.prefix||'',suf=el.dataset.suffix||'',start=0,dur=1800,step=dur/60;
+    var t=setInterval(function(){
+      start+=target/step;
+      if(start>=target){start=target;clearInterval(t);}
+      el.textContent=pre+Math.round(start).toLocaleString()+suf;
+    },16);
+  });
+}
+var countersDone=false;
+var heroObs=new IntersectionObserver(function(e){if(e[0].isIntersecting&&!countersDone){countersDone=true;animateCounters();}},{threshold:0.3});
+var heroEl=document.getElementById('hero');if(heroEl)heroObs.observe(heroEl);
+
+// ── REVEAL ON SCROLL ──
+var revObs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('in');});},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.reveal').forEach(function(el){revObs.observe(el);});
+
+// ── PHASE DATA ──
+var phases=[
+  {name:'Foundation',period:'Months 1–3',fte:'5–15 FTEs',desc:'Legal entity incorporation, location selection, leadership hiring, and technology stack setup. This phase defines the foundation everything else is built on.',
+   activities:['Incorporate Private Limited Company / LLP under Companies Act 2013','Register with STPI for 100% export duty exemption','Select primary city (Hyderabad recommended for most profiles)','Hire Country Head / GCC Director and 2–3 core leaders','Establish co-working presence or negotiate Grade-A office lease','Set up EPFO, ESIC, GST, PAN, TAN registrations','Define operating model: CoE structure, reporting lines to HQ'],
+   pithonix:'Pithonix runs a GCC Readiness Assessment across 6 dimensions. JEET ERP baseline setup. GOT activated for cross-domain feasibility analysis.'},
+  {name:'Launch',period:'Months 4–9',fte:'30–100 FTEs',desc:'Core team onboarding, first process migrations from HQ, and establishing the employer brand in-market. The speed of this phase determines your Year 1 ROI.',
+   activities:['Hire Tier-1 technical and functional leads across selected domains','Migrate first 3–5 HQ processes to GCC (start with well-documented ones)','Launch campus recruitment program at IITs, NITs, IIIT-H','Establish GPTW certification process (target end of Year 2)','Deploy JEET ERP for GCC workforce intelligence from Day 1','Create innovation charter — publish GCC vision internally and externally','Run first All-Hands with HQ leadership via video link'],
+   pithonix:'HARI activated — talent matching, onboarding coordination, early retention signals. GOT begins cross-domain reasoning on team composition and process migration risk.'},
+  {name:'Scale',period:'Months 10–24',fte:'100–300 FTEs',desc:'Expand all selected functions, establish the first Centres of Excellence, and deepen integration with HQ systems. This is where the GCC starts generating real enterprise value.',
+   activities:['Expand all selected functions to full team structure','Launch first CoE in priority domain (AI/ML, FinOps, or ER&D)','Integrate with HQ systems: ERP, HRIS, CRM, collaboration tools','Implement K5AnonymityGuard — full data governance and PII protection','Hit break-even milestone (typically Month 18–24)','Launch internal career path program — reduce attrition from ~25% to <15%','File first patents if ER&D function is active'],
+   pithonix:'GOT runs 8-domain cross-analysis weekly. HARI identifies retention risks before resignations happen. JEET ERP replaces fragmented tools with one unified platform.'},
+  {name:'Optimise',period:'Year 3–4',fte:'300–600 FTEs',desc:'Automate, benchmark, and deepen capability. The GCC is now a proven delivery partner — focus shifts to increasing strategic value and reducing cost per output.',
+   activities:['Deploy AI automation across Finance, HR, and IT functions','Run annual compensation benchmarking (Radford/Payscale data)','Achieve 40+ learning hours per employee per year','Establish diversity targets: 35%+ women in tech by Year 3','Benchmark GCC performance against NASSCOM/Zinnov industry data','Launch Leadership Development Program for GCC → HQ promotions','Begin Tier-2 city satellite office evaluation for cost advantage'],
+   pithonix:'JEET ERP running fully autonomous across all 6 functions. GOT reasoning integrated into HQ strategic planning. HARI runs succession planning and leadership pipeline assessment.'},
+  {name:'Hub of Excellence',period:'Year 5+',fte:'600–1,000+ FTEs',desc:'The GCC owns global processes, creates IP, and drives enterprise-wide innovation. India stops being a delivery centre — it becomes a global decision-making hub.',
+   activities:['Transfer global process ownership for 2+ functions to GCC leadership','Launch open innovation partnerships with India startup ecosystem','Run joint hackathons with IITs and IIIT-H for deep-tech hiring','GCC leaders appear on HQ board-level talent succession plans','IP portfolio: 10+ patents filed from GCC, 3+ commercialised','GCC hosts global leadership offsites — not just "India team" events','Pithonix BOT: full intelligence platform transferred to client ownership'],
+   pithonix:'Full Pithonix BOT handover — JEET, HARI, and GOT transferred to client infrastructure. Complete data sovereignty. Pithonix transitions to strategic advisory role.'}
+];
+
+function buildPhases(){
+  var el=document.getElementById('phase-panels');
+  el.innerHTML=phases.map(function(p,i){
+    return '<div class="phase-content'+(i===0?' active':'')+'" id="pc'+i+'">'+
+    '<div class="phase-left">'+
+    '<h3>Phase '+i+': '+p.name+'</h3>'+
+    '<div class="phase-period mono">'+p.period+'</div>'+
+    '<p>'+p.desc+'</p>'+
+    '<div class="phase-fte"><div><div class="fte-num">'+p.fte+'</div><div class="fte-lbl">Typical Headcount</div></div></div>'+
+    '<div class="pithonix-role"><h4>PITHONIX ROLE</h4><p>'+p.pithonix+'</p></div>'+
+    '</div>'+
+    '<div class="phase-right">'+
+    '<p style="color:var(--tdim);font-size:0.78rem;letter-spacing:1px;margin-bottom:0.75rem;text-transform:uppercase">Key Activities</p>'+
+    '<ul class="activity-list">'+p.activities.map(function(a){return'<li>'+a+'</li>';}).join('')+'</ul>'+
+    '</div>'+
+    '</div>';
+  }).join('');
+}
+buildPhases();
+
+function showPhase(i){
+  document.querySelectorAll('.phase-tab').forEach(function(t,j){t.classList.toggle('active',j===i);});
+  document.querySelectorAll('.phase-content').forEach(function(c){c.classList.remove('active');});
+  var pc=document.getElementById('pc'+i);if(pc)pc.classList.add('active');
+}
+
+// ── CITY DATA ──
+var cities=[
+  {name:'Hyderabad',state:'Telangana',primary:true,stats:[['GCC Share','12–13%'],['Tech Talent','900K+'],['Avg Eng Salary','₹12–22L/yr'],['GCC Count','250+'],['Grade-A Office','₹55–80/sqft']],tags:['IT/ITES','BFSI','Pharma','Manufacturing']},
+  {name:'Bengaluru',state:'Karnataka',stats:[['GCC Share','34–35%'],['Tech Talent','1.5M+'],['Avg Eng Salary','₹15–28L/yr'],['GCC Count','600+'],['Grade-A Office','₹75–120/sqft']],tags:['Deep Tech','AI/ML','SaaS','ER&D']},
+  {name:'Pune',state:'Maharashtra',stats:[['GCC Share','9–10%'],['Tech Talent','600K+'],['Avg Eng Salary','₹12–20L/yr'],['GCC Count','180+'],['Grade-A Office','₹60–90/sqft']],tags:['Automotive','IT','Engineering','BFSI']},
+  {name:'Chennai',state:'Tamil Nadu',stats:[['GCC Share','9–10%'],['Tech Talent','500K+'],['Avg Eng Salary','₹11–19L/yr'],['GCC Count','175+'],['Grade-A Office','₹55–80/sqft']],tags:['Manufacturing','IT','Retail','CPG']},
+  {name:'NCR / Delhi',state:'Delhi NCR',stats:[['GCC Share','15–16%'],['Tech Talent','700K+'],['Avg Eng Salary','₹13–22L/yr'],['GCC Count','290+'],['Grade-A Office','₹65–100/sqft']],tags:['BFSI','Telecom','Government','CPG']},
+  {name:'Tier-2 Cities',state:'Emerging Hubs',stats:[['Cost Saving','~50% vs Tier-1'],['Retention','20%+ higher'],['New GCC Growth','1.4x FY19–24'],['STEM Talent','60% from non-metros']],tags:['Ahmedabad','Kochi','Jaipur','Indore','Chandigarh']}
+];
+
+(function(){
+  var g=document.getElementById('city-grid');
+  g.innerHTML=cities.map(function(c){
+    return '<div class="city-block'+(c.primary?' primary':'')+' reveal">'+
+    '<h3>'+c.name+'</h3><div class="city-state">'+c.state+'</div>'+
+    c.stats.map(function(s){return'<div class="city-stat"><span class="cs-k">'+s[0]+'</span><span class="cs-v">'+s[1]+'</span></div>';}).join('')+
+    '<div class="city-tags">'+c.tags.map(function(t){return'<span class="city-tag-pill">'+t+'</span>';}).join('')+'</div>'+
+    '</div>';
+  }).join('');
+  document.querySelectorAll('.reveal').forEach(function(el){revObs.observe(el);});
+})();
+
+// ── MARKET NUMBERS ──
+var marketData=[
+  {n:'1,800+',l:'GCCs Operating in India',s:'FY 2025'},
+  {n:'2.16M',l:'Professionals Employed',s:'Growing at 7% CAGR'},
+  {n:'$46B+',l:'Annual GCC Revenue',s:'40% growth 2023–2025'},
+  {n:'$182B',l:'Total Economic Impact',s:'Direct + Indirect + Induced'},
+  {n:'5.4M',l:'STEM Graduates Annually',s:'Largest pipeline globally'},
+  {n:'55–70%',l:'Cost Arbitrage vs US/UK',s:'Salary + operational'},
+  {n:'13%',l:'ER&D CAGR (3-Year)',s:'Fastest growing segment'},
+  {n:'$100B',l:'2030 Revenue Target',s:'NASSCOM projection'},
+];
+(function(){
+  var g=document.getElementById('market-grid');
+  g.innerHTML=marketData.map(function(m){
+    return'<div class="market-card reveal"><span class="market-num">'+m.n+'</span><div class="market-lbl">'+m.l+'</div><div class="market-sub">'+m.s+'</div></div>';
+  }).join('');
+  document.querySelectorAll('.reveal').forEach(function(el){revObs.observe(el);});
+})();
+
+// ── PARTNER ECOSYSTEM ──
+var cats=['All','Real Estate & Workspace','Legal & Compliance','Recruitment & Staffing','IT Infrastructure','Payroll & Benefits','Training & L&D','Banking & Finance','Technology Partner'];
+(function(){
+  var ct=document.getElementById('cat-tabs');
+  ct.innerHTML=cats.map(function(c,i){return'<div class="cat-tab'+(i===0?' active':'')+'" onclick="filterCat(this,\''+c+'\')">'+c+'</div>';}).join('');
+
+  var g=document.getElementById('vendor-grid');
+  var empties=cats.slice(1).map(function(cat){
+    return '<div class="vendor-card vendor-empty show" data-cat="'+cat+'" onclick="document.getElementById(\'partners\').querySelector(\'.partner-form-wrap\').scrollIntoView({behavior:\'smooth\'})">'+
+    '<div class="ve-icon">+</div><div class="ve-txt">'+cat+'</div>'+
+    '<div class="ve-cta">Apply to become a partner →</div></div>';
+  }).join('');
+  g.innerHTML=empties;
+})();
+
+function filterCat(tab,cat){
+  document.querySelectorAll('.cat-tab').forEach(function(t){t.classList.remove('active');});
+  tab.classList.add('active');
+  document.querySelectorAll('.vendor-card').forEach(function(c){
+    c.classList.toggle('show',cat==='All'||c.dataset.cat===cat);
+  });
+}
+
+function submitPartner(){
+  var company=document.getElementById('pf-company').value.trim();
+  var email=document.getElementById('pf-email').value.trim();
+  var name=document.getElementById('pf-name').value.trim();
+  var cat=document.getElementById('pf-category').value;
+  if(!company||!email||!name||!cat){alert('Please fill in all required fields.');return;}
+  document.getElementById('partner-form').style.display='none';
+  document.getElementById('partner-success').style.display='block';
+}
+
+// ── SIMULATOR LOGIC ──
+var simData={};
+var projChart=null;
+
+function toggleChip(el){
+  el.classList.toggle('checked',el.querySelector('input').checked===false);
+  el.querySelector('input').checked=!el.querySelector('input').checked;
+}
+
+function selectPriority(el,val){
+  document.querySelectorAll('.priority-card').forEach(function(c){c.classList.remove('selected');});
+  el.classList.add('selected');
+  simData.priority=val;
+}
+
+function goStep(n){
+  var tabs=document.querySelectorAll('.sim-step-tab');
+  var panes=document.querySelectorAll('.sim-pane');
+  tabs.forEach(function(t,i){
+    t.classList.remove('active');
+    if(i+1<n)t.classList.add('done');
+    else t.classList.remove('done');
+    if(i+1===n)t.classList.add('active');
+  });
+  panes.forEach(function(p,i){p.classList.toggle('active',i+1===n);});
+}
+
+function getSelectedFunctions(){
+  var checked=[];
+  document.querySelectorAll('.func-chip input:checked').forEach(function(i){checked.push(i.value);});
+  return checked;
+}
+
+async function generateBlueprint(){
+  simData.industry=document.getElementById('f-industry').value||'Technology';
+  simData.country=document.getElementById('f-country').value||'United States';
+  simData.revenue=document.getElementById('f-revenue').value||'$100M–$500M';
+  simData.maturity=document.getElementById('f-maturity').value||'No GCC — evaluating feasibility';
+  simData.functions=getSelectedFunctions();
+  if(simData.functions.length===0)simData.functions=['Technology Hub'];
+  simData.fte=document.getElementById('f-fte').value||'30–80 FTEs';
+  simData.timeline=document.getElementById('f-timeline').value||'Balanced (18–24 months)';
+  if(!simData.priority)simData.priority='Cost Leadership';
+
+  goStep(4);
+  document.getElementById('sim-loading').style.display='block';
+  document.getElementById('sim-output').style.display='none';
+
+  var prompt='You are an elite GCC strategy consultant at Pithonix.ai with deep expertise in India GCC setup. Generate a precise, data-driven GCC blueprint for the following company.\n\n'+
+'COMPANY PROFILE:\nIndustry: '+simData.industry+'\nHQ Country: '+simData.country+'\nAnnual Revenue: '+simData.revenue+'\nGCC Maturity: '+simData.maturity+'\nGCC Functions: '+simData.functions.join(', ')+'\nYear 1 FTE Target: '+simData.fte+'\nSetup Timeline: '+simData.timeline+'\nTop Priority: '+simData.priority+'\n\n'+
+'Use real India GCC data. Be specific to this company profile. Return ONLY valid JSON starting with { and ending with }:\n'+
+'{"city_primary":"city name","city_primary_reason":"2 specific sentences based on company profile and priority","city_alt":"alternative city","city_alt_reason":"1 sentence","headcount":[y1,y2,y3,y4,y5],"savings_usd":[y1,y2,y3,y4,y5],"cost_usd":[y1,y2,y3,y4,y5],"break_even_months":number,"total_5yr_savings_usd":number,"risks":[{"risk":"name","probability":"High/Medium/Low","mitigation":"specific action"},{"risk":"...","probability":"...","mitigation":"..."},{"risk":"...","probability":"...","mitigation":"..."}],"phase0_actions":["action1","action2","action3","action4","action5"],"pithonix_modules":["JEET ERP","HARI","GOT"],"pithonix_fit":"2 sentences on why Pithonix specifically fits this company\'s GCC","hidden_insight":"1 non-obvious insight most consultants miss for this company profile"}';
+
+  try{
+    var resp=await fetch('/api/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({_model:'gemini-2.5-pro',contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:0.7,maxOutputTokens:2000}})});
+    var data=await resp.json();
+    var raw=data.candidates&&data.candidates[0]&&data.candidates[0].content&&data.candidates[0].content.parts[0].text||'{}';
+    var m=raw.match(/\{[\s\S]*\}/);
+    var bp=m?JSON.parse(m[0]):{};
+    renderBlueprint(bp);
+  }catch(e){
+    console.error(e);
+    renderBlueprint({city_primary:'Hyderabad',city_primary_reason:'Hyderabad offers the optimal balance of tech talent depth, competitive costs, and GCC maturity for your industry and revenue profile. With 900K+ tech professionals and strong government support, it provides the fastest path to operational GCC.',city_alt:'Bengaluru',city_alt_reason:'Bengaluru suits if deep-tech talent density is the primary criteria.',headcount:[50,150,300,500,750],savings_usd:[2000000,7000000,15000000,24000000,35000000],cost_usd:[2500000,5000000,8000000,11000000,14000000],break_even_months:20,total_5yr_savings_usd:83000000,risks:[{risk:'Talent Attrition',probability:'High',mitigation:'Strong EVP, ESOP, clear growth paths, GPTW certification target in Year 2'},{risk:'Process Migration Risk',probability:'Medium',mitigation:'Start with well-documented processes only; deploy JEET ERP for migration tracking'},{risk:'INR/USD Volatility',probability:'Medium',mitigation:'Annual FX review clauses in HQ contracts, quarterly benchmarking'}],phase0_actions:['Incorporate Private Limited Company — engage specialist CA firm within Month 1','Register with STPI for 100% export duty exemption (6–8 week process)','Hire Country Head / GCC Director — use Pithonix HARI for candidate matching','Negotiate Grade-A co-working space in HITEC City with 6-month flexibility clause','Stand up JEET ERP baseline for GCC workforce tracking from Day 1'],pithonix_modules:['JEET ERP','HARI','GOT'],pithonix_fit:'Pithonix HARI activates 25 AI agents from Day 1, giving your GCC HR intelligence that most centers only achieve after 3 years. GOT reasoning across 8 domains identifies cross-domain risks before they surface — protecting your Year 1 investment.',hidden_insight:'Most GCCs under-invest in employer branding in Month 1–3, then overpay on recruitment fees in Month 4–9 to fix the talent pipeline. Activate your LinkedIn employer brand and campus presence before you open, not after.'});
+  }
+}
+
+function fmt(n){if(!n)return'–';if(n>=1000000)return'$'+(n/1000000).toFixed(1)+'M';return'$'+n.toLocaleString();}
+
+function renderBlueprint(bp){
+  document.getElementById('sim-loading').style.display='none';
+  document.getElementById('sim-output').style.display='block';
+
+  var cityFlags={'Hyderabad':'🏙️','Bengaluru':'🌳','Pune':'🌆','Chennai':'🌊','Mumbai':'🌇','NCR':'🏛️','Delhi':'🏛️'};
+  document.getElementById('out-flag').textContent=cityFlags[bp.city_primary]||'🏙️';
+  document.getElementById('out-city').textContent=bp.city_primary||'Hyderabad';
+  document.getElementById('out-city-reason').textContent=bp.city_primary_reason||'';
+
+  var hc=bp.headcount||[50,150,300,500,750];
+  var sav=bp.savings_usd||[2e6,7e6,15e6,24e6,35e6];
+  var cost=bp.cost_usd||[2.5e6,5e6,8e6,11e6,14e6];
+  var meta=document.getElementById('out-meta');
+  meta.innerHTML=[
+    ['Alternative City',bp.city_alt||'Bengaluru'],
+    ['Alternative Reason',bp.city_alt_reason||'Deep-tech talent density'],
+    ['Break-Even',bp.break_even_months?'Month '+bp.break_even_months:'Month 20'],
+    ['5-Year Net Savings',fmt(bp.total_5yr_savings_usd)],
+    ['Year 5 Headcount',(hc[4]||750)+' FTEs'],
+  ].map(function(r){return'<div class="bm-row"><span class="bm-key">'+r[0]+'</span><span class="bm-val '+(r[0].includes('Savings')?'gold':r[0].includes('Break')?'green':'')+'">'+(typeof r[1]==='string'?r[1]:r[1])+'</span></div>';}).join('');
+
+  // Chart
+  if(projChart)projChart.destroy();
+  var ctx2=document.getElementById('projChart').getContext('2d');
+  projChart=new Chart(ctx2,{type:'bar',data:{labels:['Year 1','Year 2','Year 3','Year 4','Year 5'],datasets:[{type:'bar',label:'Annual Cost (USD)',data:cost,backgroundColor:'rgba(58,127,212,0.3)',borderColor:'rgba(58,127,212,0.6)',borderWidth:1},{type:'bar',label:'Annual Savings (USD)',data:sav,backgroundColor:'rgba(40,168,136,0.3)',borderColor:'rgba(40,168,136,0.6)',borderWidth:1},{type:'line',label:'Cumulative Savings (USD)',data:(function(){var cum=0;return sav.map(function(v){cum+=v;return cum;});})(),borderColor:'var(--gold)',borderWidth:2,pointBackgroundColor:'var(--gold)',tension:0.3,yAxisID:'y2'}]},options:{responsive:true,plugins:{legend:{labels:{color:'#9090c0',font:{size:11}}}},scales:{y:{ticks:{color:'#606090',callback:function(v){return'$'+(v/1e6).toFixed(0)+'M';}},grid:{color:'rgba(255,255,255,0.04)'}},y2:{position:'right',ticks:{color:'rgba(232,184,75,0.7)',callback:function(v){return'$'+(v/1e6).toFixed(0)+'M';}},grid:{display:false}}}}});
+
+  // Risks
+  var risks=bp.risks||[];
+  document.getElementById('out-risks').innerHTML=risks.map(function(r){
+    var cls=r.probability==='High'?'risk-high':r.probability==='Low'?'risk-low':'risk-med';
+    return'<div class="risk-card"><div class="risk-top"><span class="risk-badge '+cls+'">'+r.probability+'</span><span class="risk-name">'+r.risk+'</span></div><p class="risk-mit">Mitigation: '+r.mitigation+'</p></div>';
+  }).join('');
+
+  // Actions
+  var actions=bp.phase0_actions||[];
+  document.getElementById('out-actions').innerHTML=actions.map(function(a,i){
+    return'<li><span class="action-num">0'+(i+1)+'</span>'+a+'</li>';
+  }).join('');
+
+  // Pithonix modules
+  var mods=bp.pithonix_modules||['JEET ERP','HARI','GOT'];
+  document.getElementById('out-pmods').innerHTML=mods.map(function(m){return'<span class="pmod">'+m+'</span>';}).join('');
+  document.getElementById('out-pfit').textContent=bp.pithonix_fit||'';
+
+  // Insight
+  document.getElementById('out-insight').textContent=bp.hidden_insight||'';
+}
+
+// ── GOT ADVISOR ──
+var gotOpen=false;
+function toggleGOT(){
+  gotOpen=!gotOpen;
+  document.getElementById('got-overlay').style.display=gotOpen?'block':'none';
+  document.getElementById('got-panel').style.display=gotOpen?'block':'none';
+}
+function selectGOTScenario(el,q){
+  document.querySelectorAll('.got-chip').forEach(function(c){c.classList.remove('active');});
+  el.classList.add('active');
+  document.getElementById('got-q').value=q;
+  runGOTAdvisor();
+}
+async function runGOTAdvisor(){
+  var q=document.getElementById('got-q').value.trim();
+  if(!q)return;
+  document.getElementById('got-loading').style.display='block';
+  document.getElementById('got-result').style.display='none';
+  var sys='You are GOT — Graph of Thought — the reasoning engine of Pithonix\'s GCC Intelligence Platform. You reason across 8 GCC domains simultaneously: People & Talent, Financial Impact, Operational Risk, Compliance & Governance, Culture & Change, Technology Enablement, Market Intelligence, Strategic Alignment.\n\nRULES: Give a direct, specific, data-driven answer using real India GCC market data. No metaphors. Short, clear paragraphs. Reference actual numbers when relevant. Always answer from a multi-domain perspective — show how different forces interact.\n\nWrite exactly 3 paragraphs:\n1. Direct answer with the most important finding, including relevant data\n2. The cross-domain interaction — how 2-3 domains interact to create the real dynamic\n3. The one thing most advisors miss — the hidden signal or contrarian insight for this question\n\nReturn plain text only. No headings. No bullet points.';
+  var prompt=sys+'\n\nQUESTION: '+q;
+  try{
+    var r=await fetch('/api/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({_model:'gemini-2.5-pro',contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:0.7,maxOutputTokens:1200}})});
+    var d=await r.json();
+    var txt=(d.candidates&&d.candidates[0]&&d.candidates[0].content&&d.candidates[0].content.parts[0].text)||'GOT could not generate a response. Please try again.';
+    var paras=txt.split(/\n\n+/).filter(function(p){return p.trim().length>0;}).slice(0,3);
+    document.getElementById('got-answer').innerHTML=paras.map(function(p){return'<p>'+p.trim()+'</p>';}).join('');
+  }catch(e){
+    document.getElementById('got-answer').innerHTML='<p style="color:var(--tdim)">Unable to connect to GOT. Please try again.</p>';
+  }
+  document.getElementById('got-loading').style.display='none';
+  document.getElementById('got-result').style.display='block';
+}
+function clearGOT(){
+  document.getElementById('got-q').value='';
+  document.getElementById('got-result').style.display='none';
+  document.getElementById('got-loading').style.display='none';
+  document.querySelectorAll('.got-chip').forEach(function(c){c.classList.remove('active');});
+}
+
+function restartSim(){
+  simData={};
+  document.querySelectorAll('.func-chip').forEach(function(c){c.classList.remove('checked');c.querySelector('input').checked=false;});
+  document.querySelectorAll('.priority-card').forEach(function(c){c.classList.remove('selected');});
+  document.querySelectorAll('.sim-step-tab').forEach(function(t){t.classList.remove('active','done');});
+  document.querySelector('.sim-step-tab').classList.add('active');
+  goStep(1);
+}
+</script>
+</body>
+</html>
