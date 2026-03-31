@@ -1,7 +1,7 @@
 {
   "version": 2,
   "functions": {
-    "api/gemini.js": { "maxDuration": 30 },
+    "api/gemini.js": { "maxDuration": 60 },
     "api/lead.js": { "maxDuration": 60 }
   },
   "headers": [
