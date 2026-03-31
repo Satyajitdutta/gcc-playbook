@@ -297,6 +297,45 @@ section{position:relative;z-index:2;padding:6rem 0}
 .insight-box p{font-size:0.95rem;color:var(--txt)}
 .btn-restart{background:transparent;color:var(--tdim);border:1px solid var(--bd);padding:0.6rem 1.2rem;border-radius:8px;cursor:pointer;font-size:0.85rem;font-family:'DM Sans',sans-serif;margin-top:1.5rem;transition:border-color 0.2s}
 .btn-restart:hover{border-color:var(--gold);color:var(--gold)}
+/* Budget Section */
+.budget-section{margin-bottom:2rem}
+.budget-total{background:linear-gradient(135deg,rgba(232,184,75,0.12),rgba(232,184,75,0.04));border:1px solid rgba(232,184,75,0.35);border-radius:12px;padding:1.4rem 1.8rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap;margin-bottom:1rem}
+.budget-total-label{font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:2px;color:var(--tdim);text-transform:uppercase}
+.budget-total-num{font-size:2rem;font-weight:800;color:var(--gold)}
+.budget-total-note{font-size:0.82rem;color:var(--tmed)}
+.budget-breakdown{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0.75rem}
+.budget-row{background:rgba(255,255,255,0.02);border:1px solid var(--bd);border-radius:8px;padding:0.9rem 1.1rem;display:flex;justify-content:space-between;align-items:flex-start;gap:0.5rem}
+.budget-row-left{}
+.budget-cat{font-size:0.88rem;font-weight:600;margin-bottom:0.2rem}
+.budget-note{font-size:0.75rem;color:var(--tdim)}
+.budget-row-right{text-align:right;white-space:nowrap}
+.budget-amt{font-size:0.95rem;font-weight:700;color:var(--gold)}
+.budget-timeline{font-size:0.72rem;color:var(--tmed);font-family:'JetBrains Mono',monospace}
+/* Yearly Budget */
+.yearly-section{margin-bottom:2rem}
+.yearly-section h3{font-size:1rem;margin-bottom:0.75rem}
+.yearly-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0.75rem}
+.yearly-card{background:rgba(58,127,212,0.06);border:1px solid rgba(58,127,212,0.2);border-radius:10px;padding:1.1rem}
+.yearly-year{font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:1px;color:rgba(58,127,212,0.8);margin-bottom:0.3rem}
+.yearly-amt{font-size:1.2rem;font-weight:700;color:var(--txt);margin-bottom:0.3rem}
+.yearly-focus{font-size:0.78rem;color:var(--tmed)}
+/* Govt Incentives */
+.incentives-section{margin-bottom:2rem}
+.incentives-section h3{font-size:1rem;margin-bottom:0.75rem}
+.incentive-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0.75rem}
+.incentive-card{background:rgba(40,168,136,0.06);border:1px solid rgba(40,168,136,0.2);border-radius:10px;padding:1.1rem}
+.incentive-scheme{font-size:0.88rem;font-weight:700;color:var(--teal);margin-bottom:0.3rem}
+.incentive-agency{font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:1px;color:var(--tdim);margin-bottom:0.4rem}
+.incentive-benefit{font-size:0.82rem;color:var(--txt);margin-bottom:0.25rem}
+.incentive-elig{font-size:0.75rem;color:var(--tmed)}
+/* Banking Support */
+.banking-section{margin-bottom:2rem}
+.banking-section h3{font-size:1rem;margin-bottom:0.75rem}
+.banking-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0.75rem}
+.banking-card{background:rgba(136,96,212,0.06);border:1px solid rgba(136,96,212,0.2);border-radius:10px;padding:1.1rem}
+.banking-name{font-size:0.88rem;font-weight:700;color:#b090e4;margin-bottom:0.3rem}
+.banking-offering{font-size:0.82rem;color:var(--txt);margin-bottom:0.25rem}
+.banking-benefit{font-size:0.75rem;color:var(--tmed)}
 
 /* ── PITHONIX EDGE ── */
 #edge{background:var(--s1)}
@@ -517,9 +556,9 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-badge mono">PITHONIX · GCC INTELLIGENCE PLATFORM · INDIA · 2025</div>
-  <h1>Your GCC. Built Right.<br><span>First Time.</span></h1>
-  <p class="hero-sub">India's first AI-native GCC intelligence platform. From business case to full operations — powered by JEET, HARI, and Graph of Thought reasoning across every domain.</p>
+  <div class="hero-badge mono">PITHONIX · INDIA'S GCC SETUP PARTNER · END TO END · 2026</div>
+  <h1>We Build Your GCC.<br><span>End to End.</span></h1>
+  <p class="hero-sub">Pithonix takes the full GCC setup contract — entity formation, talent, infrastructure, compliance, and go-live. Your GCC runs on our JEET + HARI + GOT intelligence stack from Day 1. We hand over a fully operational centre.</p>
   <div class="hero-ctas">
     <a href="#simulator" class="btn-primary">Launch GCC Simulator →</a>
     <a href="#journey" class="btn-secondary">Explore the Playbook</a>
@@ -557,9 +596,9 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
 <!-- SIMULATOR -->
 <section id="simulator">
   <div class="wrap">
-    <div class="section-label">AI-POWERED SIMULATOR</div>
-    <h2 class="section-title">GCC Blueprint <span class="gold">Simulator</span></h2>
-    <p class="section-sub">Enter your company parameters. Receive a custom, data-driven GCC blueprint generated by Gemini AI — city recommendation, cost projections, risk map, and 5-year roadmap.</p>
+    <div class="section-label">GCC SETUP PROJECT ESTIMATOR</div>
+    <h2 class="section-title">GCC Project <span class="gold">Blueprint</span></h2>
+    <p class="section-sub">Tell us about your company. Get a full GCC Setup Project Plan — total setup budget, year-wise investment, government incentives, banking support, and 90-day launch actions. Pithonix delivers it.</p>
     <div class="sim-wrap reveal">
       <div class="sim-header">
         <h2>Build Your Custom GCC Blueprint</h2>
@@ -708,8 +747,8 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
         <div class="sim-pane" id="pane4">
           <div class="sim-loading" id="sim-loading">
             <div class="spin-big"></div>
-            <p style="color:var(--tmed);font-size:0.95rem">Gemini AI is building your custom GCC blueprint…</p>
-            <p style="color:var(--tdim);font-size:0.82rem;margin-top:0.4rem">Analysing India GCC data · Mapping talent pools · Calculating 5-year projections</p>
+            <p style="color:var(--tmed);font-size:0.95rem">Building your GCC Setup Project Blueprint…</p>
+            <p style="color:var(--tdim);font-size:0.82rem;margin-top:0.4rem">Calculating setup budget · Mapping govt incentives · Projecting year-wise investment plan</p>
           </div>
           <div class="sim-output" id="sim-output">
             <div class="blueprint-header">
@@ -721,16 +760,23 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
               </div>
               <div class="blueprint-meta" id="out-meta"></div>
             </div>
+            <div class="budget-section" id="out-budget-wrap">
+              <div class="budget-total" id="out-budget-total"></div>
+              <div class="budget-breakdown" id="out-budget-breakdown"></div>
+            </div>
+            <div class="yearly-section" id="out-yearly-wrap"></div>
             <div class="chart-wrap">
-              <h3>5-Year Financial Projection</h3>
+              <h3>5-Year Financial Projection (Operating Cost vs Savings)</h3>
               <canvas id="projChart" height="120"></canvas>
             </div>
+            <div class="incentives-section" id="out-incentives-wrap"></div>
+            <div class="banking-section" id="out-banking-wrap"></div>
             <h3 style="margin-bottom:1rem;font-size:1rem">Top Risks & Mitigations</h3>
             <div class="risks-grid" id="out-risks"></div>
             <h3 style="margin-bottom:0.75rem;font-size:1rem">Phase 0 Priority Actions (First 90 Days)</h3>
             <ul class="actions-list" id="out-actions"></ul>
             <div class="pithonix-rec" id="out-pithonix">
-              <h3>Pithonix Intelligence Layer</h3>
+              <h3>Pithonix Delivery Role — What We Do On This Project</h3>
               <div class="pmod-row" id="out-pmods"></div>
               <p id="out-pfit" style="font-size:0.88rem;color:var(--tmed)"></p>
             </div>
@@ -753,33 +799,33 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
 <!-- PITHONIX EDGE -->
 <section id="edge">
   <div class="wrap">
-    <div class="section-label">THE PITHONIX DIFFERENCE</div>
-    <h2 class="section-title">Not Just a Setup Firm.<br>Your <span class="gold">Intelligence Operating System.</span></h2>
-    <p class="section-sub">Every other GCC partner hands you a playbook and walks away. Pithonix runs the intelligence layer of your GCC — continuously, autonomously, with full data sovereignty.</p>
+    <div class="section-label">THE PITHONIX MODEL</div>
+    <h2 class="section-title">We Take the Contract.<br>We Deliver the <span class="gold">GCC.</span></h2>
+    <p class="section-sub">Pithonix is not a consultant who hands you a report. We are the setup contractor — we manage every workstream from entity incorporation to go-live. Our tools run the GCC during and after setup.</p>
     <div class="edge-grid">
       <div class="edge-card holo reveal" style="--accent:var(--gold)">
         <div class="edge-icon">⚡</div>
-        <h3>JEET ERP</h3>
-        <p>The Enterprise Nervous System — replaces 30–60 fragmented HR, Finance, and Operations tools with one unified AI platform. Built for GCC command and control.</p>
-        <span class="edge-tag">ENTERPRISE NERVOUS SYSTEM</span>
+        <h3>JEET ERP — GCC Operating Backbone</h3>
+        <p>Deployed on Day 1 of setup. Replaces 30–60 fragmented HR, Finance, and Operations tools with one AI-native platform. Your GCC runs on JEET from the first hire, not after 2 years of tool sprawl.</p>
+        <span class="edge-tag">DEPLOYED DURING SETUP</span>
       </div>
       <div class="edge-card holo reveal" style="--accent:var(--blue)">
         <div class="edge-icon">🧬</div>
-        <h3>HARI</h3>
-        <p>HR & People Intelligence vertical. Talent matching, retention prediction, attrition signals, compensation benchmarking — 25 AI agents running continuously across your GCC workforce.</p>
-        <span class="edge-tag" style="color:var(--blue);border-color:rgba(58,127,212,0.3)">25 AI AGENTS · ALWAYS ON</span>
+        <h3>HARI — Talent Acquisition Engine</h3>
+        <p>Pithonix uses HARI to execute your entire GCC talent acquisition — sourcing, screening, matching, onboarding. 25 AI agents working your talent pipeline from Month 1, eliminating expensive recruitment agency dependency.</p>
+        <span class="edge-tag" style="color:var(--blue);border-color:rgba(58,127,212,0.3)">YOUR TALENT ARM · 25 AI AGENTS</span>
       </div>
       <div class="edge-card holo reveal" style="--accent:var(--teal)">
         <div class="edge-icon">🕸️</div>
-        <h3>GOT — Graph of Thought</h3>
-        <p>Proprietary multi-domain reasoning engine. Explores 8 GCC domains simultaneously — People, Finance, Compliance, Culture, Strategy — finding cross-domain signals no single agent could detect.</p>
-        <span class="edge-tag" style="color:var(--teal);border-color:rgba(40,168,136,0.3)">8-DOMAIN CAUSAL REASONING</span>
+        <h3>GOT — Strategic Risk Intelligence</h3>
+        <p>Graph of Thought runs 8-domain reasoning across every setup decision — city, talent strategy, compliance, vendor selection, org design. Flags risks before they become costs. Used by Pithonix PMs on every GCC project.</p>
+        <span class="edge-tag" style="color:var(--teal);border-color:rgba(40,168,136,0.3)">PROJECT INTELLIGENCE · 8 DOMAINS</span>
       </div>
       <div class="edge-card holo reveal" style="--accent:var(--purple)">
         <div class="edge-icon">🔒</div>
-        <h3>BOT Model + K5AnonymityGuard</h3>
-        <p>Build, Operate, Transfer. Your GCC data never leaves your premises. Pithonix deploys on-site, operates intelligently, then transfers full ownership. DPIIT Recognised Startup.</p>
-        <span class="edge-tag" style="color:var(--purple);border-color:rgba(136,96,212,0.3)">ZERO DATA LEAVES PREMISES</span>
+        <h3>BOT — Build, Operate, Transfer</h3>
+        <p>Pithonix builds your GCC, operates it through the stabilisation phase, and transfers full ownership to your leadership team. K5AnonymityGuard ensures your data never leaves your premises at any stage.</p>
+        <span class="edge-tag" style="color:var(--purple);border-color:rgba(136,96,212,0.3)">FULL HANDOVER · ZERO DATA RISK</span>
       </div>
     </div>
   </div>
@@ -825,14 +871,14 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
 <!-- PARTNER ECOSYSTEM -->
 <section id="partners">
   <div class="wrap">
-    <div class="section-label">PARTNER ECOSYSTEM</div>
-    <h2 class="section-title">The Pithonix GCC <span class="gold">Partner Network</span></h2>
-    <p class="section-sub" style="margin-bottom:2rem">Best-in-class vendors across every GCC setup discipline. If a client chooses your city, your category, or your capability — they find you here first.</p>
+    <div class="section-label">CO-DELIVERY PARTNERS</div>
+    <h2 class="section-title">Join Our GCC <span class="gold">Delivery Network</span></h2>
+    <p class="section-sub" style="margin-bottom:2rem">Pithonix manages GCC setup projects end-to-end. We bring in specialist partners for legal, real estate, IT, staffing, and compliance — working alongside us on live GCC projects. If you're best-in-class in your domain, join the delivery network.</p>
     <div class="cat-tabs" id="cat-tabs"></div>
     <div class="vendor-grid" id="vendor-grid"></div>
     <div class="partner-form-wrap reveal">
-      <h3>Become a Pithonix GCC Partner</h3>
-      <p>Join the network of trusted vendors powering India's fastest-growing GCC ecosystem. We match your services to active GCC prospects at exactly the right stage of their journey.</p>
+      <h3>Apply to Join the GCC Delivery Network</h3>
+      <p>Pithonix works with specialist partners on live GCC setup projects. We need domain experts in legal, real estate, IT infrastructure, talent, compliance, and more — who can co-deliver with us. Apply below and our team reviews within 48 hours.</p>
       <div class="partner-form" id="partner-form">
         <div class="form-group"><label>Company Name</label><input type="text" id="pf-company" placeholder="Acme Solutions Pvt Ltd"></div>
         <div class="form-group"><label>Category</label>
@@ -1149,10 +1195,10 @@ async function generateBlueprint(){
   document.getElementById('sim-loading').style.display='block';
   document.getElementById('sim-output').style.display='none';
 
-  var prompt='You are an elite GCC strategy consultant at Pithonix.ai with deep expertise in India GCC setup. Generate a precise, data-driven GCC blueprint for the following company.\n\n'+
+  var prompt='You are a GCC setup project expert at Pithonix.ai. Pithonix takes full GCC setup contracts — entity formation, talent acquisition, infrastructure, compliance — and delivers operational GCCs to global enterprises. Generate a precise, data-driven GCC Setup Project Blueprint.\n\n'+
 'COMPANY PROFILE:\nIndustry: '+simData.industry+'\nHQ Country: '+simData.country+'\nAnnual Revenue: '+simData.revenue+'\nGCC Maturity: '+simData.maturity+'\nGCC Functions: '+simData.functions.join(', ')+'\nYear 1 FTE Target: '+simData.fte+'\nSetup Timeline: '+simData.timeline+'\nTop Priority: '+simData.priority+'\n\n'+
-'Use real India GCC data. Be specific to this company profile. Return ONLY valid JSON starting with { and ending with }:\n'+
-'{"city_primary":"city name","city_primary_reason":"2 specific sentences based on company profile and priority","city_alt":"alternative city","city_alt_reason":"1 sentence","hidden_insight":"1 non-obvious, data-backed insight that most GCC consultants miss — specific to this company profile, industry, and HQ country","headcount":[y1,y2,y3,y4,y5],"savings_usd":[y1,y2,y3,y4,y5],"cost_usd":[y1,y2,y3,y4,y5],"break_even_months":number,"total_5yr_savings_usd":number,"risks":[{"risk":"name","probability":"High/Medium/Low","mitigation":"specific action"},{"risk":"...","probability":"...","mitigation":"..."},{"risk":"...","probability":"...","mitigation":"..."}],"phase0_actions":["action1","action2","action3","action4","action5"],"pithonix_modules":["JEET ERP","HARI","GOT"],"pithonix_fit":"2 sentences on why Pithonix specifically fits this company\'s GCC"}';
+'Use real India GCC data. All cost figures in USD. Be specific — reference real schemes, real banks, real government programs. Return ONLY valid JSON starting with { and ending with }:\n'+
+'{"city_primary":"city name","city_primary_reason":"2 sentences — why this city for this company profile","city_alt":"alternative city","city_alt_reason":"1 sentence","hidden_insight":"1 non-obvious, data-backed insight most GCC consultants miss — specific to this company, industry, and HQ country","setup_budget_total_usd":number,"setup_budget_breakdown":[{"category":"Entity Formation & Legal (PvtLtd incorporation, CA, company secretary)","cost_usd":number,"timeline":"Month 1-2","notes":"specific vendors/actions"},{"category":"Office Space & Infrastructure (fit-out, furniture, lease deposit)","cost_usd":number,"timeline":"Month 2-4","notes":"Grade-A area recommendation"},{"category":"IT & Technology Setup (laptops, servers, network, licenses)","cost_usd":number,"timeline":"Month 2-5","notes":"key items"},{"category":"Talent Acquisition Year 1 (recruitment fees, ESOP, onboarding)","cost_usd":number,"timeline":"Month 1-12","notes":"avg cost per hire"},{"category":"Compliance & Regulatory (STPI/SEZ registration, audit, payroll setup)","cost_usd":number,"timeline":"Month 1-3","notes":"key registrations"},{"category":"Pithonix Setup Management Fee (project management, JEET+HARI+GOT deployment)","cost_usd":number,"timeline":"Full project","notes":"milestone-based billing"}],"yearly_budget":[{"year":"Year 1 — Setup + Ramp","budget_usd":number,"focus":"Entity setup, first hires, infrastructure"},{"year":"Year 2 — Scale","budget_usd":number,"focus":"Scale to full headcount, process migration"},{"year":"Year 3 — Optimize","budget_usd":number,"focus":"Efficiency, automation, CoE development"}],"govt_incentives":[{"scheme":"exact scheme name","benefit":"specific benefit with numbers","eligibility":"who qualifies","agency":"STPI / SEZ / State IT Dept / MeitY / DPIIT"},{"scheme":"...","benefit":"...","eligibility":"...","agency":"..."},{"scheme":"...","benefit":"...","eligibility":"...","agency":"..."}],"banking_support":[{"bank":"bank name (e.g. HDFC, ICICI, SBI, Kotak, Yes Bank)","offering":"specific GCC banking package or program name","benefit":"what it offers to a new GCC entity"},{"bank":"...","offering":"...","benefit":"..."},{"bank":"...","offering":"...","benefit":"..."}],"headcount":[y1,y2,y3,y4,y5],"savings_usd":[y1,y2,y3,y4,y5],"cost_usd":[y1,y2,y3,y4,y5],"break_even_months":number,"total_5yr_savings_usd":number,"risks":[{"risk":"name","probability":"High/Medium/Low","mitigation":"specific action"},{"risk":"...","probability":"...","mitigation":"..."},{"risk":"...","probability":"...","mitigation":"..."}],"phase0_actions":["specific action 1","specific action 2","specific action 3","specific action 4","specific action 5"],"pithonix_role":"2 sentences on exactly what Pithonix delivers as the setup contractor for this company — not generic, specific to their profile"}';
 
   try{
     var resp=await fetch('/api/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({_model:'gemini-2.5-pro',contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:0.7,maxOutputTokens:3000}})});
@@ -1163,7 +1209,7 @@ async function generateBlueprint(){
     renderBlueprint(bp);
   }catch(e){
     console.error(e);
-    renderBlueprint({city_primary:'Hyderabad',city_primary_reason:'Hyderabad offers the optimal balance of tech talent depth, competitive costs, and GCC maturity for your industry and revenue profile. With 900K+ tech professionals and strong government support, it provides the fastest path to operational GCC.',city_alt:'Bengaluru',city_alt_reason:'Bengaluru suits if deep-tech talent density is the primary criteria.',headcount:[50,150,300,500,750],savings_usd:[2000000,7000000,15000000,24000000,35000000],cost_usd:[2500000,5000000,8000000,11000000,14000000],break_even_months:20,total_5yr_savings_usd:83000000,risks:[{risk:'Talent Attrition',probability:'High',mitigation:'Strong EVP, ESOP, clear growth paths, GPTW certification target in Year 2'},{risk:'Process Migration Risk',probability:'Medium',mitigation:'Start with well-documented processes only; deploy JEET ERP for migration tracking'},{risk:'INR/USD Volatility',probability:'Medium',mitigation:'Annual FX review clauses in HQ contracts, quarterly benchmarking'}],phase0_actions:['Incorporate Private Limited Company — engage specialist CA firm within Month 1','Register with STPI for 100% export duty exemption (6–8 week process)','Hire Country Head / GCC Director — use Pithonix HARI for candidate matching','Negotiate Grade-A co-working space in HITEC City with 6-month flexibility clause','Stand up JEET ERP baseline for GCC workforce tracking from Day 1'],pithonix_modules:['JEET ERP','HARI','GOT'],pithonix_fit:'Pithonix HARI activates 25 AI agents from Day 1, giving your GCC HR intelligence that most centers only achieve after 3 years. GOT reasoning across 8 domains identifies cross-domain risks before they surface — protecting your Year 1 investment.',hidden_insight:'Most GCCs under-invest in employer branding in Month 1–3, then overpay on recruitment fees in Month 4–9 to fix the talent pipeline. Activate your LinkedIn employer brand and campus presence before you open, not after.'});
+    renderBlueprint({city_primary:'Hyderabad',city_primary_reason:'Hyderabad is Telangana\'s GCC capital with 700+ GCCs, strong state government incentives, and the deepest talent pool outside Bengaluru. HITEC City and Financial District offer Grade-A space at 30–40% lower cost than Bengaluru.',city_alt:'Bengaluru',city_alt_reason:'Bengaluru suits if deep-tech R&D talent density is the primary criteria over cost.',hidden_insight:'80% of GCCs negotiate office leases too late — after entity is formed. Lock in your co-working or pre-built space agreement in Month 1, before hiring starts; this alone saves 3–4 months of timeline slippage.',setup_budget_total_usd:1850000,setup_budget_breakdown:[{category:'Entity Formation & Legal',cost_usd:45000,timeline:'Month 1-2',notes:'PvtLtd incorporation, company secretary, MCA registration, PAN/TAN'},{category:'Office Space & Infrastructure',cost_usd:420000,timeline:'Month 2-4',notes:'Grade-A co-working or pre-built in HITEC City; 6-month deposit + fit-out'},{category:'IT & Technology Setup',cost_usd:280000,timeline:'Month 2-5',notes:'Laptops, VDI, MPLS/SD-WAN, Microsoft 365, security stack'},{category:'Talent Acquisition Year 1',cost_usd:750000,timeline:'Month 1-12',notes:'8-10% recruitment fee on CTC; avg ₹18L CTC for mid-senior roles'},{category:'Compliance & Regulatory',cost_usd:85000,timeline:'Month 1-3',notes:'STPI registration, SEZ evaluation, payroll setup, statutory audit'},{category:'Pithonix Setup Management Fee',cost_usd:270000,timeline:'Full project',notes:'Milestone-based: 40% at start, 40% at go-live, 20% at handover'}],yearly_budget:[{year:'Year 1 — Setup + Ramp',budget_usd:3200000,focus:'Entity setup, 50 hires, infrastructure, process migration start'},{year:'Year 2 — Scale',budget_usd:5800000,focus:'Scale to 150 FTEs, full process migration, JEET ERP integration'},{year:'Year 3 — Optimize',budget_usd:8100000,focus:'Automation, CoE development, 300 FTEs, productivity gains'}],headcount:[50,150,300,500,750],savings_usd:[2000000,7000000,15000000,24000000,35000000],cost_usd:[3200000,5800000,8100000,11000000,14000000],break_even_months:20,total_5yr_savings_usd:83000000,govt_incentives:[{scheme:'STPI (Software Technology Parks of India)',benefit:'100% export duty exemption, tax holiday for first 5 years on IT exports, single-window clearance',eligibility:'IT/ITES GCCs registered as 100% EOU',agency:'MeitY / STPI India'},{scheme:'Telangana IT Investment Region (ITIR) Policy',benefit:'25% capital subsidy on fixed assets up to ₹2 Cr; power tariff subsidy ₹1/unit for 5 years; stamp duty exemption',eligibility:'GCCs setting up in T-Hub, HITEC City, Genome Valley or designated IT parks',agency:'Telangana ITE&C Department'},{scheme:'DPIIT Startup Recognition',benefit:'Tax exemption under Section 80-IAC for 3 consecutive years; access to Fund of Funds; simplified compliance',eligibility:'Incorporated < 10 years, turnover < ₹100 Cr, DPIIT certificate required',agency:'DPIIT / Startup India'}],banking_support:[{bank:'HDFC Bank',offering:'GCC Banking Suite — dedicated RM, multi-currency accounts, instant payroll processing',benefit:'Zero-fee corporate salary accounts for first 200 employees; FX rates 0.5% better than spot for export remittances'},{bank:'ICICI Bank',offering:'iStartup & GCC Accelerator Program',benefit:'Collateral-free working capital up to ₹5 Cr; digital payroll platform; integration with JEET ERP payroll module'},{bank:'Kotak Mahindra Bank',offering:'Kotak Corporate Banking for Captives & GCCs',benefit:'Dedicated forex desk; FEMA compliance support; ₹0 account maintenance for first year'}],risks:[{risk:'Talent Attrition',probability:'High',mitigation:'Strong EVP, ESOP, clear growth paths, GPTW certification target in Year 2'},{risk:'Process Migration Risk',probability:'Medium',mitigation:'Start with well-documented processes only; deploy JEET ERP for migration tracking'},{risk:'INR/USD Volatility',probability:'Medium',mitigation:'Annual FX review clauses in HQ contracts, quarterly benchmarking'}],phase0_actions:['Incorporate Private Limited Company — engage specialist CA firm within Month 1 (₹40–60K total cost)','Register with STPI for 100% export duty exemption — 6-8 week process, apply Day 1','Hire Country Head / GCC Director before all other hires — this person owns go-live','Lock in Grade-A co-working agreement in HITEC City or Financial District before signing leases','Apply for Telangana ITIR subsidy and DPIIT Startup recognition — both are stackable'],pithonix_modules:['JEET ERP','HARI','GOT'],pithonix_role:'Pithonix manages the full setup project — from entity incorporation to your first 50 FTEs going live. HARI handles talent acquisition and onboarding; JEET ERP is deployed as the operational backbone from Day 1, eliminating the need for separate HR, Finance, and Compliance tools during ramp-up.'});
   }
 }
 
@@ -1208,13 +1254,56 @@ function renderBlueprint(bp){
     return'<li><span class="action-num">0'+(i+1)+'</span>'+a+'</li>';
   }).join('');
 
-  // Pithonix modules
+  // Pithonix modules + role
   var mods=bp.pithonix_modules||['JEET ERP','HARI','GOT'];
   document.getElementById('out-pmods').innerHTML=mods.map(function(m){return'<span class="pmod">'+m+'</span>';}).join('');
-  document.getElementById('out-pfit').textContent=bp.pithonix_fit||'';
+  document.getElementById('out-pfit').textContent=bp.pithonix_role||bp.pithonix_fit||'';
 
   // Insight
   document.getElementById('out-insight').textContent=bp.hidden_insight||'';
+
+  // Setup Budget
+  var budgetWrap=document.getElementById('out-budget-wrap');
+  if(bp.setup_budget_total_usd){
+    document.getElementById('out-budget-total').innerHTML=
+      '<div><div class="budget-total-label">Total GCC Setup Investment</div><div class="budget-total-num">'+fmt(bp.setup_budget_total_usd)+'</div></div>'+
+      '<div class="budget-total-note">Covers entity formation, office, IT, talent acquisition, compliance, and Pithonix project management — Year 0 to go-live.</div>';
+    var bd=bp.setup_budget_breakdown||[];
+    document.getElementById('out-budget-breakdown').innerHTML=bd.map(function(b){
+      return'<div class="budget-row"><div class="budget-row-left"><div class="budget-cat">'+b.category.split('(')[0].trim()+'</div><div class="budget-note">'+(b.notes||'')+'</div></div><div class="budget-row-right"><div class="budget-amt">'+fmt(b.cost_usd)+'</div><div class="budget-timeline">'+(b.timeline||'')+'</div></div></div>';
+    }).join('');
+    budgetWrap.style.display='block';
+  } else { budgetWrap.style.display='none'; }
+
+  // Yearly Budget
+  var yearlyWrap=document.getElementById('out-yearly-wrap');
+  if(bp.yearly_budget&&bp.yearly_budget.length){
+    yearlyWrap.innerHTML='<h3 style="margin-bottom:0.75rem;font-size:1rem">Year-wise Investment Plan</h3><div class="yearly-grid">'+
+      bp.yearly_budget.map(function(y){
+        return'<div class="yearly-card"><div class="yearly-year">'+y.year+'</div><div class="yearly-amt">'+fmt(y.budget_usd)+'</div><div class="yearly-focus">'+(y.focus||'')+'</div></div>';
+      }).join('')+'</div>';
+    yearlyWrap.style.display='block';
+  } else { yearlyWrap.style.display='none'; }
+
+  // Govt Incentives
+  var incWrap=document.getElementById('out-incentives-wrap');
+  if(bp.govt_incentives&&bp.govt_incentives.length){
+    incWrap.innerHTML='<h3 style="margin-bottom:0.75rem;font-size:1rem">Government Incentives & Support</h3><div class="incentive-cards">'+
+      bp.govt_incentives.map(function(g){
+        return'<div class="incentive-card"><div class="incentive-scheme">'+g.scheme+'</div><div class="incentive-agency">'+g.agency+'</div><div class="incentive-benefit">'+g.benefit+'</div><div class="incentive-elig">Eligibility: '+g.eligibility+'</div></div>';
+      }).join('')+'</div>';
+    incWrap.style.display='block';
+  } else { incWrap.style.display='none'; }
+
+  // Banking Support
+  var bankWrap=document.getElementById('out-banking-wrap');
+  if(bp.banking_support&&bp.banking_support.length){
+    bankWrap.innerHTML='<h3 style="margin-bottom:0.75rem;font-size:1rem">Banking Support for New GCC</h3><div class="banking-cards">'+
+      bp.banking_support.map(function(b){
+        return'<div class="banking-card"><div class="banking-name">'+b.bank+'</div><div class="banking-offering">'+b.offering+'</div><div class="banking-benefit">'+b.benefit+'</div></div>';
+      }).join('')+'</div>';
+    bankWrap.style.display='block';
+  } else { bankWrap.style.display='none'; }
 }
 
 // ── GOT ADVISOR ──
