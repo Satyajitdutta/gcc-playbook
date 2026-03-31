@@ -1168,12 +1168,25 @@ function filterCat(tab,cat){
   });
 }
 
-function submitPartner(){
+async function submitPartner(){
   var company=document.getElementById('pf-company').value.trim();
   var email=document.getElementById('pf-email').value.trim();
   var name=document.getElementById('pf-name').value.trim();
   var cat=document.getElementById('pf-category').value;
+  var web=document.getElementById('pf-web').value.trim();
+  var phone=document.getElementById('pf-phone').value.trim();
+  var desc=document.getElementById('pf-desc').value.trim();
   if(!company||!email||!name||!cat){alert('Please fill in all required fields.');return;}
+  try{
+    await fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      source:'GCC Partner Application',
+      name:name,email:email,company:company,
+      functions:cat,priority:desc,
+      country:web||'',fte:phone||'',
+      industry:'Partner — '+cat,timeline:'Partnership',
+      timestamp:new Date().toISOString()
+    })});
+  }catch(e){}
   document.getElementById('partner-form').style.display='none';
   document.getElementById('partner-success').style.display='block';
 }
