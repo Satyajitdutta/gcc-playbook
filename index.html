@@ -297,6 +297,20 @@ section{position:relative;z-index:2;padding:6rem 0}
 .insight-box p{font-size:0.95rem;color:var(--txt)}
 .btn-restart{background:transparent;color:var(--tdim);border:1px solid var(--bd);padding:0.6rem 1.2rem;border-radius:8px;cursor:pointer;font-size:0.85rem;font-family:'DM Sans',sans-serif;margin-top:1.5rem;transition:border-color 0.2s}
 .btn-restart:hover{border-color:var(--gold);color:var(--gold)}
+/* Lead Capture */
+.lead-capture-box{background:linear-gradient(135deg,rgba(58,127,212,0.1),rgba(58,127,212,0.04));border:1px solid rgba(58,127,212,0.3);border-radius:14px;padding:1.8rem;margin:1.5rem 0}
+.lead-capture-inner{display:flex;gap:2rem;align-items:flex-start;flex-wrap:wrap}
+.lead-left{flex:1;min-width:220px}
+.lead-title{font-size:1.05rem;font-weight:700;margin-bottom:0.4rem;color:var(--txt)}
+.lead-sub{font-size:0.82rem;color:var(--tmed);line-height:1.5}
+.lead-right{flex:1;min-width:260px}
+.lead-fields{display:flex;flex-direction:column;gap:0.6rem}
+.lead-input{background:rgba(255,255,255,0.05);border:1px solid var(--bd);color:var(--txt);padding:0.6rem 0.9rem;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.88rem;outline:none;width:100%;transition:border-color 0.2s}
+.lead-input:focus{border-color:rgba(58,127,212,0.6)}
+.lead-btn{background:rgba(58,127,212,0.8);color:#fff;font-weight:700;padding:0.7rem 1.2rem;border:none;border-radius:8px;cursor:pointer;font-size:0.88rem;font-family:'DM Sans',sans-serif;transition:background 0.2s;margin-top:0.2rem}
+.lead-btn:hover{background:rgba(58,127,212,1)}
+.lead-skip{font-size:0.78rem;color:var(--tdim);cursor:pointer;margin-top:0.5rem;text-align:right;transition:color 0.2s}
+.lead-skip:hover{color:var(--tmed)}
 /* Budget Section */
 .budget-section{margin-bottom:2rem}
 .budget-total{background:linear-gradient(135deg,rgba(232,184,75,0.12),rgba(232,184,75,0.04));border:1px solid rgba(232,184,75,0.35);border-radius:12px;padding:1.4rem 1.8rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap;margin-bottom:1rem}
@@ -784,6 +798,23 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
               <div class="insight-label">◉ HIDDEN INSIGHT — WHAT MOST CONSULTANTS MISS</div>
               <p id="out-insight"></p>
             </div>
+            <div class="lead-capture-box" id="lead-box">
+              <div class="lead-capture-inner">
+                <div class="lead-left">
+                  <div class="lead-title">Get this blueprint in your inbox</div>
+                  <div class="lead-sub">We'll send you a copy of this blueprint + our India GCC market report. No spam — one email, that's it.</div>
+                </div>
+                <div class="lead-right" id="lead-form-area">
+                  <div class="lead-fields">
+                    <input type="text" id="lead-name" placeholder="Your name" class="lead-input">
+                    <input type="email" id="lead-email" placeholder="Work email" class="lead-input">
+                    <input type="text" id="lead-company" placeholder="Company name" class="lead-input">
+                    <button class="lead-btn" onclick="submitLead()">Send me the blueprint →</button>
+                  </div>
+                  <div class="lead-skip" onclick="document.getElementById('lead-box').style.display='none'">Skip →</div>
+                </div>
+              </div>
+            </div>
             <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
               <button class="btn-restart" onclick="restartSim()">← Build Another Blueprint</button>
               <a href="#contact" class="btn-primary" style="font-size:0.88rem;padding:0.65rem 1.5rem">Speak to Pithonix GCC Team →</a>
@@ -1266,8 +1297,8 @@ function renderBlueprint(bp){
   var budgetWrap=document.getElementById('out-budget-wrap');
   if(bp.setup_budget_total_usd){
     document.getElementById('out-budget-total').innerHTML=
-      '<div><div class="budget-total-label">Total GCC Setup Investment</div><div class="budget-total-num">'+fmt(bp.setup_budget_total_usd)+'</div></div>'+
-      '<div class="budget-total-note">Covers entity formation, office, IT, talent acquisition, compliance, and Pithonix project management — Year 0 to go-live.</div>';
+      '<div><div class="budget-total-label">One-Time Setup Capital Cost</div><div class="budget-total-num">'+fmt(bp.setup_budget_total_usd)+'</div></div>'+
+      '<div class="budget-total-note">One-time project costs only: entity formation, office fit-out, IT infrastructure, talent acquisition fees, compliance registrations, and Pithonix setup fee. <strong style="color:var(--gold)">Note:</strong> This is included within Year 1 total spend. Year 1 total is higher as it also covers ongoing salaries, rent, and operating costs for your first hires.</div>';
     var bd=bp.setup_budget_breakdown||[];
     document.getElementById('out-budget-breakdown').innerHTML=bd.map(function(b){
       return'<div class="budget-row"><div class="budget-row-left"><div class="budget-cat">'+b.category.split('(')[0].trim()+'</div><div class="budget-note">'+(b.notes||'')+'</div></div><div class="budget-row-right"><div class="budget-amt">'+fmt(b.cost_usd)+'</div><div class="budget-timeline">'+(b.timeline||'')+'</div></div></div>';
@@ -1343,6 +1374,24 @@ function clearGOT(){
   document.getElementById('got-result').style.display='none';
   document.getElementById('got-loading').style.display='none';
   document.querySelectorAll('.got-chip').forEach(function(c){c.classList.remove('active');});
+}
+
+async function submitLead(){
+  var name=document.getElementById('lead-name').value.trim();
+  var email=document.getElementById('lead-email').value.trim();
+  var company=document.getElementById('lead-company').value.trim();
+  if(!email){document.getElementById('lead-email').focus();return;}
+  var btn=document.querySelector('.lead-btn');
+  btn.textContent='Sending…';btn.disabled=true;
+  try{
+    await fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      name:name,email:email,company:company,
+      industry:simData.industry||'',country:simData.country||'',
+      functions:(simData.functions||[]).join(', '),
+      fte:simData.fte||'',timeline:simData.timeline||'',priority:simData.priority||''
+    })});
+  }catch(e){}
+  document.getElementById('lead-form-area').innerHTML='<div style="color:var(--teal);font-size:0.95rem;padding:1rem 0">✓ Sent! We\'ll be in touch within 24 hours.</div>';
 }
 
 function restartSim(){
