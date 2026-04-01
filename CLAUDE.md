@@ -4,11 +4,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Company
 
-**Legal name: PITHONIX AI India Pvt Ltd**
+**Legal name: PITHONIX AI INDIA PRIVATE LIMITED**
 Brand name: Pithonix AI | Website: pithonix.ai | Email: info@pithonix.ai
 Registered: Hyderabad, Telangana, India
+Incorporated: 18th March 2026 | Companies Act, 2013 | Company limited by shares
+CIN: U62090TS2026PTC213220
+PAN: AAQCP8532M
+TAN: HYDP24088B
 
-Always use "PITHONIX AI India Pvt Ltd" in legal/formal documents (proposals, contracts, footers).
+Always use "PITHONIX AI INDIA PRIVATE LIMITED" in formal/legal documents (proposals, MoUs, contracts, footers).
 Use "Pithonix AI" in UI, marketing copy, and general references.
 
 ## Project
