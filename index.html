@@ -1352,7 +1352,11 @@ function renderBlueprint(bp){
   if(bp.govt_incentives&&bp.govt_incentives.length){
     incWrap.innerHTML='<h3 style="margin-bottom:0.75rem;font-size:1rem">Government Incentives & Support</h3><div class="incentive-cards">'+
       bp.govt_incentives.map(function(g){
-        return'<div class="incentive-card"><div class="incentive-scheme">'+g.scheme+'</div><div class="incentive-agency">'+g.agency+'</div><div class="incentive-benefit">'+g.benefit+'</div><div class="incentive-elig">Eligibility: '+g.eligibility+'</div></div>';
+        var schemeLinks={'STPI':'https://www.stpi.in/','Software Technology Parks of India':'https://www.stpi.in/','DPIIT':'https://dpiit.gov.in/','Startup India':'https://www.startupindia.gov.in/','Telangana':'https://www.tsiic.telangana.gov.in/','Karnataka':'https://itbt.karnataka.gov.in/','Maharashtra':'https://maitri.maharashtra.gov.in/','Tamil Nadu':'https://www.investtn.in/','MeitY':'https://www.meity.gov.in/','SEZ':'https://www.sezindia.nic.in/'};
+        var link='';
+        Object.keys(schemeLinks).forEach(function(k){if(!link&&(g.scheme+g.agency).indexOf(k)>-1)link=schemeLinks[k];});
+        var applyBtn=link?'<a href="'+link+'" target="_blank" rel="noopener" style="display:inline-block;margin-top:0.6rem;padding:0.3rem 0.8rem;background:rgba(40,168,136,0.15);border:1px solid rgba(40,168,136,0.4);border-radius:6px;color:var(--teal);font-size:0.72rem;font-weight:700;letter-spacing:0.05em;text-decoration:none">→ Apply / Learn More</a>':'';
+        return'<div class="incentive-card"><div class="incentive-scheme">'+g.scheme+'</div><div class="incentive-agency">'+g.agency+'</div><div class="incentive-benefit">'+g.benefit+'</div><div class="incentive-elig">Eligibility: '+g.eligibility+'</div>'+applyBtn+'</div>';
       }).join('')+'</div>';
     incWrap.style.display='block';
   } else { incWrap.style.display='none'; }
