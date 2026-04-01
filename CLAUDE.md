@@ -15,6 +15,13 @@ TAN: HYDP24088B
 Always use "PITHONIX AI INDIA PRIVATE LIMITED" in formal/legal documents (proposals, MoUs, contracts, footers).
 Use "Pithonix AI" in UI, marketing copy, and general references.
 
+## Product Acronyms
+
+- **JEET** — Just In Time Emotionally Empowered Technology (flagship ERP platform)
+- **HARI** — Human Augmented Realistic Intelligence (HR AI system)
+- **GOT** — Graph of Thought (proprietary multi-domain reasoning engine)
+- **BOT** — Build-Operate-Transfer (deployment/commercial model)
+
 ## Project
 
 **GCC Playbook** — India's first AI-native GCC Intelligence Platform
