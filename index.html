@@ -387,7 +387,9 @@ section{position:relative;z-index:2;padding:6rem 0}
 
 /* ── CITIES ── */
 #cities{background:var(--s1)}
-.city-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem}
+.city-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.2rem}
+.city-tier-btn{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);border-radius:6px;color:var(--tmed);padding:0.4rem 1rem;font-size:0.8rem;font-weight:700;cursor:pointer;letter-spacing:0.05em;transition:all 0.2s}
+.city-tier-btn.active,.city-tier-btn:hover{background:rgba(232,184,75,0.15);border-color:rgba(232,184,75,0.5);color:var(--gold)}
 .city-block{background:rgba(255,255,255,0.02);border:1px solid var(--bd);border-radius:var(--r);padding:1.5rem;transition:all 0.3s;position:relative;overflow:hidden}
 .city-block.primary{border-color:rgba(232,184,75,0.35);background:rgba(232,184,75,0.04)}
 .city-block.primary::after{content:'RECOMMENDED';position:absolute;top:0.8rem;right:0.8rem;font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:1px;color:var(--gold);background:rgba(232,184,75,0.1);padding:2px 6px;border-radius:3px}
@@ -606,6 +608,31 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
 <div class="ticker-wrap">
   <div class="ticker-track" id="ticker"></div>
 </div>
+
+<!-- CITY INTELLIGENCE — moved before simulator so client picks city first -->
+<section id="cities">
+  <div class="wrap">
+    <div class="section-label">INDIA CITY INTELLIGENCE</div>
+    <h2 class="section-title">Choose Your <span class="gold">GCC Location</span></h2>
+    <p class="section-sub">India offers 25+ viable GCC destinations across Tier 1, 2 and 3 cities. The client decides — Pithonix delivers anywhere. Compare, pick your city, then run the blueprint.</p>
+
+    <!-- Filter + Dropdown row -->
+    <div style="display:flex;flex-wrap:wrap;gap:0.75rem;align-items:center;margin-bottom:1.5rem">
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+        <button class="city-tier-btn active" onclick="filterCities('all',this)">All Cities</button>
+        <button class="city-tier-btn" onclick="filterCities('1',this)">Tier 1</button>
+        <button class="city-tier-btn" onclick="filterCities('2',this)">Tier 2</button>
+        <button class="city-tier-btn" onclick="filterCities('3',this)">Tier 3</button>
+      </div>
+      <select id="city-select" onchange="jumpToCity(this.value)" style="margin-left:auto;background:rgba(255,255,255,0.05);border:1px solid rgba(232,184,75,0.3);border-radius:8px;color:var(--txt);padding:0.5rem 1rem;font-size:0.85rem;cursor:pointer">
+        <option value="">— Jump to city —</option>
+      </select>
+    </div>
+
+    <div class="city-grid" id="city-grid"></div>
+    <p style="text-align:center;margin-top:1.5rem;font-size:0.8rem;color:var(--tdim)">Don't see your preferred city? The simulator accepts any Indian city — type it in the blueprint generator below.</p>
+  </div>
+</section>
 
 <!-- SIMULATOR -->
 <section id="simulator">
@@ -879,15 +906,6 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
   </div>
 </section>
 
-<!-- INDIA CITY INTELLIGENCE -->
-<section id="cities">
-  <div class="wrap">
-    <div class="section-label">INDIA CITY INTELLIGENCE</div>
-    <h2 class="section-title">Where to Build Your <span class="gold">GCC</span></h2>
-    <p class="section-sub">Real data across India's top GCC destinations. Hyderabad leads on the Pithonix GCC Readiness Index — optimal balance of talent, cost, and infrastructure.</p>
-    <div class="city-grid" id="city-grid"></div>
-  </div>
-</section>
 
 <!-- MARKET NUMBERS -->
 <section id="market">
@@ -1106,25 +1124,93 @@ function showPhase(i){
 
 // ── CITY DATA ──
 var cities=[
-  {name:'Hyderabad',state:'Telangana',primary:true,stats:[['GCC Share','12–13%'],['Tech Talent','900K+'],['Avg Eng Salary','₹12–22L/yr'],['GCC Count','250+'],['Grade-A Office','₹55–80/sqft']],tags:['IT/ITES','BFSI','Pharma','Manufacturing']},
-  {name:'Bengaluru',state:'Karnataka',stats:[['GCC Share','34–35%'],['Tech Talent','1.5M+'],['Avg Eng Salary','₹15–28L/yr'],['GCC Count','600+'],['Grade-A Office','₹75–120/sqft']],tags:['Deep Tech','AI/ML','SaaS','ER&D']},
-  {name:'Pune',state:'Maharashtra',stats:[['GCC Share','9–10%'],['Tech Talent','600K+'],['Avg Eng Salary','₹12–20L/yr'],['GCC Count','180+'],['Grade-A Office','₹60–90/sqft']],tags:['Automotive','IT','Engineering','BFSI']},
-  {name:'Chennai',state:'Tamil Nadu',stats:[['GCC Share','9–10%'],['Tech Talent','500K+'],['Avg Eng Salary','₹11–19L/yr'],['GCC Count','175+'],['Grade-A Office','₹55–80/sqft']],tags:['Manufacturing','IT','Retail','CPG']},
-  {name:'NCR / Delhi',state:'Delhi NCR',stats:[['GCC Share','15–16%'],['Tech Talent','700K+'],['Avg Eng Salary','₹13–22L/yr'],['GCC Count','290+'],['Grade-A Office','₹65–100/sqft']],tags:['BFSI','Telecom','Government','CPG']},
-  {name:'Tier-2 Cities',state:'Emerging Hubs',stats:[['Cost Saving','~50% vs Tier-1'],['Retention','20%+ higher'],['New GCC Growth','1.4x FY19–24'],['STEM Talent','60% from non-metros']],tags:['Ahmedabad','Kochi','Jaipur','Indore','Chandigarh']}
+  // TIER 1
+  {name:'Hyderabad',state:'Telangana',tier:'1',stats:[['GCC Count','250+'],['Tech Talent','900K+'],['Avg Eng Salary','₹12–22L/yr'],['Office Cost','₹55–80/sqft'],['GCC Share','12–13%']],tags:['IT/ITES','BFSI','Pharma','Manufacturing'],incentive:'ITIR Policy + STPI'},
+  {name:'Bengaluru',state:'Karnataka',tier:'1',stats:[['GCC Count','600+'],['Tech Talent','1.5M+'],['Avg Eng Salary','₹15–28L/yr'],['Office Cost','₹75–120/sqft'],['GCC Share','34–35%']],tags:['Deep Tech','AI/ML','SaaS','ER&D'],incentive:'K-TECH + STPI'},
+  {name:'Pune',state:'Maharashtra',tier:'1',stats:[['GCC Count','180+'],['Tech Talent','600K+'],['Avg Eng Salary','₹12–20L/yr'],['Office Cost','₹60–90/sqft'],['GCC Share','9–10%']],tags:['Automotive','IT','Engineering','BFSI'],incentive:'Magnetic Maharashtra'},
+  {name:'Chennai',state:'Tamil Nadu',tier:'1',stats:[['GCC Count','175+'],['Tech Talent','500K+'],['Avg Eng Salary','₹11–19L/yr'],['Office Cost','₹55–80/sqft'],['GCC Share','9–10%']],tags:['Manufacturing','IT','Retail','CPG'],incentive:'TIDEL + STPI'},
+  {name:'NCR / Delhi',state:'Delhi NCR',tier:'1',stats:[['GCC Count','290+'],['Tech Talent','700K+'],['Avg Eng Salary','₹13–22L/yr'],['Office Cost','₹65–100/sqft'],['GCC Share','15–16%']],tags:['BFSI','Telecom','Government','CPG'],incentive:'DSIIDC + STPI'},
+  {name:'Mumbai',state:'Maharashtra',tier:'1',stats:[['GCC Count','120+'],['Tech Talent','500K+'],['Avg Eng Salary','₹14–25L/yr'],['Office Cost','₹80–140/sqft'],['GCC Share','5–6%']],tags:['BFSI','FinTech','Media','Consulting'],incentive:'Magnetic Maharashtra'},
+  // TIER 2
+  {name:'Ahmedabad',state:'Gujarat',tier:'2',stats:[['GCC Count','40+'],['Tech Talent','180K+'],['Avg Eng Salary','₹8–16L/yr'],['Office Cost','₹35–55/sqft'],['Cost vs T1','~45% lower']],tags:['Manufacturing','FinTech','CPG','Pharma'],incentive:'Gujarat IT Policy + GIFT City'},
+  {name:'Kochi',state:'Kerala',tier:'2',stats:[['GCC Count','35+'],['Tech Talent','150K+'],['Avg Eng Salary','₹8–15L/yr'],['Office Cost','₹30–50/sqft'],['Cost vs T1','~50% lower']],tags:['IT/ITES','BFSI','Healthcare','Logistics'],incentive:'Smart City + KSITIL'},
+  {name:'Jaipur',state:'Rajasthan',tier:'2',stats:[['GCC Count','25+'],['Tech Talent','120K+'],['Avg Eng Salary','₹7–14L/yr'],['Office Cost','₹28–45/sqft'],['Cost vs T1','~55% lower']],tags:['IT','Textile Tech','Tourism','E-commerce'],incentive:'iStart Rajasthan'},
+  {name:'Indore',state:'Madhya Pradesh',tier:'2',stats:[['GCC Count','20+'],['Tech Talent','100K+'],['Avg Eng Salary','₹7–13L/yr'],['Office Cost','₹25–40/sqft'],['Cost vs T1','~55% lower']],tags:['IT/ITES','Manufacturing','Retail','Pharma'],incentive:'MP IT Policy'},
+  {name:'Chandigarh',state:'Punjab/Haryana',tier:'2',stats:[['GCC Count','18+'],['Tech Talent','90K+'],['Avg Eng Salary','₹8–15L/yr'],['Office Cost','₹30–50/sqft'],['Cost vs T1','~48% lower']],tags:['IT','Agritech','Healthcare','Education'],incentive:'Punjab IT Policy'},
+  {name:'Coimbatore',state:'Tamil Nadu',tier:'2',stats:[['GCC Count','22+'],['Tech Talent','110K+'],['Avg Eng Salary','₹7–13L/yr'],['Office Cost','₹25–40/sqft'],['Cost vs T1','~52% lower']],tags:['Manufacturing','Engineering','Textile','IT'],incentive:'TIDEL Parks + STPI'},
+  {name:'Nagpur',state:'Maharashtra',tier:'2',stats:[['GCC Count','15+'],['Tech Talent','80K+'],['Avg Eng Salary','₹7–13L/yr'],['Office Cost','₹22–38/sqft'],['Cost vs T1','~55% lower']],tags:['Logistics','IT','Agriculture','Mining'],incentive:'Mihan SEZ + Magnetic Maharashtra'},
+  {name:'Visakhapatnam',state:'Andhra Pradesh',tier:'2',stats:[['GCC Count','18+'],['Tech Talent','85K+'],['Avg Eng Salary','₹7–13L/yr'],['Office Cost','₹25–40/sqft'],['Cost vs T1','~52% lower']],tags:['Port & Logistics','IT','Pharma','Defence'],incentive:'AP IT Policy 2021–24'},
+  {name:'Bhubaneswar',state:'Odisha',tier:'2',stats:[['GCC Count','12+'],['Tech Talent','70K+'],['Avg Eng Salary','₹6–12L/yr'],['Office Cost','₹20–35/sqft'],['Cost vs T1','~58% lower']],tags:['IT/ITES','Mining Tech','Steel Tech','Education'],incentive:'Odisha IT Policy'},
+  // TIER 3
+  {name:'Thiruvananthapuram',state:'Kerala',tier:'3',stats:[['Tech Talent','55K+'],['Avg Eng Salary','₹6–11L/yr'],['Office Cost','₹18–30/sqft'],['Attrition','Very Low'],['Cost vs T1','~60% lower']],tags:['IT/ITES','Space Tech','Healthcare','Education'],incentive:'Technopark + KSITIL'},
+  {name:'Mysuru',state:'Karnataka',tier:'3',stats:[['Tech Talent','50K+'],['Avg Eng Salary','₹6–11L/yr'],['Office Cost','₹18–30/sqft'],['Attrition','Very Low'],['Cost vs T1','~62% lower']],tags:['IT','Tourism Tech','Silk & Textile','Education'],incentive:'K-TECH Karnataka'},
+  {name:'Vadodara',state:'Gujarat',tier:'3',stats:[['Tech Talent','55K+'],['Avg Eng Salary','₹6–12L/yr'],['Office Cost','₹18–32/sqft'],['Attrition','Very Low'],['Cost vs T1','~58% lower']],tags:['Engineering','Chemicals','IT','Defence'],incentive:'Gujarat IT Policy'},
+  {name:'Lucknow',state:'Uttar Pradesh',tier:'3',stats:[['Tech Talent','65K+'],['Avg Eng Salary','₹6–12L/yr'],['Office Cost','₹18–30/sqft'],['Attrition','Very Low'],['Cost vs T1','~60% lower']],tags:['IT/ITES','Government Tech','Healthcare','Retail'],incentive:'UP IT Policy 2022'},
+  {name:'Bhopal',state:'Madhya Pradesh',tier:'3',stats:[['Tech Talent','45K+'],['Avg Eng Salary','₹5–10L/yr'],['Office Cost','₹15–28/sqft'],['Attrition','Very Low'],['Cost vs T1','~63% lower']],tags:['IT','Government Tech','Agriculture','Education'],incentive:'MP IT Policy'},
+  {name:'Mangaluru',state:'Karnataka',tier:'3',stats:[['Tech Talent','40K+'],['Avg Eng Salary','₹5–10L/yr'],['Office Cost','₹15–25/sqft'],['Attrition','Very Low'],['Cost vs T1','~65% lower']],tags:['IT/ITES','Fishing Tech','Banking','Healthcare'],incentive:'K-TECH Karnataka'},
+  {name:'Raipur',state:'Chhattisgarh',tier:'3',stats:[['Tech Talent','30K+'],['Avg Eng Salary','₹5–9L/yr'],['Office Cost','₹12–22/sqft'],['Attrition','Very Low'],['Cost vs T1','~65% lower']],tags:['Mining Tech','Steel','Agriculture','Government'],incentive:'CG IT Policy'},
+  {name:'Patna',state:'Bihar',tier:'3',stats:[['Tech Talent','35K+'],['Avg Eng Salary','₹5–9L/yr'],['Office Cost','₹12–22/sqft'],['Attrition','Very Low'],['Cost vs T1','~65% lower']],tags:['Government Tech','Agriculture','Education','Healthcare'],incentive:'Bihar IT Policy'},
+  {name:'Guwahati',state:'Assam',tier:'3',stats:[['Tech Talent','28K+'],['Avg Eng Salary','₹5–9L/yr'],['Office Cost','₹12–20/sqft'],['Attrition','Very Low'],['Cost vs T1','~67% lower']],tags:['IT/ITES','Agriculture Tech','Tea Tech','Logistics'],incentive:'Assam IT Policy + NE Incentives'},
+  {name:'Dehradun',state:'Uttarakhand',tier:'3',stats:[['Tech Talent','30K+'],['Avg Eng Salary','₹5–10L/yr'],['Office Cost','₹14–24/sqft'],['Attrition','Very Low'],['Cost vs T1','~63% lower']],tags:['IT','Tourism Tech','Defence','Education'],incentive:'Uttarakhand IT Policy'}
 ];
 
-(function(){
+function renderCities(tierFilter){
   var g=document.getElementById('city-grid');
-  g.innerHTML=cities.map(function(c){
-    return '<div class="city-block'+(c.primary?' primary':'')+' reveal">'+
-    '<h3>'+c.name+'</h3><div class="city-state">'+c.state+'</div>'+
+  var sel=document.getElementById('city-select');
+  var filtered=tierFilter==='all'?cities:cities.filter(function(c){return c.tier===tierFilter;});
+  g.innerHTML=filtered.map(function(c){
+    var tierBadge={'1':'<span style="background:rgba(232,184,75,0.2);color:var(--gold);font-size:0.65rem;font-weight:700;padding:0.15rem 0.5rem;border-radius:4px;letter-spacing:0.05em">TIER 1</span>',
+      '2':'<span style="background:rgba(40,168,136,0.15);color:var(--teal);font-size:0.65rem;font-weight:700;padding:0.15rem 0.5rem;border-radius:4px;letter-spacing:0.05em">TIER 2</span>',
+      '3':'<span style="background:rgba(136,96,212,0.15);color:#b090e4;font-size:0.65rem;font-weight:700;padding:0.15rem 0.5rem;border-radius:4px;letter-spacing:0.05em">TIER 3</span>'}[c.tier]||'';
+    return '<div class="city-block reveal" id="city-'+c.name.replace(/[^a-z]/gi,'')+'" data-tier="'+c.tier+'">'+
+    '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem">'+
+    '<div><h3 style="margin:0 0 0.2rem">'+c.name+'</h3><div class="city-state">'+c.state+'</div></div>'+
+    tierBadge+'</div>'+
     c.stats.map(function(s){return'<div class="city-stat"><span class="cs-k">'+s[0]+'</span><span class="cs-v">'+s[1]+'</span></div>';}).join('')+
+    (c.incentive?'<div style="font-size:0.7rem;color:var(--teal);margin:0.4rem 0 0.5rem">🏛 '+c.incentive+'</div>':'')+
     '<div class="city-tags">'+c.tags.map(function(t){return'<span class="city-tag-pill">'+t+'</span>';}).join('')+'</div>'+
+    '<button onclick="runSimulatorForCity(\''+c.name+'\')" style="width:100%;margin-top:0.75rem;padding:0.45rem;background:rgba(232,184,75,0.12);border:1px solid rgba(232,184,75,0.35);border-radius:7px;color:var(--gold);font-size:0.78rem;font-weight:700;cursor:pointer;letter-spacing:0.05em" onmouseover="this.style.background=\'rgba(232,184,75,0.25)\'" onmouseout="this.style.background=\'rgba(232,184,75,0.12)\'">Build Blueprint for '+c.name+' →</button>'+
     '</div>';
   }).join('');
+  // Populate dropdown with all cities
+  if(sel.options.length<=1){
+    cities.forEach(function(c){var o=document.createElement('option');o.value=c.name;o.text=c.name+' (Tier '+c.tier+') — '+c.state;sel.appendChild(o);});
+  }
   document.querySelectorAll('.reveal').forEach(function(el){revObs.observe(el);});
-})();
+}
+
+function filterCities(tier,btn){
+  document.querySelectorAll('.city-tier-btn').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  renderCities(tier);
+}
+
+function jumpToCity(name){
+  if(!name)return;
+  // Show all cities first, then scroll to it
+  filterCities('all',document.querySelector('.city-tier-btn'));
+  setTimeout(function(){
+    var el=document.getElementById('city-'+name.replace(/[^a-z]/gi,''));
+    if(el)el.scrollIntoView({behavior:'smooth',block:'center'});
+  },100);
+}
+
+function runSimulatorForCity(cityName){
+  simData.city=cityName;
+  document.querySelector('a[href="#simulator"]').click();
+  setTimeout(function(){
+    // Pre-fill the city into the prompt context and scroll to simulator
+    document.getElementById('simulator').scrollIntoView({behavior:'smooth'});
+    // Show a toast
+    var toast=document.createElement('div');
+    toast.style.cssText='position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:var(--gold);color:#111;padding:0.6rem 1.4rem;border-radius:8px;font-weight:700;font-size:0.85rem;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,0.3)';
+    toast.textContent='✓ '+cityName+' selected — complete the form to generate blueprint';
+    document.body.appendChild(toast);
+    setTimeout(function(){toast.remove();},3500);
+  },300);
+}
+
+renderCities('all');
 
 // ── MARKET NUMBERS ──
 var marketData=[
@@ -1243,7 +1329,7 @@ async function generateBlueprint(){
   var isSmall=fteNum<=30, isMid=fteNum>30&&fteNum<=100, isLarge=fteNum>100&&fteNum<=300, isEnterprise=fteNum>300;
   var fteTier=isSmall?'small (≤30 FTE — lean setup, co-working space, minimal infra)':isMid?'mid-size (31–100 FTE — dedicated floor, full IT stack)':isLarge?'large (101–300 FTE — campus-style, multiple floors, full compliance team)':'enterprise (300+ FTE — multi-building, SEZ registration, large procurement budgets)';
   var prompt='You are a GCC setup project expert at Pithonix.ai. Pithonix takes full GCC setup contracts end-to-end. Generate a UNIQUE, SCENARIO-SPECIFIC GCC Setup Project Blueprint. Every number MUST reflect the exact inputs below — different inputs = completely different numbers.\n\n'+
-'COMPANY PROFILE:\nIndustry: '+simData.industry+'\nHQ Country: '+simData.country+'\nAnnual Revenue: '+simData.revenue+'\nGCC Maturity: '+simData.maturity+'\nGCC Functions: '+simData.functions.join(', ')+'\nYear 1 FTE Target: '+simData.fte+' ('+fteTier+')\nSetup Timeline: '+simData.timeline+'\nTop Priority: '+simData.priority+'\n\n'+
+'COMPANY PROFILE:\nIndustry: '+simData.industry+'\nHQ Country: '+simData.country+'\n'+(simData.city?'PREFERRED GCC CITY (client selected): '+simData.city+' — your city recommendation MUST be '+simData.city+' as primary unless it is genuinely unsuitable for the stated functions.\n':'')+'\nAnnual Revenue: '+simData.revenue+'\nGCC Maturity: '+simData.maturity+'\nGCC Functions: '+simData.functions.join(', ')+'\nYear 1 FTE Target: '+simData.fte+' ('+fteTier+')\nSetup Timeline: '+simData.timeline+'\nTop Priority: '+simData.priority+'\n\n'+
 'CRITICAL RULES — MUST FOLLOW:\n1. All cost figures must scale with the FTE tier above. A '+fteNum+'-FTE GCC costs very differently from a 50-FTE or 500-FTE GCC.\n2. Industry "'+simData.industry+'" has specific talent cost benchmarks — use them.\n3. HQ country "'+simData.country+'" affects banking preferences, timezone needs, and compliance complexity.\n4. Top priority "'+simData.priority+'" must visibly influence your city choice and Phase 0 actions.\n5. NEVER produce generic round numbers — every figure should be specific to THIS profile.\n\n'+
 'Use real India GCC market data (2025-2026). All costs in USD. Return ONLY valid JSON starting with { and ending with }:\n'+
 '{"city_primary":"city name","city_primary_reason":"2 sentences — why this city for this company profile","city_alt":"alternative city","city_alt_reason":"1 sentence","hidden_insight":"1 non-obvious, data-backed insight most GCC consultants miss — specific to this company, industry, and HQ country","setup_budget_total_usd":number,"setup_budget_breakdown":[{"category":"Entity Formation & Legal (PvtLtd incorporation, CA, company secretary)","cost_usd":number,"timeline":"Month 1-2","notes":"specific vendors/actions"},{"category":"Office Space & Infrastructure (fit-out, furniture, lease deposit)","cost_usd":number,"timeline":"Month 2-4","notes":"Grade-A area recommendation"},{"category":"IT & Technology Setup (laptops, servers, network, licenses)","cost_usd":number,"timeline":"Month 2-5","notes":"key items"},{"category":"Talent Acquisition Year 1 (recruitment fees, ESOP, onboarding)","cost_usd":number,"timeline":"Month 1-12","notes":"avg cost per hire"},{"category":"Compliance & Regulatory (STPI/SEZ registration, audit, payroll setup)","cost_usd":number,"timeline":"Month 1-3","notes":"key registrations"},{"category":"Pithonix Setup Management Fee (project management, JEET+HARI+GOT deployment)","cost_usd":number,"timeline":"Full project","notes":"milestone-based billing"}],"yearly_budget":[{"year":"Year 1 — Setup + Ramp","budget_usd":number,"focus":"Entity setup, first hires, infrastructure"},{"year":"Year 2 — Scale","budget_usd":number,"focus":"Scale to full headcount, process migration"},{"year":"Year 3 — Optimize","budget_usd":number,"focus":"Efficiency, automation, CoE development"}],"govt_incentives":[{"scheme":"exact scheme name","benefit":"specific benefit with numbers","eligibility":"who qualifies","agency":"STPI / SEZ / State IT Dept / MeitY / DPIIT"},{"scheme":"...","benefit":"...","eligibility":"...","agency":"..."},{"scheme":"...","benefit":"...","eligibility":"...","agency":"..."}],"banking_support":[{"bank":"State Bank of India (SBI) — always include as first entry given its unmatched network, govt scheme access, and pan-India payroll reach","offering":"specific SBI program name","benefit":"what SBI offers to a new GCC entity"},{"bank":"HDFC or ICICI or Kotak based on company profile","offering":"specific program name","benefit":"what it offers"},{"bank":"third bank relevant to company HQ country or industry","offering":"specific program name","benefit":"what it offers"}],"headcount":[y1,y2,y3,y4,y5],"savings_usd":[y1,y2,y3,y4,y5],"cost_usd":[y1,y2,y3,y4,y5],"break_even_months":number,"total_5yr_savings_usd":number,"risks":[{"risk":"name","probability":"High/Medium/Low","mitigation":"specific action"},{"risk":"...","probability":"...","mitigation":"..."},{"risk":"...","probability":"...","mitigation":"..."}],"phase0_actions":["specific action 1","specific action 2","specific action 3","specific action 4","specific action 5"],"pithonix_role":"2 sentences on exactly what Pithonix delivers as the setup contractor for this company — not generic, specific to their profile"}';
