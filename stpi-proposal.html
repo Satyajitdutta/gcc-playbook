@@ -1,0 +1,1999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GCC Playbook — Strategic Platform Partnership Proposal | Pithonix AI × STPI</title>
+  <style>
+    /* =====================================================
+       RESET & BASE
+    ===================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --navy:       #003F87;
+      --navy-light: #005cbf;
+      --navy-pale:  #e8f0fa;
+      --gold:       #C8963E;
+      --gold-light: #f0d9a8;
+      --gold-pale:  #fdf6e8;
+      --black:      #111111;
+      --dark:       #2c2c2c;
+      --mid:        #555555;
+      --light:      #888888;
+      --border:     #d0d9e8;
+      --stripe:     #f5f8fd;
+      --white:      #ffffff;
+      --page-max:   860px;
+    }
+
+    html {
+      font-size: 16px;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: #f0f2f5;
+      color: var(--dark);
+      line-height: 1.7;
+    }
+
+    /* =====================================================
+       LAYOUT WRAPPER
+    ===================================================== */
+    .document {
+      max-width: var(--page-max);
+      margin: 0 auto;
+      background: var(--white);
+      box-shadow: 0 4px 40px rgba(0,0,0,0.18);
+    }
+
+    /* =====================================================
+       COVER PAGE
+    ===================================================== */
+    .cover {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 0;
+      background: var(--white);
+      position: relative;
+      overflow: hidden;
+      page-break-after: always;
+    }
+
+    .cover-top-bar {
+      background: var(--navy);
+      height: 10px;
+      width: 100%;
+    }
+
+    .cover-accent-bar {
+      background: var(--gold);
+      height: 4px;
+      width: 100%;
+    }
+
+    .cover-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 60px 60px 40px;
+      position: relative;
+    }
+
+    /* Decorative corner elements */
+    .cover-body::before {
+      content: '';
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      width: 80px;
+      height: 80px;
+      border-top: 3px solid var(--navy);
+      border-left: 3px solid var(--navy);
+      opacity: 0.25;
+    }
+
+    .cover-body::after {
+      content: '';
+      position: absolute;
+      bottom: 30px;
+      right: 30px;
+      width: 80px;
+      height: 80px;
+      border-bottom: 3px solid var(--gold);
+      border-right: 3px solid var(--gold);
+      opacity: 0.4;
+    }
+
+    .logo-lockup {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      margin-bottom: 60px;
+    }
+
+    .logo-pithonix {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .logo-wordmark {
+      font-family: 'Arial', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--navy);
+    }
+
+    .logo-wordmark span {
+      color: var(--gold);
+    }
+
+    .logo-tagline {
+      font-family: 'Arial', sans-serif;
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-top: 2px;
+    }
+
+    .logo-divider {
+      width: 1px;
+      height: 50px;
+      background: var(--border);
+    }
+
+    .logo-presented {
+      font-family: 'Arial', sans-serif;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--light);
+      text-align: left;
+      line-height: 1.8;
+    }
+
+    .logo-presented strong {
+      display: block;
+      font-size: 13px;
+      color: var(--navy);
+      letter-spacing: 1px;
+    }
+
+    .cover-rule {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--navy), var(--gold));
+      margin: 0 auto 30px;
+    }
+
+    .cover-label {
+      font-family: 'Arial', sans-serif;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 18px;
+    }
+
+    .cover-title {
+      font-family: 'Georgia', serif;
+      font-size: 36px;
+      font-weight: normal;
+      color: var(--navy);
+      line-height: 1.3;
+      margin-bottom: 10px;
+      max-width: 640px;
+    }
+
+    .cover-title em {
+      font-style: normal;
+      color: var(--gold);
+    }
+
+    .cover-subtitle {
+      font-family: 'Arial', sans-serif;
+      font-size: 13px;
+      color: var(--mid);
+      line-height: 1.7;
+      margin-bottom: 50px;
+      max-width: 560px;
+    }
+
+    .cover-meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+      border: 1px solid var(--border);
+      max-width: 560px;
+      width: 100%;
+      margin-bottom: 40px;
+    }
+
+    .cover-meta-cell {
+      padding: 16px 20px;
+      border-right: 1px solid var(--border);
+      text-align: left;
+    }
+
+    .cover-meta-cell:last-child {
+      border-right: none;
+    }
+
+    .cover-meta-label {
+      font-family: 'Arial', sans-serif;
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-bottom: 4px;
+    }
+
+    .cover-meta-value {
+      font-family: 'Arial', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .cover-confidential {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--gold);
+      padding: 6px 16px;
+      border-radius: 2px;
+    }
+
+    .cover-confidential-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .cover-confidential-text {
+      font-family: 'Arial', sans-serif;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    .cover-footer {
+      padding: 20px 60px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cover-footer-text {
+      font-family: 'Arial', sans-serif;
+      font-size: 10px;
+      color: var(--light);
+      letter-spacing: 0.5px;
+    }
+
+    .cover-bottom-bar {
+      background: var(--navy);
+      height: 6px;
+      width: 100%;
+    }
+
+    /* =====================================================
+       RUNNING FOOTER
+    ===================================================== */
+    .page-footer {
+      background: var(--navy);
+      padding: 10px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .page-footer-text {
+      font-family: 'Arial', sans-serif;
+      font-size: 9px;
+      color: rgba(255,255,255,0.65);
+      letter-spacing: 0.5px;
+    }
+
+    .page-footer-brand {
+      font-family: 'Arial', sans-serif;
+      font-size: 9px;
+      color: var(--gold);
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    /* =====================================================
+       CONTENT SECTIONS
+    ===================================================== */
+    .content {
+      padding: 0;
+    }
+
+    .section {
+      padding: 52px 60px 44px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+
+    .section:last-of-type {
+      border-bottom: none;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+
+    .section-number {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'Arial', sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+    }
+
+    .section-title-group {
+      flex: 1;
+    }
+
+    .section-eyebrow {
+      font-family: 'Arial', sans-serif;
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .section-title {
+      font-family: 'Georgia', serif;
+      font-size: 26px;
+      font-weight: normal;
+      color: var(--navy);
+      line-height: 1.25;
+    }
+
+    .section-rule {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, var(--navy) 0%, var(--gold) 40%, transparent 100%);
+      margin-bottom: 32px;
+      opacity: 0.4;
+    }
+
+    /* =====================================================
+       TYPOGRAPHY WITHIN SECTIONS
+    ===================================================== */
+    .section p {
+      font-family: 'Georgia', serif;
+      font-size: 14.5px;
+      color: var(--dark);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .section p:last-child {
+      margin-bottom: 0;
+    }
+
+    .section ul {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 20px;
+    }
+
+    .section ul li {
+      font-family: 'Georgia', serif;
+      font-size: 14.5px;
+      color: var(--dark);
+      line-height: 1.75;
+      padding: 6px 0 6px 28px;
+      position: relative;
+      border-bottom: 1px solid #f0f3f8;
+    }
+
+    .section ul li:last-child {
+      border-bottom: none;
+    }
+
+    .section ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 16px;
+      width: 8px;
+      height: 2px;
+      background: var(--gold);
+    }
+
+    .section ul li strong {
+      color: var(--navy);
+      font-family: 'Arial', sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+    }
+
+    /* =====================================================
+       CALLOUT / HIGHLIGHT BOX
+    ===================================================== */
+    .callout {
+      border-left: 4px solid var(--navy);
+      background: var(--navy-pale);
+      padding: 20px 24px;
+      margin: 24px 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .callout p {
+      font-size: 14px !important;
+      color: var(--navy) !important;
+      margin-bottom: 0 !important;
+    }
+
+    .callout-gold {
+      border-left-color: var(--gold);
+      background: var(--gold-pale);
+    }
+
+    .callout-gold p {
+      color: #7a5520 !important;
+    }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 28px 0;
+    }
+
+    .stat-card {
+      border: 1px solid var(--border);
+      padding: 20px 16px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--navy);
+    }
+
+    .stat-card:nth-child(2)::after { background: var(--gold); }
+    .stat-card:nth-child(3)::after { background: linear-gradient(90deg, var(--navy), var(--gold)); }
+
+    .stat-number {
+      font-family: 'Arial', sans-serif;
+      font-size: 30px;
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-number.gold { color: var(--gold); }
+
+    .stat-label {
+      font-family: 'Arial', sans-serif;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--light);
+      line-height: 1.4;
+    }
+
+    /* =====================================================
+       TABLES
+    ===================================================== */
+    .table-wrap {
+      overflow-x: auto;
+      margin: 24px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Arial', sans-serif;
+      font-size: 13px;
+    }
+
+    thead tr {
+      background: var(--navy);
+    }
+
+    thead th {
+      color: var(--white);
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 12px 16px;
+      text-align: left;
+    }
+
+    thead th:first-child {
+      border-left: none;
+    }
+
+    tbody tr:nth-child(odd) {
+      background: var(--white);
+    }
+
+    tbody tr:nth-child(even) {
+      background: var(--stripe);
+    }
+
+    tbody tr:hover {
+      background: var(--navy-pale);
+    }
+
+    tbody td {
+      padding: 11px 16px;
+      color: var(--dark);
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+
+    tbody td:first-child {
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    /* =====================================================
+       PARTNERSHIP MODEL CARDS
+    ===================================================== */
+    .model-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+      margin: 28px 0;
+    }
+
+    .model-card {
+      border: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .model-card.recommended {
+      border-color: var(--navy);
+      border-width: 2px;
+    }
+
+    .model-card-badge {
+      display: none;
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--gold);
+      color: var(--white);
+      font-family: 'Arial', sans-serif;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 3px 8px;
+    }
+
+    .model-card.recommended .model-card-badge {
+      display: block;
+    }
+
+    .model-card-header {
+      background: var(--navy);
+      padding: 18px 20px;
+    }
+
+    .model-card.recommended .model-card-header {
+      background: linear-gradient(135deg, var(--navy), var(--navy-light));
+    }
+
+    .model-card-letter {
+      font-family: 'Arial', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: rgba(255,255,255,0.2);
+      line-height: 1;
+    }
+
+    .model-card-name {
+      font-family: 'Georgia', serif;
+      font-size: 18px;
+      color: var(--white);
+      margin-top: 2px;
+    }
+
+    .model-card-body {
+      padding: 20px;
+    }
+
+    .model-card-item {
+      font-family: 'Arial', sans-serif;
+      font-size: 12px;
+      color: var(--dark);
+      padding: 7px 0 7px 18px;
+      position: relative;
+      border-bottom: 1px solid #f0f3f8;
+      line-height: 1.5;
+    }
+
+    .model-card-item:last-child {
+      border-bottom: none;
+    }
+
+    .model-card-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 14px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--navy);
+    }
+
+    .model-card.recommended .model-card-item::before {
+      background: var(--gold);
+    }
+
+    /* =====================================================
+       CO-BRAND MOCKUP
+    ===================================================== */
+    .cobrand-mockup {
+      border: 1px solid var(--border);
+      margin: 28px 0;
+      overflow: hidden;
+    }
+
+    .cobrand-header-bar {
+      background: var(--navy);
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cobrand-logo-left {
+      font-family: 'Arial', sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: 1px;
+    }
+
+    .cobrand-logo-right {
+      font-family: 'Arial', sans-serif;
+      font-size: 10px;
+      color: rgba(255,255,255,0.75);
+      text-align: right;
+    }
+
+    .cobrand-logo-right strong {
+      color: var(--gold);
+      font-size: 12px;
+    }
+
+    .cobrand-tagline-bar {
+      background: var(--gold);
+      padding: 6px 24px;
+      font-family: 'Arial', sans-serif;
+      font-size: 10px;
+      color: var(--white);
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .cobrand-body {
+      padding: 20px 24px;
+      background: var(--stripe);
+      font-family: 'Arial', sans-serif;
+      font-size: 12px;
+      color: var(--mid);
+      font-style: italic;
+      text-align: center;
+    }
+
+    /* =====================================================
+       TECH SPEC GRID
+    ===================================================== */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 24px 0;
+    }
+
+    .tech-item {
+      display: flex;
+      gap: 14px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      align-items: flex-start;
+    }
+
+    .tech-icon {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'Arial', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+
+    .tech-label {
+      font-family: 'Arial', sans-serif;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 3px;
+    }
+
+    .tech-value {
+      font-family: 'Arial', sans-serif;
+      font-size: 12.5px;
+      color: var(--dark);
+      line-height: 1.5;
+    }
+
+    /* =====================================================
+       ABOUT SECTION
+    ===================================================== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 24px 0;
+    }
+
+    .about-card {
+      border: 1px solid var(--border);
+      padding: 20px;
+    }
+
+    .about-card-icon {
+      font-family: 'Arial', sans-serif;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .about-card-title {
+      font-family: 'Georgia', serif;
+      font-size: 17px;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+
+    .about-card-text {
+      font-family: 'Arial', sans-serif;
+      font-size: 12.5px;
+      color: var(--mid);
+      line-height: 1.6;
+    }
+
+    /* =====================================================
+       CONTACT BOX
+    ===================================================== */
+    .contact-box {
+      border: 2px solid var(--navy);
+      padding: 28px 32px;
+      margin-top: 32px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .contact-heading {
+      font-family: 'Arial', sans-serif;
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .contact-line {
+      font-family: 'Arial', sans-serif;
+      font-size: 13px;
+      color: var(--dark);
+      margin-bottom: 6px;
+      line-height: 1.5;
+    }
+
+    .contact-line strong {
+      color: var(--navy);
+      font-weight: 700;
+    }
+
+    .contact-line a {
+      color: var(--navy);
+      text-decoration: none;
+    }
+
+    /* =====================================================
+       PAGE BREAK HELPERS
+    ===================================================== */
+    .page-break {
+      page-break-before: always;
+    }
+
+    .no-break {
+      page-break-inside: avoid;
+    }
+
+    /* =====================================================
+       SECTION DIVIDER
+    ===================================================== */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent);
+      margin: 0;
+    }
+
+    /* =====================================================
+       NUMBERED STEPS
+    ===================================================== */
+    .steps-list {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0;
+    }
+
+    .steps-list li {
+      display: flex;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+    }
+
+    .steps-list li:last-child {
+      border-bottom: none;
+    }
+
+    .step-num {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      background: var(--gold);
+      color: var(--white);
+      font-family: 'Arial', sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+
+    .step-content {
+      flex: 1;
+    }
+
+    .step-title {
+      font-family: 'Arial', sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 3px;
+    }
+
+    .step-detail {
+      font-family: 'Arial', sans-serif;
+      font-size: 12.5px;
+      color: var(--mid);
+      line-height: 1.5;
+    }
+
+    /* =====================================================
+       TOC PAGE
+    ===================================================== */
+    .toc-page {
+      padding: 52px 60px 44px;
+      border-bottom: 1px solid var(--border);
+      page-break-after: always;
+    }
+
+    .toc-title {
+      font-family: 'Arial', sans-serif;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 28px;
+    }
+
+    .toc-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .toc-item {
+      display: flex;
+      align-items: baseline;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      gap: 12px;
+    }
+
+    .toc-num {
+      flex-shrink: 0;
+      font-family: 'Arial', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gold);
+      width: 28px;
+    }
+
+    .toc-name {
+      flex: 1;
+      font-family: 'Georgia', serif;
+      font-size: 15px;
+      color: var(--navy);
+    }
+
+    .toc-dots {
+      flex: 1;
+      border-bottom: 1px dotted var(--border);
+      margin-bottom: 3px;
+    }
+
+    .toc-sub {
+      font-family: 'Arial', sans-serif;
+      font-size: 11px;
+      color: var(--light);
+      margin-top: 2px;
+    }
+
+    /* =====================================================
+       PRINT STYLES
+    ===================================================== */
+    @media print {
+      @page {
+        size: A4;
+        margin: 0;
+      }
+
+      html, body {
+        background: white;
+        font-size: 13px;
+      }
+
+      .document {
+        max-width: none;
+        width: 100%;
+        box-shadow: none;
+      }
+
+      .cover {
+        min-height: 297mm;
+        height: 297mm;
+      }
+
+      .section {
+        page-break-inside: avoid;
+      }
+
+      .page-break {
+        page-break-before: always;
+      }
+
+      .no-break {
+        page-break-inside: avoid;
+      }
+
+      table { page-break-inside: avoid; }
+
+      .model-card, .stat-card, .tech-item, .about-card {
+        page-break-inside: avoid;
+      }
+
+      tbody tr:hover {
+        background: inherit;
+      }
+
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="document">
+
+  <!-- ==========================================
+       COVER PAGE
+  =========================================== -->
+  <div class="cover">
+    <div class="cover-top-bar"></div>
+    <div class="cover-accent-bar"></div>
+
+    <div class="cover-body">
+
+      <div class="logo-lockup">
+        <div class="logo-pithonix">
+          <div class="logo-wordmark">Pithonix<span>AI</span></div>
+          <div class="logo-tagline">India's AI-Native Enterprise Builder</div>
+        </div>
+        <div class="logo-divider"></div>
+        <div class="logo-presented">
+          <span>Submitted to</span>
+          <strong>Software Technology Parks of India</strong>
+          <span>Ministry of Electronics &amp; IT (MeitY)</span>
+        </div>
+      </div>
+
+      <div class="cover-rule"></div>
+      <div class="cover-label">Strategic Partnership Proposal — April 2026</div>
+
+      <h1 class="cover-title">
+        GCC Playbook —<br/>
+        <em>Strategic Platform Partnership</em><br/>
+        Proposal
+      </h1>
+
+      <p class="cover-subtitle">
+        A proposal for co-hosting and co-branding India's first AI-native GCC
+        Intelligence Platform on the STPI digital ecosystem — accelerating
+        foreign investment and positioning STPI as the digital front door for
+        India's $100B+ GCC ambition.
+      </p>
+
+      <div class="cover-meta-grid">
+        <div class="cover-meta-cell">
+          <div class="cover-meta-label">Prepared by</div>
+          <div class="cover-meta-value">Pithonix AI Pvt Ltd</div>
+        </div>
+        <div class="cover-meta-cell">
+          <div class="cover-meta-label">Date</div>
+          <div class="cover-meta-value">April 2026</div>
+        </div>
+        <div class="cover-meta-cell">
+          <div class="cover-meta-label">Platform</div>
+          <div class="cover-meta-value">gcc-playbook.pithonix.ai</div>
+        </div>
+      </div>
+
+      <div class="cover-confidential">
+        <div class="cover-confidential-dot"></div>
+        <div class="cover-confidential-text">Private &amp; Confidential — For STPI Review Only</div>
+      </div>
+
+    </div>
+
+    <div class="cover-footer">
+      <div class="cover-footer-text">Confidential — Prepared by Pithonix AI Pvt Ltd for STPI | April 2026</div>
+      <div class="cover-footer-text">Registered: Hyderabad, Telangana, India | info@pithonix.ai</div>
+    </div>
+
+    <div class="cover-bottom-bar"></div>
+  </div>
+
+  <!-- Running footer appears on every subsequent page -->
+  <div class="page-footer">
+    <div class="page-footer-text">Confidential — Prepared by Pithonix AI Pvt Ltd for STPI | April 2026 | gcc-playbook.pithonix.ai</div>
+    <div class="page-footer-brand">PITHONIX AI × STPI</div>
+  </div>
+
+  <!-- ==========================================
+       TABLE OF CONTENTS
+  =========================================== -->
+  <div class="toc-page">
+    <div class="toc-title">Table of Contents</div>
+    <ul class="toc-list">
+      <li class="toc-item">
+        <span class="toc-num">01</span>
+        <div>
+          <div class="toc-name">Executive Summary</div>
+          <div class="toc-sub">The GCC opportunity, the platform, and the proposal at a glance</div>
+        </div>
+      </li>
+      <li class="toc-item">
+        <span class="toc-num">02</span>
+        <div>
+          <div class="toc-name">The Problem — Why Foreign Investors Struggle</div>
+          <div class="toc-sub">Market fragmentation, consultant dependency, and investor drop-off</div>
+        </div>
+      </li>
+      <li class="toc-item">
+        <span class="toc-num">03</span>
+        <div>
+          <div class="toc-name">The Solution — GCC Playbook Platform</div>
+          <div class="toc-sub">Platform capabilities, technology stack, and live demonstration</div>
+        </div>
+      </li>
+      <li class="toc-item">
+        <span class="toc-num">04</span>
+        <div>
+          <div class="toc-name">Why STPI — The Strategic Fit</div>
+          <div class="toc-sub">Institutional alignment, geographic coverage, and competitive positioning</div>
+        </div>
+      </li>
+      <li class="toc-item">
+        <span class="toc-num">05</span>
+        <div>
+          <div class="toc-name">Partnership Options — Three Models</div>
+          <div class="toc-sub">Embed, White Label, and Co-Development — comparative analysis</div>
+        </div>
+      </li>
+      <li class="toc-item">
+        <span class="toc-num">06</span>
+        <div>
+          <div class="toc-name">Technical Brief — Integration &amp; Data Security</div>
+          <div class="toc-sub">Integration architecture, security posture, and hosting options</div>
+        </div>
+      </li>
+      <li class="toc-item">
+        <span class="toc-num">07</span>
+        <div>
+          <div class="toc-name">Co-Branding Proposal</div>
+          <div class="toc-sub">Visual identity, STPI theme integration, and platform co-branding</div>
+        </div>
+      </li>
+      <li class="toc-item">
+        <span class="toc-num">08</span>
+        <div>
+          <div class="toc-name">Impact Projections</div>
+          <div class="toc-sub">Investor reach, GCC creation, and STPI registration uplift estimates</div>
+        </div>
+      </li>
+      <li class="toc-item">
+        <span class="toc-num">09</span>
+        <div>
+          <div class="toc-name">Next Steps &amp; Timeline</div>
+          <div class="toc-sub">Six-week implementation roadmap from MOU to live launch</div>
+        </div>
+      </li>
+      <li class="toc-item">
+        <span class="toc-num">10</span>
+        <div>
+          <div class="toc-name">About Pithonix AI</div>
+          <div class="toc-sub">Company background, flagship products, and GCC credentials</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="content">
+
+    <!-- ==========================================
+         SECTION 1: EXECUTIVE SUMMARY
+    =========================================== -->
+    <div class="section page-break">
+      <div class="section-header">
+        <div class="section-number">01</div>
+        <div class="section-title-group">
+          <div class="section-eyebrow">Section One</div>
+          <h2 class="section-title">Executive Summary</h2>
+        </div>
+      </div>
+      <div class="section-rule"></div>
+
+      <div class="stat-row no-break">
+        <div class="stat-card">
+          <div class="stat-number">1,800+</div>
+          <div class="stat-label">GCCs operating<br/>in India (2025)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number gold">$64B+</div>
+          <div class="stat-label">GCC sector<br/>annual revenue</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">$100B+</div>
+          <div class="stat-label">Projected GCC<br/>revenue by 2030</div>
+        </div>
+      </div>
+
+      <p>
+        India's Global Capability Centre (GCC) sector is the fastest-growing segment of the technology economy. According to NASSCOM and Zinnov's 2025 data, over 1,800 GCCs now operate across India, generating more than $64 billion in annual revenue and directly employing over 1.9 million technology professionals. By 2030, the sector is projected to surpass $100 billion in revenue, cementing India's status as the world's preferred destination for global enterprise capability building.
+      </p>
+
+      <p>
+        Yet despite this extraordinary momentum, the decision-making process for foreign companies evaluating India as a GCC destination remains deeply fragmented, opaque, and expensive. Most organizations rely on costly consulting engagements — spending between $50,000 and $200,000 — simply to evaluate whether India is the right choice. Government portals are siloed. Market data is scattered across consulting reports behind paywalls. The result is a landscape where only well-resourced multinationals can afford to explore India seriously; mid-market and growth-stage companies abandon the process entirely.
+      </p>
+
+      <div class="callout no-break">
+        <p>
+          <strong>Pithonix AI has built India's first AI-native GCC Intelligence Platform</strong> — the GCC Playbook — that automates the entire discovery-to-blueprint process using Gemini AI. A foreign company enters their industry, headcount target, functions, and timeline, and receives a complete, personalized GCC Blueprint in under 10 seconds. Free of charge. No consultant required.
+        </p>
+      </div>
+
+      <p>
+        This proposal requests that the Software Technology Parks of India (STPI), the apex body under MeitY responsible for IT/ITES exports, formally co-host or feature the GCC Playbook on the stpi.in ecosystem. The specific proposition is simple and risk-free: STPI embeds the GCC Playbook as a tool on its website, gains co-branding rights, and receives qualified investor inquiry data generated by the platform — at zero infrastructure cost to STPI.
+      </p>
+
+      <p>
+        The business case is compelling on both sides. For STPI, this initiative transforms stpi.in from a registration portal into a proactive investor acquisition platform — the digital front door for India's entire GCC ambition. For Pithonix AI, STPI's institutional credibility provides the most powerful distribution and trust signal available in the Indian government ecosystem. For India, it means more GCCs — more jobs, more exports, more FDI.
+      </p>
+
+      <div class="callout callout-gold no-break">
+        <p>
+          <strong>This is a zero-cost, high-impact initiative for STPI.</strong> No engineering resources. No procurement cycle. No infrastructure investment. The platform can be live on stpi.in within two weeks of signing a Letter of Intent. The only input required from STPI is institutional endorsement — and the return is leadership of India's AI-powered investment promotion story.
+        </p>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- ==========================================
+         SECTION 2: THE PROBLEM
+    =========================================== -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">02</div>
+        <div class="section-title-group">
+          <div class="section-eyebrow">Section Two</div>
+          <h2 class="section-title">The Problem — Why Foreign Investors Struggle</h2>
+        </div>
+      </div>
+      <div class="section-rule"></div>
+
+      <p>
+        Despite India's undeniable attractiveness as a GCC destination, the information landscape for foreign investors remains among the most fragmented in the global FDI ecosystem. The barriers are not just bureaucratic — they are structural, informational, and economic.
+      </p>
+
+      <ul>
+        <li>
+          <strong>No single authoritative platform exists.</strong> A CFO in Germany evaluating India for a 200-person technology GCC must simultaneously navigate Invest India, Make in India, individual state investment boards, NASSCOM publications, STPI scheme documentation, and commercial real estate reports — none of which are connected, personalized, or up-to-date in a unified format.
+        </li>
+        <li>
+          <strong>STPI's portal serves registration, not discovery.</strong> The stpi.in website is primarily designed for companies already registered under the STPI scheme — not for foreign companies at the earliest evaluation stage. This is a critical missed opportunity: investors arriving at STPI's website represent the highest-intent audience in the GCC decision funnel.
+        </li>
+        <li>
+          <strong>Consulting fees create a massive equity gap.</strong> Foreign companies spend between $50,000 and $200,000 on management consulting engagements — Big 4, NASSCOM affiliated advisories, and GCC-specialist boutiques — before making a single hiring decision in India. This cost structure effectively excludes mid-market companies, private equity-backed businesses, and growth-stage technology firms that could be India's next generation of GCC investors.
+        </li>
+        <li>
+          <strong>Government portals are siloed and non-personalized.</strong> Invest India provides macro-level pitch materials. Make in India is sector-agnostic. STPI scheme documentation requires prior knowledge of what the STPI scheme even is. None of these platforms answer the core question every foreign investor asks first: <em>"If I want to set up a 150-person data engineering GCC in India for $3 million over 3 years — which city, which structure, which incentives, and what do I do first?"</em>
+        </li>
+        <li>
+          <strong>The result: investor drop-off before engagement.</strong> Industry estimates suggest that for every foreign company that successfully establishes a GCC in India, two to three others begin the evaluation process and abandon it — typically within the first 60–90 days — due to information overload, contradictory advice, or the sheer cost of credible guidance. India is losing GCC investments it deserves.
+        </li>
+      </ul>
+
+      <div class="callout no-break">
+        <p>
+          The solution is not more brochures or more advisory meetings. It is an intelligent, personalized, instantly accessible platform that answers the right question, for the right investor, at the right moment — and routes them into the STPI ecosystem for formal engagement.
+        </p>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- ==========================================
+         SECTION 3: THE SOLUTION
+    =========================================== -->
+    <div class="section page-break">
+      <div class="section-header">
+        <div class="section-number">03</div>
+        <div class="section-title-group">
+          <div class="section-eyebrow">Section Three</div>
+          <h2 class="section-title">The Solution — GCC Playbook Platform</h2>
+        </div>
+      </div>
+      <div class="section-rule"></div>
+
+      <p>
+        The GCC Playbook is India's first AI-native GCC Intelligence Platform, built and operated by Pithonix AI Pvt Ltd. The platform is live, functional, and accessible at <strong>gcc-playbook.pithonix.ai</strong>. It requires no login, no consultant, and no prior knowledge of Indian regulatory frameworks. A foreign executive anywhere in the world can receive a complete, personalized GCC blueprint for India in under 10 seconds.
+      </p>
+
+      <h3 style="font-family: Arial, sans-serif; font-size: 14px; font-weight: 700; color: var(--navy); letter-spacing: 1px; text-transform: uppercase; margin: 28px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--navy-pale);">Core Platform Capabilities</h3>
+
+      <ul>
+        <li>
+          <strong>AI-Powered GCC Simulator.</strong> The platform's flagship tool. A foreign company inputs their industry vertical, target headcount, primary functions (engineering, analytics, finance, legal operations, etc.), timeline, and budget range. Powered by Gemini AI with 2026 India market benchmarks sourced from NASSCOM, CBRE, Mercer, and Zinnov data, the simulator generates a complete, personalized GCC Blueprint in under 10 seconds — at no cost.
+        </li>
+        <li>
+          <strong>Comprehensive Blueprint Output.</strong> Every generated blueprint includes: recommended Indian city (drawn from a database of 25 cities spanning Tier 1, 2, and 3 locations), a detailed 3-year cost projection in USD (covering talent, real estate, setup costs, and operational expenses), government incentives specifically applicable to the user's industry and location profile, banking and treasury support options, entity formation steps under Indian company law, a Phase 0 action plan covering the first 90 days, and a risk and mitigation map for the GCC establishment journey.
+        </li>
+        <li>
+          <strong>India City Intelligence Database.</strong> An interactive comparative intelligence module covering 25 cities across India, including all major Tier 1 destinations (Bengaluru, Hyderabad, Mumbai, Pune, Chennai, Gurgaon, Noida) as well as emerging Tier 2 and Tier 3 locations (Coimbatore, Kochi, Jaipur, Ahmedabad, Chandigarh, Nagpur, Vizag, and others). Each city profile includes real-time talent pool data, current office rental rates (USD per sq ft per month), attrition rates by function, and applicable state and central government incentive schemes.
+        </li>
+        <li>
+          <strong>Government Incentive Cards.</strong> A structured, navigable directory of central and state government incentives available to GCC investors, with each incentive card linking directly to the relevant government portal — STPI, DPIIT, MeitY, Invest India, and individual state IT departments. STPI's STP scheme is prominently featured as a primary recommendation for eligible entities.
+        </li>
+        <li>
+          <strong>GOT Advisor (Graph of Thought).</strong> The platform's advanced reasoning engine — built on Pithonix AI's proprietary Graph of Thought (GOT) architecture — that answers free-form, open-ended GCC strategy questions. Investors can ask questions like "How does India's talent market compare to Poland for an AI/ML GCC?" or "What are the risks of setting up in Hyderabad vs. Pune?" and receive structured, multi-dimensional analysis drawing on the platform's knowledge base.
+        </li>
+      </ul>
+
+      <h3 style="font-family: Arial, sans-serif; font-size: 14px; font-weight: 700; color: var(--navy); letter-spacing: 1px; text-transform: uppercase; margin: 28px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--navy-pale);">Technology Stack</h3>
+
+      <div class="tech-grid no-break">
+        <div class="tech-item">
+          <div class="tech-icon">FE</div>
+          <div>
+            <div class="tech-label">Frontend</div>
+            <div class="tech-value">Single-page HTML/JavaScript — zero framework lock-in. Deployable on any government-approved infrastructure including NIC Cloud and MeghRaj without modification.</div>
+          </div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon">AI</div>
+          <div>
+            <div class="tech-label">AI Engine</div>
+            <div class="tech-value">Google Gemini 2.5 Flash, accessed via a secure server-side proxy. The API key is never exposed to the browser. All prompts include 2026 India market benchmark data.</div>
+          </div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon">HO</div>
+          <div>
+            <div class="tech-label">Hosting</div>
+            <div class="tech-value">Vercel global CDN (current). 99.99% uptime SLA. Can be mirrored on NIC Cloud or MeghRaj within 4 weeks if required by STPI's data residency policy.</div>
+          </div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon">LC</div>
+          <div>
+            <div class="tech-label">Lead Capture</div>
+            <div class="tech-value">Microsoft Power Automate pipeline routing investor inquiries to Pithonix CRM and STPI's preferred notification endpoint in real time.</div>
+          </div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon">DA</div>
+          <div>
+            <div class="tech-label">Data Sources</div>
+            <div class="tech-value">2026 benchmarks: NASSCOM GCC Report, CBRE India Office Market, Mercer Total Remuneration Survey, Zinnov GCC Landscape Report. Updated quarterly.</div>
+          </div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon">AC</div>
+          <div>
+            <div class="tech-label">Accessibility</div>
+            <div class="tech-value">WCAG 2.1 AA compliant. Mobile-responsive. Tested on 3G connections. Supports screen readers. Available in English; Hindi and regional language versions in roadmap.</div>
+          </div>
+        </div>
+      </div>
+
+      <p style="margin-top: 20px;">
+        The platform is currently live and publicly accessible. STPI representatives are invited to explore the full functionality at <strong>gcc-playbook.pithonix.ai</strong> prior to the first formal meeting. A dedicated demo session — including a live blueprint generation and GOT Advisor demonstration — can be arranged at STPI's convenience, either in person at the STPI headquarters or via video conference.
+      </p>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- ==========================================
+         SECTION 4: WHY STPI
+    =========================================== -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">04</div>
+        <div class="section-title-group">
+          <div class="section-eyebrow">Section Four</div>
+          <h2 class="section-title">Why STPI — The Strategic Fit</h2>
+        </div>
+      </div>
+      <div class="section-rule"></div>
+
+      <p>
+        The selection of STPI as a co-branding and distribution partner is not a default or convenience choice. STPI is, institutionally and structurally, the single most appropriate government body in India to anchor an AI-powered GCC intelligence platform. The alignment across multiple dimensions is precise.
+      </p>
+
+      <ul>
+        <li>
+          <strong>STPI is the natural institutional home for GCC intelligence.</strong> STPI's statutory mandate covers the registration, support, and monitoring of software technology parks and IT/ITES export units. GCCs are the highest-value, highest-growth category within this mandate. By extending STPI's digital presence to encompass pre-registration GCC discovery, the platform closes the full investor journey — from initial curiosity through to STPI scheme registration — within a single institutional ecosystem.
+        </li>
+        <li>
+          <strong>STPI's geographic footprint mirrors our data coverage exactly.</strong> STPI operates 64 centers across India — spanning every major metro and an extensive network of Tier 2 cities. The GCC Playbook's city intelligence database covers 25 cities, encompassing all cities where STPI centers are present and actively processing new registrations. This alignment means that every city recommendation generated by the platform maps directly to a STPI center capable of providing on-the-ground institutional support.
+        </li>
+        <li>
+          <strong>STPI captures investors at peak intent.</strong> Foreign companies visiting stpi.in are not casual browsers. They are organizations that have already identified India as a potential GCC destination and are seeking formal institutional guidance. This is precisely the audience for whom the GCC Playbook delivers maximum value — and precisely the moment at which embedding a simulator produces the highest conversion to formal inquiry.
+        </li>
+        <li>
+          <strong>Co-branding with STPI delivers instant government credibility.</strong> In the international investor community, a government institutional endorsement from a MeitY body carries weight that no private-sector marketing campaign can replicate. STPI's co-branding on the GCC Playbook platform would immediately distinguish it from the ecosystem of commercial GCC advisory tools and position it as India's authoritative, government-backed GCC guidance platform — a status no other AI tool currently holds.
+        </li>
+        <li>
+          <strong>STPI becomes India's first AI-powered investment promotion authority.</strong> Invest India, Make in India, DPIIT, and state investment promotion boards have not yet deployed a personalized, AI-driven investment advisory tool. This partnership positions STPI — under MeitY's leadership — as the first government body in India to offer foreign investors a real-time, AI-generated investment blueprint. This is a significant strategic differentiation, both domestically and in the international investment promotion community.
+        </li>
+      </ul>
+
+      <div class="callout callout-gold no-break">
+        <p>
+          The opportunity before STPI is to transform from a <em>registration authority</em> into an <em>investment generation engine</em> — and to do so without any change to STPI's existing operations, staffing, or technology infrastructure.
+        </p>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- ==========================================
+         SECTION 5: PARTNERSHIP OPTIONS
+    =========================================== -->
+    <div class="section page-break">
+      <div class="section-header">
+        <div class="section-number">05</div>
+        <div class="section-title-group">
+          <div class="section-eyebrow">Section Five</div>
+          <h2 class="section-title">Partnership Options — Three Models</h2>
+        </div>
+      </div>
+      <div class="section-rule"></div>
+
+      <p>
+        Pithonix AI proposes three distinct partnership structures, each calibrated to different levels of STPI institutional commitment, procurement timeline, and strategic ambition. The models are not mutually exclusive — they represent a logical progression, with Model A as the immediate first step.
+      </p>
+
+      <div class="model-grid no-break">
+
+        <div class="model-card recommended">
+          <div class="model-card-badge">Recommended</div>
+          <div class="model-card-header">
+            <div class="model-card-letter">A</div>
+            <div class="model-card-name">Embed</div>
+          </div>
+          <div class="model-card-body">
+            <div class="model-card-item">STPI embeds GCC Playbook as a widget or iframe on stpi.in/gcc or gcc.stpi.in subdomain</div>
+            <div class="model-card-item">Zero STPI engineering effort — Pithonix maintains platform fully</div>
+            <div class="model-card-item">STPI + Pithonix co-branding on platform header</div>
+            <div class="model-card-item">Leads flow to both STPI and Pithonix in real time</div>
+            <div class="model-card-item">10–15% revenue share to STPI on GCC engagements originating from STPI traffic</div>
+            <div class="model-card-item">Live within 2 weeks of Letter of Intent</div>
+            <div class="model-card-item">No procurement cycle required</div>
+          </div>
+        </div>
+
+        <div class="model-card">
+          <div class="model-card-header">
+            <div class="model-card-letter">B</div>
+            <div class="model-card-name">White Label</div>
+          </div>
+          <div class="model-card-body">
+            <div class="model-card-item">STPI deploys a fully STPI-branded version on a custom domain with STPI visual theme</div>
+            <div class="model-card-item">STPI owns the user-facing product entirely</div>
+            <div class="model-card-item">Pithonix provides AI engine and data layer under a technology license agreement</div>
+            <div class="model-card-item">Annual technology license fee — to be agreed based on usage tier</div>
+            <div class="model-card-item">Requires STPI IT procurement process (4–8 weeks)</div>
+            <div class="model-card-item">Full STPI brand authority over the platform UX</div>
+          </div>
+        </div>
+
+        <div class="model-card">
+          <div class="model-card-header">
+            <div class="model-card-letter">C</div>
+            <div class="model-card-name">Co-Development</div>
+          </div>
+          <div class="model-card-body">
+            <div class="model-card-item">Joint platform: STPI + Pithonix build an expanded version incorporating STPI's proprietary data</div>
+            <div class="model-card-item">STPI contributes registered unit database, park vacancy data, and scheme disbursement records</div>
+            <div class="model-card-item">Pithonix contributes full AI stack, GOT reasoning engine, and market benchmark data</div>
+            <div class="model-card-item">Joint IP ownership with agreed commercialization terms</div>
+            <div class="model-card-item">Funded through MeitY Digital India / STPI Innovation Fund</div>
+            <div class="model-card-item">12–18 month development and deployment timeline</div>
+          </div>
+        </div>
+
+      </div>
+
+      <h3 style="font-family: Arial, sans-serif; font-size: 14px; font-weight: 700; color: var(--navy); letter-spacing: 1px; text-transform: uppercase; margin: 32px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--navy-pale);">Comparative Model Summary</h3>
+
+      <div class="table-wrap no-break">
+        <table>
+          <thead>
+            <tr>
+              <th>Dimension</th>
+              <th>Model A — Embed</th>
+              <th>Model B — White Label</th>
+              <th>Model C — Co-Dev</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Time to Live</td>
+              <td>2 weeks</td>
+              <td>4–8 weeks</td>
+              <td>12–18 months</td>
+            </tr>
+            <tr>
+              <td>STPI Engineering Effort</td>
+              <td>Zero</td>
+              <td>Minimal</td>
+              <td>Significant</td>
+            </tr>
+            <tr>
+              <td>STPI Cost</td>
+              <td>Zero</td>
+              <td>Annual license fee</td>
+              <td>Co-investment required</td>
+            </tr>
+            <tr>
+              <td>Brand Ownership</td>
+              <td>Co-branded</td>
+              <td>STPI brand primary</td>
+              <td>Joint IP</td>
+            </tr>
+            <tr>
+              <td>Lead Data Access</td>
+              <td>Shared (real-time)</td>
+              <td>STPI-owned</td>
+              <td>Joint ownership</td>
+            </tr>
+            <tr>
+              <td>Procurement Required</td>
+              <td>No</td>
+              <td>Yes (standard IT)</td>
+              <td>Yes (formal tender)</td>
+            </tr>
+            <tr>
+              <td>Revenue to STPI</td>
+              <td>10–15% royalty</td>
+              <td>Platform ownership</td>
+              <td>Joint commercialization</td>
+            </tr>
+            <tr>
+              <td>Pithonix Recommendation</td>
+              <td style="color: var(--gold); font-weight: 700;">Start Here →</td>
+              <td>Upgrade Path</td>
+              <td>Strategic Phase 2</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout no-break" style="margin-top: 24px;">
+        <p>
+          <strong>Our firm recommendation is to begin with Model A.</strong> It requires no procurement cycle, no STPI engineering resource, no IT infrastructure change, and can be deployed live within two weeks of a signed Letter of Intent. Once 90-day traction data is available — demonstrating actual investor engagement and lead quality — the institutional case for upgrading to Model B or initiating a co-development conversation under Model C becomes straightforward to make internally. The model is designed to earn its own upgrade.
+        </p>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- ==========================================
+         SECTION 6: TECHNICAL BRIEF
+    =========================================== -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">06</div>
+        <div class="section-title-group">
+          <div class="section-eyebrow">Section Six</div>
+          <h2 class="section-title">Technical Brief — Integration &amp; Data Security</h2>
+        </div>
+      </div>
+      <div class="section-rule"></div>
+
+      <p>
+        Technical integration under Model A is deliberately designed to be the simplest possible engineering operation. The following details address the integration effort, data security posture, and hosting flexibility in full.
+      </p>
+
+      <ul>
+        <li>
+          <strong>Integration effort for STPI: one line of code.</strong> Model A integration requires STPI's web team to insert a single iframe embed tag or JavaScript snippet into the stpi.in CMS — an operation functionally identical to embedding a YouTube video or a Google Map. No API keys, no server-side changes, no database modifications, no security review cycle. Estimated effort for STPI's web team: under 30 minutes.
+        </li>
+        <li>
+          <strong>Stateless architecture — no user data stored.</strong> The GCC Simulator is architecturally stateless. User inputs (industry, headcount, city preference, timeline) are sent to the Gemini API via a secure server-side proxy and the AI response is returned directly to the user's browser. No user data is written to any Pithonix database. There are no user accounts, no cookies beyond session state, and no personally identifiable information collected unless the user voluntarily submits an inquiry form.
+        </li>
+        <li>
+          <strong>API security: server-side key management.</strong> The Gemini API key is stored and accessed exclusively on the server-side proxy (a Vercel serverless function). It is never transmitted to or accessible from the user's browser at any point. This architecture meets standard government API security requirements and is consistent with MeitY's cloud security guidelines.
+        </li>
+        <li>
+          <strong>Government cloud hosting available within 4 weeks.</strong> If STPI requires data residency within India or mandates hosting on government-approved infrastructure, the platform can be fully mirrored on NIC Cloud (National Informatics Centre) or MeghRaj (Government of India's GI Cloud) within four weeks. The platform's zero-dependency frontend architecture makes this migration straightforward. Pithonix will bear the cost of migration under Model A.
+        </li>
+        <li>
+          <strong>Uptime and performance.</strong> The current Vercel deployment provides 99.99% uptime with global CDN delivery. Average page load time is under 1.2 seconds on a standard broadband connection and under 4 seconds on a 3G mobile connection — ensuring accessibility to investors connecting from markets with variable internet infrastructure.
+        </li>
+        <li>
+          <strong>Accessibility and compliance.</strong> The platform is WCAG 2.1 AA compliant, mobile-responsive across all major device categories, and has been tested across modern browsers including Chrome, Firefox, Edge, and Safari. The codebase does not use any technologies banned under MeitY's software procurement guidelines.
+        </li>
+      </ul>
+
+      <div class="callout no-break">
+        <p>
+          Pithonix AI is prepared to provide STPI's IT team with a complete technical architecture document, security review package, and third-party penetration test report (if required) as part of the due diligence process prior to Model A deployment. We expect no barriers to clearance.
+        </p>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- ==========================================
+         SECTION 7: CO-BRANDING PROPOSAL
+    =========================================== -->
+    <div class="section page-break">
+      <div class="section-header">
+        <div class="section-number">07</div>
+        <div class="section-title-group">
+          <div class="section-eyebrow">Section Seven</div>
+          <h2 class="section-title">Co-Branding Proposal</h2>
+        </div>
+      </div>
+      <div class="section-rule"></div>
+
+      <p>
+        The co-branding design philosophy for this partnership is one of institutional elevation: STPI's visual identity leads, with Pithonix AI positioned as the technology provider in the background. This ensures that foreign investors experience STPI as the authoritative source and Pithonix as the enabling technology — a framing that maximises trust for both organizations.
+      </p>
+
+      <h3 style="font-family: Arial, sans-serif; font-size: 13px; font-weight: 700; color: var(--navy); letter-spacing: 1px; text-transform: uppercase; margin: 24px 0 12px;">Platform Header — Co-Branding Mockup</h3>
+
+      <div class="cobrand-mockup no-break">
+        <div class="cobrand-header-bar">
+          <div class="cobrand-logo-left">STPI — Software Technology Parks of India</div>
+          <div class="cobrand-logo-right">
+            <strong>GCC Playbook</strong><br/>
+            Powered by Pithonix AI
+          </div>
+        </div>
+        <div class="cobrand-tagline-bar">
+          An initiative supported by STPI — Ministry of Electronics &amp; Information Technology (MeitY)
+        </div>
+        <div class="cobrand-body">
+          [Platform content — GCC Simulator, City Intelligence, Incentive Cards]
+        </div>
+      </div>
+
+      <ul>
+        <li>
+          <strong>Dual-logo header architecture.</strong> STPI logo and wordmark on the left (primary, larger). "Powered by Pithonix AI" on the right (secondary, smaller). This follows standard government-endorsed technology platform conventions — as seen on Aarogya Setu, UMANG, and other MeitY-supported digital initiatives.
+        </li>
+        <li>
+          <strong>STPI color palette applied platform-wide.</strong> STPI's brand blue (#003F87) will be the primary UI color for all navigation, section headings, and button elements. STPI's green (#00A651) will be applied to positive indicators and success states. Pithonix's gold accent (#C8963E) is retained only for the "Powered by" attribution elements.
+        </li>
+        <li>
+          <strong>Government endorsement tagline on all pages.</strong> Every page of the platform, when accessed via STPI's domain, will display the tagline: <em>"An initiative supported by STPI — Ministry of Electronics &amp; Information Technology, Government of India."</em>
+        </li>
+        <li>
+          <strong>STPI seal on blueprint output (future feature).</strong> A future enhancement — planned for the 90-day post-launch development cycle — will add the STPI official seal to the downloadable GCC Blueprint PDF, alongside the STPI center contact details most relevant to the investor's recommended city.
+        </li>
+        <li>
+          <strong>STPI scheme as primary incentive recommendation.</strong> The Government Incentive Cards module will be re-ordered when accessed via STPI's domain to feature the STPI STP Scheme and STPI Software Technology Park benefits as the first and most prominent recommendations for eligible entities — ensuring STPI's own scheme drives conversion.
+        </li>
+        <li>
+          <strong>All 64 STPI center cities reflected in city intelligence.</strong> The 25 cities currently in the intelligence database will be augmented, in coordination with STPI's program team, to reflect STPI's full 64-center geographic footprint — including STPI center contact details, dedicated STPI relationship manager names (where available), and STPI park-specific incentive information.
+        </li>
+      </ul>
+
+      <p>
+        All co-branding specifications are subject to final review and approval by STPI's communications and branding team. Pithonix will provide full design mockups in Figma format for STPI's review within 5 business days of an MOU being signed.
+      </p>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- ==========================================
+         SECTION 8: IMPACT PROJECTIONS
+    =========================================== -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">08</div>
+        <div class="section-title-group">
+          <div class="section-eyebrow">Section Eight</div>
+          <h2 class="section-title">Impact Projections</h2>
+        </div>
+      </div>
+      <div class="section-rule"></div>
+
+      <p>
+        The following impact projections are derived from three input assumptions: (1) STPI portal traffic estimated at 500,000+ visits per month based on Similarweb data for stpi.in; (2) GCC Playbook engagement rates benchmarked against comparable B2B AI tool conversion data; and (3) GCC establishment conversion rates based on NASSCOM's 2024 data on qualified investor-to-GCC conversion. These are conservative estimates — presented for planning purposes, not as guaranteed outcomes.
+      </p>
+
+      <div class="table-wrap no-break">
+        <table>
+          <thead>
+            <tr>
+              <th>Impact Metric</th>
+              <th>Year 1 Projection</th>
+              <th>Year 2 Projection</th>
+              <th>Basis</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>GCC Simulator Runs</td>
+              <td>5,000+</td>
+              <td>20,000+</td>
+              <td>1% of STPI monthly traffic × 12 months, growing with awareness</td>
+            </tr>
+            <tr>
+              <td>Qualified Investor Inquiries</td>
+              <td>300+</td>
+              <td>1,200+</td>
+              <td>6% of simulator runs converting to formal inquiry submission</td>
+            </tr>
+            <tr>
+              <td>GCC Engagements Influenced</td>
+              <td>20–30</td>
+              <td>80–120</td>
+              <td>7–10% of qualified inquiries advancing to GCC engagement</td>
+            </tr>
+            <tr>
+              <td>GCC FTE Created (Influenced)</td>
+              <td>2,000–5,000</td>
+              <td>10,000–20,000</td>
+              <td>Average GCC size of 100–200 FTE at 3-year maturity</td>
+            </tr>
+            <tr>
+              <td>STPI Registrations Influenced</td>
+              <td>15–25</td>
+              <td>60–100</td>
+              <td>70–80% of GCC engagements selecting STPI STP scheme</td>
+            </tr>
+            <tr>
+              <td>Incremental STPI Scheme Revenue</td>
+              <td>Indicative</td>
+              <td>Significant</td>
+              <td>Based on standard STPI registration and service fee structure</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p style="margin-top: 20px;">
+        To contextualise these projections: NASSCOM's 2024 data indicates approximately 100–130 new GCCs are established in India annually. If this platform — embedded on STPI's portal — contributes to even 15–25 new GCC formations in Year 1, it would represent a material 12–20% uplift on the national annual GCC addition rate attributable to a single digital channel.
+      </p>
+
+      <div class="callout callout-gold no-break">
+        <p>
+          <strong>The strategic value extends beyond the numbers.</strong> Each GCC that traces its India journey to the STPI-Pithonix platform becomes a proof point for STPI's role as an active investment generation authority — not merely a compliance registration body. The long-term institutional value of this repositioning is difficult to quantify but is, in our view, the most important outcome of this partnership.
+        </p>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- ==========================================
+         SECTION 9: NEXT STEPS & TIMELINE
+    =========================================== -->
+    <div class="section page-break">
+      <div class="section-header">
+        <div class="section-number">09</div>
+        <div class="section-title-group">
+          <div class="section-eyebrow">Section Nine</div>
+          <h2 class="section-title">Next Steps &amp; Implementation Timeline</h2>
+        </div>
+      </div>
+      <div class="section-rule"></div>
+
+      <p>
+        The following implementation timeline applies to Model A (Embed) — the recommended starting point. The entire sequence from signed Letter of Intent to public beta launch on stpi.in can be completed within six weeks. The timeline is intentionally aggressive: we have designed Model A to require minimal institutional process on STPI's side, so that momentum is not lost in procurement cycles.
+      </p>
+
+      <div class="table-wrap no-break">
+        <table>
+          <thead>
+            <tr>
+              <th>Action / Milestone</th>
+              <th>Responsible Party</th>
+              <th>Target Timeline</th>
+              <th>Deliverable</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Proposal review &amp; internal discussion</td>
+              <td>STPI Leadership</td>
+              <td>Week 1–2</td>
+              <td>Go / No-Go decision with internal stakeholders</td>
+            </tr>
+            <tr>
+              <td>Initial meeting &amp; live platform demonstration</td>
+              <td>STPI + Pithonix</td>
+              <td>Week 1</td>
+              <td>Live demo of GCC Simulator, GOT Advisor, and City Intelligence</td>
+            </tr>
+            <tr>
+              <td>Partnership model selection (A / B / C)</td>
+              <td>STPI + Pithonix</td>
+              <td>Week 2</td>
+              <td>Confirmed model with any customization requirements documented</td>
+            </tr>
+            <tr>
+              <td>MOU / Letter of Intent drafting &amp; execution</td>
+              <td>Both parties (legal)</td>
+              <td>Week 3–4</td>
+              <td>Signed MOU covering co-branding rights, lead data sharing, and revenue share terms</td>
+            </tr>
+            <tr>
+              <td>Technical integration — Model A embed</td>
+              <td>Pithonix (primary)</td>
+              <td>Week 3–4</td>
+              <td>Embed-ready code package delivered to STPI web team for review</td>
+            </tr>
+            <tr>
+              <td>STPI brand theme applied to platform</td>
+              <td>Pithonix</td>
+              <td>Week 4</td>
+              <td>Platform updated with STPI color palette, co-branding header, and endorsement tagline</td>
+            </tr>
+            <tr>
+              <td>STPI IT &amp; security review</td>
+              <td>STPI IT team</td>
+              <td>Week 4–5</td>
+              <td>Security clearance for embed code deployment on stpi.in</td>
+            </tr>
+            <tr>
+              <td>Beta launch on stpi.in</td>
+              <td>Both parties</td>
+              <td>Week 5–6</td>
+              <td>Platform live on stpi.in/gcc or gcc.stpi.in — internal team testing phase</td>
+            </tr>
+            <tr>
+              <td>Press release &amp; public announcement</td>
+              <td>Both parties (comms)</td>
+              <td>Week 6</td>
+              <td>Joint press release to business media, investor communities, and NASSCOM channels</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="font-family: Arial, sans-serif; font-size: 13px; font-weight: 700; color: var(--navy); letter-spacing: 1px; text-transform: uppercase; margin: 32px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--navy-pale);">Immediate Next Step — Requested from STPI</h3>
+
+      <p>
+        Pithonix AI requests the following as the immediate next action from STPI upon review of this proposal:
+      </p>
+
+      <ul class="steps-list">
+        <li>
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-title">Schedule a Live Platform Demonstration</div>
+            <div class="step-detail">A 45-minute session with the relevant STPI team (DG office, IT cell, or GCC programs team) to walk through the live platform, generate a sample blueprint, and answer technical and commercial questions. Can be in-person (Bengaluru or New Delhi STPI offices) or via video conference.</div>
+          </div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-title">Designate a Nodal Officer for this Engagement</div>
+            <div class="step-detail">A named STPI point of contact — at Director or Joint Director level — to own the partnership evaluation process and coordinate with Pithonix AI's engagement lead.</div>
+          </div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-title">Confirm Interest in Proceeding (Letter of Intent)</div>
+            <div class="step-detail">Even a one-page non-binding expression of interest from STPI — confirming willingness to explore Model A — enables Pithonix to begin technical customization immediately, compressing the timeline to launch.</div>
+          </div>
+        </li>
+      </ul>
+
+      <div class="callout no-break">
+        <p>
+          Pithonix AI is fully committed to making this process as frictionless as possible for STPI. We have deliberately structured Model A to require minimum institutional overhead — the entire proposal is designed around the reality that government bodies have limited capacity for exploratory technology pilots and that the fastest path to demonstrating value is simply to launch. We are ready to move at STPI's pace.
+        </p>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- ==========================================
+         SECTION 10: ABOUT PITHONIX AI
+    =========================================== -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">10</div>
+        <div class="section-title-group">
+          <div class="section-eyebrow">Section Ten</div>
+          <h2 class="section-title">About Pithonix AI Pvt Ltd</h2>
+        </div>
+      </div>
+      <div class="section-rule"></div>
+
+      <p>
+        Pithonix AI Pvt Ltd is India's first AI-native Enterprise Nervous System builder — a technology company founded on the conviction that AI should not merely assist enterprise operations, but should orchestrate them end-to-end through deeply integrated, reasoning-capable agent networks.
+      </p>
+
+      <div class="about-grid no-break">
+        <div class="about-card">
+          <div class="about-card-icon">Flagship Product</div>
+          <div class="about-card-title">JEET ERP</div>
+          <div class="about-card-text">India's first AI-first enterprise platform — a fully integrated ERP system with 25 specialized AI agents spanning HR, finance, procurement, operations, and customer intelligence. Designed for GCC-stage organizations that require enterprise-grade intelligence without legacy system complexity.</div>
+        </div>
+        <div class="about-card">
+          <div class="about-card-icon">Core Technology</div>
+          <div class="about-card-title">GOT — Graph of Thought</div>
+          <div class="about-card-text">Pithonix's proprietary reasoning architecture. Unlike standard LLM chain-of-thought approaches, GOT constructs a multi-dimensional reasoning graph across business domains — enabling AI agents to navigate complex, multi-variable enterprise decisions with structured, auditable reasoning paths.</div>
+        </div>
+        <div class="about-card">
+          <div class="about-card-icon">Key System</div>
+          <div class="about-card-title">HARI — HR AI</div>
+          <div class="about-card-text">Pithonix's AI-native HR intelligence agent — covering talent acquisition, workforce planning, compensation benchmarking, and attrition prediction. Directly relevant to GCC operations, where HR decisions are the primary cost and risk driver in the first three years of operations.</div>
+        </div>
+        <div class="about-card">
+          <div class="about-card-icon">Operational System</div>
+          <div class="about-card-title">BOT — Business Operations Terminal</div>
+          <div class="about-card-text">A unified AI command layer for business operations — integrating procurement, vendor management, compliance tracking, and reporting into a single conversational interface. Designed to replace the fragmented tool sprawl that characterises GCC operations in their early phase.</div>
+        </div>
+      </div>
+
+      <h3 style="font-family: Arial, sans-serif; font-size: 13px; font-weight: 700; color: var(--navy); letter-spacing: 1px; text-transform: uppercase; margin: 32px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--navy-pale);">GCC Practice — End-to-End Capability</h3>
+
+      <p>
+        Pithonix AI's GCC practice specialises in supporting foreign companies through the complete GCC establishment journey in India — from initial feasibility evaluation through to operational steady-state. Our end-to-end service offering covers:
+      </p>
+
+      <ul>
+        <li>
+          <strong>Entity Formation &amp; Legal Structure.</strong> Private Limited company incorporation, branch office setup, liaison office registration, STPI scheme registration, DPIIT startup recognition, and all statutory compliance setup under Companies Act 2013.
+        </li>
+        <li>
+          <strong>Location Selection &amp; Real Estate Advisory.</strong> Leveraging the same 25-city intelligence database that powers the GCC Playbook, Pithonix provides clients with personalized location recommendations, SEZ / IT park shortlisting, office space negotiations, and fit-out project management.
+        </li>
+        <li>
+          <strong>Talent Acquisition &amp; HR Systems.</strong> End-to-end talent acquisition for GCC founding team hires — from CTO/CHRO-level leadership to technology individual contributors. HARI AI provides ongoing workforce analytics once the GCC is operational.
+        </li>
+        <li>
+          <strong>Technology Deployment.</strong> Deployment of JEET ERP and integrated AI agent stack tailored to the GCC's specific function mix — ensuring technology infrastructure is in place from Day 1, not retrofitted 18 months into operations.
+        </li>
+        <li>
+          <strong>Ongoing Operations Support.</strong> Post-establishment managed services covering payroll compliance, statutory filings, vendor management, and performance reporting — enabling the GCC's India leadership team to focus on capability delivery rather than administrative overhead.
+        </li>
+      </ul>
+
+      <div class="contact-box no-break">
+        <div>
+          <div class="contact-heading">Primary Contact — Partnership Enquiry</div>
+          <div class="contact-line"><strong>Organization:</strong> Pithonix AI Pvt Ltd</div>
+          <div class="contact-line"><strong>Email:</strong> <a href="mailto:info@pithonix.ai">info@pithonix.ai</a></div>
+          <div class="contact-line"><strong>Platform:</strong> gcc-playbook.pithonix.ai</div>
+          <div class="contact-line"><strong>Website:</strong> pithonix.ai</div>
+          <div class="contact-line"><strong>Registered Office:</strong> Hyderabad, Telangana, India</div>
+        </div>
+        <div>
+          <div class="contact-heading">Platform Access &amp; Demonstration</div>
+          <div class="contact-line"><strong>Live Platform:</strong> gcc-playbook.pithonix.ai</div>
+          <div class="contact-line"><strong>Demo Request:</strong> Available in person (Bengaluru / New Delhi / Hyderabad) or via video conference at STPI's convenience.</div>
+          <div class="contact-line" style="margin-top: 12px;"><strong>For STPI:</strong> Please direct all communication regarding this proposal to info@pithonix.ai with subject line "STPI GCC Playbook Partnership Enquiry"</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ==========================================
+       CLOSING PAGE FOOTER
+  =========================================== -->
+  <div class="page-footer">
+    <div class="page-footer-text">Confidential — Prepared by Pithonix AI Pvt Ltd for STPI | April 2026 | gcc-playbook.pithonix.ai</div>
+    <div class="page-footer-brand">PITHONIX AI × STPI</div>
+  </div>
+
+  <!-- Final closing block -->
+  <div style="background: var(--gold); height: 4px; width: 100%;"></div>
+
+</div>
+
+</body>
+</html>
