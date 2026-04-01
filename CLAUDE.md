@@ -18,7 +18,7 @@ Use "Pithonix AI" in UI, marketing copy, and general references.
 ## Product Acronyms
 
 - **JEET** — Just In Time Emotionally Empowered Technology (flagship ERP platform)
-- **HARI** — Human Augmented Realistic Intelligence (HR AI system)
+- **HARI** — Human Augmented Realistic Intelligence (the structural framework defining how AI Agents and Humans augment each other — not an HR tool)
 - **GOT** — Graph of Thought (proprietary multi-domain reasoning engine)
 - **BOT** — Build-Operate-Transfer (deployment/commercial model)
 
