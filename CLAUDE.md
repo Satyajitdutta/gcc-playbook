@@ -15,6 +15,13 @@ TAN: HYDP24088B
 Always use "PITHONIX AI INDIA PRIVATE LIMITED" in formal/legal documents (proposals, MoUs, contracts, footers).
 Use "Pithonix AI" in UI, marketing copy, and general references.
 
+## Writing Style Rules
+
+- No em dashes anywhere. Not in documents, proposals, emails, UI copy, or code comments. Use commas, full stops, or colons instead.
+- Tone must be human, warm, and simple. Write like a real person talking, not a consultant writing a report.
+- Short sentences. Plain words. No jargon.
+- Scan all written content for em dashes before finalising.
+
 ## Product Acronyms
 
 - **JEET** — Just In Time Emotionally Empowered Technology (flagship ERP platform)
