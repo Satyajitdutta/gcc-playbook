@@ -240,6 +240,10 @@
           <label>Phone Number <span class="req">*</span></label>
           <input type="tel" id="phone" placeholder="+91 98765 43210">
         </div>
+        <div class="form-group full">
+          <label>Backup Email Address <span style="font-weight:400;color:rgba(148,163,184,0.6)">(optional — for lead notifications if primary contact is unavailable)</span></label>
+          <input type="email" id="backup_email" placeholder="backup@company.com">
+        </div>
       </div>
 
       <div class="divider"></div>
@@ -405,6 +409,7 @@ async function submitApplication() {
     gcc_projects: document.getElementById('gcc_projects').value,
     team_size: document.getElementById('team_size').value,
     description: description,
+    backup_email: document.getElementById('backup_email').value.trim(),
     doc_link: document.getElementById('doc_link').value.trim(),
     documents: documents
   };

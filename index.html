@@ -425,6 +425,14 @@ section{position:relative;z-index:2;padding:6rem 0}
 .vendor-empty .ve-icon{font-size:2rem;margin-bottom:0.5rem;opacity:0.4}
 .vendor-empty .ve-txt{font-size:0.82rem;color:var(--tdim)}
 .vendor-empty .ve-cta{display:inline-block;margin-top:0.75rem;font-size:0.78rem;color:var(--gold);font-weight:600;cursor:pointer}
+.ve-badges{display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.75rem}
+.ve-verified{background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);color:#22c55e;font-size:0.7rem;font-weight:700;padding:0.25rem 0.6rem;border-radius:20px;letter-spacing:0.5px}
+.ve-cat{background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.2);color:var(--blue);font-size:0.7rem;font-weight:600;padding:0.25rem 0.6rem;border-radius:20px}
+.ve-name{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:0.35rem}
+.ve-cities{font-size:0.78rem;color:var(--tmed);margin-bottom:0.5rem}
+.ve-desc{font-size:0.82rem;color:var(--tmed);line-height:1.5;margin-bottom:0.75rem}
+.ve-website{font-size:0.8rem;color:var(--blue);text-decoration:none;font-weight:600}
+.ve-website:hover{text-decoration:underline}
 
 /* Partner Form */
 .partner-form-wrap{background:rgba(255,255,255,0.02);border:1px solid var(--bd);border-radius:var(--r2);padding:2.5rem}
@@ -1236,15 +1244,45 @@ var cats=['All','Real Estate & Workspace','Legal & Compliance','Recruitment & St
 (function(){
   var ct=document.getElementById('cat-tabs');
   ct.innerHTML=cats.map(function(c,i){return'<div class="cat-tab'+(i===0?' active':'')+'" onclick="filterCat(this,\''+c+'\')">'+c+'</div>';}).join('');
-
-  var g=document.getElementById('vendor-grid');
-  var empties=cats.slice(1).map(function(cat){
-    return '<div class="vendor-card vendor-empty show" data-cat="'+cat+'" onclick="document.getElementById(\'partners\').querySelector(\'.partner-form-wrap\').scrollIntoView({behavior:\'smooth\'})">'+
-    '<div class="ve-icon">+</div><div class="ve-txt">'+cat+'</div>'+
-    '<div class="ve-cta">Apply to become a partner →</div></div>';
-  }).join('');
-  g.innerHTML=empties;
+  loadPartners();
 })();
+
+async function loadPartners(){
+  var g=document.getElementById('vendor-grid');
+  var partners=[];
+  try{
+    var res=await fetch('/api/partners-list');
+    var data=await res.json();
+    partners=data.partners||[];
+  }catch(e){}
+
+  var approvedCats=partners.map(function(p){return p.partner_category;});
+  var html='';
+
+  partners.forEach(function(p){
+    var desc=p.description?(p.description.length>130?p.description.substring(0,130)+'...':p.description):'';
+    html+='<div class="vendor-card show" data-cat="'+(p.partner_category||'')+'">'+
+      '<div class="ve-badges">'+
+      '<span class="ve-verified">✓ Pithonix Verified Partner</span>'+
+      '<span class="ve-cat">'+(p.partner_category||'Partner')+'</span>'+
+      '</div>'+
+      '<div class="ve-name">'+p.company_name+'</div>'+
+      (p.cities?'<div class="ve-cities">📍 '+p.cities+'</div>':'')+
+      (desc?'<div class="ve-desc">'+desc+'</div>':'')+
+      (p.website?'<a href="'+p.website+'" target="_blank" rel="noopener" class="ve-website">Visit Website →</a>':'')+
+      '</div>';
+  });
+
+  cats.slice(1).forEach(function(cat){
+    if(!approvedCats.includes(cat)){
+      html+='<div class="vendor-card vendor-empty show" data-cat="'+cat+'" onclick="window.location.href=\'/partner-apply\'">'+
+        '<div class="ve-icon">+</div><div class="ve-txt">'+cat+'</div>'+
+        '<div class="ve-cta">Apply to become a partner →</div></div>';
+    }
+  });
+
+  g.innerHTML=html;
+}
 
 function filterCat(tab,cat){
   document.querySelectorAll('.cat-tab').forEach(function(t){t.classList.remove('active');});
