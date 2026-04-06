@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Partner Application — Pithonix GCC Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0f1e;
+    --s1: #0d1426;
+    --s2: #111827;
+    --bd: rgba(255,255,255,0.08);
+    --blue: #3b82f6;
+    --teal: #06b6d4;
+    --purple: #8b5cf6;
+    --text: #f1f5f9;
+    --tmed: #94a3b8;
+    --r: 10px;
+  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  /* NAV */
+  nav { background: rgba(10,15,30,0.95); border-bottom: 1px solid var(--bd); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; position: sticky; top: 0; z-index: 100; }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo img { height: 32px; }
+  .nav-logo span { font-weight: 700; font-size: 1rem; color: var(--text); }
+  .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+  .nav-links a { color: var(--tmed); font-size: 0.85rem; text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links .btn-portal { background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3); color: var(--blue); padding: 0.4rem 1rem; border-radius: 6px; font-size: 0.85rem; text-decoration: none; transition: all 0.2s; }
+  .nav-links .btn-portal:hover { background: rgba(59,130,246,0.25); }
+
+  /* HERO */
+  .hero { padding: 4rem 2rem 3rem; text-align: center; max-width: 700px; margin: 0 auto; }
+  .hero-badge { display: inline-block; background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.25); color: var(--blue); font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; padding: 0.35rem 1rem; border-radius: 20px; margin-bottom: 1.5rem; }
+  .hero h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; line-height: 1.2; margin-bottom: 1rem; }
+  .hero h1 span { background: linear-gradient(135deg, var(--blue), var(--teal)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero p { color: var(--tmed); font-size: 1rem; line-height: 1.7; }
+
+  /* FORM CONTAINER */
+  .form-container { max-width: 780px; margin: 0 auto; padding: 0 1.5rem 5rem; }
+  .form-card { background: var(--s1); border: 1px solid var(--bd); border-radius: 16px; overflow: hidden; }
+
+  /* SECTION HEADER */
+  .section-header { background: var(--s2); padding: 1rem 1.5rem; border-bottom: 1px solid var(--bd); display: flex; align-items: center; gap: 0.75rem; }
+  .section-num { width: 28px; height: 28px; background: linear-gradient(135deg, var(--blue), var(--teal)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; color: white; flex-shrink: 0; }
+  .section-header h3 { font-size: 0.95rem; font-weight: 600; color: var(--text); }
+
+  /* FORM GRID */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; padding: 1.5rem; }
+  .form-grid.single { grid-template-columns: 1fr; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group.full { grid-column: 1 / -1; }
+  label { font-size: 0.82rem; font-weight: 600; color: var(--tmed); letter-spacing: 0.5px; }
+  label span.req { color: #f87171; margin-left: 2px; }
+  input, select, textarea {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--bd);
+    border-radius: 8px;
+    padding: 0.7rem 1rem;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--blue); }
+  input::placeholder, textarea::placeholder { color: rgba(148,163,184,0.4); }
+  select option { background: #1e293b; }
+  textarea { resize: vertical; min-height: 100px; }
+
+  /* FILE UPLOAD */
+  .file-zone { border: 2px dashed var(--bd); border-radius: 10px; padding: 2rem; text-align: center; cursor: pointer; transition: all 0.2s; position: relative; }
+  .file-zone:hover, .file-zone.dragover { border-color: var(--blue); background: rgba(59,130,246,0.05); }
+  .file-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+  .file-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+  .file-zone p { color: var(--tmed); font-size: 0.85rem; }
+  .file-zone strong { color: var(--blue); }
+  .file-list { margin-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+  .file-item { display: flex; align-items: center; justify-content: space-between; background: rgba(59,130,246,0.08); border: 1px solid rgba(59,130,246,0.2); border-radius: 6px; padding: 0.5rem 0.75rem; font-size: 0.82rem; }
+  .file-item .remove { background: none; border: none; color: #f87171; cursor: pointer; font-size: 1rem; padding: 0 0.25rem; }
+  .file-size-warning { color: #fbbf24; font-size: 0.8rem; margin-top: 0.5rem; }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: var(--bd); margin: 0; }
+
+  /* OR LINK */
+  .or-link { padding: 0 1.5rem 1.5rem; }
+  .or-link p { color: var(--tmed); font-size: 0.82rem; margin-bottom: 0.5rem; }
+
+  /* SUBMIT */
+  .submit-area { padding: 1.5rem; border-top: 1px solid var(--bd); display: flex; flex-direction: column; gap: 1rem; }
+  .btn-submit { background: linear-gradient(135deg, var(--blue), var(--purple)); color: white; font-weight: 700; padding: 1rem 2.5rem; border: none; border-radius: 10px; cursor: pointer; font-size: 1rem; font-family: 'DM Sans', sans-serif; transition: opacity 0.2s, transform 0.2s; width: 100%; }
+  .btn-submit:hover { opacity: 0.9; transform: translateY(-1px); }
+  .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  .submit-note { color: var(--tmed); font-size: 0.8rem; text-align: center; }
+
+  /* STATES */
+  .loading-state, .success-state, .error-state { display: none; flex-direction: column; align-items: center; text-align: center; padding: 3rem 2rem; gap: 1rem; }
+  .success-state .icon { font-size: 3.5rem; }
+  .success-state h2 { font-size: 1.5rem; font-weight: 700; }
+  .success-state .ref { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.2); border-radius: 8px; padding: 1rem 2rem; margin-top: 0.5rem; }
+  .success-state .ref p { font-size: 0.8rem; color: var(--tmed); margin-bottom: 0.25rem; }
+  .success-state .ref strong { font-size: 1.8rem; color: var(--blue); }
+  .error-banner { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); border-radius: 8px; padding: 0.75rem 1rem; color: #fca5a5; font-size: 0.85rem; }
+  .btn-portal-link { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); color: var(--blue); padding: 0.75rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; margin-top: 0.5rem; }
+
+  /* FOOTER */
+  footer { background: var(--s1); border-top: 1px solid var(--bd); padding: 1.5rem 2rem; text-align: center; color: var(--tmed); font-size: 0.8rem; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">
+    <img src="/logo.png" alt="Pithonix AI">
+    <span>Pithonix GCC Platform</span>
+  </a>
+  <div class="nav-links">
+    <a href="/">GCC Playbook</a>
+    <a href="/partner-portal" class="btn-portal">Check Application Status</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">Co-Delivery Partner Network</div>
+  <h1>Join the <span>Pithonix GCC</span> Partner Ecosystem</h1>
+  <p>We work with domain experts in legal, real estate, IT, staffing, compliance, and more. Apply below and our partnerships team will review within 48 hours.</p>
+</div>
+
+<div class="form-container">
+  <div class="form-card" id="form-card">
+
+    <!-- Form itself -->
+    <div id="form-view">
+
+      <!-- SECTION 1: Company -->
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <h3>Company Details</h3>
+      </div>
+      <div class="form-grid">
+        <div class="form-group full">
+          <label>Company Legal Name <span class="req">*</span></label>
+          <input type="text" id="company_name" placeholder="As per registration documents">
+        </div>
+        <div class="form-group">
+          <label>GST Number <span class="req">*</span></label>
+          <input type="text" id="gst_number" placeholder="22AAAAA0000A1Z5" maxlength="15">
+        </div>
+        <div class="form-group">
+          <label>Company Registration / CIN <span class="req">*</span></label>
+          <input type="text" id="cin_number" placeholder="U12345MH2020PTC123456">
+        </div>
+        <div class="form-group">
+          <label>Year Founded <span class="req">*</span></label>
+          <input type="number" id="year_founded" placeholder="2015" min="1900" max="2026">
+        </div>
+        <div class="form-group">
+          <label>Company Website</label>
+          <input type="url" id="website" placeholder="https://yourcompany.com">
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- SECTION 2: Partnership -->
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <h3>Partnership Details</h3>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Partner Category <span class="req">*</span></label>
+          <select id="partner_category">
+            <option value="">Select category</option>
+            <option>Real Estate &amp; Workspace</option>
+            <option>Legal &amp; Compliance</option>
+            <option>Recruitment &amp; Staffing</option>
+            <option>IT Infrastructure</option>
+            <option>Payroll &amp; Benefits</option>
+            <option>Training &amp; L&amp;D</option>
+            <option>Banking &amp; Finance</option>
+            <option>Technology Partner</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Cities of Operation <span class="req">*</span></label>
+          <input type="text" id="cities" placeholder="Hyderabad, Bangalore, Mumbai">
+        </div>
+        <div class="form-group">
+          <label>GCC / Enterprise Projects Handled</label>
+          <select id="gcc_projects">
+            <option value="">Select range</option>
+            <option>1 to 5</option>
+            <option>6 to 15</option>
+            <option>16 to 30</option>
+            <option>30+</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Team Size in This Domain</label>
+          <select id="team_size">
+            <option value="">Select range</option>
+            <option>1 to 10</option>
+            <option>11 to 50</option>
+            <option>51 to 200</option>
+            <option>200+</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label>Describe Your Services <span class="req">*</span></label>
+          <textarea id="description" placeholder="Tell us about your core services, notable clients or GCC projects, and why you would be a strong delivery partner for Pithonix..."></textarea>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- SECTION 3: Contact -->
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <h3>Contact Person</h3>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Full Name <span class="req">*</span></label>
+          <input type="text" id="contact_name" placeholder="Your full name">
+        </div>
+        <div class="form-group">
+          <label>Designation / Role</label>
+          <input type="text" id="designation" placeholder="Managing Director, CEO...">
+        </div>
+        <div class="form-group">
+          <label>Email Address <span class="req">*</span></label>
+          <input type="email" id="email" placeholder="you@company.com">
+        </div>
+        <div class="form-group">
+          <label>Phone Number <span class="req">*</span></label>
+          <input type="tel" id="phone" placeholder="+91 98765 43210">
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- SECTION 4: Documents -->
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <h3>Documents <span style="font-weight:400;color:var(--tmed);font-size:0.85rem">(Optional)</span></h3>
+      </div>
+      <div class="form-grid single">
+        <div class="form-group">
+          <label>Upload Documents</label>
+          <div class="file-zone" id="file-zone">
+            <input type="file" id="file-input" multiple accept=".pdf,.doc,.docx,.jpg,.png" onchange="handleFiles(this.files)">
+            <div class="file-icon">📎</div>
+            <p>Drag and drop or <strong>click to browse</strong></p>
+            <p style="margin-top:0.25rem;font-size:0.75rem">PDF, DOC, DOCX — max 2MB per file, up to 3 files</p>
+          </div>
+          <div class="file-list" id="file-list"></div>
+          <div class="file-size-warning" id="file-warning" style="display:none"></div>
+        </div>
+        <div class="or-link">
+          <p>Or share a link to your documents (OneDrive, SharePoint):</p>
+          <input type="url" id="doc_link" placeholder="https://onedrive.live.com/...">
+        </div>
+      </div>
+
+      <!-- Error banner -->
+      <div style="padding: 0 1.5rem;" id="error-area"></div>
+
+      <!-- Submit -->
+      <div class="submit-area">
+        <button class="btn-submit" id="submit-btn" onclick="submitApplication()">Submit Partnership Application</button>
+        <p class="submit-note">By submitting, you confirm that all information provided is accurate. Our team reviews within 48 hours.</p>
+      </div>
+    </div>
+
+    <!-- Success state -->
+    <div class="success-state" id="success-view">
+      <div class="icon">🎉</div>
+      <h2>Application Submitted Successfully</h2>
+      <p style="color:var(--tmed)">Thank you for applying to the Pithonix GCC Partner Network. Check your email for a confirmation.</p>
+      <div class="ref">
+        <p>Your Application Reference</p>
+        <strong id="ref-number">#00000</strong>
+      </div>
+      <p style="color:var(--tmed);font-size:0.85rem;margin-top:0.5rem">Our partnerships team will review your application and respond within 48 hours.</p>
+      <a href="/partner-portal" class="btn-portal-link">Track Your Application Status</a>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  PITHONIX AI INDIA PRIVATE LIMITED | CIN: U62090TS2026PTC213220 | Hyderabad, Telangana, India
+</footer>
+
+<script>
+var selectedFiles = [];
+
+function handleFiles(files) {
+  var warning = document.getElementById('file-warning');
+  warning.style.display = 'none';
+  var newFiles = Array.from(files);
+  for (var f of newFiles) {
+    if (f.size > 2 * 1024 * 1024) {
+      warning.textContent = f.name + ' is over 2MB and was not added. Please reduce the file size.';
+      warning.style.display = 'block';
+      continue;
+    }
+    if (selectedFiles.length >= 3) {
+      warning.textContent = 'Maximum 3 files allowed.';
+      warning.style.display = 'block';
+      break;
+    }
+    if (!selectedFiles.find(function(x){ return x.name === f.name; })) {
+      selectedFiles.push(f);
+    }
+  }
+  renderFileList();
+}
+
+function renderFileList() {
+  var list = document.getElementById('file-list');
+  list.innerHTML = '';
+  selectedFiles.forEach(function(f, i) {
+    var size = (f.size / 1024).toFixed(0) + ' KB';
+    list.innerHTML += '<div class="file-item"><span>' + f.name + ' (' + size + ')</span><button class="remove" onclick="removeFile(' + i + ')">x</button></div>';
+  });
+}
+
+function removeFile(i) {
+  selectedFiles.splice(i, 1);
+  renderFileList();
+}
+
+var fileZone = document.getElementById('file-zone');
+fileZone.addEventListener('dragover', function(e){ e.preventDefault(); fileZone.classList.add('dragover'); });
+fileZone.addEventListener('dragleave', function(){ fileZone.classList.remove('dragover'); });
+fileZone.addEventListener('drop', function(e){ e.preventDefault(); fileZone.classList.remove('dragover'); handleFiles(e.dataTransfer.files); });
+
+function readFileAsBase64(file) {
+  return new Promise(function(resolve) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var base64 = e.target.result.split(',')[1];
+      resolve({ name: file.name, type: file.type, data: base64 });
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+async function submitApplication() {
+  var errorArea = document.getElementById('error-area');
+  errorArea.innerHTML = '';
+
+  var companyName = document.getElementById('company_name').value.trim();
+  var contactName = document.getElementById('contact_name').value.trim();
+  var email = document.getElementById('email').value.trim();
+  var phone = document.getElementById('phone').value.trim();
+  var partnerCategory = document.getElementById('partner_category').value;
+  var gstNumber = document.getElementById('gst_number').value.trim();
+  var cinNumber = document.getElementById('cin_number').value.trim();
+  var yearFounded = document.getElementById('year_founded').value;
+  var description = document.getElementById('description').value.trim();
+
+  if (!companyName || !contactName || !email || !phone || !partnerCategory || !gstNumber || !cinNumber || !yearFounded || !description) {
+    errorArea.innerHTML = '<div class="error-banner" style="margin-bottom:1rem">Please fill in all required fields marked with *</div>';
+    errorArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
+  var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRe.test(email)) {
+    errorArea.innerHTML = '<div class="error-banner" style="margin-bottom:1rem">Please enter a valid email address.</div>';
+    return;
+  }
+
+  var btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+
+  var documents = [];
+  for (var f of selectedFiles) {
+    try {
+      var encoded = await readFileAsBase64(f);
+      documents.push(encoded);
+    } catch(e) { console.log('File read error', e); }
+  }
+
+  var payload = {
+    company_name: companyName,
+    contact_name: contactName,
+    email: email,
+    phone: phone,
+    designation: document.getElementById('designation').value.trim(),
+    website: document.getElementById('website').value.trim(),
+    partner_category: partnerCategory,
+    gst_number: gstNumber,
+    cin_number: cinNumber,
+    year_founded: yearFounded,
+    cities: document.getElementById('cities').value.trim(),
+    gcc_projects: document.getElementById('gcc_projects').value,
+    team_size: document.getElementById('team_size').value,
+    description: description,
+    doc_link: document.getElementById('doc_link').value.trim(),
+    documents: documents
+  };
+
+  try {
+    var res = await fetch('/api/partner', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    var data = await res.json();
+    if (data.success) {
+      document.getElementById('form-view').style.display = 'none';
+      var successView = document.getElementById('success-view');
+      successView.style.display = 'flex';
+      document.getElementById('ref-number').textContent = '#' + data.applicationId;
+    } else {
+      throw new Error(data.error || 'Submission failed');
+    }
+  } catch(e) {
+    errorArea.innerHTML = '<div class="error-banner" style="margin-bottom:1rem">Something went wrong: ' + e.message + '. Please try again.</div>';
+    btn.disabled = false;
+    btn.textContent = 'Submit Partnership Application';
+  }
+}
+</script>
+</body>
+</html>

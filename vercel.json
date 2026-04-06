@@ -2,8 +2,14 @@
   "version": 2,
   "functions": {
     "api/gemini.js": { "maxDuration": 60 },
-    "api/lead.js": { "maxDuration": 60 }
+    "api/lead.js": { "maxDuration": 60 },
+    "api/partner.js": { "maxDuration": 60 },
+    "api/partner-status.js": { "maxDuration": 30 }
   },
+  "rewrites": [
+    { "source": "/partner-apply", "destination": "/partner-apply.html" },
+    { "source": "/partner-portal", "destination": "/partner-portal.html" }
+  ],
   "headers": [
     {
       "source": "/(.*)",

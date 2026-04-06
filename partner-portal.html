@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Partner Portal — Pithonix GCC Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0f1e; --s1: #0d1426; --s2: #111827;
+    --bd: rgba(255,255,255,0.08); --blue: #3b82f6; --teal: #06b6d4;
+    --purple: #8b5cf6; --text: #f1f5f9; --tmed: #94a3b8;
+  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+  nav { background: rgba(10,15,30,0.95); border-bottom: 1px solid var(--bd); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo img { height: 32px; }
+  .nav-logo span { font-weight: 700; font-size: 1rem; color: var(--text); }
+  .nav-links a { color: var(--tmed); font-size: 0.85rem; text-decoration: none; }
+  .nav-links .btn-apply { background: linear-gradient(135deg, var(--blue), var(--purple)); color: white; padding: 0.4rem 1rem; border-radius: 6px; font-size: 0.85rem; text-decoration: none; font-weight: 600; }
+
+  main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 3rem 1.5rem; }
+
+  .portal-card { background: var(--s1); border: 1px solid var(--bd); border-radius: 16px; width: 100%; max-width: 520px; overflow: hidden; }
+  .portal-header { background: var(--s2); padding: 2rem; text-align: center; border-bottom: 1px solid var(--bd); }
+  .portal-header .icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+  .portal-header h1 { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .portal-header p { color: var(--tmed); font-size: 0.88rem; }
+
+  .portal-body { padding: 2rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+  label { font-size: 0.82rem; font-weight: 600; color: var(--tmed); }
+  input { background: rgba(255,255,255,0.04); border: 1px solid var(--bd); border-radius: 8px; padding: 0.75rem 1rem; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 0.9rem; width: 100%; transition: border-color 0.2s; }
+  input:focus { outline: none; border-color: var(--blue); }
+  input::placeholder { color: rgba(148,163,184,0.4); }
+  .btn-check { background: linear-gradient(135deg, var(--blue), var(--purple)); color: white; font-weight: 700; padding: 0.85rem; border: none; border-radius: 8px; cursor: pointer; font-size: 0.95rem; font-family: 'DM Sans', sans-serif; width: 100%; transition: opacity 0.2s; margin-top: 0.5rem; }
+  .btn-check:hover { opacity: 0.9; }
+  .btn-check:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .result-area { margin-top: 1.5rem; }
+  .app-card { background: rgba(255,255,255,0.03); border: 1px solid var(--bd); border-radius: 10px; padding: 1.25rem; margin-bottom: 1rem; }
+  .app-card .app-id { font-size: 0.75rem; color: var(--tmed); margin-bottom: 0.25rem; }
+  .app-card .app-company { font-weight: 700; font-size: 1rem; margin-bottom: 0.25rem; }
+  .app-card .app-category { color: var(--tmed); font-size: 0.85rem; margin-bottom: 0.75rem; }
+  .app-card .app-meta { font-size: 0.8rem; color: var(--tmed); }
+
+  .status-badge { display: inline-block; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.78rem; font-weight: 600; }
+  .status-pending { background: rgba(251,191,36,0.1); color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); }
+  .status-review { background: rgba(59,130,246,0.1); color: var(--blue); border: 1px solid rgba(59,130,246,0.3); }
+  .status-approved { background: rgba(34,197,94,0.1); color: #22c55e; border: 1px solid rgba(34,197,94,0.3); }
+  .status-rejected { background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
+
+  .not-found { text-align: center; padding: 1.5rem; color: var(--tmed); font-size: 0.9rem; }
+  .error-msg { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2); border-radius: 8px; padding: 0.75rem 1rem; color: #fca5a5; font-size: 0.85rem; margin-top: 1rem; }
+
+  .apply-prompt { text-align: center; padding: 1.5rem 2rem; border-top: 1px solid var(--bd); }
+  .apply-prompt p { color: var(--tmed); font-size: 0.85rem; margin-bottom: 0.75rem; }
+  .apply-prompt a { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); color: var(--blue); padding: 0.6rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.85rem; }
+
+  footer { background: var(--s1); border-top: 1px solid var(--bd); padding: 1rem 2rem; text-align: center; color: var(--tmed); font-size: 0.78rem; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">
+    <img src="/logo.png" alt="Pithonix AI">
+    <span>Pithonix GCC Platform</span>
+  </a>
+  <div class="nav-links">
+    <a href="/partner-apply" class="btn-apply">Apply as Partner</a>
+  </div>
+</nav>
+
+<main>
+  <div class="portal-card">
+    <div class="portal-header">
+      <div class="icon">🔍</div>
+      <h1>Partner Application Portal</h1>
+      <p>Enter your email to check the status of your application</p>
+    </div>
+    <div class="portal-body">
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="check-email" placeholder="you@company.com" onkeydown="if(event.key==='Enter') checkStatus()">
+      </div>
+      <div class="form-group">
+        <label>Application Reference Number <span style="font-weight:400;color:rgba(148,163,184,0.6)">(optional)</span></label>
+        <input type="number" id="check-id" placeholder="#12345">
+      </div>
+      <button class="btn-check" id="check-btn" onclick="checkStatus()">Check Status</button>
+      <div id="result-area" class="result-area"></div>
+    </div>
+    <div class="apply-prompt">
+      <p>Have not applied yet?</p>
+      <a href="/partner-apply">Apply to Join the Partner Network</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  PITHONIX AI INDIA PRIVATE LIMITED | CIN: U62090TS2026PTC213220 | pithonix.ai
+</footer>
+
+<script>
+function getStatusClass(status) {
+  var s = (status || '').toLowerCase();
+  if (s.includes('approv')) return 'status-approved';
+  if (s.includes('review')) return 'status-review';
+  if (s.includes('reject')) return 'status-rejected';
+  return 'status-pending';
+}
+
+function formatDate(dateStr) {
+  try {
+    return new Date(dateStr).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+  } catch(e) { return dateStr; }
+}
+
+async function checkStatus() {
+  var email = document.getElementById('check-email').value.trim();
+  var appId = document.getElementById('check-id').value.trim();
+  var resultArea = document.getElementById('result-area');
+  var btn = document.getElementById('check-btn');
+
+  if (!email) {
+    resultArea.innerHTML = '<div class="error-msg">Please enter your email address.</div>';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Checking...';
+  resultArea.innerHTML = '';
+
+  try {
+    var payload = { email: email };
+    if (appId) payload.application_id = appId;
+
+    var res = await fetch('/api/partner-status', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    var data = await res.json();
+
+    if (data.found && data.applications && data.applications.length > 0) {
+      var html = '';
+      data.applications.forEach(function(app) {
+        html += '<div class="app-card">' +
+          '<div class="app-id">Application #' + app.id + '</div>' +
+          '<div class="app-company">' + app.company_name + '</div>' +
+          '<div class="app-category">' + (app.partner_category || 'General Partner') + '</div>' +
+          '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem">' +
+          '<span class="status-badge ' + getStatusClass(app.status) + '">' + app.status + '</span>' +
+          '<span class="app-meta">Submitted ' + formatDate(app.submitted_at) + '</span>' +
+          '</div>' +
+          '</div>';
+      });
+      resultArea.innerHTML = html;
+    } else {
+      resultArea.innerHTML = '<div class="not-found">No application found for this email address.<br>Please check the email and try again.</div>';
+    }
+  } catch(e) {
+    resultArea.innerHTML = '<div class="error-msg">Could not retrieve status. Please try again in a moment.</div>';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Check Status';
+  }
+}
+</script>
+</body>
+</html>

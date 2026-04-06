@@ -5,6 +5,7 @@
   "description": "Pithonix GCC Intelligence Platform — World's First AI-Native GCC Playbook",
   "engines": { "node": ">=18" },
   "dependencies": {
-    "resend": "^4.0.0"
+    "resend": "^4.0.0",
+    "pg": "^8.13.3"
   }
 }
