@@ -86,6 +86,20 @@
   /* DIVIDER */
   .divider { height: 1px; background: var(--bd); margin: 0; }
 
+  /* MULTI SELECT */
+  .multi-select-box { background: rgba(255,255,255,0.03); border: 1px solid var(--bd); border-radius: 8px; padding: 1rem; }
+  .ms-tier { margin-bottom: 0.75rem; }
+  .ms-tier:last-child { margin-bottom: 0; }
+  .ms-tier-label { font-size: 0.72rem; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 0.5rem; }
+  .ms-pills { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .ms-pill { display: inline-flex; align-items: center; gap: 0.35rem; background: rgba(255,255,255,0.04); border: 1px solid var(--bd); border-radius: 20px; padding: 0.3rem 0.75rem; font-size: 0.8rem; color: var(--tmed); cursor: pointer; transition: all 0.15s; user-select: none; }
+  .ms-pill:hover { border-color: var(--blue); color: var(--text); }
+  .ms-pill input[type="checkbox"] { display: none; }
+  .ms-pill.selected { background: rgba(59,130,246,0.15); border-color: rgba(59,130,246,0.5); color: var(--text); }
+  .ms-pill.zone-pill.selected { background: rgba(6,182,212,0.15); border-color: rgba(6,182,212,0.5); color: var(--teal); }
+  .location-summary { margin-top: 0.6rem; font-size: 0.78rem; color: var(--tmed); min-height: 1.2em; }
+  .location-summary span { color: var(--blue); }
+
   /* OR LINK */
   .or-link { padding: 0 1.5rem 1.5rem; }
   .or-link p { color: var(--tmed); font-size: 0.82rem; margin-bottom: 0.5rem; }
@@ -186,9 +200,67 @@
             <option>Technology Partner</option>
           </select>
         </div>
-        <div class="form-group">
+        <div class="form-group full">
+          <label>Operating Zone <span class="req">*</span></label>
+          <div class="multi-select-box">
+            <div class="ms-pills" id="zone-pills">
+              <label class="ms-pill zone-pill"><input type="checkbox" value="Pan India"> Pan India</label>
+              <label class="ms-pill zone-pill"><input type="checkbox" value="North India"> North</label>
+              <label class="ms-pill zone-pill"><input type="checkbox" value="South India"> South</label>
+              <label class="ms-pill zone-pill"><input type="checkbox" value="East India"> East</label>
+              <label class="ms-pill zone-pill"><input type="checkbox" value="West India"> West</label>
+              <label class="ms-pill zone-pill"><input type="checkbox" value="Central India"> Central</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group full">
           <label>Cities of Operation <span class="req">*</span></label>
-          <input type="text" id="cities" placeholder="Hyderabad, Bangalore, Mumbai">
+          <div class="multi-select-box">
+            <div class="ms-tier">
+              <div class="ms-tier-label">Tier 1 — Primary GCC Hubs</div>
+              <div class="ms-pills" id="city-pills-t1">
+                <label class="ms-pill"><input type="checkbox" value="Bengaluru"> Bengaluru</label>
+                <label class="ms-pill"><input type="checkbox" value="Mumbai"> Mumbai</label>
+                <label class="ms-pill"><input type="checkbox" value="Hyderabad"> Hyderabad</label>
+                <label class="ms-pill"><input type="checkbox" value="Delhi NCR"> Delhi NCR</label>
+                <label class="ms-pill"><input type="checkbox" value="Chennai"> Chennai</label>
+                <label class="ms-pill"><input type="checkbox" value="Pune"> Pune</label>
+                <label class="ms-pill"><input type="checkbox" value="Kolkata"> Kolkata</label>
+              </div>
+            </div>
+            <div class="ms-tier">
+              <div class="ms-tier-label">Tier 2 — Emerging GCC Cities</div>
+              <div class="ms-pills" id="city-pills-t2">
+                <label class="ms-pill"><input type="checkbox" value="Ahmedabad"> Ahmedabad</label>
+                <label class="ms-pill"><input type="checkbox" value="Coimbatore"> Coimbatore</label>
+                <label class="ms-pill"><input type="checkbox" value="Kochi"> Kochi</label>
+                <label class="ms-pill"><input type="checkbox" value="Jaipur"> Jaipur</label>
+                <label class="ms-pill"><input type="checkbox" value="Chandigarh"> Chandigarh</label>
+                <label class="ms-pill"><input type="checkbox" value="Noida"> Noida</label>
+                <label class="ms-pill"><input type="checkbox" value="Gurugram"> Gurugram</label>
+                <label class="ms-pill"><input type="checkbox" value="Indore"> Indore</label>
+                <label class="ms-pill"><input type="checkbox" value="Nagpur"> Nagpur</label>
+                <label class="ms-pill"><input type="checkbox" value="Visakhapatnam"> Visakhapatnam</label>
+                <label class="ms-pill"><input type="checkbox" value="Bhubaneswar"> Bhubaneswar</label>
+                <label class="ms-pill"><input type="checkbox" value="Lucknow"> Lucknow</label>
+              </div>
+            </div>
+            <div class="ms-tier">
+              <div class="ms-tier-label">Tier 3 — Upcoming Locations</div>
+              <div class="ms-pills" id="city-pills-t3">
+                <label class="ms-pill"><input type="checkbox" value="Mysuru"> Mysuru</label>
+                <label class="ms-pill"><input type="checkbox" value="Vadodara"> Vadodara</label>
+                <label class="ms-pill"><input type="checkbox" value="Surat"> Surat</label>
+                <label class="ms-pill"><input type="checkbox" value="Thiruvananthapuram"> Thiruvananthapuram</label>
+                <label class="ms-pill"><input type="checkbox" value="Mangaluru"> Mangaluru</label>
+                <label class="ms-pill"><input type="checkbox" value="Nashik"> Nashik</label>
+                <label class="ms-pill"><input type="checkbox" value="Bhopal"> Bhopal</label>
+                <label class="ms-pill"><input type="checkbox" value="Dehradun"> Dehradun</label>
+              </div>
+            </div>
+          </div>
+          <div class="location-summary" id="location-summary">No locations selected yet.</div>
+          <input type="hidden" id="cities">
         </div>
         <div class="form-group">
           <label>GCC / Enterprise Projects Handled</label>
@@ -340,6 +412,29 @@ function removeFile(i) {
   renderFileList();
 }
 
+// Pill selection for zones and cities
+document.querySelectorAll('.ms-pill').forEach(function(pill) {
+  pill.addEventListener('click', function() {
+    var cb = pill.querySelector('input[type="checkbox"]');
+    cb.checked = !cb.checked;
+    pill.classList.toggle('selected', cb.checked);
+    updateLocationSummary();
+  });
+});
+
+function updateLocationSummary() {
+  var zones = Array.from(document.querySelectorAll('#zone-pills input:checked')).map(function(i){ return i.value; });
+  var cities = Array.from(document.querySelectorAll('#city-pills-t1 input:checked, #city-pills-t2 input:checked, #city-pills-t3 input:checked')).map(function(i){ return i.value; });
+  var all = zones.concat(cities);
+  document.getElementById('cities').value = all.join(', ');
+  var summary = document.getElementById('location-summary');
+  if (all.length === 0) {
+    summary.innerHTML = 'No locations selected yet.';
+  } else {
+    summary.innerHTML = '<span>' + all.length + ' selected:</span> ' + all.join(' · ');
+  }
+}
+
 var fileZone = document.getElementById('file-zone');
 fileZone.addEventListener('dragover', function(e){ e.preventDefault(); fileZone.classList.add('dragover'); });
 fileZone.addEventListener('dragleave', function(){ fileZone.classList.remove('dragover'); });
@@ -370,8 +465,10 @@ async function submitApplication() {
   var yearFounded = document.getElementById('year_founded').value;
   var description = document.getElementById('description').value.trim();
 
-  if (!companyName || !contactName || !email || !phone || !partnerCategory || !gstNumber || !cinNumber || !yearFounded || !description) {
-    errorArea.innerHTML = '<div class="error-banner" style="margin-bottom:1rem">Please fill in all required fields marked with *</div>';
+  var citiesVal = document.getElementById('cities').value.trim();
+
+  if (!companyName || !contactName || !email || !phone || !partnerCategory || !gstNumber || !cinNumber || !yearFounded || !description || !citiesVal) {
+    errorArea.innerHTML = '<div class="error-banner" style="margin-bottom:1rem">Please fill in all required fields marked with *. Make sure to select at least one zone or city.</div>';
     errorArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
     return;
   }
@@ -405,7 +502,7 @@ async function submitApplication() {
     gst_number: gstNumber,
     cin_number: cinNumber,
     year_founded: yearFounded,
-    cities: document.getElementById('cities').value.trim(),
+    cities: citiesVal,
     gcc_projects: document.getElementById('gcc_projects').value,
     team_size: document.getElementById('team_size').value,
     description: description,
