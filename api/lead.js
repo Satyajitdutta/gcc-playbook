@@ -1,9 +1,9 @@
 // Pithonix GCC Playbook — Lead & Partner Notification
-// Flow: Form submit → send email directly via M365 SMTP
+// Flow: Form submit → send email via Resend
 // To: satyajit.d@pithonix.ai  |  CC: info@pithonix.ai
 // Tags: [Partnership Request] or [GCC Lead Request]
 
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 import https from 'https';
 
 async function postJSON(urlStr, payload) {
@@ -30,23 +30,10 @@ async function postJSON(urlStr, payload) {
   });
 }
 
-function createTransporter() {
-  return nodemailer.createTransport({
-    host: 'smtp.office365.com',
-    port: 587,
-    secure: false,
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS
-    },
-    tls: { rejectUnauthorized: false }
-  });
-}
-
 async function sendEmail(subject, html) {
-  const transporter = createTransporter();
-  await transporter.sendMail({
-    from: `"Pithonix GCC Platform" <${process.env.SMTP_USER}>`,
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  await resend.emails.send({
+    from: 'Pithonix GCC Platform <info@pithonix.ai>',
     to: 'satyajit.d@pithonix.ai',
     cc: 'info@pithonix.ai',
     subject,
@@ -173,7 +160,7 @@ export default async function handler(req, res) {
   }));
 
   // Send notification email before responding so it always fires
-  if (process.env.SMTP_USER && process.env.SMTP_PASS) {
+  if (process.env.RESEND_API_KEY) {
     try {
       const html = isPartner ? buildPartnerEmail(body) : buildLeadEmail(body);
       await sendEmail(subject, html);
@@ -203,7 +190,7 @@ export default async function handler(req, res) {
         try { parsed = JSON.parse(outreachResult.content[0].text); } catch { parsed = null; }
       }
 
-      if (parsed?.email1_subject && process.env.SMTP_USER && process.env.SMTP_PASS) {
+      if (parsed?.email1_subject && process.env.RESEND_API_KEY) {
         const outreachHtml = buildOutreachEmail(body, parsed);
         await sendEmail(`[GCC Lead Request] Outreach Emails — ${name}, ${company}`, outreachHtml);
       }
