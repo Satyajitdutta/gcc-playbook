@@ -184,7 +184,6 @@ export default async function handler(req, res) {
   }
 
   applicationId = applicationId || Math.floor(Math.random() * 90000) + 10000;
-  res.status(200).json({ success: true, applicationId });
 
   if (process.env.RESEND_API_KEY) {
     try {
@@ -212,4 +211,6 @@ export default async function handler(req, res) {
       });
     } catch(e) { console.error('Email error:', e.message); }
   }
+
+  res.status(200).json({ success: true, applicationId });
 }
