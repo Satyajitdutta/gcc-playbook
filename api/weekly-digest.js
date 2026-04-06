@@ -18,8 +18,9 @@ function buildDigestEmail(partners, pendingCount) {
     <tr style="background:${i % 2 === 0 ? '#fff' : '#f8fafc'}">
       <td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;border-bottom:1px solid #f1f5f9">${p.company_name}</td>
       <td style="padding:10px 14px;font-size:13px;color:#374151;border-bottom:1px solid #f1f5f9">${p.partner_category || '—'}</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;border-bottom:1px solid #f1f5f9">${p.contact_name || '—'}<br><a href="mailto:${p.email}" style="color:#3b82f6;font-size:12px">${p.email}</a>${p.backup_email ? `<br><span style="color:#94a3b8;font-size:11px">${p.backup_email}</span>` : ''}</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;border-bottom:1px solid #f1f5f9">${p.phone || '—'}</td>
       <td style="padding:10px 14px;font-size:13px;color:#374151;border-bottom:1px solid #f1f5f9">${p.cities || '—'}</td>
-      <td style="padding:10px 14px;font-size:13px;color:#374151;border-bottom:1px solid #f1f5f9">${p.approved_at ? new Date(p.approved_at).toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' }) : '—'}</td>
       <td style="padding:10px 14px;font-size:13px;border-bottom:1px solid #f1f5f9">${p.website ? `<a href="${p.website}" style="color:#3b82f6">${p.website.replace(/^https?:\/\//, '')}</a>` : '—'}</td>
     </tr>
   `).join('');
@@ -56,8 +57,9 @@ function buildDigestEmail(partners, pendingCount) {
             <tr style="background:#f1f5f9">
               <th style="padding:10px 14px;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1px;text-align:left;border-bottom:2px solid #e2e8f0">Company</th>
               <th style="padding:10px 14px;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1px;text-align:left;border-bottom:2px solid #e2e8f0">Category</th>
+              <th style="padding:10px 14px;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1px;text-align:left;border-bottom:2px solid #e2e8f0">Contact</th>
+              <th style="padding:10px 14px;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1px;text-align:left;border-bottom:2px solid #e2e8f0">Phone</th>
               <th style="padding:10px 14px;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1px;text-align:left;border-bottom:2px solid #e2e8f0">Cities</th>
-              <th style="padding:10px 14px;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1px;text-align:left;border-bottom:2px solid #e2e8f0">Approved On</th>
               <th style="padding:10px 14px;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1px;text-align:left;border-bottom:2px solid #e2e8f0">Website</th>
             </tr>
           </thead>
@@ -95,7 +97,8 @@ export default async function handler(req, res) {
     const client = await getPool().connect();
     try {
       const approved = await client.query(`
-        SELECT company_name, partner_category, cities, website, approved_at
+        SELECT company_name, partner_category, cities, website, approved_at,
+               contact_name, email, backup_email, phone
         FROM gcc_partner_applications
         WHERE status = 'Approved'
         ORDER BY approved_at ASC
