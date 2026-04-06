@@ -1,7 +1,9 @@
-// Pithonix GCC Playbook — Lead Capture + Auto Outreach Generator
-// Flow: Lead submits form → capture lead → call outreach engine → send full pack to Make webhook
-// Make webhook → email to info@pithonix.ai with lead details + 3 ready-to-send outreach emails
+// Pithonix GCC Playbook — Lead & Partner Notification
+// Flow: Form submit → send email directly via M365 SMTP
+// To: satyajit.d@pithonix.ai  |  CC: info@pithonix.ai
+// Tags: [Partnership Request] or [GCC Lead Request]
 
+import nodemailer from 'nodemailer';
 import https from 'https';
 
 async function postJSON(urlStr, payload) {
@@ -28,6 +30,120 @@ async function postJSON(urlStr, payload) {
   });
 }
 
+function createTransporter() {
+  return nodemailer.createTransport({
+    host: 'smtp.office365.com',
+    port: 587,
+    secure: false,
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS
+    },
+    tls: { rejectUnauthorized: false }
+  });
+}
+
+async function sendEmail(subject, html) {
+  const transporter = createTransporter();
+  await transporter.sendMail({
+    from: `"Pithonix GCC Platform" <${process.env.SMTP_USER}>`,
+    to: 'satyajit.d@pithonix.ai',
+    cc: 'info@pithonix.ai',
+    subject,
+    html
+  });
+}
+
+function row(label, value) {
+  if (!value) return '';
+  return `<tr>
+    <td style="padding:8px 12px;font-weight:600;color:#555;white-space:nowrap;vertical-align:top">${label}</td>
+    <td style="padding:8px 12px;color:#111">${value}</td>
+  </tr>`;
+}
+
+function buildPartnerEmail(data) {
+  const { name, email, company, functions: category, country: website, fte: phone, priority: description } = data;
+  return `
+  <div style="font-family:'Segoe UI',Arial,sans-serif;max-width:620px;margin:0 auto;background:#f9f9f9;padding:24px">
+    <div style="background:#0f172a;padding:20px 24px;border-radius:10px 10px 0 0">
+      <p style="margin:0;color:#94a3b8;font-size:12px;letter-spacing:1px;text-transform:uppercase">Pithonix GCC Platform</p>
+      <h2 style="margin:6px 0 0;color:#ffffff;font-size:20px">New Partnership Application</h2>
+    </div>
+    <div style="background:#ffffff;padding:24px;border-radius:0 0 10px 10px;border:1px solid #e2e8f0;border-top:none">
+      <table style="width:100%;border-collapse:collapse">
+        ${row('Name', name)}
+        ${row('Email', `<a href="mailto:${email}" style="color:#3b82f6">${email}</a>`)}
+        ${row('Company', company)}
+        ${row('Partner Category', category)}
+        ${row('Website', website)}
+        ${row('Phone', phone)}
+        ${row('Description', description)}
+        ${row('Submitted', new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) + ' IST')}
+      </table>
+      <div style="margin-top:20px;padding:14px 16px;background:#f0fdf4;border-left:4px solid #22c55e;border-radius:4px">
+        <p style="margin:0;font-size:13px;color:#166534">Review this application and respond within 48 hours as committed on the platform.</p>
+      </div>
+    </div>
+  </div>`;
+}
+
+function buildLeadEmail(data) {
+  const { name, email, company, industry, country, functions, fte, timeline, priority } = data;
+  return `
+  <div style="font-family:'Segoe UI',Arial,sans-serif;max-width:620px;margin:0 auto;background:#f9f9f9;padding:24px">
+    <div style="background:#0f172a;padding:20px 24px;border-radius:10px 10px 0 0">
+      <p style="margin:0;color:#94a3b8;font-size:12px;letter-spacing:1px;text-transform:uppercase">Pithonix GCC Platform</p>
+      <h2 style="margin:6px 0 0;color:#ffffff;font-size:20px">New GCC Lead</h2>
+    </div>
+    <div style="background:#ffffff;padding:24px;border-radius:0 0 10px 10px;border:1px solid #e2e8f0;border-top:none">
+      <table style="width:100%;border-collapse:collapse">
+        ${row('Name', name)}
+        ${row('Email', `<a href="mailto:${email}" style="color:#3b82f6">${email}</a>`)}
+        ${row('Company', company)}
+        ${row('Industry', industry)}
+        ${row('Country', country)}
+        ${row('Functions Needed', functions)}
+        ${row('Year 1 FTE', fte)}
+        ${row('Timeline', timeline)}
+        ${row('Top Priority', priority)}
+        ${row('Submitted', new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) + ' IST')}
+      </table>
+      <div style="margin-top:20px;padding:14px 16px;background:#eff6ff;border-left:4px solid #3b82f6;border-radius:4px">
+        <p style="margin:0;font-size:13px;color:#1e40af">Outreach emails are being generated and will follow in a second email shortly.</p>
+      </div>
+    </div>
+  </div>`;
+}
+
+function buildOutreachEmail(data, outreach) {
+  const { name, company } = data;
+  function emailBlock(num, subject, body) {
+    if (!subject) return '';
+    return `
+    <div style="margin-bottom:24px;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden">
+      <div style="background:#f1f5f9;padding:10px 16px">
+        <span style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:1px">Email ${num}</span>
+        <p style="margin:4px 0 0;font-weight:600;color:#0f172a;font-size:14px">${subject}</p>
+      </div>
+      <div style="padding:14px 16px;font-size:13px;color:#374151;white-space:pre-wrap;line-height:1.6">${body}</div>
+    </div>`;
+  }
+  return `
+  <div style="font-family:'Segoe UI',Arial,sans-serif;max-width:620px;margin:0 auto;background:#f9f9f9;padding:24px">
+    <div style="background:#1e293b;padding:20px 24px;border-radius:10px 10px 0 0">
+      <p style="margin:0;color:#94a3b8;font-size:12px;letter-spacing:1px;text-transform:uppercase">Pithonix Outreach Engine</p>
+      <h2 style="margin:6px 0 0;color:#ffffff;font-size:20px">3 Ready-to-Send Emails — ${name}, ${company}</h2>
+    </div>
+    <div style="background:#ffffff;padding:24px;border-radius:0 0 10px 10px;border:1px solid #e2e8f0;border-top:none">
+      ${outreach.company_summary ? `<p style="font-size:13px;color:#555;margin-bottom:20px">${outreach.company_summary}</p>` : ''}
+      ${emailBlock(1, outreach.email1_subject, outreach.email1_body)}
+      ${emailBlock(2, outreach.email2_subject, outreach.email2_body)}
+      ${emailBlock(3, outreach.email3_subject, outreach.email3_body)}
+    </div>
+  </div>`;
+}
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -45,78 +161,54 @@ export default async function handler(req, res) {
 
   const { name, email, company, industry, country, functions, fte, timeline, priority, source } = body;
 
-  // Log lead
-  console.log('GCC_LEAD', JSON.stringify({
-    timestamp: new Date().toISOString(),
-    source: source || 'GCC Simulator',
-    name, email, company, industry, country, functions, fte, timeline, priority
+  const isPartner = (source || '').toLowerCase().includes('partner');
+  const tag = isPartner ? 'Partnership Request' : 'GCC Lead Request';
+  const subjectSuffix = isPartner
+    ? `${company || 'Unknown'} — ${functions || 'Partner'}`
+    : `${company || 'Unknown'} — ${industry || 'GCC Enquiry'}`;
+  const subject = `[${tag}] ${subjectSuffix}`;
+
+  console.log('SUBMISSION', JSON.stringify({
+    timestamp: new Date().toISOString(), tag, source, name, email, company
   }));
 
-  // Respond to client immediately so the form shows success without waiting
-  res.status(200).json({ success: true });
-
-  const webhookUrl = process.env.LEAD_WEBHOOK_URL;
-  if (!webhookUrl) return;
-
-  // Step 1 — Send immediate lead notification to Make (fast, no emails yet)
-  const immediatePayload = {
-    source: source || 'GCC Playbook Simulator',
-    timestamp: new Date().toISOString(),
-    name: name || 'Not provided',
-    email, company: company || 'Not provided',
-    industry, country, functions, fte, timeline, priority,
-    outreach_status: 'Generating outreach emails...'
-  };
-  try { await postJSON(webhookUrl, immediatePayload); } catch(e) { console.error('Webhook error:', e.message); }
-
-  // Step 2 — Call outreach engine to generate 3 personalised emails
-  let outreachEmails = null;
-  try {
-    const outreachResult = await postJSON('https://pithonix-outreach-engine.vercel.app/api/research', {
-      lead: {
-        name: name || '',
-        company: company || '',
-        role: priority || 'Decision Maker',
-        industry: industry || '',
-        strategicContext: `GCC Setup enquiry from ${country || 'international'}. Functions needed: ${functions || ''}. Year 1 FTE: ${fte || ''}. Timeline: ${timeline || ''}. Top priority: ${priority || ''}.`
-      }
-    });
-
-    // Engine wraps output in content[0].text as stringified JSON
-    let parsed = outreachResult;
-    if (outreachResult && outreachResult.content && outreachResult.content[0] && outreachResult.content[0].text) {
-      try { parsed = JSON.parse(outreachResult.content[0].text); } catch { parsed = null; }
+  // Send notification email before responding so it always fires
+  if (process.env.SMTP_USER && process.env.SMTP_PASS) {
+    try {
+      const html = isPartner ? buildPartnerEmail(body) : buildLeadEmail(body);
+      await sendEmail(subject, html);
+    } catch(e) {
+      console.error('Email send error:', e.message);
     }
-    if (parsed && parsed.email1_subject) {
-      outreachEmails = parsed;
-    }
-  } catch(e) {
-    console.error('Outreach engine error:', e.message);
   }
 
-  // Step 3 — Send enriched payload to Make with outreach emails included
-  if (outreachEmails) {
-    const enrichedPayload = {
-      source: source || 'GCC Playbook Simulator',
-      timestamp: new Date().toISOString(),
-      name: name || 'Not provided',
-      email, company: company || 'Not provided',
-      industry, country, functions, fte, timeline, priority,
-      outreach_status: 'Ready — 3 emails generated',
+  // Respond to client
+  res.status(200).json({ success: true });
 
-      // Company intelligence
-      company_summary: outreachEmails.company_summary || '',
-      pain_points: Array.isArray(outreachEmails.pain_points) ? outreachEmails.pain_points.join(' | ') : '',
-      pithonix_fit: outreachEmails.pithonix_fit || '',
+  // For GCC leads only: call outreach engine and send enriched follow-up email
+  if (!isPartner) {
+    try {
+      const outreachResult = await postJSON('https://pithonix-outreach-engine.vercel.app/api/research', {
+        lead: {
+          name: name || '',
+          company: company || '',
+          role: priority || 'Decision Maker',
+          industry: industry || '',
+          strategicContext: `GCC Setup enquiry from ${country || 'international'}. Functions needed: ${functions || ''}. Year 1 FTE: ${fte || ''}. Timeline: ${timeline || ''}. Top priority: ${priority || ''}.`
+        }
+      });
 
-      // Ready-to-send email sequence
-      email1_subject: outreachEmails.email1_subject || '',
-      email1_body: outreachEmails.email1_body || '',
-      email2_subject: outreachEmails.email2_subject || '',
-      email2_body: outreachEmails.email2_body || '',
-      email3_subject: outreachEmails.email3_subject || '',
-      email3_body: outreachEmails.email3_body || ''
-    };
-    try { await postJSON(webhookUrl, enrichedPayload); } catch(e) { console.error('Enriched webhook error:', e.message); }
+      let parsed = outreachResult;
+      if (outreachResult?.content?.[0]?.text) {
+        try { parsed = JSON.parse(outreachResult.content[0].text); } catch { parsed = null; }
+      }
+
+      if (parsed?.email1_subject && process.env.SMTP_USER && process.env.SMTP_PASS) {
+        const outreachHtml = buildOutreachEmail(body, parsed);
+        await sendEmail(`[GCC Lead Request] Outreach Emails — ${name}, ${company}`, outreachHtml);
+      }
+    } catch(e) {
+      console.error('Outreach engine error:', e.message);
+    }
   }
 }
