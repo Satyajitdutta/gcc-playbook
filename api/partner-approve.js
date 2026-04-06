@@ -115,9 +115,10 @@ export default async function handler(req, res) {
       partner = check.rows[0];
 
       if (partner.status === 'Approved' || partner.status === 'Rejected') {
+        const editUrl = `https://gcc-playbook.pithonix.ai/api/partner-edit?id=${id}&token=${token}`;
         res.setHeader('Content-Type', 'text/html');
         res.status(200).send(page('Already Processed', 'Already Done',
-          `<div class="icon">${partner.status === 'Approved' ? '✅' : '❌'}</div><h1>Already ${partner.status}</h1><p>This application from <strong>${partner.company_name}</strong> was already ${partner.status.toLowerCase()}.</p>`,
+          `<div class="icon">${partner.status === 'Approved' ? '✅' : '❌'}</div><h1>Already ${partner.status}</h1><p>This application from <strong>${partner.company_name}</strong> was already ${partner.status.toLowerCase()}.</p><a href="${editUrl}" style="margin-top:0.75rem;background:rgba(59,130,246,0.15);border-color:rgba(59,130,246,0.4);color:#93c5fd">Edit Details</a>`,
           partner.status === 'Approved' ? '#22c55e' : '#f87171'));
         return;
       }
@@ -163,13 +164,15 @@ export default async function handler(req, res) {
   }
 
   const isApprove = action === 'approve';
+  const editUrl = `https://gcc-playbook.pithonix.ai/api/partner-edit?id=${id}&token=${token}`;
   res.setHeader('Content-Type', 'text/html');
   res.status(200).send(page(
     isApprove ? 'Partner Approved' : 'Application Rejected',
     isApprove ? 'Partner Approved' : 'Application Rejected',
     `<div class="icon">${isApprove ? '✅' : '❌'}</div>
     <h1>${isApprove ? 'Partner Approved' : 'Application Rejected'}</h1>
-    <p><strong>${partner.company_name}</strong> has been ${isApprove ? 'approved and is now live on the GCC Playbook site' : 'rejected and notified by email'}.</p>`,
+    <p><strong>${partner.company_name}</strong> has been ${isApprove ? 'approved and is now live on the GCC Playbook site' : 'rejected and notified by email'}.</p>
+    <a href="${editUrl}" style="margin-top:0.75rem;background:rgba(59,130,246,0.12);border-color:rgba(59,130,246,0.35);color:#93c5fd">Edit Details</a>`,
     isApprove ? '#22c55e' : '#f87171'
   ));
 }
