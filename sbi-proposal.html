@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Global Preferred Banking Partner Proposal | Pithonix AI x SBI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:      #003F87;
+      --navy-pale: #e8f0fa;
+      --gold:      #C8963E;
+      --gold-pale: #fdf6e8;
+      --sbi-blue:  #1A237E;
+      --sbi-red:   #B71C1C;
+      --sbi-pale:  #E8EAF6;
+      --dark:      #2c2c2c;
+      --mid:       #555555;
+      --light:     #888888;
+      --border:    #d0d9e8;
+      --stripe:    #f5f8fd;
+      --white:     #ffffff;
+
+      /* Letterhead dimensions */
+      --lh-header-h: 88px;
+      --lh-footer-h: 48px;
+      --page-max:    820px;
+      --page-pad:    56px;
+    }
+
+    html {
+      font-size: 15px;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: #edf0f4;
+      color: var(--dark);
+      line-height: 1.7;
+      /* space for fixed header and footer */
+      padding-top: calc(var(--lh-header-h) + 8px);
+      padding-bottom: calc(var(--lh-footer-h) + 8px);
+    }
+
+    /* =============================================
+       LETTERHEAD HEADER — fixed, every page
+    ============================================= */
+    .lh-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--lh-header-h);
+      background: var(--white);
+      z-index: 9000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 0 0;
+    }
+
+    .lh-header-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    .lh-logo-img {
+      height: 60px;
+      width: auto;
+      display: block;
+    }
+
+    .lh-wordmark {
+      font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+      font-weight: 900;
+      font-size: 26px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      /* grey gradient matching the letterhead */
+      background: linear-gradient(90deg, #4a4a4a 0%, #999999 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+      margin-top: 2px;
+    }
+
+    .lh-tagline {
+      font-family: 'Arial', sans-serif;
+      font-size: 8px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #5BAFD6;
+      margin-top: 3px;
+    }
+
+    .lh-header-rule {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--navy), var(--gold), var(--navy));
+    }
+
+    /* =============================================
+       LETTERHEAD FOOTER — fixed, every page
+    ============================================= */
+    .lh-footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: var(--lh-footer-h);
+      background: var(--white);
+      z-index: 9000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lh-footer-rule {
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--navy), var(--gold), var(--navy));
+      margin-bottom: 6px;
+    }
+
+    .lh-footer-text {
+      font-family: 'Arial', sans-serif;
+      font-size: 8px;
+      color: var(--mid);
+      letter-spacing: 0.3px;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .lh-footer-text strong {
+      color: var(--navy);
+    }
+
+    /* =============================================
+       DOCUMENT WRAPPER
+    ============================================= */
+    .document {
+      max-width: var(--page-max);
+      margin: 0 auto;
+      background: var(--white);
+      box-shadow: 0 4px 32px rgba(0,0,0,0.15);
+    }
+
+    /* =============================================
+       COVER PAGE
+    ============================================= */
+    .cover {
+      padding: 60px var(--page-pad) 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      page-break-after: always;
+      position: relative;
+    }
+
+    .cover::before {
+      content: '';
+      position: absolute;
+      top: 24px; left: 24px;
+      width: 64px; height: 64px;
+      border-top: 2px solid var(--navy);
+      border-left: 2px solid var(--navy);
+      opacity: 0.2;
+    }
+
+    .cover::after {
+      content: '';
+      position: absolute;
+      bottom: 24px; right: 24px;
+      width: 64px; height: 64px;
+      border-bottom: 2px solid var(--gold);
+      border-right: 2px solid var(--gold);
+      opacity: 0.35;
+    }
+
+    .cover-logo-lockup {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      margin-bottom: 44px;
+    }
+
+    .cover-logo-pithonix {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .cover-pithonix-wordmark {
+      font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+      font-weight: 900;
+      font-size: 22px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, #4a4a4a 0%, #999999 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-top: 4px;
+    }
+
+    .cover-pithonix-tag {
+      font-family: 'Arial', sans-serif;
+      font-size: 7px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #5BAFD6;
+      margin-top: 3px;
+    }
+
+    .cover-divider {
+      width: 1px;
+      height: 48px;
+      background: var(--border);
+    }
+
+    .cover-sbi-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .cover-sbi-tag {
+      font-family: 'Arial', sans-serif;
+      font-size: 7px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--sbi-red);
+      margin-top: 5px;
+    }
+
+    .cover-rule {
+      width: 50px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--navy), var(--gold));
+      margin: 0 auto 20px;
+    }
+
+    .cover-label {
+      font-family: 'Arial', sans-serif;
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+
+    .cover-title {
+      font-family: 'Georgia', serif;
+      font-size: 30px;
+      font-weight: normal;
+      color: var(--navy);
+      line-height: 1.3;
+      margin-bottom: 10px;
+      max-width: 580px;
+    }
+
+    .cover-title em { font-style: normal; color: var(--gold); }
+
+    .cover-subtitle {
+      font-family: 'Arial', sans-serif;
+      font-size: 12.5px;
+      color: var(--mid);
+      line-height: 1.7;
+      margin-bottom: 40px;
+      max-width: 520px;
+    }
+
+    .cover-meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      border: 1px solid var(--border);
+      max-width: 520px;
+      width: 100%;
+      margin-bottom: 32px;
+    }
+
+    .cover-meta-cell {
+      padding: 14px 16px;
+      border-right: 1px solid var(--border);
+      text-align: left;
+    }
+
+    .cover-meta-cell:last-child { border-right: none; }
+
+    .cover-meta-label {
+      font-family: 'Arial', sans-serif;
+      font-size: 8px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-bottom: 4px;
+    }
+
+    .cover-meta-value {
+      font-family: 'Arial', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .cover-confidential {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--gold);
+      padding: 5px 14px;
+      border-radius: 2px;
+    }
+
+    .cover-confidential-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
+
+    .cover-confidential-text {
+      font-family: 'Arial', sans-serif;
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    /* =============================================
+       TOC
+    ============================================= */
+    .toc-page {
+      padding: 44px var(--page-pad);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .toc-eyebrow {
+      font-family: 'Arial', sans-serif;
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+    }
+
+    .toc-list { list-style: none; padding: 0; }
+
+    .toc-item {
+      display: flex;
+      align-items: baseline;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+      gap: 12px;
+    }
+
+    .toc-num {
+      flex-shrink: 0;
+      font-family: 'Arial', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--gold);
+      width: 26px;
+    }
+
+    .toc-name {
+      flex: 1;
+      font-family: 'Georgia', serif;
+      font-size: 14px;
+      color: var(--navy);
+    }
+
+    .toc-sub {
+      font-family: 'Arial', sans-serif;
+      font-size: 10px;
+      color: var(--light);
+      margin-top: 2px;
+    }
+
+    /* =============================================
+       CONTENT SECTIONS
+    ============================================= */
+    .section {
+      padding: 44px var(--page-pad) 38px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section:last-of-type { border-bottom: none; }
+
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .section-number {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'Arial', sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 4px;
+    }
+
+    .section-title-group { flex: 1; }
+
+    .section-eyebrow {
+      font-family: 'Arial', sans-serif;
+      font-size: 8px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 5px;
+    }
+
+    .section-title {
+      font-family: 'Georgia', serif;
+      font-size: 24px;
+      font-weight: normal;
+      color: var(--navy);
+      line-height: 1.25;
+    }
+
+    .section-rule {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, var(--navy) 0%, var(--gold) 40%, transparent 100%);
+      margin-bottom: 28px;
+      opacity: 0.4;
+    }
+
+    .section p {
+      font-family: 'Georgia', serif;
+      font-size: 13.5px;
+      color: var(--dark);
+      line-height: 1.8;
+      margin-bottom: 14px;
+    }
+
+    .section p:last-child { margin-bottom: 0; }
+
+    .section ul { list-style: none; padding: 0; margin-bottom: 18px; }
+
+    .section ul li {
+      font-family: 'Georgia', serif;
+      font-size: 13.5px;
+      color: var(--dark);
+      line-height: 1.75;
+      padding: 5px 0 5px 26px;
+      position: relative;
+      border-bottom: 1px solid #f0f3f8;
+    }
+
+    .section ul li:last-child { border-bottom: none; }
+
+    .section ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 15px;
+      width: 8px;
+      height: 2px;
+      background: var(--gold);
+    }
+
+    .section ul li strong {
+      color: var(--navy);
+      font-family: 'Arial', sans-serif;
+      font-size: 12.5px;
+      font-weight: 700;
+    }
+
+    /* =============================================
+       CALLOUTS
+    ============================================= */
+    .callout {
+      border-left: 4px solid var(--navy);
+      background: var(--navy-pale);
+      padding: 18px 22px;
+      margin: 22px 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .callout p { font-size: 13px !important; color: var(--navy) !important; margin-bottom: 0 !important; }
+
+    .callout-gold { border-left-color: var(--gold); background: var(--gold-pale); }
+    .callout-gold p { color: #7a5520 !important; }
+
+    .callout-sbi { border-left-color: var(--sbi-blue); background: var(--sbi-pale); }
+    .callout-sbi p { color: var(--sbi-blue) !important; }
+
+    /* =============================================
+       STAT ROW
+    ============================================= */
+    .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 24px 0; }
+
+    .stat-card {
+      border: 1px solid var(--border);
+      padding: 18px 14px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--navy); }
+    .stat-card:nth-child(2)::after { background: var(--gold); }
+    .stat-card:nth-child(3)::after { background: linear-gradient(90deg, var(--navy), var(--gold)); }
+
+    .stat-number { font-family: 'Arial', sans-serif; font-size: 28px; font-weight: 800; color: var(--navy); line-height: 1; margin-bottom: 4px; }
+    .stat-number.gold { color: var(--gold); }
+    .stat-label { font-family: 'Arial', sans-serif; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--light); line-height: 1.4; }
+
+    /* =============================================
+       TABLES
+    ============================================= */
+    .table-wrap { overflow-x: auto; margin: 22px 0; }
+
+    table { width: 100%; border-collapse: collapse; font-family: 'Arial', sans-serif; font-size: 12px; }
+    thead tr { background: var(--navy); }
+    thead th { color: var(--white); font-weight: 700; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; padding: 11px 14px; text-align: left; }
+    tbody tr:nth-child(odd) { background: var(--white); }
+    tbody tr:nth-child(even) { background: var(--stripe); }
+    tbody tr:hover { background: var(--navy-pale); }
+    tbody td { padding: 10px 14px; color: var(--dark); border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.5; }
+    tbody td:first-child { font-weight: 700; color: var(--navy); }
+
+    /* =============================================
+       TIER CARDS
+    ============================================= */
+    .model-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 24px 0; }
+
+    .model-card { border: 1px solid var(--border); overflow: hidden; position: relative; }
+    .model-card.recommended { border-color: var(--navy); border-width: 2px; }
+
+    .model-card-badge { display: none; position: absolute; top: 10px; right: 10px; background: var(--gold); color: var(--white); font-family: 'Arial', sans-serif; font-size: 8px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 3px 8px; }
+    .model-card.recommended .model-card-badge { display: block; }
+
+    .model-card-header { background: var(--navy); padding: 16px 18px; }
+    .model-card.recommended .model-card-header { background: linear-gradient(135deg, var(--navy), #005cbf); }
+
+    .model-card-letter { font-family: 'Arial', sans-serif; font-size: 28px; font-weight: 800; color: rgba(255,255,255,0.2); line-height: 1; }
+    .model-card-name { font-family: 'Georgia', serif; font-size: 16px; color: var(--white); margin-top: 2px; }
+    .model-card-body { padding: 18px; }
+
+    .model-card-item { font-family: 'Arial', sans-serif; font-size: 11.5px; color: var(--dark); padding: 6px 0 6px 16px; position: relative; border-bottom: 1px solid #f0f3f8; line-height: 1.5; }
+    .model-card-item:last-child { border-bottom: none; }
+    .model-card-item::before { content: ''; position: absolute; left: 0; top: 13px; width: 6px; height: 6px; border-radius: 50%; background: var(--navy); }
+    .model-card.recommended .model-card-item::before { background: var(--gold); }
+
+    /* =============================================
+       FLOW DIAGRAM
+    ============================================= */
+    .flow-diagram { margin: 24px 0; border: 1px solid var(--border); overflow: hidden; }
+
+    .flow-title-bar { background: var(--navy); padding: 10px 22px; font-family: 'Arial', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--white); }
+
+    .flow-body { padding: 24px 20px; background: var(--stripe); }
+
+    .flow-steps { display: flex; align-items: stretch; }
+
+    .flow-step { flex: 1; text-align: center; position: relative; }
+    .flow-step:not(:last-child)::after { content: ''; position: absolute; top: 26px; right: -15px; width: 0; height: 0; border-top: 9px solid transparent; border-bottom: 9px solid transparent; border-left: 12px solid var(--gold); z-index: 2; }
+
+    .flow-step-box { background: var(--white); border: 1px solid var(--border); border-top: 3px solid var(--navy); padding: 12px 8px; margin: 0 15px; min-height: 76px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .flow-step:nth-child(even) .flow-step-box { border-top-color: var(--gold); }
+
+    .flow-step-num { font-family: 'Arial', sans-serif; font-size: 9px; font-weight: 800; color: var(--gold); letter-spacing: 1px; margin-bottom: 4px; }
+    .flow-step-label { font-family: 'Arial', sans-serif; font-size: 10px; font-weight: 700; color: var(--navy); line-height: 1.3; }
+    .flow-step-sub { font-family: 'Arial', sans-serif; font-size: 9px; color: var(--mid); margin-top: 3px; line-height: 1.3; }
+
+    /* =============================================
+       WIN-WIN GRID
+    ============================================= */
+    .winwin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 24px 0; }
+
+    .winwin-card { border: 1px solid var(--border); overflow: hidden; }
+
+    .winwin-header { padding: 12px 18px; font-family: 'Arial', sans-serif; font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; }
+    .winwin-header.sbi { background: var(--sbi-blue); color: var(--white); }
+    .winwin-header.pithonix { background: var(--navy); color: var(--white); }
+
+    .winwin-body { padding: 14px 18px; }
+
+    .winwin-item { font-family: 'Arial', sans-serif; font-size: 12px; color: var(--dark); padding: 6px 0 6px 16px; position: relative; border-bottom: 1px solid #f0f3f8; line-height: 1.5; }
+    .winwin-item:last-child { border-bottom: none; }
+    .winwin-item::before { content: ''; position: absolute; left: 0; top: 13px; width: 6px; height: 6px; border-radius: 50%; }
+    .winwin-card.sbi .winwin-item::before { background: var(--sbi-blue); }
+    .winwin-card.pithonix .winwin-item::before { background: var(--gold); }
+
+    /* =============================================
+       TECH GRID
+    ============================================= */
+    .tech-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 22px 0; }
+
+    .tech-item { display: flex; gap: 12px; padding: 14px; border: 1px solid var(--border); align-items: flex-start; }
+
+    .tech-icon { flex-shrink: 0; width: 30px; height: 30px; background: var(--navy); color: var(--white); font-family: 'Arial', sans-serif; font-size: 10px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+
+    .tech-label { font-family: 'Arial', sans-serif; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 3px; }
+    .tech-value { font-family: 'Arial', sans-serif; font-size: 12px; color: var(--dark); line-height: 1.5; }
+
+    /* =============================================
+       ABOUT CARDS
+    ============================================= */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 22px 0; }
+
+    .about-card { border: 1px solid var(--border); padding: 18px; }
+    .about-card-icon { font-family: 'Arial', sans-serif; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 7px; }
+    .about-card-title { font-family: 'Georgia', serif; font-size: 15px; color: var(--navy); margin-bottom: 9px; }
+    .about-card-text { font-family: 'Arial', sans-serif; font-size: 12px; color: var(--mid); line-height: 1.6; }
+
+    /* =============================================
+       STEPS LIST
+    ============================================= */
+    .steps-list { list-style: none; padding: 0; margin: 18px 0; }
+
+    .steps-list li { display: flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
+    .steps-list li:last-child { border-bottom: none; }
+
+    .step-num { flex-shrink: 0; width: 26px; height: 26px; background: var(--gold); color: var(--white); font-family: 'Arial', sans-serif; font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+
+    .step-content { flex: 1; }
+    .step-title { font-family: 'Arial', sans-serif; font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 3px; }
+    .step-detail { font-family: 'Arial', sans-serif; font-size: 12px; color: var(--mid); line-height: 1.5; }
+
+    /* =============================================
+       CONTACT BOX
+    ============================================= */
+    .contact-box { border: 2px solid var(--navy); padding: 26px 30px; margin-top: 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+
+    .contact-heading { font-family: 'Arial', sans-serif; font-size: 9px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+    .contact-line { font-family: 'Arial', sans-serif; font-size: 12.5px; color: var(--dark); margin-bottom: 5px; line-height: 1.5; }
+    .contact-line strong { color: var(--navy); font-weight: 700; }
+    .contact-line a { color: var(--navy); text-decoration: none; }
+
+    /* =============================================
+       SECTION DIVIDER
+    ============================================= */
+    .section-divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent); }
+
+    /* =============================================
+       HELPERS
+    ============================================= */
+    .page-break { page-break-before: always; }
+    .no-break { page-break-inside: avoid; }
+
+    /* H3 style shortcut */
+    .sub-heading {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin: 26px 0 14px;
+      padding-bottom: 7px;
+      border-bottom: 2px solid var(--navy-pale);
+    }
+
+    /* =============================================
+       PRINT
+    ============================================= */
+    @media print {
+      @page {
+        size: A4;
+        margin: 0;
+      }
+
+      html, body {
+        background: white;
+        font-size: 13px;
+        padding-top: var(--lh-header-h);
+        padding-bottom: var(--lh-footer-h);
+      }
+
+      .lh-header { position: fixed; top: 0; left: 0; right: 0; }
+      .lh-footer { position: fixed; bottom: 0; left: 0; right: 0; }
+
+      .document { max-width: 100%; width: 100%; box-shadow: none; }
+
+      .section { page-break-inside: avoid; }
+      .page-break { page-break-before: always; }
+      .no-break { page-break-inside: avoid; }
+
+      table { page-break-inside: avoid; }
+      .model-card, .stat-card, .tech-item, .about-card, .winwin-card { page-break-inside: avoid; }
+
+      tbody tr:hover { background: inherit; }
+      a { color: inherit; text-decoration: none; }
+      .download-btn { display: none !important; }
+    }
+
+    /* =============================================
+       DOWNLOAD BUTTON
+    ============================================= */
+    .download-btn {
+      position: fixed;
+      bottom: calc(var(--lh-footer-h) + 16px);
+      right: 2rem;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.8rem 1.4rem;
+      background: var(--navy);
+      color: #fff;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 6px 24px rgba(0,63,135,0.35);
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .download-btn:hover { background: var(--gold); transform: translateY(-2px); }
+    .download-btn svg { flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================
+       LETTERHEAD HEADER — appears on every page
+  ============================================= -->
+  <div class="lh-header">
+    <div class="lh-header-inner">
+      <img src="pithonix-letterhead-logo.png" class="lh-logo-img" alt="Pithonix AI" />
+    </div>
+    <div class="lh-header-rule"></div>
+  </div>
+
+  <!-- ============================================
+       LETTERHEAD FOOTER — appears on every page
+  ============================================= -->
+  <div class="lh-footer">
+    <div class="lh-footer-rule"></div>
+    <div class="lh-footer-text">
+      <strong>PITHONIX AI INDIA PRIVATE LIMITED</strong> &nbsp;|&nbsp; CIN: U62090TS2026PTC213220 &nbsp;|&nbsp;
+      No 2-106/D405, Accurate Wind Chimes, Narsingi, K.V.Rangareddy, Rajendranagar, Telangana, India, 500075 &nbsp;|&nbsp; info@pithonix.ai
+    </div>
+  </div>
+
+  <!-- ============================================
+       DOCUMENT BODY
+  ============================================= -->
+  <div class="document">
+
+    <!-- COVER PAGE -->
+    <div class="cover">
+
+      <div class="cover-logo-lockup">
+        <div class="cover-logo-pithonix">
+          <img src="logo.png" alt="Pithonix AI" style="height:48px;width:auto;display:block;" />
+          <div class="cover-pithonix-wordmark">PITHONIX AI</div>
+          <div class="cover-pithonix-tag">Information to Intelligence</div>
+        </div>
+        <div class="cover-divider"></div>
+        <div class="cover-sbi-block">
+          <img src="sbi-logo.png" alt="State Bank of India" style="height:48px;width:auto;display:block;" />
+          <div class="cover-sbi-tag">State Bank of India</div>
+        </div>
+      </div>
+
+      <div class="cover-rule"></div>
+      <div class="cover-label">Global Preferred Banking Partner Proposal, April 2026</div>
+
+      <h1 class="cover-title">
+        GCC Playbook:<br/>
+        <em>Global Preferred Banking</em><br/>
+        Partner Proposal
+      </h1>
+
+      <p class="cover-subtitle">
+        We are inviting State Bank of India to become the exclusive Preferred Banking Partner
+        on India's first AI-native GCC Intelligence Platform. Every company that plans a GCC
+        in India starts here. We want SBI to be the first call they make.
+      </p>
+
+      <div class="cover-meta-grid">
+        <div class="cover-meta-cell">
+          <div class="cover-meta-label">Prepared by</div>
+          <div class="cover-meta-value">PITHONIX AI INDIA PRIVATE LIMITED</div>
+        </div>
+        <div class="cover-meta-cell">
+          <div class="cover-meta-label">Date</div>
+          <div class="cover-meta-value">April 2026</div>
+        </div>
+        <div class="cover-meta-cell">
+          <div class="cover-meta-label">Platform</div>
+          <div class="cover-meta-value">gcc-playbook.pithonix.ai</div>
+        </div>
+      </div>
+
+      <div class="cover-confidential">
+        <div class="cover-confidential-dot"></div>
+        <div class="cover-confidential-text">Private and Confidential. For SBI Review Only.</div>
+      </div>
+    </div>
+
+    <!-- TABLE OF CONTENTS -->
+    <div class="toc-page">
+      <div class="toc-eyebrow">Table of Contents</div>
+      <ul class="toc-list">
+        <li class="toc-item"><span class="toc-num">01</span><div><div class="toc-name">Executive Summary</div><div class="toc-sub">The opportunity and the ask, in plain terms</div></div></li>
+        <li class="toc-item"><span class="toc-num">02</span><div><div class="toc-name">The Problem: Where GCC Companies Lose Time and Money</div><div class="toc-sub">Banking friction, FEMA complexity, and slow account setup</div></div></li>
+        <li class="toc-item"><span class="toc-num">03</span><div><div class="toc-name">The GCC Playbook Platform: The Lead Engine</div><div class="toc-sub">How the platform works, what it captures, and why these leads are warm</div></div></li>
+        <li class="toc-item"><span class="toc-num">04</span><div><div class="toc-name">Why SBI: The Strategic Fit</div><div class="toc-sub">Network, government relationships, GIFT City, and international branches</div></div></li>
+        <li class="toc-item"><span class="toc-num">05</span><div><div class="toc-name">What Preferred Partner Means in Practice</div><div class="toc-sub">Co-branding, lead flow, and embedded banking recommendations</div></div></li>
+        <li class="toc-item"><span class="toc-num">06</span><div><div class="toc-name">The Lead Flow: From Simulator to SBI Banker</div><div class="toc-sub">Step by step, how a company goes from the platform to a banking relationship</div></div></li>
+        <li class="toc-item"><span class="toc-num">07</span><div><div class="toc-name">The Global Layer: A Two-Way Referral Partnership</div><div class="toc-sub">How SBI's international network becomes a pipeline for both sides</div></div></li>
+        <li class="toc-item"><span class="toc-num">08</span><div><div class="toc-name">Commercial Model: Hybrid Structure</div><div class="toc-sub">Annual partner fee plus per-account referral commission</div></div></li>
+        <li class="toc-item"><span class="toc-num">09</span><div><div class="toc-name">The Win for Both Sides</div><div class="toc-sub">What SBI gets, what Pithonix gets, and what GCC companies get</div></div></li>
+        <li class="toc-item"><span class="toc-num">10</span><div><div class="toc-name">Pilot Proposal and Next Steps</div><div class="toc-sub">Six-month pilot design, success metrics, and how to get started</div></div></li>
+      </ul>
+    </div>
+
+    <!-- SECTION 1 -->
+    <div class="section page-break">
+      <div class="section-header">
+        <div class="section-number">01</div>
+        <div class="section-title-group">
+          <div class="section-eyebrow">Section One</div>
+          <h2 class="section-title">Executive Summary</h2>
+        </div>
+      </div>
+      <div class="section-rule"></div>
+
+      <div class="stat-row no-break">
+        <div class="stat-card"><div class="stat-number">1,800+</div><div class="stat-label">Active GCCs<br/>in India today</div></div>
+        <div class="stat-card"><div class="stat-number gold">36</div><div class="stat-label">New GCCs opening<br/>every two weeks</div></div>
+        <div class="stat-card"><div class="stat-number">$100B</div><div class="stat-label">Projected GCC<br/>market size by 2030</div></div>
+      </div>
+
+      <p>India's GCC sector is growing faster than any other market in the world. 1,800 GCCs are already here. 36 more open every two weeks. By 2030 this is a $100 billion market with over four million people employed. Every single one of those GCCs needs a bank from day one. Accounts open, payroll running, foreign exchange managed, and compliance sorted. That is a massive corporate banking opportunity sitting right in front of SBI.</p>
+
+      <p>Pithonix AI built India's first AI-native GCC Intelligence Platform, called the GCC Playbook. It is live and free to use at gcc-playbook.pithonix.ai. Companies from the US, UK, Middle East, and across Asia use it to plan their GCC setup in India. In under ten seconds, the platform generates a complete, personalised blueprint covering city selection, three-year cost projections, government incentives, and banking recommendations. Every company that runs this simulation is actively planning to build in India right now.</p>
+
+      <div class="callout no-break">
+        <p><strong>We are asking SBI to become the exclusive Preferred Banking Partner on the GCC Playbook.</strong> Every company that plans a GCC in India sees SBI as the recommended bank, gets SBI's contact in their blueprint, and has a named SBI relationship manager reach out within 48 hours. These are warm, qualified leads at the moment of maximum decision-making intent.</p>
+      </div>
+
+      <p>The model is simple. Pithonix brings the leads. SBI brings the banking infrastructure, the government relationships, and the nationwide reach that no private bank can match. Companies get faster account setup and better terms. The commercial structure is a hybrid: a modest annual partner fee for platform positioning, plus a commission for each lead that becomes an SBI corporate account. SBI only pays for leads that actually convert.</p>
+
+      <div class="callout callout-gold no-break">
+        <p><strong>SBI already has a GCC relationship desk at HITEC City.</strong> The infrastructure is there. What is missing is a steady, qualified pipeline of companies feeding that desk. This partnership delivers exactly that.</p>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- SECTION 2 -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">02</div>
+        <div class="section-title-group">
+          <div class="section-eyebrow">Section Two</div>
+          <h2 class="section-title">The Problem: Where GCC Companies Lose Time and Money</h2>
+        </div>
+      </div>
+      <div class="section-rule"></div>
+
+      <p>Every company setting up a GCC in India hits the same banking wall. It is not that they do not want to bank here. The problem is nobody is helping them get there fast, with the right partner, on the right terms, from the very first week.</p>
+
+      <ul>
+        <li><strong>Account opening takes too long.</strong> A foreign company incorporating an Indian entity and trying to open a corporate bank account without an introduction can wait three to eight weeks. In that window they cannot pay vendors, cannot onboard employees, and cannot run payroll. Every day of delay costs money.</li>
+        <li><strong>FEMA and RBI rules are genuinely hard to navigate.</strong> Foreign currency accounts, export collection accounts, intercompany transfer structures, repatriation compliance: for a US or UK company setting up in India for the first time, this is unfamiliar territory. They need a bank that knows the rules and can walk them through it.</li>
+        <li><strong>Banks come in too late.</strong> By the time a foreign company has incorporated and is shopping for a bank account, they are under time pressure and looking for the fastest option, not the best one. The right moment to be in the conversation is earlier: when they are choosing their city and building their cost model.</li>
+        <li><strong>Cross-border banking is underserved.</strong> A GCC's parent company in New York or Dubai needs to transfer funds to the India entity, monitor balances, and manage treasury on both sides. Very few banks can genuinely serve both. SBI, with 229+ international offices across 30+ countries, is one of them.</li>
+        <li><strong>Government scheme benefits get missed.</strong> STPI registration, DPIIT recognition, state IT incentives: all of these have banking implications. GCC companies miss these benefits not because they are ineligible, but because their bank does not have the government relationships to help them access the schemes. SBI does.</li>
+      </ul>
+
+      <div class="callout no-break">
+        <p>The fix is not a cold call after incorporation. It is being in the conversation before a company even picks a city. That is where the GCC Playbook sits. And that is where SBI needs to be.</p>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- SECTION 3 -->
+    <div class="section page-break">
+      <div class="section-header">
+        <div class="section-number">03</div>
+        <div class="section-title-group">
+          <div class="section-eyebrow">Section Three</div>
+          <h2 class="section-title">The GCC Playbook Platform: The Lead Engine</h2>
+        </div>
+      </div>
+      <div class="section-rule"></div>
+
+      <p>The GCC Playbook is India's first AI-native GCC Intelligence Platform, built by PITHONIX AI INDIA PRIVATE LIMITED. It is live, free to use, and accessible to any company worldwide at <strong>gcc-playbook.pithonix.ai</strong>. Before we talk about the partnership, it helps to understand what the platform does and why the leads it generates are so valuable.</p>
+
+      <div class="sub-heading">What the Platform Does</div>
+
+      <ul>
+        <li><strong>AI-Powered GCC Simulator.</strong> A company tells the platform their industry, headcount target, functions, city preference, timeline, and budget. In under ten seconds, the platform generates a complete, personalised GCC Blueprint covering city recommendation, three-year cost breakdown, government incentives, entity structure, a 90-day action plan, and banking recommendations.</li>
+        <li><strong>Real leads at the moment of real intent.</strong> Every company that completes a blueprint has told us exactly what they plan to build and when. This is not a newsletter signup. It is a company actively planning their India entry. The data is rich, specific, and captured at peak decision-making intent.</li>
+        <li><strong>Banking is already inside every blueprint.</strong> Every GCC Blueprint includes a banking support section. As Preferred Partner, SBI's name, contact details, and pre-agreed terms appear in every single blueprint output. The recommendation is built into the AI output itself.</li>
+        <li><strong>The platform is live and growing.</strong> It is already receiving traffic from companies across India, the US, UK, Middle East, and Southeast Asia. The lead pipeline exists today. This partnership directs it to SBI.</li>
+      </ul>
+
+      <div class="sub-heading">What SBI Receives with Every Lead</div>
+
+      <div class="tech-grid no-break">
+        <div class="tech-item"><div class="tech-icon">CO</div><div><div class="tech-label">Company Profile</div><div class="tech-value">Company name, industry, country of origin, and contact details of the person who ran the simulation.</div></div></div>
+        <div class="tech-item"><div class="tech-icon">SC</div><div><div class="tech-label">GCC Scale</div><div class="tech-value">Headcount target across Phase 1 and steady state, functions being set up, and three-year budget range in USD.</div></div></div>
+        <div class="tech-item"><div class="tech-icon">CI</div><div><div class="tech-label">City and Timeline</div><div class="tech-value">Recommended city, preferred setup timeline, and Phase 0 start target. SBI's banker knows exactly when to reach out.</div></div></div>
+        <div class="tech-item"><div class="tech-icon">IN</div><div><div class="tech-label">Incentive Profile</div><div class="tech-value">Which government schemes apply: STPI, DPIIT, state IT policy. Directly relevant to account structure and compliance needs.</div></div></div>
+      </div>
+
+      <div class="callout callout-gold no-break">
+        <p><strong>See the platform live at gcc-playbook.pithonix.ai.</strong> Run a simulation yourself. That is the experience every GCC company has before they become a Pithonix lead, and before they see SBI as their recommended banking partner.</p>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- SECTION 4 -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">04</div>
+        <div class="section-title-group">
+          <div class="section-eyebrow">Section Four</div>
+          <h2 class="section-title">Why SBI: The Strategic Fit</h2>
+        </div>
+      </div>
+      <div class="section-rule"></div>
+
+      <p>We did not approach SBI simply because they are the largest bank. We approached SBI because when you look at what a GCC company actually needs from a banking partner, SBI is the only institution in India that ticks every box.</p>
+
+      <ul>
+        <li><strong>Pan-India payroll reach that no private bank can match.</strong> A GCC scaling to 300 people across Hyderabad, Bengaluru, and Pune needs salary accounts disbursed in three cities. SBI's 22,000+ branches and 70,000+ ATMs mean no employee is far from an SBI branch. For a GCC employer, this is a genuine talent attraction advantage.</li>
+        <li><strong>SBI is the government's banking partner.</strong> STPI registration, DPIIT scheme access, state IT policy benefits: all of these involve government processes where SBI's institutional relationships create real advantages. No private bank has these relationships at the same depth.</li>
+        <li><strong>GIFT City is the right entry point for international GCCs.</strong> SBI's GIFT City branch handles foreign currency accounts, FEMA-compliant intercompany transfers, export collection accounts, and cross-border treasury. The entire suite sits within the same institution managing the India entity's domestic accounts. No other bank offers that seamlessly.</li>
+        <li><strong>SBI's international network covers every major GCC parent market.</strong> New York, London, Frankfurt, Singapore, Dubai, Hong Kong, Tokyo: SBI is present in every city where GCC parent companies are headquartered. The GCC company can meet an SBI banker in their own city before they have even incorporated in India.</li>
+        <li><strong>SBI already wants this business.</strong> The dedicated GCC relationship desk at HITEC City proves SBI sees GCCs as a priority segment. The infrastructure is there. The only thing missing is a consistent, qualified pipeline feeding that desk.</li>
+      </ul>
+
+      <div class="callout callout-gold no-break">
+        <p>Right now, every other bank on the GCC Playbook is a name with a few bullet points. SBI as Preferred Partner is a recommendation built directly into the AI-generated blueprint of every company that uses the platform. That is the difference between being listed and being chosen.</p>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- SECTION 5 -->
+    <div class="section page-break">
+      <div class="section-header">
+        <div class="section-number">05</div>
+        <div class="section-title-group">
+          <div class="section-eyebrow">Section Five</div>
+          <h2 class="section-title">What Preferred Partner Means in Practice</h2>
+        </div>
+      </div>
+      <div class="section-rule"></div>
+
+      <p>Preferred Partner is not a logo placement. It is a structural position inside the platform that shapes the banking recommendation every GCC company receives. There are three layers, from the lightest to the most integrated.</p>
+
+      <div class="model-grid no-break">
+        <div class="model-card">
+          <div class="model-card-header"><div class="model-card-letter">A</div><div class="model-card-name">Co-Brand</div></div>
+          <div class="model-card-body">
+            <div class="model-card-item">SBI logo as exclusive banking partner across all platform pages</div>
+            <div class="model-card-item">SBI co-brand on every PDF blueprint a GCC company downloads</div>
+            <div class="model-card-item">SBI name in every outreach email sent to platform leads</div>
+            <div class="model-card-item">Visual dominance over all other banks on the platform</div>
+            <div class="model-card-item">HITEC City GCC desk contact in every banking section</div>
+          </div>
+        </div>
+
+        <div class="model-card recommended">
+          <div class="model-card-badge">Recommended Start</div>
+          <div class="model-card-header"><div class="model-card-letter">B</div><div class="model-card-name">Lead Flow</div></div>
+          <div class="model-card-body">
+            <div class="model-card-item">Every completed blueprint sends a warm lead to SBI's GCC desk in real time</div>
+            <div class="model-card-item">Lead includes company profile, scale, city, timeline, and incentive eligibility</div>
+            <div class="model-card-item">SBI banker contacts the company within 48 hours of blueprint generation</div>
+            <div class="model-card-item">Lead tagged with a Pithonix source ID for referral commission tracking</div>
+            <div class="model-card-item">Monthly lead report shared with SBI's relationship team</div>
+            <div class="model-card-item">Dedicated SBI email endpoint and CRM webhook for seamless handoff</div>
+          </div>
+        </div>
+
+        <div class="model-card" style="grid-column: 1 / -1;">
+          <div class="model-card-header"><div class="model-card-letter">C</div><div class="model-card-name">Embedded Banking: Full Integration (Upgrade Path at Month 6)</div></div>
+          <div class="model-card-body" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0;">
+            <div class="model-card-item">SBI pre-approved corporate account term sheet inside every blueprint</div>
+            <div class="model-card-item">GCC companies see SBI-specific terms, not generic banking guidance</div>
+            <div class="model-card-item">Account opening initiated from the platform with pre-filled KYC data</div>
+            <div class="model-card-item">FEMA and GIFT City guidance co-authored by SBI, hosted on the platform</div>
+            <div class="model-card-item">Government scheme facilitation bundled as an SBI-delivered service</div>
+            <div class="model-card-item">Pithonix clients receive zero-fee salary accounts for their first 100 employees</div>
+          </div>
+        </div>
+      </div>
+
+      <p style="margin-top: 14px;">We recommend starting with Tier A and Tier B together as the pilot structure. Tier C is the natural next step at the six-month review, once lead volume and conversion data are on the table.</p>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- SECTION 6 -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">06</div>
+        <div class="section-title-group">
+          <div class="section-eyebrow">Section Six</div>
+          <h2 class="section-title">The Lead Flow: From Simulator to SBI Banker</h2>
+        </div>
+      </div>
+      <div class="section-rule"></div>
+
+      <p>Here is exactly how a company moves from the GCC Playbook platform to a conversation with an SBI relationship manager. Every step is already built. Nothing is theoretical.</p>
+
+      <div class="flow-diagram no-break">
+        <div class="flow-title-bar">GCC Lead Journey: From Platform to SBI Banker</div>
+        <div class="flow-body">
+          <div class="flow-steps">
+            <div class="flow-step"><div class="flow-step-box"><div class="flow-step-num">01</div><div class="flow-step-label">Company Runs Simulator</div><div class="flow-step-sub">gcc-playbook.pithonix.ai</div></div></div>
+            <div class="flow-step"><div class="flow-step-box"><div class="flow-step-num">02</div><div class="flow-step-label">Blueprint Generated</div><div class="flow-step-sub">SBI named as Preferred Banking Partner</div></div></div>
+            <div class="flow-step"><div class="flow-step-box"><div class="flow-step-num">03</div><div class="flow-step-label">Lead Captured</div><div class="flow-step-sub">Profile, scale, city, timeline</div></div></div>
+            <div class="flow-step"><div class="flow-step-box"><div class="flow-step-num">04</div><div class="flow-step-label">SBI Desk Notified</div><div class="flow-step-sub">Real-time notification to SBI GCC team</div></div></div>
+            <div class="flow-step"><div class="flow-step-box"><div class="flow-step-num">05</div><div class="flow-step-label">SBI Banker Calls</div><div class="flow-step-sub">Within 48 hours of blueprint</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <p>The webhook integration is a single API endpoint on SBI's side. Pithonix's lead pipeline is already live and running. Adding SBI as a recipient takes minimal setup on both sides and can be live within two weeks of signing.</p>
+
+      <div class="sub-heading">What Makes These Leads Different</div>
+
+      <div class="table-wrap no-break">
+        <table>
+          <thead><tr><th>Dimension</th><th>Typical Cold Outreach Lead</th><th>Pithonix GCC Platform Lead</th></tr></thead>
+          <tbody>
+            <tr><td>Intent Level</td><td>Unknown. A contact on a list.</td><td>High. The company just built their India GCC blueprint.</td></tr>
+            <tr><td>Company Data Available</td><td>Name and email only</td><td>Industry, headcount, city, timeline, budget</td></tr>
+            <tr><td>Banking Decision Stage</td><td>Pre-discovery</td><td>Active planning. Banking is on the checklist right now.</td></tr>
+            <tr><td>SBI Awareness Before Contact</td><td>Zero</td><td>High. SBI named as preferred partner in their blueprint.</td></tr>
+            <tr><td>Estimated Conversion</td><td>1 to 3% industry average</td><td>Estimated 15 to 25% based on intent and pre-warm</td></tr>
+            <tr><td>Relationship Value</td><td>Unpredictable</td><td>Known in advance. Headcount, city, and timeline tell SBI exactly what the account is worth.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- SECTION 7 -->
+    <div class="section page-break">
+      <div class="section-header">
+        <div class="section-number">07</div>
+        <div class="section-title-group">
+          <div class="section-eyebrow">Section Seven</div>
+          <h2 class="section-title">The Global Layer: A Two-Way Referral Partnership</h2>
+        </div>
+      </div>
+      <div class="section-rule"></div>
+
+      <p>This is not just Pithonix sending leads to SBI. That is the Tier B model and it is valuable on its own. The global layer is bigger. SBI's international network becomes a sales channel for Pithonix, and Pithonix becomes a structured GCC pipeline for SBI's international corporate bankers. It goes both ways.</p>
+
+      <div class="callout callout-sbi no-break">
+        <p><strong>SBI has 229+ offices across 30+ countries.</strong> New York. London. Frankfurt. Singapore. Dubai. Tokyo. Those offices are already in conversation with exactly the kinds of companies that become GCC investors in India. Every SBI relationship manager who refers a company to Pithonix generates a GCC setup engagement for Pithonix and a corporate banking relationship for SBI India, all within the same institution.</p>
+      </div>
+
+      <div class="sub-heading">How It Works End to End</div>
+
+      <ol class="steps-list">
+        <li><div class="step-num">1</div><div class="step-content"><div class="step-title">Company Meets SBI in Their Home Country</div><div class="step-detail">A US technology company banking with SBI New York mentions they are thinking about an India GCC. Their SBI relationship manager refers them to Pithonix and the GCC Playbook platform for structured planning guidance.</div></div></li>
+        <li><div class="step-num">2</div><div class="step-content"><div class="step-title">Pithonix Delivers the Blueprint</div><div class="step-detail">The company visits gcc-playbook.pithonix.ai and runs the simulator. They receive a complete blueprint with SBI named as the Preferred Banking Partner throughout. They already know SBI from home. The recommendation lands as trusted, not cold.</div></div></li>
+        <li><div class="step-num">3</div><div class="step-content"><div class="step-title">SBI India Picks Up the Relationship</div><div class="step-detail">The HITEC City or relevant city GCC desk is notified. The banker already knows the company profile and the SBI international introduction. The first call is a continuation of an existing relationship, not a new sales pitch.</div></div></li>
+        <li><div class="step-num">4</div><div class="step-content"><div class="step-title">Pithonix Delivers the GCC Setup</div><div class="step-detail">Pithonix manages entity formation, talent, infrastructure, and JEET ERP deployment. SBI handles all banking. The company gets two coordinated partners across the two most critical tracks of their India setup.</div></div></li>
+        <li><div class="step-num">5</div><div class="step-content"><div class="step-title">Both Partners Grow Together</div><div class="step-detail">As the GCC scales from 50 to 300 to 600 people, both Pithonix's engagement and SBI's banking relationship grow with it. The value compounds over the GCC lifecycle, not just at account opening.</div></div></li>
+      </ol>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- SECTION 8 -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">08</div>
+        <div class="section-title-group">
+          <div class="section-eyebrow">Section Eight</div>
+          <h2 class="section-title">Commercial Model: Hybrid Structure</h2>
+        </div>
+      </div>
+      <div class="section-rule"></div>
+
+      <p>The commercial model is designed to be low risk for SBI to enter and high value as the relationship grows. It has two components: a base annual partner fee and a per-account referral commission. SBI only pays for leads that actually convert.</p>
+
+      <div class="sub-heading">Component 1: Annual Preferred Partner Fee</div>
+
+      <div class="callout no-break">
+        <p>The annual fee covers exclusive co-brand positioning across the entire platform, SBI's name and contact in every blueprint output, lead routing infrastructure setup, a dedicated SBI landing page within the platform, and Pithonix's quarterly GCC lead market report shared with SBI's corporate banking team. This is the price of being the only bank GCC companies see when they are building their India plan.</p>
+      </div>
+
+      <div class="sub-heading">Component 2: Per-Account Referral Commission</div>
+
+      <div class="callout callout-gold no-break">
+        <p>For every corporate account opened by a GCC company that came through a Pithonix platform lead, SBI pays a one-time referral commission. Tracked via a unique lead ID assigned at blueprint generation. SBI only pays when a lead becomes an active account. No payment for leads that do not convert.</p>
+      </div>
+
+      <div class="table-wrap no-break">
+        <table>
+          <thead><tr><th>Commercial Element</th><th>Structure</th><th>When It Applies</th></tr></thead>
+          <tbody>
+            <tr><td>Annual Partner Fee</td><td>Fixed annual amount, to be agreed at heads of terms</td><td>Paid at commencement and on each anniversary</td></tr>
+            <tr><td>Per-Account Referral</td><td>Fixed commission per corporate account opened via Pithonix lead</td><td>Paid quarterly, triggered by account activation confirmation</td></tr>
+            <tr><td>Tracking</td><td>Unique lead ID assigned at blueprint generation, shared at lead handoff</td><td>SBI confirms account opened. Pithonix invoices.</td></tr>
+            <tr><td>Pilot Period Terms</td><td>A reduced partner fee for the first six months, transitioning to full terms from Month 7 onwards. Exact dates confirmed mutually at signing.</td><td>Start date to be agreed by both parties</td></tr>
+            <tr><td>Annual Review</td><td>Lead volume and conversion data reviewed jointly. Commercial terms recalibrated.</td><td>Every 12 months from commencement</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- SECTION 9 -->
+    <div class="section page-break">
+      <div class="section-header">
+        <div class="section-number">09</div>
+        <div class="section-title-group">
+          <div class="section-eyebrow">Section Nine</div>
+          <h2 class="section-title">The Win for Both Sides</h2>
+        </div>
+      </div>
+      <div class="section-rule"></div>
+
+      <p>A good partnership works for everyone in the room. Here is what each side walks away with, clearly and measurably.</p>
+
+      <div class="winwin-grid no-break">
+        <div class="winwin-card sbi">
+          <div class="winwin-header sbi">SBI Wins</div>
+          <div class="winwin-body">
+            <div class="winwin-item">A steady pipeline of warm, qualified GCC corporate banking leads. Not cold contacts. Companies actively building their India plan right now.</div>
+            <div class="winwin-item">First mover advantage in the AI-native GCC intelligence space. No other bank has this position.</div>
+            <div class="winwin-item">Lead quality known before the first call. Headcount, city, timeline, budget, and government incentive eligibility all captured upfront.</div>
+            <div class="winwin-item">HITEC City GCC desk runs at higher capacity with pre-qualified, pre-warmed inbound leads rather than cold outreach.</div>
+            <div class="winwin-item">SBI's international network gains a structured referral trigger. Relationship managers in New York and London have a reason to bring up India GCCs with their clients.</div>
+            <div class="winwin-item">Brand positioning as India's AI-native GCC banking partner: a market segment SBI has already identified as strategic.</div>
+          </div>
+        </div>
+
+        <div class="winwin-card pithonix">
+          <div class="winwin-header pithonix">Pithonix Wins</div>
+          <div class="winwin-body">
+            <div class="winwin-item">Revenue from the annual partner fee and per-account referral commission funds platform growth and data infrastructure.</div>
+            <div class="winwin-item">SBI's institutional credibility lifts Pithonix's position with every GCC company that sees SBI as the recommended partner.</div>
+            <div class="winwin-item">SBI's international branches become a source of inbound GCC leads: a reverse referral pipeline from 30+ countries.</div>
+            <div class="winwin-item">GCC clients get faster account opening and better banking terms, which makes the Pithonix BOT delivery model more attractive.</div>
+            <div class="winwin-item">A tier-one institutional banking partner strengthens Pithonix's position in conversations with STPI, DPIIT, and state investment boards.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-heading">And the GCC Company Wins Too</div>
+
+      <ul>
+        <li><strong>Faster account opening.</strong> A Pithonix introduction to SBI's GCC desk means a named relationship manager, no cold KYC process, and a 48-hour response commitment. Accounts active in days, not weeks.</li>
+        <li><strong>Better terms than walking in off the street.</strong> Companies coming through Pithonix receive pre-negotiated terms: zero-fee salary accounts for the first employee cohort, preferential FX rates, and dedicated forex desk access.</li>
+        <li><strong>Government scheme access through a bank that has the relationships.</strong> SBI's position with STPI, DPIIT, and state IT departments means clients capture incentive benefits they would otherwise miss or wait months to access.</li>
+        <li><strong>One banking relationship across home country and India.</strong> SBI's global network means the same institution handles both the parent company and the India entity. Intercompany transfers, consolidated treasury, and FEMA compliance all within one relationship.</li>
+      </ul>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- SECTION 10 -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">10</div>
+        <div class="section-title-group">
+          <div class="section-eyebrow">Section Ten</div>
+          <h2 class="section-title">Pilot Proposal and Next Steps</h2>
+        </div>
+      </div>
+      <div class="section-rule"></div>
+
+      <p>We are proposing a six-month pilot before moving to a full annual agreement. The pilot is designed so that both sides can see real lead volume, real conversion rates, and real account value before committing to a multi-year term. Everything is based on actual data, not projections. The pilot starts only upon mutual confirmation and agreement from both parties.</p>
+
+      <div class="sub-heading">Pilot Parameters</div>
+
+      <div class="table-wrap no-break">
+        <table>
+          <thead><tr><th>Pilot Element</th><th>Detail</th></tr></thead>
+          <tbody>
+            <tr><td>Duration</td><td>Six months from the date of mutual agreement and signing. Exact start date to be confirmed jointly.</td></tr>
+            <tr><td>Geography</td><td>Hyderabad (HITEC City SBI desk) as primary. Bengaluru as secondary.</td></tr>
+            <tr><td>Lead Volume</td><td>Qualified GCC leads routed to SBI throughout the pilot period. Volume to be tracked and reviewed jointly at Month 3.</td></tr>
+            <tr><td>Success Metric</td><td>To be agreed jointly at the start of the pilot, based on platform traffic at the time of signing. No fixed targets imposed upfront.</td></tr>
+            <tr><td>SBI Commitment</td><td>Named relationship manager at HITEC City. 48-hour response on all Pithonix leads.</td></tr>
+            <tr><td>Pithonix Commitment</td><td>SBI co-brand live on platform within 2 weeks of agreement. Lead webhook active from Day 1.</td></tr>
+            <tr><td>Pilot Period Terms</td><td>A reduced partner fee for the first six months, transitioning to full terms from Month 7 onwards. Exact dates confirmed mutually at signing.</td></tr>
+            <tr><td>Review Points</td><td>Month 3 check-in on lead volume and pipeline. Month 6: full review and full partnership terms discussion.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sub-heading">Implementation Timeline</div>
+
+      <ol class="steps-list no-break">
+        <li><div class="step-num">1</div><div class="step-content"><div class="step-title">Weeks 1 to 2: Letter of Intent Signed</div><div class="step-detail">Pilot terms agreed by both parties. Start date confirmed. Named points of contact assigned on both sides. Legal review of referral commission structure initiated.</div></div></li>
+        <li><div class="step-num">2</div><div class="step-content"><div class="step-title">Weeks 2 to 3: Platform Integration</div><div class="step-detail">SBI co-brand goes live on gcc-playbook.pithonix.ai. Banking section updated to feature SBI as Preferred Partner. Lead webhook integrated with SBI GCC desk email and CRM endpoint.</div></div></li>
+        <li><div class="step-num">3</div><div class="step-content"><div class="step-title">Weeks 3 to 4: Internal SBI Briefing</div><div class="step-detail">Pithonix briefs SBI HITEC City and Bengaluru GCC teams on the platform, the lead format, and the response protocol. Bankers know what a Pithonix lead looks like from the very first contact.</div></div></li>
+        <li><div class="step-num">4</div><div class="step-content"><div class="step-title">Month 1 Onwards: Leads Flow</div><div class="step-detail">Every qualified GCC blueprint from the platform triggers a lead notification to the SBI desk. SBI bankers follow up within 48 hours. Pithonix tracks account openings against lead IDs for commission invoicing.</div></div></li>
+        <li><div class="step-num">5</div><div class="step-content"><div class="step-title">Month 6: Full Partnership Review</div><div class="step-detail">Lead volume, conversion rate, account value, and global referral pipeline reviewed together. Full annual partnership agreement and commercial terms finalised based on real numbers, not estimates.</div></div></li>
+      </ol>
+
+      <div class="sub-heading">Let's Start the Conversation</div>
+
+      <div class="contact-box no-break">
+        <div>
+          <div class="contact-heading">From Pithonix AI</div>
+          <div class="contact-line"><strong>Satyajit Dutta</strong></div>
+          <div class="contact-line">Founder and CEO</div>
+          <div class="contact-line">PITHONIX AI INDIA PRIVATE LIMITED</div>
+          <div class="contact-line"><a href="mailto:satyajit.d@pithonix.ai">satyajit.d@pithonix.ai</a></div>
+          <div class="contact-line"><a href="https://gcc-playbook.pithonix.ai">gcc-playbook.pithonix.ai</a></div>
+          <div class="contact-line">CIN: U62090TS2026PTC213220</div>
+          <div class="contact-line">Hyderabad, Telangana, India</div>
+        </div>
+        <div>
+          <div class="contact-heading">Proposed SBI Contact</div>
+          <div class="contact-line"><strong>Head, GCC Relationship Desk</strong></div>
+          <div class="contact-line">State Bank of India</div>
+          <div class="contact-line">HITEC City Branch, Hyderabad</div>
+          <div class="contact-line" style="margin-top: 14px; color: var(--mid); font-size: 11px; font-style: italic;">We are suggesting the SBI GCC Relationship Desk at HITEC City as the primary point of contact for this pilot, given the Hyderabad GCC market is where the largest share of platform leads is expected to originate.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- ABOUT -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number" style="background: var(--gold);">&#8734;</div>
+        <div class="section-title-group">
+          <div class="section-eyebrow">Appendix</div>
+          <h2 class="section-title">About Pithonix AI</h2>
+        </div>
+      </div>
+      <div class="section-rule"></div>
+
+      <div class="about-grid no-break">
+        <div class="about-card">
+          <div class="about-card-icon">Who We Are</div>
+          <div class="about-card-title">Information to Intelligence</div>
+          <div class="about-card-text">PITHONIX AI INDIA PRIVATE LIMITED is a DPIIT Recognised Startup incorporated in Hyderabad, Telangana on 18 March 2026. We build AI-native enterprise platforms that replace fragmented point solutions with unified intelligence. Our flagship product is JEET (Just In Time Emotionally Empowered Technology), deployed as India's first Enterprise Nervous System.</div>
+        </div>
+        <div class="about-card">
+          <div class="about-card-icon">The Platform</div>
+          <div class="about-card-title">GCC Playbook: Live at gcc-playbook.pithonix.ai</div>
+          <div class="about-card-text">India's first AI-native GCC Intelligence Platform. Live, free to use, and receiving traffic from companies across India, the US, UK, Middle East, and Southeast Asia. Gemini AI with 2026 India market benchmarks generates a personalised GCC blueprint in under ten seconds. No login required. No consultant needed.</div>
+        </div>
+        <div class="about-card">
+          <div class="about-card-icon">Our Technology</div>
+          <div class="about-card-title">GOT, HARI, and JEET</div>
+          <div class="about-card-text">GOT (Graph of Thought) is our proprietary reasoning engine that analyses eight enterprise domains simultaneously. HARI (Human Augmented Realistic Intelligence) is our framework for human and AI working together. JEET ERP is the operational platform deployed inside client GCCs from day one, replacing 30 to 60 fragmented enterprise tools with a single AI-native system.</div>
+        </div>
+        <div class="about-card">
+          <div class="about-card-icon">Our Market</div>
+          <div class="about-card-title">GCC India is Our Priority Market</div>
+          <div class="about-card-text">GCC and Middle East is our primary focus. Our BOT (Build-Operate-Transfer) model means we build the GCC, operate it through stabilisation, and hand full ownership to client leadership. K5AnonymityGuard ensures data sovereignty throughout. The GCC Playbook is both our client acquisition tool and the industry's leading pre-decision intelligence platform.</div>
+        </div>
+      </div>
+
+      <div class="callout callout-gold" style="margin-top: 28px;">
+        <p><strong>We would love to show SBI the platform live.</strong> We can arrange a demonstration in person at SBI HITEC City or on a video call, at SBI's convenience. Run a real simulation. See exactly where SBI appears as the recommended partner. Visit gcc-playbook.pithonix.ai anytime to explore the platform yourself.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <button class="download-btn" onclick="window.print()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    Download PDF
+  </button>
+
+</body>
+</html>
