@@ -412,6 +412,52 @@ section{position:relative;z-index:2;padding:6rem 0}
 .market-lbl{font-size:0.82rem;color:var(--tdim);letter-spacing:0.5px}
 .market-sub{font-size:0.75rem;color:rgba(232,184,75,0.5);margin-top:0.3rem;font-family:'JetBrains Mono',monospace}
 
+/* ── WHITE PAPER ── */
+#whitepaper{background:linear-gradient(180deg,var(--s1) 0%,var(--s2) 100%)}
+.wp-meta-strip{display:flex;align-items:center;gap:2rem;flex-wrap:wrap;margin-bottom:3rem;padding:1.25rem 1.5rem;background:rgba(232,184,75,0.05);border:1px solid rgba(232,184,75,0.2);border-radius:10px}
+.wp-meta-item{font-size:0.8rem;color:var(--tdim);letter-spacing:0.5px}
+.wp-meta-item strong{color:var(--gold);display:block;font-size:0.88rem;margin-bottom:0.1rem}
+.wp-core-box{background:rgba(255,255,255,0.02);border:1px solid var(--bd);border-left:3px solid var(--gold);border-radius:0 10px 10px 0;padding:1.5rem 2rem;margin-bottom:3rem}
+.wp-core-box p{color:var(--tmed);line-height:1.8;font-size:0.95rem}
+.wp-domains-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.2rem;margin-bottom:3rem}
+.wp-domain-card{background:rgba(255,255,255,0.02);border:1px solid var(--bd);border-radius:var(--r);padding:1.4rem;transition:border-color 0.2s,transform 0.2s}
+.wp-domain-card:hover{border-color:rgba(232,184,75,0.4);transform:translateY(-3px)}
+.wp-domain-num{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--gold);letter-spacing:2px;margin-bottom:0.5rem;text-transform:uppercase}
+.wp-domain-title{font-size:1rem;font-weight:700;color:var(--txt);margin-bottom:0.4rem}
+.wp-domain-replaces{font-size:0.75rem;color:var(--teal);margin-bottom:0.6rem;font-style:italic}
+.wp-domain-desc{font-size:0.82rem;color:var(--tdim);line-height:1.6}
+.wp-levels{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-bottom:3rem}
+@media(max-width:768px){.wp-levels{grid-template-columns:1fr}}
+.wp-level-card{border:1px solid var(--bd);border-radius:var(--r);padding:1.5rem;text-align:center;transition:border-color 0.2s}
+.wp-level-card.ready{border-top:3px solid var(--teal)}
+.wp-level-card.cert{border-top:3px solid var(--blue)}
+.wp-level-card.prime{border-top:3px solid var(--gold)}
+.wp-level-badge{font-family:'JetBrains Mono',monospace;font-size:0.75rem;letter-spacing:2px;font-weight:700;margin-bottom:0.5rem;text-transform:uppercase}
+.wp-level-card.ready .wp-level-badge{color:var(--teal)}
+.wp-level-card.cert .wp-level-badge{color:var(--blue)}
+.wp-level-card.prime .wp-level-badge{color:var(--gold)}
+.wp-level-title{font-size:1.1rem;font-weight:700;margin-bottom:0.5rem}
+.wp-level-for{font-size:0.78rem;color:var(--tdim);line-height:1.6}
+.wp-level-validity{display:inline-block;margin-top:0.75rem;font-size:0.75rem;padding:0.25rem 0.75rem;border-radius:20px;background:rgba(255,255,255,0.05);color:var(--tmed)}
+.wp-cost-table{width:100%;border-collapse:collapse;margin-bottom:3rem;font-size:0.85rem}
+.wp-cost-table th{text-align:left;padding:0.75rem 1rem;font-size:0.72rem;letter-spacing:1.5px;color:var(--tdim);text-transform:uppercase;border-bottom:2px solid var(--bd);font-weight:600;font-family:'JetBrains Mono',monospace}
+.wp-cost-table td{padding:0.75rem 1rem;border-bottom:1px solid var(--bd);color:var(--txt);line-height:1.5}
+.wp-cost-table tr:last-child td{border-bottom:none;font-weight:700}
+.wp-cost-table .total-row td{background:rgba(208,69,69,0.08);color:var(--red)}
+.wp-cost-table .indus-row td{background:rgba(40,168,136,0.08);color:var(--teal);font-weight:700}
+.wp-cost-table .origin{color:var(--tdim);font-size:0.78rem}
+.wp-roadmap{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1rem;margin-bottom:3rem}
+.wp-phase{background:rgba(255,255,255,0.02);border:1px solid var(--bd);border-radius:var(--r);padding:1.2rem}
+.wp-phase-num{font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--gold);letter-spacing:2px;margin-bottom:0.4rem}
+.wp-phase-period{font-size:0.78rem;color:var(--tmed);margin-bottom:0.4rem}
+.wp-phase-title{font-size:0.92rem;font-weight:700;color:var(--txt);margin-bottom:0.4rem}
+.wp-phase-outcome{font-size:0.78rem;color:var(--teal);font-weight:600}
+.wp-pithonix-box{background:rgba(58,127,212,0.06);border:1px solid rgba(58,127,212,0.25);border-radius:var(--r);padding:2rem;margin-bottom:3rem}
+.wp-pithonix-box h3{font-size:1.2rem;margin-bottom:0.75rem;color:var(--txt)}
+.wp-pithonix-box p{font-size:0.9rem;color:var(--tmed);line-height:1.7;margin-bottom:0.75rem}
+.wp-pithonix-box p:last-child{margin-bottom:0}
+.wp-cta-strip{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-top:2rem}
+
 /* ── PARTNERS ── */
 #partners{background:var(--s2)}
 .cat-tabs{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:2rem}
@@ -571,6 +617,7 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
       <a href="#simulator">Simulator</a>
       <a href="#journey">Playbook</a>
       <a href="#cities">India Intel</a>
+      <a href="#whitepaper">White Paper</a>
       <a href="#partners">Partners</a>
       <a href="#contact">Contact</a>
     </div>
@@ -925,6 +972,200 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
   </div>
 </section>
 
+<!-- INDUS WHITE PAPER -->
+<section id="whitepaper">
+  <div class="wrap">
+    <div class="section-label">WHITE PAPER · APRIL 2026 · VERSION 1.0</div>
+    <h2 class="section-title">INDUS: India's GCC <span class="gold">Certification Standard</span></h2>
+    <p class="section-sub">One certification that replaces the entire patchwork of ISO standards, SOC 2, and regional certifications that GCCs are forced to maintain today.</p>
+
+    <div class="wp-meta-strip reveal">
+      <div class="wp-meta-item"><strong>Full Title</strong>Integrated National Digital Unified Standard for Global Capability Centres</div>
+      <div class="wp-meta-item"><strong>Author</strong>Satyajit Dutta, Founder and CEO, Pithonix AI India Private Limited</div>
+      <div class="wp-meta-item"><strong>For Consideration By</strong>NASSCOM, CII, MeitY, Bureau of Indian Standards (BIS)</div>
+      <div class="wp-meta-item"><strong>Version</strong>1.0, April 2026</div>
+    </div>
+
+    <!-- Core argument -->
+    <div class="section-label" style="margin-top:1rem">THE CORE ARGUMENT</div>
+    <h3 class="section-title" style="font-size:1.6rem;margin-bottom:1rem">ISO Was Built for Independent Companies. <span class="gold">GCCs Are Not That.</span></h3>
+    <div class="wp-core-box reveal">
+      <p>India hosts 1,700 to 1,800 Global Capability Centres employing approximately 2 million professionals and generating $64.6 billion in annual revenue. By 2030, this reaches $105 billion. India accounts for over 53% of all GCCs globally.</p>
+      <p style="margin-top:0.75rem">Despite this scale, GCCs are certified using ISO standards designed for independent companies with their own customers, their own governance, and their own P&L. A GCC is none of those things. A GCC is a wholly owned captive entity of a parent corporation. Its governance is set abroad. Its customers are internal. Its financial model is based on transfer pricing, not market revenue. Its data flows across borders by design.</p>
+      <p style="margin-top:0.75rem">Applying ISO standards to this entity is like measuring a submarine with an aircraft's flight checklist. Both are engineering marvels. Both require rigorous standards. But the frameworks must match the operating reality. INDUS is that match.</p>
+    </div>
+
+    <!-- 8 Domains -->
+    <div class="section-label">THE EIGHT ASSESSMENT DOMAINS</div>
+    <h3 class="section-title" style="font-size:1.6rem;margin-bottom:1.5rem">Every Dimension That Matters. <span class="gold">Nothing That Doesn't.</span></h3>
+    <div class="wp-domains-grid reveal">
+      <div class="wp-domain-card">
+        <div class="wp-domain-num">Domain 01</div>
+        <div class="wp-domain-title">Governance Alignment</div>
+        <div class="wp-domain-replaces">Replaces: ISO 9001 (Quality Management)</div>
+        <div class="wp-domain-desc">How well the GCC's governance structure aligns with the parent company's global framework while maintaining Indian regulatory compliance. Covers decision rights, intercompany SLAs, transfer pricing (15.5% safe harbour, Budget 2026), and reporting integration.</div>
+      </div>
+      <div class="wp-domain-card">
+        <div class="wp-domain-num">Domain 02</div>
+        <div class="wp-domain-title">Cross-Border Data Integrity</div>
+        <div class="wp-domain-replaces">Replaces: ISO 27001, SOC 2 Type II, sector-specific security standards</div>
+        <div class="wp-domain-desc">Data governance across the full cross-border reality of a GCC. Multi-jurisdiction data classification (India DPDP + EU GDPR + US CCPA), cross-border flow mapping, global security posture integration, and sector-specific controls.</div>
+      </div>
+      <div class="wp-domain-card">
+        <div class="wp-domain-num">Domain 03</div>
+        <div class="wp-domain-title">Talent Ecosystem Maturity</div>
+        <div class="wp-domain-replaces">No ISO equivalent exists</div>
+        <div class="wp-domain-desc">The single most critical factor for GCC success. Dual HR governance (Indian labour law + parent global HR), EVP strength, attrition benchmarking, skilling pipeline, D&I metrics, and leadership pipeline depth.</div>
+      </div>
+      <div class="wp-domain-card">
+        <div class="wp-domain-num">Domain 04</div>
+        <div class="wp-domain-title">Operational Integration</div>
+        <div class="wp-domain-replaces">Replaces: elements of ISO 9001 and ISO 20000</div>
+        <div class="wp-domain-desc">How deeply the GCC is integrated into the parent's global operations. Maturity stage (Cost Centre to Portfolio Hub), global process ownership, SLA adherence, knowledge management, and tool standardisation.</div>
+      </div>
+      <div class="wp-domain-card">
+        <div class="wp-domain-num">Domain 05</div>
+        <div class="wp-domain-title">Regulatory Multi-Jurisdiction Compliance</div>
+        <div class="wp-domain-replaces">Replaces: SOC 1, PCI DSS, Cyber Essentials, C5, and regional standards</div>
+        <div class="wp-domain-desc">GCCs operate under multiple regulatory regimes simultaneously. Regulatory mapping matrix, FEMA and RBI compliance, India's four Labour Codes, transfer pricing documentation, and sector-specific controls (banking, healthcare, pharma).</div>
+      </div>
+      <div class="wp-domain-card">
+        <div class="wp-domain-num">Domain 06</div>
+        <div class="wp-domain-title">AI and Digital Readiness</div>
+        <div class="wp-domain-replaces">No ISO equivalent exists</div>
+        <div class="wp-domain-desc">Over 70% of GCCs are implementing AI by 2026. 58% investing in Agentic AI. AI governance framework, use case inventory with risk classification, bias and fairness assessment, human-in-the-loop protocols, and GenAI controls.</div>
+      </div>
+      <div class="wp-domain-card">
+        <div class="wp-domain-num">Domain 07</div>
+        <div class="wp-domain-title">Business Continuity in Captive Model</div>
+        <div class="wp-domain-replaces">Replaces: ISO 22301 (Business Continuity Management)</div>
+        <div class="wp-domain-desc">GCC continuity is bidirectional: disruption at the GCC affects the parent, and vice versa. Bidirectional BCP, cross-border disaster recovery, geopolitical risk assessment, pandemic resilience, and talent continuity planning.</div>
+      </div>
+      <div class="wp-domain-card">
+        <div class="wp-domain-num">Domain 08</div>
+        <div class="wp-domain-title">Innovation and Value Contribution</div>
+        <div class="wp-domain-replaces">No ISO equivalent exists</div>
+        <div class="wp-domain-desc">The difference between a cost centre and a centre of excellence. IP contribution, product and service innovation, revenue impact, strategic mandate expansion, and engagement with India's startup and academia ecosystem.</div>
+      </div>
+    </div>
+
+    <!-- 3 Certification Levels -->
+    <div class="section-label">CERTIFICATION LEVELS</div>
+    <h3 class="section-title" style="font-size:1.6rem;margin-bottom:1.5rem">Three Levels. <span class="gold">One Badge That Means Something.</span></h3>
+    <div class="wp-levels reveal">
+      <div class="wp-level-card ready">
+        <div class="wp-level-badge">INDUS Ready</div>
+        <div class="wp-level-title">Foundation</div>
+        <div class="wp-level-for">Meets baseline standards across all 8 domains. No critical gaps. Basic governance and security in place. For new GCCs (0 to 2 years), pilot-stage centres, Tier 2/3 city centres, and mid-market GCCs scaling up.</div>
+        <div class="wp-level-validity">Valid: 2 years</div>
+      </div>
+      <div class="wp-level-card cert">
+        <div class="wp-level-badge">INDUS Certified</div>
+        <div class="wp-level-title">Full Compliance</div>
+        <div class="wp-level-for">Full compliance across all 8 domains. Demonstrated maturity in governance, data integrity, talent management, and operational integration. Evidence-based. For established GCCs (2 to 5 years), centres with 100+ employees, multi-function hubs.</div>
+        <div class="wp-level-validity">Valid: 3 years with annual surveillance</div>
+      </div>
+      <div class="wp-level-card prime">
+        <div class="wp-level-badge">INDUS Prime</div>
+        <div class="wp-level-title">Centre of Excellence</div>
+        <div class="wp-level-for">Highest tier. GCC operates as a true Centre of Excellence with demonstrated innovation contribution, IP creation, global leadership roles, and measurable strategic impact. The industry benchmark. For mega GCCs (5,000+ employees) and global R&D hubs.</div>
+        <div class="wp-level-validity">Valid: 3 years with annual surveillance</div>
+      </div>
+    </div>
+
+    <!-- Cost Comparison Table -->
+    <div class="section-label">CERTIFICATION COST: CURRENT PATCHWORK vs INDUS</div>
+    <h3 class="section-title" style="font-size:1.6rem;margin-bottom:1.5rem">What GCCs Pay Today. <span class="gold">What INDUS Costs.</span></h3>
+    <div class="reveal" style="overflow-x:auto;margin-bottom:3rem">
+      <table class="wp-cost-table">
+        <thead>
+          <tr>
+            <th>Standard</th>
+            <th>Purpose</th>
+            <th>Origin</th>
+            <th>Annual Cost (INR)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>ISO 9001:2015</td><td>Quality Management</td><td class="origin">Global (voluntary)</td><td>Rs 3.5 – 9 Lakhs</td></tr>
+          <tr><td>ISO 27001:2022</td><td>Information Security</td><td class="origin">Global (voluntary)</td><td>Rs 6 – 17 Lakhs</td></tr>
+          <tr><td>ISO 22301:2019</td><td>Business Continuity</td><td class="origin">Global (voluntary)</td><td>Rs 4.5 – 12 Lakhs</td></tr>
+          <tr><td>ISO 20000-1:2018</td><td>IT Service Management</td><td class="origin">Global (voluntary)</td><td>Rs 4.5 – 12 Lakhs</td></tr>
+          <tr><td>ISO 31000:2018</td><td>Risk Management</td><td class="origin">Global (voluntary)</td><td>Rs 3.5 – 10 Lakhs</td></tr>
+          <tr><td>SOC 2 Type II</td><td>Security Trust Criteria</td><td class="origin">USA (de facto required)</td><td>Rs 12 – 29 Lakhs</td></tr>
+          <tr><td>SOC 1 (SSAE 18)</td><td>Financial Controls</td><td class="origin">USA (required, BFSI)</td><td>Rs 9 – 17 Lakhs</td></tr>
+          <tr><td>HITRUST CSF</td><td>Healthcare Security</td><td class="origin">USA (required, Healthcare)</td><td>Rs 17 – 36 Lakhs</td></tr>
+          <tr><td>PCI DSS</td><td>Payment Card Data</td><td class="origin">Global (required if applicable)</td><td>Rs 6 – 17 Lakhs</td></tr>
+          <tr><td>Cyber Essentials</td><td>Baseline Cybersecurity</td><td class="origin">UK (expected, UK parents)</td><td>Rs 2.5 – 6 Lakhs</td></tr>
+          <tr class="total-row"><td colspan="3"><strong>Full Stack Total (7 to 10 separate audits)</strong></td><td><strong>Rs 55 Lakhs – Rs 1.44 Crore / year</strong></td></tr>
+          <tr class="indus-row"><td colspan="3"><strong>INDUS (one unified certification, all 8 domains)</strong></td><td><strong>Rs 28 – 63 Lakhs / year</strong></td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:0.75rem;color:var(--tdim);margin-top:-2rem;margin-bottom:3rem">Cost comparison for a mature GCC serving a US-headquartered parent. INDUS replaces the entire stack: one audit cycle, one documentation framework, one badge.</p>
+    </div>
+
+    <!-- 5-Phase Adoption Roadmap -->
+    <div class="section-label">ADOPTION ROADMAP</div>
+    <h3 class="section-title" style="font-size:1.6rem;margin-bottom:1.5rem">Five Phases. <span class="gold">24 Months to National Standard.</span></h3>
+    <div class="wp-roadmap reveal">
+      <div class="wp-phase">
+        <div class="wp-phase-num">PHASE 1</div>
+        <div class="wp-phase-period">Months 1 to 4</div>
+        <div class="wp-phase-title">White Paper Socialisation</div>
+        <div style="font-size:0.78rem;color:var(--tdim);margin-top:0.3rem">Roundtables with NASSCOM, CII, BIS, MeitY. 20 to 30 GCC heads across verticals.</div>
+        <div class="wp-phase-outcome">Working Group Formed</div>
+      </div>
+      <div class="wp-phase">
+        <div class="wp-phase-num">PHASE 2</div>
+        <div class="wp-phase-period">Months 5 to 10</div>
+        <div class="wp-phase-title">Standard Development</div>
+        <div style="font-size:0.78rem;color:var(--tdim);margin-top:0.3rem">Domain-by-domain criteria, scoring methodology, evidence requirements. Industry review and feedback.</div>
+        <div class="wp-phase-outcome">Draft Standard Published</div>
+      </div>
+      <div class="wp-phase">
+        <div class="wp-phase-num">PHASE 3</div>
+        <div class="wp-phase-period">Months 11 to 14</div>
+        <div class="wp-phase-title">Pilot Certifications</div>
+        <div style="font-size:0.78rem;color:var(--tdim);margin-top:0.3rem">10 to 15 volunteer GCCs across BFSI, Healthcare, Technology, Manufacturing in Hyderabad, Bengaluru, Pune.</div>
+        <div class="wp-phase-outcome">Pilot Complete</div>
+      </div>
+      <div class="wp-phase">
+        <div class="wp-phase-num">PHASE 4</div>
+        <div class="wp-phase-period">Months 15 to 18</div>
+        <div class="wp-phase-title">Standard Launch</div>
+        <div style="font-size:0.78rem;color:var(--tdim);margin-top:0.3rem">Formal publication via BIS or NASSCOM. Auditor accreditation programme launched. First official INDUS certifications issued.</div>
+        <div class="wp-phase-outcome">INDUS Live</div>
+      </div>
+      <div class="wp-phase">
+        <div class="wp-phase-num">PHASE 5</div>
+        <div class="wp-phase-period">Months 19 to 24</div>
+        <div class="wp-phase-title">National Rollout</div>
+        <div style="font-size:0.78rem;color:var(--tdim);margin-top:0.3rem">State GCC policy integration. Engagement with ISO/TC for potential global GCC standard based on INDUS.</div>
+        <div class="wp-phase-outcome">National Standard</div>
+      </div>
+    </div>
+
+    <!-- Pithonix Role -->
+    <div class="wp-pithonix-box reveal">
+      <div class="section-label" style="margin-bottom:0.5rem">PITHONIX AI'S ROLE</div>
+      <h3 style="font-size:1.2rem;margin-bottom:0.75rem">Technical Architect of INDUS</h3>
+      <p>Pithonix AI proposes to serve as the technical architect and digital infrastructure provider for INDUS. Not as the governing body (which rightly belongs to NASSCOM, BIS, and CII) but as the technology engine that powers the standard's implementation.</p>
+      <p>The GOT (Graph of Thought) engine already reasons across 8 domains for GCC decision-making. The same 8-domain architecture maps directly to the INDUS assessment framework. JEET ERP serves as the continuous compliance monitoring layer for INDUS-certified GCCs: real-time dashboards, domain-by-domain compliance status, not point-in-time annual audits.</p>
+      <p>Pithonix does not seek to own the standard. Standards must be industry-governed and publicly accessible to gain trust and adoption. Pithonix provides the technology that makes INDUS practical, scalable, and digitally native from day one.</p>
+    </div>
+
+    <!-- CTA -->
+    <div style="text-align:center;padding:2rem 0" class="reveal">
+      <div class="section-label" style="justify-content:center;display:flex">INDIA'S MOMENT TO LEAD</div>
+      <p style="max-width:600px;margin:0 auto 2rem;color:var(--tmed);font-size:1rem">India accounts for over 53% of the world's GCCs. No other country comes close. INDUS is India's opportunity to define a global standard for GCC excellence, the way UPI defined global digital payments.</p>
+      <div class="wp-cta-strip">
+        <a href="mailto:satyajit.d@pithonix.ai?subject=INDUS%20White%20Paper%20Enquiry" class="btn-primary">Discuss INDUS →</a>
+        <a href="#contact" class="btn-secondary">Book a Strategy Call</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- PARTNER ECOSYSTEM -->
 <section id="partners">
   <div class="wrap">
@@ -978,6 +1219,7 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
         <a href="#journey">5-Phase Playbook</a>
         <a href="#cities">India City Guide</a>
         <a href="#market">Market Intelligence</a>
+        <a href="#whitepaper">INDUS White Paper</a>
         <a href="#partners">Partner Ecosystem</a>
       </div>
       <div class="footer-col">
