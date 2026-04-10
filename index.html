@@ -1487,7 +1487,7 @@ async function loadPartners(){
       '<div class="ve-name">'+p.company_name+'</div>'+
       (p.cities?'<div class="ve-cities">📍 '+p.cities+'</div>':'')+
       (desc?'<div class="ve-desc">'+desc+'</div>':'')+
-      (p.website?'<a href="'+p.website+'" target="_blank" rel="noopener" class="ve-website">Visit Website →</a>':'')+
+      (p.website?'<a href="'+(p.website.match(/^https?:\/\//)?p.website:'https://'+p.website)+'" target="_blank" rel="noopener" class="ve-website">Visit Website →</a>':'')+
       '</div>';
   });
 
