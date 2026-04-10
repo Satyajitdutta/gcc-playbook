@@ -4,169 +4,652 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Partner Portal — Pithonix GCC Platform</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --bg: #0a0f1e; --s1: #0d1426; --s2: #111827;
-    --bd: rgba(255,255,255,0.08); --blue: #3b82f6; --teal: #06b6d4;
-    --purple: #8b5cf6; --text: #f1f5f9; --tmed: #94a3b8;
-  }
-  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
-  nav { background: rgba(10,15,30,0.95); border-bottom: 1px solid var(--bd); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
-  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-  .nav-logo img { height: 32px; }
-  .nav-logo span { font-weight: 700; font-size: 1rem; color: var(--text); }
-  .nav-links a { color: var(--tmed); font-size: 0.85rem; text-decoration: none; }
-  .nav-links .btn-apply { background: linear-gradient(135deg, var(--blue), var(--purple)); color: white; padding: 0.4rem 1rem; border-radius: 6px; font-size: 0.85rem; text-decoration: none; font-weight: 600; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#060b18;--s1:#0a0f1e;--s2:#0d1426;--s3:#111827;
+  --bd:rgba(255,255,255,0.08);--bd2:rgba(255,255,255,0.14);
+  --blue:#3b82f6;--teal:#06b6d4;--purple:#8b5cf6;--gold:#e8b84b;
+  --green:#22c55e;--red:#ef4444;--amber:#f59e0b;
+  --txt:#f1f5f9;--tmed:#94a3b8;--tdim:#475569;
+  --r:12px;--r2:16px;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
 
-  main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 3rem 1.5rem; }
+/* NAV */
+.pnav{background:rgba(6,11,24,0.95);border-bottom:1px solid var(--bd);backdrop-filter:blur(12px);position:sticky;top:0;z-index:100;padding:0 1.5rem;height:60px;display:flex;align-items:center;justify-content:space-between}
+.pnav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.pnav-logo img{height:28px}
+.pnav-logo span{font-weight:700;font-size:0.9rem;color:var(--txt)}
+.pnav-logo small{display:block;font-size:0.65rem;color:var(--teal);letter-spacing:2px;text-transform:uppercase;font-family:'JetBrains Mono',monospace}
+.pnav-right{display:flex;align-items:center;gap:1rem}
+.pnav-email{font-size:0.8rem;color:var(--tmed)}
+.btn-signout{font-size:0.8rem;color:var(--tdim);background:none;border:1px solid var(--bd);border-radius:6px;padding:0.3rem 0.75rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:border-color 0.2s,color 0.2s}
+.btn-signout:hover{border-color:var(--bd2);color:var(--tmed)}
 
-  .portal-card { background: var(--s1); border: 1px solid var(--bd); border-radius: 16px; width: 100%; max-width: 520px; overflow: hidden; }
-  .portal-header { background: var(--s2); padding: 2rem; text-align: center; border-bottom: 1px solid var(--bd); }
-  .portal-header .icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
-  .portal-header h1 { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.4rem; }
-  .portal-header p { color: var(--tmed); font-size: 0.88rem; }
+/* AUTH SCREENS */
+.auth-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem 1rem;background:radial-gradient(ellipse at 50% 0%,rgba(59,130,246,0.08) 0%,transparent 60%)}
+.auth-card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r2);width:100%;max-width:440px;overflow:hidden}
+.auth-head{background:linear-gradient(135deg,rgba(59,130,246,0.15),rgba(139,92,246,0.1));padding:2rem;text-align:center;border-bottom:1px solid var(--bd)}
+.auth-head .auth-icon{font-size:2.2rem;margin-bottom:0.75rem}
+.auth-head h1{font-size:1.35rem;font-weight:700;margin-bottom:0.35rem}
+.auth-head p{color:var(--tmed);font-size:0.85rem}
+.auth-body{padding:2rem}
+.form-group{margin-bottom:1.1rem}
+label.fl{display:block;font-size:0.75rem;font-weight:600;color:var(--tmed);margin-bottom:0.4rem;letter-spacing:0.5px;text-transform:uppercase}
+input.fi{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--bd);border-radius:8px;padding:0.75rem 1rem;color:var(--txt);font-family:'DM Sans',sans-serif;font-size:0.9rem;transition:border-color 0.2s}
+input.fi:focus{outline:none;border-color:var(--blue)}
+input.fi::placeholder{color:rgba(148,163,184,0.35)}
+.btn-primary{width:100%;background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;font-weight:700;padding:0.85rem;border:none;border-radius:8px;cursor:pointer;font-size:0.95rem;font-family:'DM Sans',sans-serif;transition:opacity 0.2s;margin-top:0.25rem}
+.btn-primary:hover{opacity:0.88}
+.btn-primary:disabled{opacity:0.45;cursor:not-allowed}
+.auth-foot{text-align:center;padding:1.25rem 2rem;border-top:1px solid var(--bd);font-size:0.82rem;color:var(--tmed)}
+.auth-foot a{color:var(--blue);text-decoration:none}
+.err-msg{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);border-radius:8px;padding:0.7rem 1rem;color:#fca5a5;font-size:0.84rem;margin-bottom:1rem}
+.info-msg{background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);border-radius:8px;padding:0.7rem 1rem;color:#93c5fd;font-size:0.84rem;margin-bottom:1rem}
 
-  .portal-body { padding: 2rem; }
-  .form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
-  label { font-size: 0.82rem; font-weight: 600; color: var(--tmed); }
-  input { background: rgba(255,255,255,0.04); border: 1px solid var(--bd); border-radius: 8px; padding: 0.75rem 1rem; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 0.9rem; width: 100%; transition: border-color 0.2s; }
-  input:focus { outline: none; border-color: var(--blue); }
-  input::placeholder { color: rgba(148,163,184,0.4); }
-  .btn-check { background: linear-gradient(135deg, var(--blue), var(--purple)); color: white; font-weight: 700; padding: 0.85rem; border: none; border-radius: 8px; cursor: pointer; font-size: 0.95rem; font-family: 'DM Sans', sans-serif; width: 100%; transition: opacity 0.2s; margin-top: 0.5rem; }
-  .btn-check:hover { opacity: 0.9; }
-  .btn-check:disabled { opacity: 0.5; cursor: not-allowed; }
+/* OTP inputs */
+.otp-row{display:flex;gap:0.6rem;justify-content:center;margin:1.25rem 0}
+.otp-digit{width:48px;height:56px;text-align:center;font-size:1.5rem;font-weight:700;font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,0.04);border:1px solid var(--bd);border-radius:10px;color:var(--txt);transition:border-color 0.2s}
+.otp-digit:focus{outline:none;border-color:var(--blue)}
+.back-link{display:inline-flex;align-items:center;gap:0.4rem;color:var(--tmed);font-size:0.82rem;cursor:pointer;margin-bottom:1rem}
+.back-link:hover{color:var(--txt)}
+.resend-link{color:var(--blue);cursor:pointer;font-size:0.82rem;background:none;border:none;font-family:'DM Sans',sans-serif;padding:0}
+.resend-link:hover{text-decoration:underline}
 
-  .result-area { margin-top: 1.5rem; }
-  .app-card { background: rgba(255,255,255,0.03); border: 1px solid var(--bd); border-radius: 10px; padding: 1.25rem; margin-bottom: 1rem; }
-  .app-card .app-id { font-size: 0.75rem; color: var(--tmed); margin-bottom: 0.25rem; }
-  .app-card .app-company { font-weight: 700; font-size: 1rem; margin-bottom: 0.25rem; }
-  .app-card .app-category { color: var(--tmed); font-size: 0.85rem; margin-bottom: 0.75rem; }
-  .app-card .app-meta { font-size: 0.8rem; color: var(--tmed); }
+/* DASHBOARD */
+.dash-wrap{max-width:1100px;margin:0 auto;padding:2rem 1.5rem}
 
-  .status-badge { display: inline-block; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.78rem; font-weight: 600; }
-  .status-pending { background: rgba(251,191,36,0.1); color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); }
-  .status-review { background: rgba(59,130,246,0.1); color: var(--blue); border: 1px solid rgba(59,130,246,0.3); }
-  .status-approved { background: rgba(34,197,94,0.1); color: #22c55e; border: 1px solid rgba(34,197,94,0.3); }
-  .status-rejected { background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
+/* Welcome banner */
+.welcome-bar{background:linear-gradient(135deg,rgba(59,130,246,0.1),rgba(139,92,246,0.06));border:1px solid rgba(59,130,246,0.2);border-radius:var(--r2);padding:1.5rem 2rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;justify-content:space-between}
+.welcome-left{display:flex;align-items:center;gap:1.2rem}
+.avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--purple));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;flex-shrink:0}
+.welcome-name{font-size:1.2rem;font-weight:700}
+.welcome-co{font-size:0.85rem;color:var(--tmed);margin-top:0.15rem}
+.welcome-badges{display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.4rem}
+.status-badge{display:inline-block;padding:0.25rem 0.75rem;border-radius:20px;font-size:0.72rem;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;font-family:'JetBrains Mono',monospace}
+.badge-approved{background:rgba(34,197,94,0.12);color:#4ade80;border:1px solid rgba(34,197,94,0.3)}
+.badge-pending{background:rgba(251,191,36,0.1);color:#fbbf24;border:1px solid rgba(251,191,36,0.25)}
+.badge-review{background:rgba(59,130,246,0.1);color:var(--blue);border:1px solid rgba(59,130,246,0.25)}
+.badge-rejected{background:rgba(239,68,68,0.1);color:#f87171;border:1px solid rgba(239,68,68,0.25)}
+.badge-cat{background:rgba(139,92,246,0.1);color:#c4b5fd;border:1px solid rgba(139,92,246,0.25)}
+.badge-avail{background:rgba(34,197,94,0.1);color:#4ade80;border:1px solid rgba(34,197,94,0.25)}
+.badge-unavail{background:rgba(100,116,139,0.1);color:var(--tmed);border:1px solid var(--bd)}
 
-  .not-found { text-align: center; padding: 1.5rem; color: var(--tmed); font-size: 0.9rem; }
-  .error-msg { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2); border-radius: 8px; padding: 0.75rem 1rem; color: #fca5a5; font-size: 0.85rem; margin-top: 1rem; }
+/* Availability toggle */
+.avail-toggle{display:flex;align-items:center;gap:0.75rem}
+.avail-label{font-size:0.82rem;color:var(--tmed)}
+.toggle-switch{position:relative;width:44px;height:24px;cursor:pointer}
+.toggle-switch input{display:none}
+.toggle-track{position:absolute;inset:0;background:rgba(100,116,139,0.3);border-radius:12px;transition:background 0.25s;border:1px solid var(--bd)}
+.toggle-thumb{position:absolute;top:3px;left:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform 0.25s;box-shadow:0 1px 4px rgba(0,0,0,0.4)}
+.toggle-switch input:checked + .toggle-track{background:rgba(34,197,94,0.4);border-color:rgba(34,197,94,0.5)}
+.toggle-switch input:checked + .toggle-track + .toggle-thumb,.toggle-switch input:checked ~ .toggle-thumb{transform:translateX(20px)}
 
-  .apply-prompt { text-align: center; padding: 1.5rem 2rem; border-top: 1px solid var(--bd); }
-  .apply-prompt p { color: var(--tmed); font-size: 0.85rem; margin-bottom: 0.75rem; }
-  .apply-prompt a { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); color: var(--blue); padding: 0.6rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.85rem; }
+/* Stats row */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
+@media(max-width:700px){.stats-row{grid-template-columns:repeat(2,1fr)}}
+.stat-card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);padding:1.1rem 1.25rem}
+.stat-label{font-size:0.7rem;color:var(--tdim);letter-spacing:1.5px;text-transform:uppercase;font-family:'JetBrains Mono',monospace;margin-bottom:0.4rem}
+.stat-val{font-size:1.05rem;font-weight:700;color:var(--txt)}
+.stat-sub{font-size:0.75rem;color:var(--tmed);margin-top:0.15rem}
 
-  footer { background: var(--s1); border-top: 1px solid var(--bd); padding: 1rem 2rem; text-align: center; color: var(--tmed); font-size: 0.78rem; }
+/* 2-col grid */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem}
+@media(max-width:768px){.two-col{grid-template-columns:1fr}}
+
+/* Cards */
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r2);overflow:hidden}
+.card-head{padding:1rem 1.5rem;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
+.card-head h3{font-size:0.88rem;font-weight:700;letter-spacing:0.5px}
+.card-body{padding:1.5rem}
+.btn-edit{font-size:0.78rem;color:var(--blue);background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);border-radius:6px;padding:0.3rem 0.75rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background 0.2s}
+.btn-edit:hover{background:rgba(59,130,246,0.15)}
+.btn-save-sm{font-size:0.78rem;color:#fff;background:var(--blue);border:none;border-radius:6px;padding:0.3rem 0.85rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity 0.2s}
+.btn-save-sm:hover{opacity:0.85}
+.btn-cancel-sm{font-size:0.78rem;color:var(--tmed);background:none;border:1px solid var(--bd);border-radius:6px;padding:0.3rem 0.75rem;cursor:pointer;font-family:'DM Sans',sans-serif}
+
+/* Profile fields */
+.pf-row{display:flex;flex-direction:column;gap:0.25rem;margin-bottom:1rem}
+.pf-label{font-size:0.7rem;color:var(--tdim);letter-spacing:1px;text-transform:uppercase;font-family:'JetBrains Mono',monospace}
+.pf-val{font-size:0.9rem;color:var(--txt);word-break:break-word}
+.pf-val a{color:var(--teal);text-decoration:none}
+.pf-val a:hover{text-decoration:underline}
+.pf-input{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--bd);border-radius:6px;padding:0.55rem 0.75rem;color:var(--txt);font-family:'DM Sans',sans-serif;font-size:0.88rem;resize:vertical}
+.pf-input:focus{outline:none;border-color:var(--blue)}
+.edit-actions{display:flex;gap:0.5rem;margin-top:0.75rem}
+
+/* PM card */
+.pm-avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--blue));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem;color:#fff;flex-shrink:0;margin-bottom:1rem}
+.pm-name{font-size:1rem;font-weight:700;margin-bottom:0.15rem}
+.pm-title{font-size:0.8rem;color:var(--tmed);margin-bottom:1rem}
+.pm-contact-row{display:flex;align-items:center;gap:0.5rem;margin-bottom:0.6rem;font-size:0.84rem;color:var(--tmed)}
+.pm-contact-row a{color:var(--teal);text-decoration:none}
+.pm-contact-row a:hover{text-decoration:underline}
+.pm-icon{width:18px;text-align:center;font-size:0.85rem}
+.btn-request{width:100%;margin-top:1.25rem;background:linear-gradient(135deg,var(--teal),var(--blue));color:#fff;font-weight:700;padding:0.7rem;border:none;border-radius:8px;cursor:pointer;font-size:0.88rem;font-family:'DM Sans',sans-serif;text-decoration:none;display:block;text-align:center;transition:opacity 0.2s}
+.btn-request:hover{opacity:0.88}
+
+/* Projects */
+.section-title{font-size:0.88rem;font-weight:700;letter-spacing:0.5px;padding:1rem 1.5rem;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
+.empty-state{padding:3rem 2rem;text-align:center;color:var(--tdim)}
+.empty-state .es-icon{font-size:2.5rem;margin-bottom:0.75rem}
+.empty-state p{font-size:0.88rem;line-height:1.6}
+.proj-table{width:100%;border-collapse:collapse}
+.proj-table th{font-size:0.68rem;letter-spacing:1.5px;color:var(--tdim);text-transform:uppercase;font-family:'JetBrains Mono',monospace;padding:0.75rem 1.25rem;border-bottom:1px solid var(--bd);text-align:left}
+.proj-table td{padding:0.85rem 1.25rem;border-bottom:1px solid rgba(255,255,255,0.04);font-size:0.85rem}
+.proj-table tr:last-child td{border-bottom:none}
+.proj-status{display:inline-block;padding:0.2rem 0.6rem;border-radius:20px;font-size:0.7rem;font-weight:600;text-transform:uppercase;font-family:'JetBrains Mono',monospace}
+.proj-active{background:rgba(34,197,94,0.1);color:#4ade80;border:1px solid rgba(34,197,94,0.25)}
+.proj-completed{background:rgba(100,116,139,0.1);color:var(--tmed);border:1px solid var(--bd)}
+.proj-pipeline{background:rgba(251,191,36,0.1);color:#fbbf24;border:1px solid rgba(251,191,36,0.25)}
+
+/* Checklist */
+.checklist-progress{padding:1.25rem 1.5rem;border-bottom:1px solid var(--bd)}
+.progress-bar-wrap{background:rgba(255,255,255,0.06);border-radius:100px;height:6px;margin-top:0.5rem;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--green));border-radius:100px;transition:width 0.4s ease}
+.progress-label{display:flex;justify-content:space-between;font-size:0.75rem;color:var(--tmed);margin-top:0.4rem}
+.checklist-items{padding:0.5rem 0}
+.ck-item{display:flex;align-items:flex-start;gap:0.85rem;padding:0.85rem 1.5rem;border-bottom:1px solid rgba(255,255,255,0.03);transition:background 0.15s}
+.ck-item:last-child{border-bottom:none}
+.ck-item:hover{background:rgba(255,255,255,0.02)}
+.ck-check{width:20px;height:20px;border-radius:50%;border:2px solid var(--bd);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;cursor:pointer;transition:all 0.2s}
+.ck-check.done{background:var(--green);border-color:var(--green)}
+.ck-check.auto-done{background:var(--teal);border-color:var(--teal);cursor:default}
+.ck-check svg{width:11px;height:11px;display:none}
+.ck-check.done svg,.ck-check.auto-done svg{display:block}
+.ck-text{flex:1}
+.ck-label{font-size:0.87rem;color:var(--txt)}
+.ck-label.done-text{color:var(--tmed);text-decoration:line-through;text-decoration-color:rgba(148,163,184,0.4)}
+.ck-meta{font-size:0.73rem;color:var(--tdim);margin-top:0.2rem}
+.ck-auto-tag{font-size:0.65rem;color:var(--teal);font-family:'JetBrains Mono',monospace;letter-spacing:1px;margin-left:0.4rem;text-transform:uppercase}
+
+/* Docs */
+.doc-row{display:flex;align-items:center;gap:0.75rem;padding:0.85rem 1.5rem;border-bottom:1px solid rgba(255,255,255,0.03)}
+.doc-row:last-child{border-bottom:none}
+.doc-icon{font-size:1.2rem}
+.doc-name{font-size:0.87rem;color:var(--txt)}
+.doc-link{margin-left:auto;font-size:0.78rem;color:var(--teal);text-decoration:none}
+
+/* Responsive */
+@media(max-width:600px){
+  .welcome-bar{flex-direction:column;align-items:flex-start}
+  .dash-wrap{padding:1rem}
+  .otp-digit{width:40px;height:50px;font-size:1.2rem}
+}
+.spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,0.2);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;display:inline-block;vertical-align:middle;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
 
-<nav>
-  <a href="/" class="nav-logo">
-    <img src="/logo.png" alt="Pithonix AI">
-    <span>Pithonix GCC Platform</span>
-  </a>
-  <div class="nav-links">
-    <a href="/partner-apply" class="btn-apply">Apply as Partner</a>
-  </div>
-</nav>
-
-<main>
-  <div class="portal-card">
-    <div class="portal-header">
-      <div class="icon">🔍</div>
-      <h1>Partner Application Portal</h1>
-      <p>Enter your email to check the status of your application</p>
-    </div>
-    <div class="portal-body">
-      <div class="form-group">
-        <label>Email Address</label>
-        <input type="email" id="check-email" placeholder="you@company.com" onkeydown="if(event.key==='Enter') checkStatus()">
-      </div>
-      <div class="form-group">
-        <label>Application Reference Number <span style="font-weight:400;color:rgba(148,163,184,0.6)">(optional)</span></label>
-        <input type="number" id="check-id" placeholder="#12345">
-      </div>
-      <button class="btn-check" id="check-btn" onclick="checkStatus()">Check Status</button>
-      <div id="result-area" class="result-area"></div>
-    </div>
-    <div class="apply-prompt">
-      <p>Have not applied yet?</p>
-      <a href="/partner-apply">Apply to Join the Partner Network</a>
-    </div>
-  </div>
-</main>
-
-<footer>
-  PITHONIX AI INDIA PRIVATE LIMITED | CIN: U62090TS2026PTC213220 | pithonix.ai
-</footer>
+<div id="app"></div>
 
 <script>
-function getStatusClass(status) {
-  var s = (status || '').toLowerCase();
-  if (s.includes('approv')) return 'status-approved';
-  if (s.includes('review')) return 'status-review';
-  if (s.includes('reject')) return 'status-rejected';
-  return 'status-pending';
-}
+// ── STATE ──────────────────────────────────────────────────────
+var S = {
+  screen: 'login',
+  email: '',
+  token: '',
+  partner: null,
+  projects: [],
+  checklist: [],
+  editMode: false,
+  loading: false,
+  error: '',
+  info: ''
+};
 
-function formatDate(dateStr) {
-  try {
-    return new Date(dateStr).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
-  } catch(e) { return dateStr; }
-}
+// ── INIT ───────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', function() {
+  var t = localStorage.getItem('pp_token');
+  var e = localStorage.getItem('pp_email');
+  if (t) {
+    S.token = t;
+    S.email = e || '';
+    S.screen = 'loading';
+    render();
+    loadDashboard();
+  } else {
+    render();
+  }
+});
 
-async function checkStatus() {
-  var email = document.getElementById('check-email').value.trim();
-  var appId = document.getElementById('check-id').value.trim();
-  var resultArea = document.getElementById('result-area');
-  var btn = document.getElementById('check-btn');
-
-  if (!email) {
-    resultArea.innerHTML = '<div class="error-msg">Please enter your email address.</div>';
+// ── RENDER ─────────────────────────────────────────────────────
+function render() {
+  var app = document.getElementById('app');
+  if (S.screen === 'loading') {
+    app.innerHTML = '<div class="auth-wrap"><div style="text-align:center;color:var(--tmed)"><div class="spinner" style="width:32px;height:32px;margin:0 auto 1rem"></div><p>Loading your dashboard...</p></div></div>';
     return;
   }
+  if (S.screen === 'login') { app.innerHTML = renderLogin(); return; }
+  if (S.screen === 'otp') { app.innerHTML = renderOTP(); setupOTPInputs(); return; }
+  if (S.screen === 'dashboard') { app.innerHTML = renderDashboard(); return; }
+}
 
-  btn.disabled = true;
-  btn.textContent = 'Checking...';
-  resultArea.innerHTML = '';
+// ── LOGIN SCREEN ───────────────────────────────────────────────
+function renderLogin() {
+  return '<div class="auth-wrap">' +
+    '<div class="auth-card">' +
+      '<div class="auth-head">' +
+        '<div class="auth-icon">🏢</div>' +
+        '<h1>Partner Portal</h1>' +
+        '<p>Sign in to access your partner dashboard</p>' +
+      '</div>' +
+      '<div class="auth-body">' +
+        (S.error ? '<div class="err-msg">' + S.error + '</div>' : '') +
+        '<div class="form-group">' +
+          '<label class="fl">Work Email Address</label>' +
+          '<input class="fi" type="email" id="login-email" placeholder="you@company.com" value="' + escHtml(S.email) + '" onkeydown="if(event.key===\'Enter\')sendOTP()">' +
+        '</div>' +
+        '<button class="btn-primary" id="send-btn" onclick="sendOTP()">' + (S.loading ? '<span class="spinner"></span>' : '') + 'Send Login Code</button>' +
+      '</div>' +
+      '<div class="auth-foot">New partner? <a href="/partner-apply">Apply to join the network</a></div>' +
+    '</div>' +
+  '</div>';
+}
 
-  try {
-    var payload = { email: email };
-    if (appId) payload.application_id = appId;
+// ── OTP SCREEN ─────────────────────────────────────────────────
+function renderOTP() {
+  return '<div class="auth-wrap">' +
+    '<div class="auth-card">' +
+      '<div class="auth-head">' +
+        '<div class="auth-icon">📬</div>' +
+        '<h1>Check your inbox</h1>' +
+        '<p>We sent a 6-digit code to<br><strong style="color:var(--txt)">' + escHtml(S.email) + '</strong></p>' +
+      '</div>' +
+      '<div class="auth-body">' +
+        (S.error ? '<div class="err-msg">' + S.error + '</div>' : '') +
+        (S.info ? '<div class="info-msg">' + S.info + '</div>' : '') +
+        '<div class="otp-row">' +
+          '<input class="otp-digit" id="d0" maxlength="1" inputmode="numeric" pattern="[0-9]">' +
+          '<input class="otp-digit" id="d1" maxlength="1" inputmode="numeric" pattern="[0-9]">' +
+          '<input class="otp-digit" id="d2" maxlength="1" inputmode="numeric" pattern="[0-9]">' +
+          '<input class="otp-digit" id="d3" maxlength="1" inputmode="numeric" pattern="[0-9]">' +
+          '<input class="otp-digit" id="d4" maxlength="1" inputmode="numeric" pattern="[0-9]">' +
+          '<input class="otp-digit" id="d5" maxlength="1" inputmode="numeric" pattern="[0-9]">' +
+        '</div>' +
+        '<button class="btn-primary" id="verify-btn" onclick="verifyOTP()">' + (S.loading ? '<span class="spinner"></span>' : '') + 'Verify &amp; Sign In</button>' +
+        '<p style="text-align:center;margin-top:1rem;font-size:0.82rem;color:var(--tmed)">Did not receive it? <button class="resend-link" onclick="sendOTP()">Resend code</button></p>' +
+        '<p style="text-align:center;margin-top:0.5rem"><span class="back-link" onclick="backToLogin()">← Use a different email</span></p>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+}
 
-    var res = await fetch('/api/partner-status', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+function setupOTPInputs() {
+  var inputs = document.querySelectorAll('.otp-digit');
+  inputs.forEach(function(inp, i) {
+    inp.addEventListener('input', function() {
+      var v = inp.value.replace(/\D/g,'');
+      inp.value = v.slice(-1);
+      if (v && i < inputs.length - 1) inputs[i+1].focus();
+      if (getOTP().length === 6) verifyOTP();
     });
-    var data = await res.json();
+    inp.addEventListener('keydown', function(e) {
+      if (e.key === 'Backspace' && !inp.value && i > 0) inputs[i-1].focus();
+    });
+    inp.addEventListener('paste', function(e) {
+      var paste = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g,'');
+      if (paste.length >= 6) {
+        paste.slice(0,6).split('').forEach(function(ch,j){ if(inputs[j]) inputs[j].value=ch; });
+        inputs[5].focus();
+        e.preventDefault();
+        verifyOTP();
+      }
+    });
+  });
+  if (inputs[0]) inputs[0].focus();
+}
 
-    if (data.found && data.applications && data.applications.length > 0) {
-      var html = '';
-      data.applications.forEach(function(app) {
-        html += '<div class="app-card">' +
-          '<div class="app-id">Application #' + app.id + '</div>' +
-          '<div class="app-company">' + app.company_name + '</div>' +
-          '<div class="app-category">' + (app.partner_category || 'General Partner') + '</div>' +
-          '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem">' +
-          '<span class="status-badge ' + getStatusClass(app.status) + '">' + app.status + '</span>' +
-          '<span class="app-meta">Submitted ' + formatDate(app.submitted_at) + '</span>' +
-          '</div>' +
-          '</div>';
-      });
-      resultArea.innerHTML = html;
-    } else {
-      resultArea.innerHTML = '<div class="not-found">No application found for this email address.<br>Please check the email and try again.</div>';
-    }
-  } catch(e) {
-    resultArea.innerHTML = '<div class="error-msg">Could not retrieve status. Please try again in a moment.</div>';
-  } finally {
-    btn.disabled = false;
-    btn.textContent = 'Check Status';
+function getOTP() {
+  return [0,1,2,3,4,5].map(function(i){ var d=document.getElementById('d'+i); return d?d.value:''; }).join('');
+}
+
+// ── DASHBOARD ──────────────────────────────────────────────────
+function renderDashboard() {
+  var p = S.partner;
+  if (!p) return '';
+  var initials = ((p.contact_name||p.company_name||'P').match(/\b\w/g)||[]).slice(0,2).join('').toUpperCase();
+  var statusClass = getStatusClass(p.status);
+  var completedCount = S.checklist.filter(function(c){return c.completed;}).length;
+  var totalCount = S.checklist.length;
+  var pct = totalCount ? Math.round(completedCount/totalCount*100) : 0;
+
+  var html = '';
+
+  // Nav
+  html += '<nav class="pnav">' +
+    '<a href="/" class="pnav-logo">' +
+      '<img src="/logo.png" alt="Pithonix AI">' +
+      '<div><span>Pithonix GCC</span><small>Partner Portal</small></div>' +
+    '</a>' +
+    '<div class="pnav-right">' +
+      '<span class="pnav-email">' + escHtml(S.email) + '</span>' +
+      '<button class="btn-signout" onclick="signOut()">Sign Out</button>' +
+    '</div>' +
+  '</nav>';
+
+  html += '<div class="dash-wrap">';
+
+  // Welcome banner
+  html += '<div class="welcome-bar">' +
+    '<div class="welcome-left">' +
+      '<div class="avatar">' + initials + '</div>' +
+      '<div>' +
+        '<div class="welcome-name">Welcome back, ' + escHtml(p.contact_name || p.company_name) + '</div>' +
+        '<div class="welcome-co">' + escHtml(p.company_name) + '</div>' +
+        '<div class="welcome-badges">' +
+          '<span class="status-badge ' + statusClass + '">' + (p.status||'Pending') + '</span>' +
+          (p.partner_category ? '<span class="status-badge badge-cat">' + escHtml(p.partner_category) + '</span>' : '') +
+          '<span class="status-badge ' + (p.is_available?'badge-avail':'badge-unavail') + '">' + (p.is_available?'Available for Projects':'Not Available') + '</span>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="avail-toggle">' +
+      '<span class="avail-label">Available for Projects</span>' +
+      '<label class="toggle-switch">' +
+        '<input type="checkbox" id="avail-chk" ' + (p.is_available?'checked':'') + ' onchange="toggleAvail()">' +
+        '<div class="toggle-track"></div>' +
+        '<div class="toggle-thumb"></div>' +
+      '</label>' +
+    '</div>' +
+  '</div>';
+
+  // Stats
+  html += '<div class="stats-row">' +
+    '<div class="stat-card"><div class="stat-label">Category</div><div class="stat-val">' + escHtml(p.partner_category||'Partner') + '</div></div>' +
+    '<div class="stat-card"><div class="stat-label">Cities</div><div class="stat-val" style="font-size:0.85rem">' + escHtml(p.cities||'Not set') + '</div></div>' +
+    '<div class="stat-card"><div class="stat-label">Member Since</div><div class="stat-val">' + fmtDate(p.submitted_at) + '</div></div>' +
+    '<div class="stat-card"><div class="stat-label">Active Projects</div><div class="stat-val">' + S.projects.filter(function(pr){return pr.status==='active';}).length + '</div><div class="stat-sub">' + S.projects.length + ' total</div></div>' +
+  '</div>';
+
+  // Profile + PM
+  html += '<div class="two-col">';
+
+  // Profile card
+  html += '<div class="card">' +
+    '<div class="card-head"><h3>Your Profile</h3>' +
+      (S.editMode ?
+        '<div style="display:flex;gap:0.5rem">' +
+          '<button class="btn-save-sm" onclick="saveProfile()">Save</button>' +
+          '<button class="btn-cancel-sm" onclick="cancelEdit()">Cancel</button>' +
+        '</div>' :
+        '<button class="btn-edit" onclick="startEdit()">Edit Profile</button>') +
+    '</div>' +
+    '<div class="card-body">';
+
+  if (S.editMode) {
+    html += '<div class="pf-row"><label class="pf-label">Company Name</label><input class="pf-input fi" id="ef-company" value="' + escHtml(p.company_name||'') + '"></div>' +
+      '<div class="pf-row"><label class="pf-label">Your Designation</label><input class="pf-input fi" id="ef-desig" value="' + escHtml(p.designation||'') + '"></div>' +
+      '<div class="pf-row"><label class="pf-label">Website</label><input class="pf-input fi" id="ef-website" value="' + escHtml(p.website||'') + '"></div>' +
+      '<div class="pf-row"><label class="pf-label">Cities / Service Zones</label><input class="pf-input fi" id="ef-cities" value="' + escHtml(p.cities||'') + '"></div>' +
+      '<div class="pf-row"><label class="pf-label">Services Description</label><textarea class="pf-input" id="ef-desc" rows="4">' + escHtml(p.description||'') + '</textarea></div>';
+  } else {
+    html += '<div class="pf-row"><label class="pf-label">Company Name</label><div class="pf-val">' + escHtml(p.company_name||'') + '</div></div>' +
+      '<div class="pf-row"><label class="pf-label">Contact</label><div class="pf-val">' + escHtml(p.contact_name||'') + (p.designation?', <span style="color:var(--tmed)">'+escHtml(p.designation)+'</span>':'') + '</div></div>' +
+      '<div class="pf-row"><label class="pf-label">Email</label><div class="pf-val">' + escHtml(p.email||'') + '</div></div>' +
+      (p.phone ? '<div class="pf-row"><label class="pf-label">Phone</label><div class="pf-val">' + escHtml(p.phone) + '</div></div>' : '') +
+      '<div class="pf-row"><label class="pf-label">Website</label><div class="pf-val">' + (p.website?'<a href="'+(p.website.match(/^https?/)?p.website:'https://'+p.website)+'" target="_blank">'+escHtml(p.website)+'</a>':'Not set') + '</div></div>' +
+      '<div class="pf-row"><label class="pf-label">Cities</label><div class="pf-val">' + escHtml(p.cities||'Not set') + '</div></div>' +
+      '<div class="pf-row"><label class="pf-label">Team Size</label><div class="pf-val">' + escHtml(p.team_size||'Not specified') + '</div></div>' +
+      (p.description ? '<div class="pf-row"><label class="pf-label">About</label><div class="pf-val" style="font-size:0.84rem;color:var(--tmed);line-height:1.6">' + escHtml(p.description) + '</div></div>' : '');
   }
+
+  html += '</div></div>';
+
+  // Project Manager card
+  html += '<div class="card">' +
+    '<div class="card-head"><h3>Your Project Manager</h3></div>' +
+    '<div class="card-body">' +
+      '<div class="pm-avatar">SD</div>' +
+      '<div class="pm-name">Satyajit Dutta</div>' +
+      '<div class="pm-title">Founder &amp; CEO, Pithonix AI</div>' +
+      '<div class="pm-contact-row"><span class="pm-icon">✉</span><a href="mailto:satyajit.d@pithonix.ai">satyajit.d@pithonix.ai</a></div>' +
+      '<div class="pm-contact-row"><span class="pm-icon">🌐</span><a href="https://pithonix.ai" target="_blank">pithonix.ai</a></div>' +
+      '<div class="pm-contact-row"><span class="pm-icon">📍</span><span>Hyderabad, India</span></div>' +
+      '<div style="background:rgba(255,255,255,0.03);border:1px solid var(--bd);border-radius:8px;padding:0.85rem;margin-top:1rem;font-size:0.8rem;color:var(--tmed);line-height:1.6">Your dedicated point of contact for project assignments, briefings, and partner support. Reach out any time.</div>' +
+      '<a href="mailto:satyajit.d@pithonix.ai?subject=Project%20Request%20—%20' + encodeURIComponent(p.company_name||'Partner') + '" class="btn-request">Request a Project Assignment</a>' +
+    '</div>' +
+  '</div>';
+
+  html += '</div>'; // end two-col
+
+  // Live Projects
+  html += '<div class="card" style="margin-bottom:1.25rem">' +
+    '<div class="section-title"><span>Live GCC Projects</span>' +
+      (S.projects.length ? '<span style="font-size:0.75rem;color:var(--tmed);font-weight:400">'+S.projects.length+' project'+(S.projects.length>1?'s':'')+'</span>' : '') +
+    '</div>';
+  if (S.projects.length === 0) {
+    html += '<div class="empty-state"><div class="es-icon">🚀</div><p>No projects assigned yet.<br>Use the button above to request your first GCC project from Satyajit.</p></div>';
+  } else {
+    html += '<div style="overflow-x:auto"><table class="proj-table"><thead><tr>' +
+      '<th>Project</th><th>Client</th><th>HQ</th><th>Your Role</th><th>Started</th><th>Status</th>' +
+      '</tr></thead><tbody>';
+    S.projects.forEach(function(pr) {
+      var sc = pr.status === 'active' ? 'proj-active' : pr.status === 'completed' ? 'proj-completed' : 'proj-pipeline';
+      html += '<tr>' +
+        '<td><strong>' + escHtml(pr.project_name) + '</strong>' + (pr.description?'<br><span style="font-size:0.76rem;color:var(--tmed)">'+escHtml(pr.description)+'</span>':'') + '</td>' +
+        '<td>' + escHtml(pr.client_name||'Confidential') + '</td>' +
+        '<td>' + escHtml(pr.client_hq||'') + '</td>' +
+        '<td>' + escHtml(pr.your_role||'') + '</td>' +
+        '<td style="font-size:0.8rem;color:var(--tmed)">' + (pr.start_date?fmtDate(pr.start_date):'TBD') + '</td>' +
+        '<td><span class="proj-status ' + sc + '">' + (pr.status||'active') + '</span></td>' +
+      '</tr>';
+    });
+    html += '</tbody></table></div>';
+  }
+  html += '</div>';
+
+  // Onboarding Checklist
+  html += '<div class="card" style="margin-bottom:1.25rem">' +
+    '<div class="section-title"><span>Onboarding Checklist</span><span style="font-size:0.75rem;color:var(--tmed);font-weight:400">' + completedCount + ' of ' + totalCount + ' complete</span></div>' +
+    '<div class="checklist-progress">' +
+      '<div style="font-size:0.78rem;color:var(--tmed)">Overall progress</div>' +
+      '<div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:' + pct + '%"></div></div>' +
+      '<div class="progress-label"><span>' + pct + '% complete</span><span>' + (totalCount-completedCount) + ' remaining</span></div>' +
+    '</div>' +
+    '<div class="checklist-items">';
+
+  S.checklist.forEach(function(item) {
+    var done = item.completed;
+    var checkClass = done ? (item.auto ? 'auto-done' : 'done') : '';
+    var ck = '<div class="ck-check ' + checkClass + '"' + (!item.auto ? ' onclick="toggleChecklist(\'' + item.key + '\',' + (!done) + ')" style="cursor:pointer"' : '') + '>' +
+      '<svg viewBox="0 0 12 10" fill="none"><polyline points="1,5 4,9 11,1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+    '</div>';
+    html += '<div class="ck-item">' + ck +
+      '<div class="ck-text">' +
+        '<div class="ck-label ' + (done?'done-text':'') + '">' + escHtml(item.label) + (item.auto?'<span class="ck-auto-tag">auto</span>':'') + '</div>' +
+        (done && item.completed_at ? '<div class="ck-meta">Completed ' + fmtDate(item.completed_at) + '</div>' : '') +
+        (!done && !item.auto ? '<div class="ck-meta">Click to mark as done</div>' : '') +
+      '</div>' +
+    '</div>';
+  });
+
+  html += '</div></div>';
+
+  // Documents
+  var hasDocs = p.doc_link || p.document_names;
+  if (hasDocs) {
+    html += '<div class="card" style="margin-bottom:1.25rem">' +
+      '<div class="section-title"><span>Submitted Documents</span></div>';
+    if (p.document_names) {
+      p.document_names.split(',').forEach(function(name) {
+        name = name.trim();
+        if (name) {
+          html += '<div class="doc-row"><span class="doc-icon">📄</span><span class="doc-name">' + escHtml(name) + '</span></div>';
+        }
+      });
+    }
+    if (p.doc_link) {
+      html += '<div class="doc-row"><span class="doc-icon">🔗</span><span class="doc-name">Document Link</span><a href="' + escHtml(p.doc_link) + '" target="_blank" class="doc-link">View →</a></div>';
+    }
+    html += '</div>';
+  }
+
+  html += '</div>'; // end dash-wrap
+  return html;
+}
+
+// ── ACTIONS ────────────────────────────────────────────────────
+async function sendOTP() {
+  var emailEl = document.getElementById('login-email');
+  var email = emailEl ? emailEl.value.trim() : S.email;
+  if (!email) { S.error = 'Please enter your email address.'; render(); return; }
+  S.email = email;
+  S.error = '';
+  S.info = '';
+  S.loading = true;
+  render();
+  try {
+    var r = await fetch('/api/partner-auth-send', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email}) });
+    await r.json();
+    S.screen = 'otp';
+    S.info = 'Code sent. Check your inbox (and spam folder).';
+  } catch(e) {
+    S.error = 'Could not send code. Please try again.';
+    S.screen = 'login';
+  }
+  S.loading = false;
+  render();
+}
+
+async function verifyOTP() {
+  var otp = getOTP();
+  if (otp.length < 6) { S.error = 'Please enter the full 6-digit code.'; render(); return; }
+  S.error = '';
+  S.loading = true;
+  render();
+  try {
+    var r = await fetch('/api/partner-auth-verify', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email:S.email, otp}) });
+    var data = await r.json();
+    if (!r.ok || !data.token) { S.error = data.error || 'Invalid code. Please try again.'; S.loading = false; render(); return; }
+    S.token = data.token;
+    localStorage.setItem('pp_token', data.token);
+    localStorage.setItem('pp_email', S.email);
+    await loadDashboard();
+  } catch(e) {
+    S.error = 'Verification failed. Please try again.';
+    S.loading = false;
+    render();
+  }
+}
+
+async function loadDashboard() {
+  try {
+    var r = await fetch('/api/partner-dashboard', { headers:{'X-Partner-Token': S.token} });
+    var data = await r.json();
+    if (!r.ok) {
+      localStorage.removeItem('pp_token');
+      localStorage.removeItem('pp_email');
+      S.token = '';
+      S.screen = 'login';
+      S.error = data.error || 'Session expired. Please sign in again.';
+      S.loading = false;
+      render();
+      return;
+    }
+    S.partner = data.partner;
+    S.projects = data.projects || [];
+    S.checklist = data.checklist || [];
+    S.screen = 'dashboard';
+    S.loading = false;
+    render();
+  } catch(e) {
+    S.screen = 'login';
+    S.error = 'Could not load dashboard. Please sign in again.';
+    S.loading = false;
+    render();
+  }
+}
+
+function backToLogin() {
+  S.screen = 'login';
+  S.error = '';
+  S.info = '';
+  render();
+}
+
+function signOut() {
+  localStorage.removeItem('pp_token');
+  localStorage.removeItem('pp_email');
+  S.token = '';
+  S.partner = null;
+  S.projects = [];
+  S.checklist = [];
+  S.screen = 'login';
+  S.email = '';
+  S.error = '';
+  render();
+}
+
+function startEdit() {
+  S.editMode = true;
+  render();
+}
+
+function cancelEdit() {
+  S.editMode = false;
+  render();
+}
+
+async function saveProfile() {
+  var body = {
+    company_name: document.getElementById('ef-company').value.trim(),
+    designation: document.getElementById('ef-desig').value.trim(),
+    website: document.getElementById('ef-website').value.trim(),
+    cities: document.getElementById('ef-cities').value.trim(),
+    description: document.getElementById('ef-desc').value.trim()
+  };
+  try {
+    var r = await fetch('/api/partner-profile-save', { method:'POST', headers:{'Content-Type':'application/json','X-Partner-Token':S.token}, body:JSON.stringify(body) });
+    var d = await r.json();
+    if (d.success) {
+      Object.assign(S.partner, body);
+      S.editMode = false;
+      render();
+    }
+  } catch(e) {}
+}
+
+async function toggleAvail() {
+  var chk = document.getElementById('avail-chk');
+  var newVal = chk ? chk.checked : !S.partner.is_available;
+  try {
+    var r = await fetch('/api/partner-toggle-available', { method:'POST', headers:{'Content-Type':'application/json','X-Partner-Token':S.token}, body:JSON.stringify({is_available:newVal}) });
+    var d = await r.json();
+    if (d.success) { S.partner.is_available = d.is_available; render(); }
+  } catch(e) {}
+}
+
+async function toggleChecklist(key, completed) {
+  try {
+    var r = await fetch('/api/partner-checklist-update', { method:'POST', headers:{'Content-Type':'application/json','X-Partner-Token':S.token}, body:JSON.stringify({item_key:key, completed}) });
+    var d = await r.json();
+    if (d.success) {
+      S.checklist = S.checklist.map(function(c) {
+        return c.key === key ? Object.assign({},c,{completed,completed_at:completed?new Date().toISOString():null}) : c;
+      });
+      render();
+    }
+  } catch(e) {}
+}
+
+// ── HELPERS ────────────────────────────────────────────────────
+function escHtml(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function fmtDate(d) {
+  try { return new Date(d).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}); }
+  catch(e) { return d||''; }
+}
+function getStatusClass(s) {
+  var v = (s||'').toLowerCase();
+  if (v.includes('approv')) return 'badge-approved';
+  if (v.includes('review')) return 'badge-review';
+  if (v.includes('reject')) return 'badge-rejected';
+  return 'badge-pending';
 }
 </script>
 </body>

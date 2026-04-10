@@ -8,6 +8,12 @@
     "api/partner-approve.js": { "maxDuration": 30 },
     "api/partners-list.js": { "maxDuration": 10 },
     "api/partner-edit.js": { "maxDuration": 30 },
+    "api/partner-auth-send.js": { "maxDuration": 30 },
+    "api/partner-auth-verify.js": { "maxDuration": 15 },
+    "api/partner-dashboard.js": { "maxDuration": 15 },
+    "api/partner-profile-save.js": { "maxDuration": 15 },
+    "api/partner-toggle-available.js": { "maxDuration": 15 },
+    "api/partner-checklist-update.js": { "maxDuration": 15 },
     "api/weekly-digest.js": { "maxDuration": 30 }
   },
   "crons": [
