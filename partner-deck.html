@@ -7,517 +7,193 @@
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Inter', Arial, sans-serif;
-      font-size: 10pt;
-      color: #1A1A2E;
-      background: #e8e8e8;
-      line-height: 1.55;
-    }
+    body { font-family: 'Inter', Arial, sans-serif; font-size: 10pt; color: #1A1A2E; background: #e8e8e8; line-height: 1.55; }
 
-    /* PAGE */
     .page {
-      width: 210mm;
-      min-height: 297mm;
-      background: #fff;
-      margin: 10mm auto;
-      padding: 16mm 15mm 24mm 15mm;
-      position: relative;
-      page-break-after: always;
+      width: 210mm; min-height: 297mm; background: #fff;
+      margin: 10mm auto; padding: 16mm 15mm 26mm 15mm;
+      position: relative; page-break-after: always;
       box-shadow: 0 2px 20px rgba(0,0,0,0.12);
     }
     .page:last-child { page-break-after: auto; }
 
     /* LETTERHEAD */
-    .lh {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-bottom: 10px;
-      border-bottom: 2.5px solid #00C49A;
-      margin-bottom: 16px;
-    }
+    .lh { display: flex; align-items: center; justify-content: space-between; padding-bottom: 10px; border-bottom: 2.5px solid #00C49A; margin-bottom: 16px; }
     .lh-left { display: flex; align-items: center; gap: 10px; }
     .lh-logo { height: 42px; width: auto; }
-    .lh-brand { display: flex; flex-direction: column; }
-    .lh-wordmark {
-      font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
-      font-weight: 900;
-      font-size: 20pt;
-      text-transform: uppercase;
-      background: linear-gradient(90deg, #4A4A4A, #AAAAAA);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      line-height: 1;
-    }
-    .lh-tagline {
-      font-size: 6.5pt;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: #5BAFD6;
-      margin-top: 2px;
-    }
-    .lh-right {
-      font-size: 7.5pt;
-      color: #999;
-      text-align: right;
-      line-height: 1.6;
-    }
+    .lh-wordmark { font-family: 'Barlow Condensed','Arial Narrow',sans-serif; font-weight: 900; font-size: 20pt; text-transform: uppercase; background: linear-gradient(90deg,#4A4A4A,#AAAAAA); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; }
+    .lh-tagline { font-size: 6.5pt; letter-spacing: 3px; text-transform: uppercase; color: #5BAFD6; margin-top: 2px; }
+    .lh-right { font-size: 7.5pt; color: #999; text-align: right; line-height: 1.6; }
     .lh-right strong { color: #555; }
 
     /* FOOTER */
-    .footer {
-      position: absolute;
-      bottom: 8mm;
-      left: 15mm;
-      right: 15mm;
-      border-top: 1px solid #E8E8E8;
-      padding-top: 5px;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-    }
+    .footer { position: absolute; bottom: 8mm; left: 15mm; right: 15mm; border-top: 1px solid #E8E8E8; padding-top: 5px; display: flex; justify-content: space-between; align-items: flex-end; }
     .footer-text { font-size: 6.2pt; color: #AAA; line-height: 1.55; }
     .footer-pg { font-size: 6.5pt; color: #CCC; }
 
     /* SECTION HEADERS */
     .sh { margin: 18px 0 10px 0; }
-    .sh-eye {
-      font-size: 6.5pt;
-      text-transform: uppercase;
-      letter-spacing: 2.5px;
-      color: #5BAFD6;
-      margin-bottom: 3px;
-    }
-    .sh-title {
-      font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
-      font-weight: 900;
-      font-size: 16pt;
-      text-transform: uppercase;
-      color: #1A1A2E;
-      line-height: 1.1;
-    }
+    .sh-eye { font-size: 6.5pt; text-transform: uppercase; letter-spacing: 2.5px; color: #5BAFD6; margin-bottom: 3px; }
+    .sh-title { font-family: 'Barlow Condensed','Arial Narrow',sans-serif; font-weight: 900; font-size: 16pt; text-transform: uppercase; color: #1A1A2E; line-height: 1.1; }
     .sh-title span { color: #00C49A; }
-    .sh-rule {
-      height: 2px;
-      background: linear-gradient(90deg, #00C49A, transparent);
-      margin-top: 5px;
-      border-radius: 2px;
-    }
+    .sh-rule { height: 2px; background: linear-gradient(90deg,#00C49A,transparent); margin-top: 5px; border-radius: 2px; }
 
-    /* BODY */
     p { font-size: 9.5pt; color: #333; margin-bottom: 8px; line-height: 1.6; }
     .lead { font-size: 10.5pt; font-weight: 500; color: #1A1A2E; margin-bottom: 12px; }
 
     /* COVER */
-    .cover-tag {
-      display: inline-block;
-      background: #E6FAF5;
-      color: #00876A;
-      font-size: 7pt;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      padding: 4px 10px;
-      border-radius: 3px;
-      margin-bottom: 14px;
-      font-weight: 600;
-    }
-    .cover-hl {
-      font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
-      font-weight: 900;
-      font-size: 30pt;
-      text-transform: uppercase;
-      line-height: 1.05;
-      color: #1A1A2E;
-      margin-bottom: 10px;
-    }
+    .cover-tag { display: inline-block; background: #E6FAF5; color: #00876A; font-size: 7pt; letter-spacing: 2px; text-transform: uppercase; padding: 4px 10px; border-radius: 3px; margin-bottom: 14px; font-weight: 600; }
+    .cover-hl { font-family: 'Barlow Condensed','Arial Narrow',sans-serif; font-weight: 900; font-size: 30pt; text-transform: uppercase; line-height: 1.05; color: #1A1A2E; margin-bottom: 10px; }
     .cover-hl span { color: #00C49A; }
-    .cover-sub {
-      font-size: 11pt;
-      font-weight: 300;
-      color: #555;
-      line-height: 1.5;
-      margin-bottom: 20px;
-    }
-    .cover-divider {
-      height: 3px;
-      background: linear-gradient(90deg, #00C49A, #5BAFD6, transparent);
-      border-radius: 2px;
-      margin: 18px 0;
-    }
+    .cover-sub { font-size: 11pt; font-weight: 300; color: #555; line-height: 1.5; margin-bottom: 18px; }
+    .cover-divider { height: 3px; background: linear-gradient(90deg,#00C49A,#5BAFD6,transparent); border-radius: 2px; margin: 16px 0; }
 
-    /* STAT CARDS */
-    .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 12px 0; }
-    .stat-card {
-      text-align: center;
-      padding: 12px 8px;
-      background: #F7FFFE;
-      border: 1px solid #C8F0E4;
-      border-radius: 8px;
-    }
-    .sc-num {
-      font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
-      font-size: 24pt;
-      font-weight: 900;
-      color: #00C49A;
-      line-height: 1;
-    }
+    /* STATS */
+    .stat-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin: 12px 0; }
+    .stat-card { text-align: center; padding: 12px 8px; background: #F7FFFE; border: 1px solid #C8F0E4; border-radius: 8px; }
+    .sc-num { font-family: 'Barlow Condensed','Arial Narrow',sans-serif; font-size: 24pt; font-weight: 900; color: #00C49A; line-height: 1; }
     .sc-unit { font-size: 12pt; color: #5BAFD6; }
     .sc-desc { font-size: 7.5pt; color: #666; margin-top: 3px; line-height: 1.35; }
 
     /* GRIDS */
     .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 10px 0; }
     .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 10px 0; }
-    .four-col { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; margin: 10px 0; }
 
     /* CARDS */
-    .card {
-      border: 1px solid #E8E8E8;
-      border-radius: 8px;
-      padding: 13px;
-      background: #fff;
-      position: relative;
-      overflow: hidden;
-    }
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, #00C49A, #5BAFD6);
-    }
+    .card { border: 1px solid #E8E8E8; border-radius: 8px; padding: 13px; background: #fff; position: relative; overflow: hidden; }
+    .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg,#00C49A,#5BAFD6); }
     .card-icon { font-size: 18pt; margin-bottom: 5px; }
     .card-title { font-size: 9.5pt; font-weight: 700; color: #1A1A2E; margin-bottom: 4px; }
     .card p { font-size: 8pt; color: #555; margin: 0; }
 
-    /* INSIGHT BOX */
-    .insight {
-      background: linear-gradient(135deg, #001A14, #003329);
-      color: #fff;
-      border-radius: 8px;
-      padding: 14px 16px;
-      margin: 12px 0;
-    }
-    .insight-lbl {
-      font-size: 6.5pt;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: #00C49A;
-      margin-bottom: 5px;
-    }
+    /* INSIGHT */
+    .insight { background: linear-gradient(135deg,#001A14,#003329); color: #fff; border-radius: 8px; padding: 14px 16px; margin: 12px 0; }
+    .insight-lbl { font-size: 6.5pt; letter-spacing: 2px; text-transform: uppercase; color: #00C49A; margin-bottom: 5px; }
     .insight p { font-size: 9.5pt; color: #DFF7F0; margin: 0; line-height: 1.55; }
 
     /* HIGHLIGHT */
-    .hl-box {
-      background: linear-gradient(135deg, #E6FAF5, #EEF6FF);
-      border: 1px solid #B2EAD8;
-      border-radius: 8px;
-      padding: 12px 14px;
-      margin: 10px 0;
-    }
+    .hl-box { background: linear-gradient(135deg,#E6FAF5,#EEF6FF); border: 1px solid #B2EAD8; border-radius: 8px; padding: 12px 14px; margin: 10px 0; }
     .hl-title { font-weight: 700; font-size: 9.5pt; color: #1A1A2E; margin-bottom: 5px; }
     .hl-box p { font-size: 8.5pt; color: #444; margin-bottom: 4px; }
     .hl-box p:last-child { margin-bottom: 0; }
 
-    /* FLOW STEPS */
-    .flow {
-      display: flex;
-      align-items: flex-start;
-      gap: 0;
-      margin: 12px 0;
-      overflow: hidden;
-    }
-    .flow-item {
-      flex: 1;
-      text-align: center;
-      position: relative;
-    }
-    .flow-item:not(:last-child)::after {
-      content: '';
-      position: absolute;
-      top: 20px;
-      right: -1px;
-      width: 100%;
-      height: 2px;
-      background: linear-gradient(90deg, #00C49A, #5BAFD6);
-      z-index: 0;
-    }
-    .flow-num {
-      width: 40px;
-      height: 40px;
-      background: linear-gradient(135deg, #00C49A, #5BAFD6);
-      color: #fff;
-      border-radius: 50%;
-      font-weight: 800;
-      font-size: 13pt;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 6px auto;
-      position: relative;
-      z-index: 1;
-    }
-    .flow-label { font-size: 8pt; font-weight: 600; color: #1A1A2E; line-height: 1.3; }
-    .flow-sub { font-size: 7pt; color: #888; margin-top: 2px; }
-
-    /* PARTNER TYPES */
-    .partner-type-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-      gap: 8px;
-      margin: 10px 0;
-    }
-    .pt-card {
-      background: #F7FFFE;
-      border: 1px solid #D0F0E8;
-      border-radius: 7px;
-      padding: 10px 8px;
-      text-align: center;
-    }
+    /* PARTNER TYPE GRID */
+    .partner-type-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin: 10px 0; }
+    .pt-card { background: #F7FFFE; border: 1px solid #D0F0E8; border-radius: 7px; padding: 10px 8px; text-align: center; }
     .pt-icon { font-size: 18pt; margin-bottom: 4px; }
     .pt-name { font-size: 7.5pt; font-weight: 600; color: #1A1A2E; line-height: 1.3; }
 
-    /* DASHBOARD PREVIEW */
-    .dash-preview {
-      background: #060B18;
-      border-radius: 10px;
-      padding: 14px;
-      margin: 12px 0;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    .dash-bar {
-      background: rgba(255,255,255,0.06);
-      border-radius: 6px;
-      padding: 8px 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 10px;
-    }
-    .dash-bar-brand {
-      font-size: 8pt;
-      font-weight: 700;
-      color: #F1F5F9;
-    }
-    .dash-bar-sub {
-      font-size: 6pt;
-      letter-spacing: 2px;
-      color: #06B6D4;
-      text-transform: uppercase;
-    }
-    .dash-badge {
-      display: inline-block;
-      background: rgba(34,197,94,0.12);
-      color: #4ADE80;
-      border: 1px solid rgba(34,197,94,0.3);
-      font-size: 6pt;
-      padding: 2px 7px;
-      border-radius: 20px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-    }
-    .dash-stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 7px;
-      margin-bottom: 10px;
-    }
-    .dash-stat {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 7px;
-      padding: 8px 10px;
-    }
-    .ds-label {
-      font-size: 5.5pt;
-      letter-spacing: 1.5px;
-      color: #475569;
-      text-transform: uppercase;
-      margin-bottom: 3px;
-    }
+    /* FLOW */
+    .flow { display: flex; align-items: flex-start; gap: 0; margin: 12px 0; }
+    .flow-item { flex: 1; text-align: center; position: relative; }
+    .flow-item:not(:last-child)::after { content: ''; position: absolute; top: 20px; right: -1px; width: 100%; height: 2px; background: linear-gradient(90deg,#00C49A,#5BAFD6); z-index: 0; }
+    .flow-num { width: 40px; height: 40px; background: linear-gradient(135deg,#00C49A,#5BAFD6); color: #fff; border-radius: 50%; font-weight: 800; font-size: 13pt; display: flex; align-items: center; justify-content: center; margin: 0 auto 6px auto; position: relative; z-index: 1; }
+    .flow-label { font-size: 8pt; font-weight: 600; color: #1A1A2E; line-height: 1.3; }
+    .flow-sub { font-size: 7pt; color: #888; margin-top: 2px; }
+
+    /* TIER CARDS — THE MAIN NEW SECTION */
+    .tier-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 12px 0; }
+
+    .tier-card { border-radius: 10px; overflow: hidden; border: 1px solid #E8E8E8; }
+
+    /* Platinum */
+    .tier-platinum { border-color: #B8860B; }
+    .tier-platinum .tc-head { background: linear-gradient(135deg,#7B5E00,#C8960C); }
+
+    /* Gold */
+    .tier-gold { border-color: #A0A0A0; }
+    .tier-gold .tc-head { background: linear-gradient(135deg,#1A3A4A,#2A6080); }
+
+    /* Silver */
+    .tier-silver { border-color: #CCCCCC; }
+    .tier-silver .tc-head { background: linear-gradient(135deg,#2A2A2A,#4A4A4A); }
+
+    .tc-head { padding: 12px 14px; color: #fff; }
+    .tc-badge { display: inline-block; font-size: 6pt; letter-spacing: 1.5px; text-transform: uppercase; padding: 2px 7px; border-radius: 3px; background: rgba(255,255,255,0.2); margin-bottom: 5px; font-weight: 600; }
+    .tc-name { font-family: 'Barlow Condensed','Arial Narrow',sans-serif; font-size: 17pt; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; line-height: 1; margin-bottom: 3px; }
+    .tc-slots { font-size: 7.5pt; opacity: 0.8; }
+
+    .tc-body { padding: 11px 12px; background: #fff; }
+    .tc-row { display: flex; align-items: flex-start; gap: 7px; padding: 5px 0; border-bottom: 1px solid #F5F5F5; font-size: 8pt; }
+    .tc-row:last-child { border-bottom: none; }
+    .tc-icon { flex-shrink: 0; font-size: 10pt; width: 18px; text-align: center; }
+    .tc-label { font-weight: 600; color: #1A1A2E; display: block; font-size: 7.5pt; margin-bottom: 1px; }
+    .tc-val { color: #555; font-size: 7.5pt; }
+
+    /* YES/NO PILLS */
+    .yes { display: inline-block; background: #E6FAF5; color: #00876A; font-size: 6pt; padding: 1px 6px; border-radius: 3px; font-weight: 700; text-transform: uppercase; }
+    .no { display: inline-block; background: #F5F5F5; color: #AAA; font-size: 6pt; padding: 1px 6px; border-radius: 3px; font-weight: 700; text-transform: uppercase; }
+    .partial { display: inline-block; background: #FFF8E6; color: #AA7700; font-size: 6pt; padding: 1px 6px; border-radius: 3px; font-weight: 700; text-transform: uppercase; }
+
+    /* COMPARISON TABLE */
+    .comp-table { width: 100%; border-collapse: collapse; font-size: 8pt; margin: 12px 0; }
+    .comp-table th { padding: 7px 10px; font-size: 7pt; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; text-align: center; border-bottom: 2px solid #E8E8E8; }
+    .comp-table th:first-child { text-align: left; }
+    .comp-table th.plat { background: linear-gradient(135deg,#7B5E00,#C8960C); color: #fff; border-radius: 6px 6px 0 0; }
+    .comp-table th.gold { background: linear-gradient(135deg,#1A3A4A,#2A6080); color: #fff; border-radius: 6px 6px 0 0; }
+    .comp-table th.silv { background: linear-gradient(135deg,#2A2A2A,#4A4A4A); color: #fff; border-radius: 6px 6px 0 0; }
+    .comp-table td { padding: 7px 10px; border-bottom: 1px solid #F0F0F0; vertical-align: middle; }
+    .comp-table td:not(:first-child) { text-align: center; }
+    .comp-table tr:nth-child(even) td { background: #FAFAFA; }
+    .comp-table td:first-child { font-weight: 600; color: #444; font-size: 8pt; }
+
+    /* PGS DASHBOARD */
+    .dash-preview { background: #060B18; border-radius: 10px; padding: 14px; margin: 12px 0; border: 1px solid rgba(255,255,255,0.08); }
+    .dash-bar { background: rgba(255,255,255,0.06); border-radius: 6px; padding: 8px 12px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+    .dash-bar-brand { font-size: 8pt; font-weight: 700; color: #F1F5F9; }
+    .dash-bar-sub { font-size: 6pt; letter-spacing: 2px; color: #06B6D4; text-transform: uppercase; }
+    .dash-badge-tier { display: inline-block; font-size: 6pt; padding: 2px 8px; border-radius: 20px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+    .badge-plat { background: rgba(200,150,12,0.2); color: #F5C842; border: 1px solid rgba(200,150,12,0.4); }
+    .badge-gold { background: rgba(59,130,246,0.12); color: #60A5FA; border: 1px solid rgba(59,130,246,0.3); }
+    .badge-silv { background: rgba(100,116,139,0.12); color: #94A3B8; border: 1px solid rgba(100,116,139,0.3); }
+    .dash-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 7px; margin-bottom: 10px; }
+    .dash-stat { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.07); border-radius: 7px; padding: 8px 10px; }
+    .ds-label { font-size: 5.5pt; letter-spacing: 1.5px; color: #475569; text-transform: uppercase; margin-bottom: 3px; }
     .ds-val { font-size: 11pt; font-weight: 700; color: #F1F5F9; }
     .ds-sub { font-size: 6.5pt; color: #64748B; margin-top: 1px; }
-    .dash-two {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
-    .dash-card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 7px;
-      overflow: hidden;
-    }
-    .dash-card-head {
-      padding: 7px 10px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      font-size: 7.5pt;
-      font-weight: 700;
-      color: #94A3B8;
-      letter-spacing: 0.5px;
-    }
+    .dash-two { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .dash-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); border-radius: 7px; overflow: hidden; }
+    .dash-card-head { padding: 7px 10px; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 7.5pt; font-weight: 700; color: #94A3B8; }
     .dash-card-body { padding: 10px; }
-    .proj-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 5px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-      font-size: 7.5pt;
-    }
+    .proj-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 7.5pt; }
     .proj-row:last-child { border-bottom: none; }
     .proj-name { color: #E2E8F0; font-weight: 500; }
-    .proj-dot {
-      display: inline-block;
-      padding: 1px 6px;
-      border-radius: 10px;
-      font-size: 6pt;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
+    .proj-dot { display: inline-block; padding: 1px 6px; border-radius: 10px; font-size: 6pt; font-weight: 700; text-transform: uppercase; }
     .dot-active { background: rgba(34,197,94,0.1); color: #4ADE80; border: 1px solid rgba(34,197,94,0.25); }
     .dot-pipeline { background: rgba(251,191,36,0.1); color: #FBBF24; border: 1px solid rgba(251,191,36,0.25); }
-    .pm-mini { display: flex; align-items: center; gap: 8px; padding: 6px 0; }
-    .pm-avatar-mini {
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #06B6D4, #3B82F6);
-      display: flex; align-items: center; justify-content: center;
-      color: #fff; font-weight: 700; font-size: 9pt;
-      flex-shrink: 0;
-    }
-    .pm-info .pm-name { font-size: 8pt; font-weight: 700; color: #E2E8F0; }
-    .pm-info .pm-role { font-size: 6.5pt; color: #64748B; }
+    .analytics-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 7px; padding: 10px; }
+    .analytics-row { display: flex; justify-content: space-between; align-items: center; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 7pt; color: #94A3B8; }
+    .analytics-row:last-child { border-bottom: none; }
+    .analytics-val { font-weight: 700; color: #F1F5F9; }
+    .locked-overlay { background: rgba(6,11,24,0.7); border: 1px dashed rgba(255,255,255,0.1); border-radius: 7px; padding: 14px; text-align: center; }
+    .locked-icon { font-size: 18pt; margin-bottom: 6px; }
+    .locked-text { font-size: 7.5pt; color: #475569; }
 
     /* TIMELINE */
     .timeline { margin: 12px 0; }
-    .tl-item {
-      display: flex;
-      gap: 12px;
-      padding-bottom: 12px;
-      position: relative;
-    }
-    .tl-item:not(:last-child)::before {
-      content: '';
-      position: absolute;
-      left: 14px;
-      top: 28px;
-      bottom: 0;
-      width: 2px;
-      background: #E0F5EE;
-    }
-    .tl-dot {
-      flex-shrink: 0;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #00C49A, #5BAFD6);
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 8.5pt;
-      font-weight: 800;
-    }
+    .tl-item { display: flex; gap: 12px; padding-bottom: 12px; position: relative; }
+    .tl-item:not(:last-child)::before { content: ''; position: absolute; left: 14px; top: 28px; bottom: 0; width: 2px; background: #E0F5EE; }
+    .tl-dot { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg,#00C49A,#5BAFD6); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 8.5pt; font-weight: 800; }
     .tl-content .tl-title { font-size: 9.5pt; font-weight: 700; color: #1A1A2E; margin-bottom: 2px; }
-    .tl-content .tl-phase {
-      display: inline-block;
-      font-size: 6pt;
-      letter-spacing: 1px;
-      background: #E6FAF5;
-      color: #00876A;
-      padding: 1px 6px;
-      border-radius: 3px;
-      text-transform: uppercase;
-      font-weight: 600;
-      margin-bottom: 3px;
-    }
+    .tl-content .tl-phase { display: inline-block; font-size: 6pt; letter-spacing: 1px; background: #E6FAF5; color: #00876A; padding: 1px 6px; border-radius: 3px; text-transform: uppercase; font-weight: 600; margin-bottom: 3px; }
     .tl-content p { font-size: 8.5pt; color: #555; margin: 0; line-height: 1.5; }
 
-    /* CHECKLIST */
-    .checklist { margin: 10px 0; }
-    .cl-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 9px;
-      padding: 7px 0;
-      border-bottom: 1px solid #F5F5F5;
-    }
-    .cl-item:last-child { border-bottom: none; }
-    .cl-check {
-      flex-shrink: 0;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: #E6FAF5;
-      border: 1.5px solid #00C49A;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 8pt;
-      color: #00C49A;
-      font-weight: 700;
-    }
-    .cl-text .cl-title { font-size: 9pt; font-weight: 600; color: #1A1A2E; margin-bottom: 1px; }
-    .cl-text p { font-size: 8pt; color: #666; margin: 0; }
-
-    /* FUTURE SCOPE CARDS */
-    .scope-card {
-      background: linear-gradient(135deg, #F0F9FF, #F0FFF9);
-      border: 1px solid #C0E8FF;
-      border-radius: 8px;
-      padding: 12px 14px;
-    }
-    .scope-tag {
-      display: inline-block;
-      font-size: 6pt;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      background: #E0F2FF;
-      color: #0077B6;
-      padding: 2px 6px;
-      border-radius: 3px;
-      margin-bottom: 5px;
-      font-weight: 600;
-    }
+    /* SCOPE CARD */
+    .scope-card { background: linear-gradient(135deg,#F0F9FF,#F0FFF9); border: 1px solid #C0E8FF; border-radius: 8px; padding: 12px 14px; }
+    .scope-tag { display: inline-block; font-size: 6pt; letter-spacing: 1.5px; text-transform: uppercase; background: #E0F2FF; color: #0077B6; padding: 2px 6px; border-radius: 3px; margin-bottom: 5px; font-weight: 600; }
     .scope-title { font-size: 9.5pt; font-weight: 700; color: #1A1A2E; margin-bottom: 4px; }
     .scope-card p { font-size: 8pt; color: #555; margin: 0; }
 
-    /* CTA BLOCK */
-    .cta-block {
-      background: linear-gradient(135deg, #001A14, #002B22);
-      border-radius: 10px;
-      padding: 18px 20px;
-      text-align: center;
-      margin: 14px 0;
-    }
-    .cta-block h3 {
-      font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
-      font-weight: 900;
-      font-size: 18pt;
-      text-transform: uppercase;
-      color: #fff;
-      margin-bottom: 6px;
-    }
+    /* CTA */
+    .cta-block { background: linear-gradient(135deg,#001A14,#002B22); border-radius: 10px; padding: 18px 20px; text-align: center; margin: 14px 0; }
+    .cta-block h3 { font-family: 'Barlow Condensed','Arial Narrow',sans-serif; font-weight: 900; font-size: 18pt; text-transform: uppercase; color: #fff; margin-bottom: 6px; }
     .cta-block h3 span { color: #00C49A; }
     .cta-block p { font-size: 9pt; color: #9ECFC4; margin-bottom: 10px; }
-    .cta-url {
-      display: inline-block;
-      background: #00C49A;
-      color: #001A14;
-      font-weight: 700;
-      font-size: 9pt;
-      padding: 8px 20px;
-      border-radius: 6px;
-      text-decoration: none;
-      letter-spacing: 0.5px;
-    }
+    .cta-url { display: inline-block; background: #00C49A; color: #001A14; font-weight: 700; font-size: 9pt; padding: 8px 20px; border-radius: 6px; text-decoration: none; }
 
     @media print {
       body { background: #fff; }
-      .page { margin: 0; box-shadow: none; width: 210mm; padding: 16mm 15mm 24mm 15mm; }
+      .page { margin: 0; box-shadow: none; width: 210mm; padding: 16mm 15mm 26mm 15mm; }
     }
   </style>
 </head>
@@ -528,70 +204,49 @@
   <div class="lh">
     <div class="lh-left">
       <img src="logo.png" alt="Pithonix AI" class="lh-logo" onerror="this.style.display='none'"/>
-      <div class="lh-brand">
-        <div class="lh-wordmark">Pithonix AI</div>
-        <div class="lh-tagline">Information to Intelligence</div>
-      </div>
+      <div><div class="lh-wordmark">Pithonix AI</div><div class="lh-tagline">Information to Intelligence</div></div>
     </div>
-    <div class="lh-right">
-      <strong>GCC PLAYBOOK PARTNER PROGRAMME</strong><br/>
-      gcc-playbook.pithonix.ai<br/>
-      April 2026
-    </div>
+    <div class="lh-right"><strong>GCC PLAYBOOK PARTNER PROGRAMME</strong><br/>gcc-playbook.pithonix.ai<br/>April 2026</div>
   </div>
 
-  <div style="margin-top: 20px;">
-    <div class="cover-tag">Partner Ecosystem · India GCC Market</div>
-    <div class="cover-hl">
-      Grow With<br/>
-      Every <span>GCC</span><br/>
-      That Lands in India
-    </div>
-    <div class="cover-sub">
-      India is adding 36 new GCCs every two weeks. Every one of them needs legal support, real estate, talent, IT, compliance, and banking from day one. The GCC Playbook puts verified partners in front of these companies at the exact moment they are deciding who to work with.
-    </div>
-
+  <div style="margin-top:20px;">
+    <div class="cover-tag">Partner Ecosystem · India GCC Market · Three Engagement Levels</div>
+    <div class="cover-hl">Be the Partner<br/>Every <span>GCC Company</span><br/>Calls First</div>
+    <div class="cover-sub">India adds 36 new GCCs every two weeks. Every one of them needs a bank, a legal firm, real estate, staffing, IT, and compliance support from day one. The GCC Playbook puts you in front of these companies before they have even shortlisted anyone else.</div>
     <div class="cover-divider"></div>
-
     <div class="stat-row">
       <div class="stat-card">
         <div class="sc-num">1,800<span class="sc-unit">+</span></div>
-        <div class="sc-desc">Active GCCs in India today. Every one needed specialist partners to get here.</div>
+        <div class="sc-desc">Active GCCs in India. Every one needed specialist partners to get here.</div>
       </div>
       <div class="stat-card">
         <div class="sc-num">36</div>
-        <div class="sc-desc">New GCCs opening in India every two weeks. That pipeline is not slowing down.</div>
+        <div class="sc-desc">New GCCs opening every two weeks. The pipeline does not slow down.</div>
       </div>
       <div class="stat-card">
         <div class="sc-num">$100<span class="sc-unit">B</span></div>
-        <div class="sc-desc">Projected India GCC market by 2030. The opportunity is only getting bigger.</div>
+        <div class="sc-desc">India GCC market size by 2030. The opportunity compounds every year.</div>
       </div>
     </div>
-
-    <div class="insight" style="margin-top: 16px;">
-      <div class="insight-lbl">The Simple Idea Behind This Programme</div>
-      <p>Pithonix builds and runs GCCs end to end. We bring in verified specialists for every domain we do not cover directly. You bring deep expertise in your field. Together, we deliver complete GCC setups for companies coming to India. When we win a project, our partners are part of the delivery team. Every GCC that lands is a new engagement for everyone in the network.</p>
+    <div class="insight" style="margin-top:16px;">
+      <div class="insight-lbl">Three Ways to Partner. One Network. Real Projects.</div>
+      <p>The GCC Playbook Partner Programme has three engagement levels. Each one gives your firm a different position in the platform, a different level of lead access, and a different set of tools inside the Partner Gateway System. The level you choose determines how visible you are, how early you hear about new GCCs, and what intelligence you get about your own performance. All three levels put you inside live projects.</p>
     </div>
   </div>
 
   <div class="footer">
-    <div class="footer-text">
-      PITHONIX AI INDIA PRIVATE LIMITED &nbsp;|&nbsp; CIN: U62090TS2026PTC213220 &nbsp;|&nbsp; info@pithonix.ai
-    </div>
+    <div class="footer-text">PITHONIX AI INDIA PRIVATE LIMITED &nbsp;|&nbsp; CIN: U62090TS2026PTC213220 &nbsp;|&nbsp; info@pithonix.ai</div>
     <div class="footer-pg">1 of 8</div>
   </div>
 </div>
 
 
-<!-- PAGE 2: THE PLATFORM AND THE OPPORTUNITY -->
+<!-- PAGE 2: PLATFORM + PARTNER FIT -->
 <div class="page">
   <div class="lh">
     <div class="lh-left">
       <img src="logo.png" alt="Pithonix AI" class="lh-logo" onerror="this.style.display='none'"/>
-      <div class="lh-brand">
-        <div class="lh-wordmark">Pithonix AI</div>
-        <div class="lh-tagline">Information to Intelligence</div>
-      </div>
+      <div><div class="lh-wordmark">Pithonix AI</div><div class="lh-tagline">Information to Intelligence</div></div>
     </div>
     <div class="lh-right"><strong>GCC PLAYBOOK PARTNER PROGRAMME</strong><br/>gcc-playbook.pithonix.ai</div>
   </div>
@@ -602,30 +257,28 @@
     <div class="sh-rule"></div>
   </div>
 
-  <p class="lead">The GCC Playbook is India's first AI-native GCC intelligence platform. It is live at gcc-playbook.pithonix.ai and free for any company in the world to use. In under ten seconds, it generates a complete, personalised GCC blueprint for any company planning to set up in India.</p>
+  <p class="lead">The GCC Playbook is live at gcc-playbook.pithonix.ai. Any company in the world can use it free of charge. In under ten seconds, it generates a complete, personalised GCC blueprint: city selection, three-year cost model, government incentive eligibility, entity structure, and a 90-day action plan. Every company that completes a blueprint is actively planning their India entry today.</p>
 
-  <p>A company tells the platform their industry, the functions they want to set up, their target headcount, their preferred city, and their timeline. The platform uses real India GCC data to generate a blueprint covering city selection, three-year cost projections, government incentives, entity structure, and a 90-day action plan. Every company that completes a blueprint is actively planning their India entry right now.</p>
-
-  <div class="two-col" style="margin: 14px 0;">
+  <div class="two-col">
     <div class="card">
       <div class="card-icon">🧠</div>
-      <div class="card-title">AI-Powered Blueprint</div>
-      <p>Gemini AI with live India GCC benchmarks. City selection, costs, incentives, and action plan in under ten seconds. Real data, not templates.</p>
-    </div>
-    <div class="card">
-      <div class="card-icon">📍</div>
-      <div class="card-title">25+ India Cities</div>
-      <p>Tier 1 hubs, Tier 2 emerging cities, and Tier 3 upcoming locations. Every viable GCC destination in India, with real talent and cost data.</p>
-    </div>
-    <div class="card">
-      <div class="card-icon">🏛️</div>
-      <div class="card-title">Government Incentives</div>
-      <p>STPI, DPIIT, and state IT policy benefits mapped automatically. Companies know what they are eligible for before they pick up the phone.</p>
+      <div class="card-title">AI Blueprint Generator</div>
+      <p>Gemini AI with live India GCC benchmarks. Real data from 1,800+ GCCs. Blueprint in under ten seconds. Companies come in as strangers and leave knowing exactly what they need and who they need it from.</p>
     </div>
     <div class="card">
       <div class="card-icon">🤝</div>
-      <div class="card-title">Partner Recommendations</div>
-      <p>Every blueprint includes partner recommendations for the services that company will need. That is where verified partners appear by name.</p>
+      <div class="card-title">Partner Recommendations Built In</div>
+      <p>Every blueprint includes partner recommendations for the services that company will need. Your firm appears by name in that section. The higher your engagement level, the more prominent that placement is.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📊</div>
+      <div class="card-title">Lead Intelligence Captured</div>
+      <p>Every company that runs the simulator shares their industry, headcount target, city, timeline, and budget. By the time a lead reaches you, Pithonix knows exactly what that company needs and when.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🏛️</div>
+      <div class="card-title">TG-iPASS and Government Links</div>
+      <p>The platform is integrated with Telangana's TG-iPASS single-window system. Higher engagement partners get pre-approved workflow status for client approvals, cutting weeks from the setup timeline.</p>
     </div>
   </div>
 
@@ -635,7 +288,7 @@
     <div class="sh-rule"></div>
   </div>
 
-  <p>Pithonix manages GCC setup end to end using the BOT model (Build, Operate, Transfer). We handle entity formation, the AI intelligence layer, overall project management, and the JEET platform deployment. Everything else is delivered through our partner network.</p>
+  <p>Pithonix manages end-to-end GCC delivery using JEET ERP and the HARI intelligence framework. Specialist partners are brought in for every domain Pithonix does not cover directly. Eight categories. Every live GCC project needs most of them.</p>
 
   <div class="partner-type-grid">
     <div class="pt-card"><div class="pt-icon">⚖️</div><div class="pt-name">Legal &amp; Compliance</div></div>
@@ -648,7 +301,10 @@
     <div class="pt-card"><div class="pt-icon">🔧</div><div class="pt-name">Technology</div></div>
   </div>
 
-  <p style="margin-top: 10px;">Partners are brought into live GCC projects based on the services required for that specific setup. A company setting up a 150-person technology hub in Hyderabad needs real estate in HITEC City or Gachibowli, a legal firm for the WOS incorporation, a staffing firm for tech talent, and an IT infrastructure team to build the workplace. Pithonix co-ordinates the entire delivery. Partners deliver their piece with full context about the project.</p>
+  <div class="insight">
+    <div class="insight-lbl">Why Slot Limits Matter</div>
+    <p>Each category in each city has a fixed number of partner slots at each engagement level. This is by design. When a GCC company gets their blueprint, they see a short, curated list, not a long directory. The platform recommends the right partner for that specific project. Slot limits protect every partner from being buried in a crowded list. Fewer partners per category means more projects per partner.</p>
+  </div>
 
   <div class="footer">
     <div class="footer-text">PITHONIX AI INDIA PRIVATE LIMITED &nbsp;|&nbsp; CIN: U62090TS2026PTC213220 &nbsp;|&nbsp; info@pithonix.ai</div>
@@ -657,15 +313,12 @@
 </div>
 
 
-<!-- PAGE 3: HOW THE PARTNERSHIP WORKS -->
+<!-- PAGE 3: HOW IT WORKS -->
 <div class="page">
   <div class="lh">
     <div class="lh-left">
       <img src="logo.png" alt="Pithonix AI" class="lh-logo" onerror="this.style.display='none'"/>
-      <div class="lh-brand">
-        <div class="lh-wordmark">Pithonix AI</div>
-        <div class="lh-tagline">Information to Intelligence</div>
-      </div>
+      <div><div class="lh-wordmark">Pithonix AI</div><div class="lh-tagline">Information to Intelligence</div></div>
     </div>
     <div class="lh-right"><strong>GCC PLAYBOOK PARTNER PROGRAMME</strong><br/>gcc-playbook.pithonix.ai</div>
   </div>
@@ -676,81 +329,202 @@
     <div class="sh-rule"></div>
   </div>
 
-  <p class="lead">The partnership is not transactional. You are not buying a listing on a directory. You become part of the Pithonix GCC delivery network, which means you are inside the projects, working with the client, and building a direct relationship that continues beyond the initial setup.</p>
+  <p class="lead">You are not buying a listing on a directory. You are joining the delivery network. When Pithonix wins a GCC setup project, the right partners are briefed and brought into the project team. You work inside the engagement with a named Pithonix Project Manager co-ordinating across all workstreams.</p>
 
   <div class="flow">
     <div class="flow-item">
       <div class="flow-num">1</div>
-      <div class="flow-label">Company Plans GCC</div>
-      <div class="flow-sub">Runs the AI simulator on gcc-playbook.pithonix.ai</div>
+      <div class="flow-label">Company Runs Blueprint</div>
+      <div class="flow-sub">gcc-playbook.pithonix.ai</div>
     </div>
     <div class="flow-item">
       <div class="flow-num">2</div>
-      <div class="flow-label">Blueprint Generated</div>
-      <div class="flow-sub">Partners appear in the relevant service sections</div>
+      <div class="flow-label">Partners Appear</div>
+      <div class="flow-sub">By name, in the relevant service section</div>
     </div>
     <div class="flow-item">
       <div class="flow-num">3</div>
-      <div class="flow-label">Pithonix Engages</div>
-      <div class="flow-sub">Project scoped. Services required confirmed.</div>
+      <div class="flow-label">Lead Routed</div>
+      <div class="flow-sub">Timing depends on your engagement level</div>
     </div>
     <div class="flow-item">
       <div class="flow-num">4</div>
       <div class="flow-label">Partner Briefed</div>
-      <div class="flow-sub">Full project context shared via the PGS dashboard</div>
+      <div class="flow-sub">Full project context via PGS dashboard</div>
     </div>
     <div class="flow-item">
       <div class="flow-num">5</div>
       <div class="flow-label">Delivery Begins</div>
-      <div class="flow-sub">Partner delivers with Pithonix PM co-ordinating</div>
+      <div class="flow-sub">Pithonix PM co-ordinates end to end</div>
     </div>
   </div>
 
-  <div class="insight">
-    <div class="insight-lbl">What Makes This Different From a Lead Directory</div>
-    <p>A lead directory sends you a company name and email. You follow up cold. Most leads go nowhere. The GCC Playbook is different because by the time a partner is brought into a project, Pithonix has already scoped the work, confirmed the client budget, and agreed the services required. You receive a briefed project, not a cold contact. The Pithonix Project Manager stays involved throughout so you are never managing client expectations alone.</p>
-  </div>
-
-  <div class="sh" style="margin-top: 16px;">
+  <div class="sh" style="margin-top:16px;">
     <div class="sh-eye">Section 04</div>
-    <div class="sh-title">What Partners <span>Receive</span></div>
+    <div class="sh-title">Three Levels of <span>Engagement</span></div>
     <div class="sh-rule"></div>
   </div>
 
-  <div class="checklist">
-    <div class="cl-item">
-      <div class="cl-check">✓</div>
-      <div class="cl-text">
-        <div class="cl-title">Warm, briefed project leads</div>
-        <p>Every project you are matched to has already been scoped. You know the company, the GCC size, the city, the timeline, and exactly what is required from you before your first call.</p>
+  <p>The programme has three engagement levels. Each gives you a different position in the platform, different lead access, different analytics, and different MNC access. Here is what each level means in practice.</p>
+
+  <div class="tier-grid">
+
+    <!-- PLATINUM -->
+    <div class="tier-card tier-platinum">
+      <div class="tc-head">
+        <div class="tc-badge">Exclusive</div>
+        <div class="tc-name">Platinum</div>
+        <div class="tc-slots">2 slots per category per city</div>
+      </div>
+      <div class="tc-body">
+        <div class="tc-row">
+          <div class="tc-icon">⚡</div>
+          <div>
+            <span class="tc-label">Lead Access</span>
+            <span class="tc-val">48-hour exclusive first window. No other partner sees the lead until your window closes.</span>
+          </div>
+        </div>
+        <div class="tc-row">
+          <div class="tc-icon">📄</div>
+          <div>
+            <span class="tc-label">Co-Branding</span>
+            <span class="tc-val">On every GCC proposal generated by the platform. Your name is in the document the client downloads.</span>
+          </div>
+        </div>
+        <div class="tc-row">
+          <div class="tc-icon">🏛️</div>
+          <div>
+            <span class="tc-label">MNC Access</span>
+            <span class="tc-val">Quarterly roundtables with MNC decision-makers actively planning India GCCs.</span>
+          </div>
+        </div>
+        <div class="tc-row">
+          <div class="tc-icon">📊</div>
+          <div>
+            <span class="tc-label">Analytics</span>
+            <span class="tc-val">Full PGS dashboard with conversion data, lead source breakdown, and sector intelligence.</span>
+          </div>
+        </div>
+        <div class="tc-row">
+          <div class="tc-icon">🏅</div>
+          <div>
+            <span class="tc-label">Badge</span>
+            <span class="tc-val">Certified GCC Partner — the highest trust signal on the platform.</span>
+          </div>
+        </div>
+        <div class="tc-row">
+          <div class="tc-icon">🏦</div>
+          <div>
+            <span class="tc-label">TG-iPASS</span>
+            <span class="tc-val">Pre-approved workflow. Client approvals move faster through single-window clearance.</span>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="cl-item">
-      <div class="cl-check">✓</div>
-      <div class="cl-text">
-        <div class="cl-title">Visibility in every relevant blueprint</div>
-        <p>When a company runs the simulator and their project profile matches your service category and city coverage, your firm appears in their blueprint as a recommended partner.</p>
+
+    <!-- GOLD -->
+    <div class="tier-card tier-gold">
+      <div class="tc-head">
+        <div class="tc-badge">Limited</div>
+        <div class="tc-name">Gold</div>
+        <div class="tc-slots">5 slots per category per city</div>
+      </div>
+      <div class="tc-body">
+        <div class="tc-row">
+          <div class="tc-icon">⏱️</div>
+          <div>
+            <span class="tc-label">Lead Access</span>
+            <span class="tc-val">After the Platinum exclusive window closes. Still warm, still qualified, still ahead of the open pool.</span>
+          </div>
+        </div>
+        <div class="tc-row">
+          <div class="tc-icon">📋</div>
+          <div>
+            <span class="tc-label">Co-Branding</span>
+            <span class="tc-val">Partner directory listing on the platform. Visible to every company browsing by category and city.</span>
+          </div>
+        </div>
+        <div class="tc-row">
+          <div class="tc-icon">🤝</div>
+          <div>
+            <span class="tc-label">MNC Access</span>
+            <span class="tc-val">Bi-annual networking events with GCC-stage companies and Pithonix clients.</span>
+          </div>
+        </div>
+        <div class="tc-row">
+          <div class="tc-icon">📈</div>
+          <div>
+            <span class="tc-label">Analytics</span>
+            <span class="tc-val">Basic PGS dashboard showing project pipeline and lead volume. No conversion data.</span>
+          </div>
+        </div>
+        <div class="tc-row">
+          <div class="tc-icon">✅</div>
+          <div>
+            <span class="tc-label">Badge</span>
+            <span class="tc-val">Verified Partner — signals quality assurance to every company that sees your listing.</span>
+          </div>
+        </div>
+        <div class="tc-row">
+          <div class="tc-icon">🏦</div>
+          <div>
+            <span class="tc-label">TG-iPASS</span>
+            <span class="tc-val">Standard single-window workflow for client approvals.</span>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="cl-item">
-      <div class="cl-check">✓</div>
-      <div class="cl-text">
-        <div class="cl-title">A dedicated Project Manager from Pithonix</div>
-        <p>Every live project has a named Pithonix PM. They co-ordinate across all partners, manage the client relationship, and keep the overall delivery on track so each partner can focus on their domain.</p>
+
+    <!-- SILVER -->
+    <div class="tier-card tier-silver">
+      <div class="tc-head">
+        <div class="tc-badge">Open</div>
+        <div class="tc-name">Silver</div>
+        <div class="tc-slots">Open slots — no cap per city</div>
       </div>
-    </div>
-    <div class="cl-item">
-      <div class="cl-check">✓</div>
-      <div class="cl-text">
-        <div class="cl-title">The Partner Gateway System (PGS) dashboard</div>
-        <p>Your own secure login. See all your projects, track status, manage your profile, view your Pithonix PM details, and control your availability. All in one place, live, no spreadsheets.</p>
-      </div>
-    </div>
-    <div class="cl-item">
-      <div class="cl-check">✓</div>
-      <div class="cl-text">
-        <div class="cl-title">National reach through a single network</div>
-        <p>Your firm can cover any city or region you are operational in. Tier 1 hubs, Tier 2 emerging cities, or all of India. The platform routes projects to the right partner based on geography and service match.</p>
+      <div class="tc-body">
+        <div class="tc-row">
+          <div class="tc-icon">🌐</div>
+          <div>
+            <span class="tc-label">Lead Access</span>
+            <span class="tc-val">General lead pool. Leads available after Platinum and Gold windows have had first access.</span>
+          </div>
+        </div>
+        <div class="tc-row">
+          <div class="tc-icon">📌</div>
+          <div>
+            <span class="tc-label">Co-Branding</span>
+            <span class="tc-val">Basic listing in the partner directory. Visible by category and city search.</span>
+          </div>
+        </div>
+        <div class="tc-row">
+          <div class="tc-icon">🎤</div>
+          <div>
+            <span class="tc-label">MNC Access</span>
+            <span class="tc-val">Annual GCC Partner Summit. Networking with the broader Pithonix ecosystem.</span>
+          </div>
+        </div>
+        <div class="tc-row">
+          <div class="tc-icon">🔒</div>
+          <div>
+            <span class="tc-label">Analytics</span>
+            <span class="tc-val">No analytics dashboard. Project status communicated by Pithonix PM directly.</span>
+          </div>
+        </div>
+        <div class="tc-row">
+          <div class="tc-icon">🤝</div>
+          <div>
+            <span class="tc-label">Badge</span>
+            <span class="tc-val">Partner — listed and verified as part of the Pithonix delivery network.</span>
+          </div>
+        </div>
+        <div class="tc-row">
+          <div class="tc-icon">🏦</div>
+          <div>
+            <span class="tc-label">TG-iPASS</span>
+            <span class="tc-val">Standard single-window workflow for client approvals.</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -762,122 +536,54 @@
 </div>
 
 
-<!-- PAGE 4: THE PGS DASHBOARD -->
+<!-- PAGE 4: COMPARISON TABLE -->
 <div class="page">
   <div class="lh">
     <div class="lh-left">
-      <img src="logo.png" alt="Pithonix AI" class="lh-logo" onerror="this.style.display='none'"/>
-      <div class="lh-brand">
-        <div class="lh-wordmark">Pithonix AI</div>
-        <div class="lh-tagline">Information to Intelligence</div>
-      </div>
+      <img src="logo.png" alt="Pithonix AI" class="lh-logo" onerror="this.style.display:'none'"/>
+      <div><div class="lh-wordmark">Pithonix AI</div><div class="lh-tagline">Information to Intelligence</div></div>
     </div>
     <div class="lh-right"><strong>GCC PLAYBOOK PARTNER PROGRAMME</strong><br/>gcc-playbook.pithonix.ai</div>
   </div>
 
   <div class="sh">
     <div class="sh-eye">Section 05</div>
-    <div class="sh-title">The Partner <span>Gateway System</span></div>
+    <div class="sh-title">Side by Side — <span>What You Get</span></div>
     <div class="sh-rule"></div>
   </div>
 
-  <p class="lead">The Partner Gateway System (PGS) is your operational home inside the Pithonix network. It is a secure, private dashboard that gives every partner full visibility of their projects, their Pithonix point of contact, and their standing in the network. No emails back and forth asking for updates. Everything is live in one place.</p>
+  <p>Every level gets you inside real GCC projects. The difference is in how early you hear about them, how prominently you appear, and how much intelligence you have about your own performance in the network.</p>
 
-  <p>Access is via OTP login at gcc-playbook.pithonix.ai/partner-portal.html. No passwords to remember. Enter your registered email, receive a one-time code, and you are in. The dashboard is designed to be simple to use and works on any device.</p>
+  <table class="comp-table">
+    <thead>
+      <tr>
+        <th style="width:32%;">Feature</th>
+        <th class="plat" style="width:23%;">Platinum<br/><small style="font-size:6pt;opacity:0.8;font-weight:400;">Certified GCC Partner</small></th>
+        <th class="gold" style="width:22%;">Gold<br/><small style="font-size:6pt;opacity:0.8;font-weight:400;">Verified Partner</small></th>
+        <th class="silv" style="width:23%;">Silver<br/><small style="font-size:6pt;opacity:0.8;font-weight:400;">Partner</small></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Slots available per city</td><td><span class="yes">2 Exclusive</span></td><td><span class="partial">5 Limited</span></td><td><span class="no">Open</span></td></tr>
+      <tr><td>Lead access timing</td><td>48-hr exclusive first window</td><td>After Platinum window</td><td>General pool</td></tr>
+      <tr><td>Appears in AI blueprint</td><td><span class="yes">Yes — primary</span></td><td><span class="yes">Yes — directory</span></td><td><span class="yes">Yes — listed</span></td></tr>
+      <tr><td>Co-brand on GCC proposals</td><td><span class="yes">Yes — all proposals</span></td><td><span class="no">No</span></td><td><span class="no">No</span></td></tr>
+      <tr><td>MNC access</td><td>Quarterly roundtables</td><td>Bi-annual networking</td><td>Annual summit</td></tr>
+      <tr><td>PGS analytics dashboard</td><td><span class="yes">Full + conversion data</span></td><td><span class="partial">Basic dashboard</span></td><td><span class="no">No dashboard</span></td></tr>
+      <tr><td>TG-iPASS workflow</td><td><span class="yes">Pre-approved</span></td><td><span class="partial">Standard</span></td><td><span class="partial">Standard</span></td></tr>
+      <tr><td>Pithonix PM on every project</td><td><span class="yes">Yes</span></td><td><span class="yes">Yes</span></td><td><span class="yes">Yes</span></td></tr>
+      <tr><td>Partner Gateway System login</td><td><span class="yes">Yes — full access</span></td><td><span class="yes">Yes — full access</span></td><td><span class="partial">Yes — basic</span></td></tr>
+    </tbody>
+  </table>
 
-  <!-- DASHBOARD PREVIEW -->
-  <div class="dash-preview">
-    <div class="dash-bar">
-      <div>
-        <div class="dash-bar-brand">Pithonix GCC Platform</div>
-        <div class="dash-bar-sub">Partner Gateway System</div>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <span style="font-size:7pt;color:#64748B;">partner@yourfirm.com</span>
-        <span class="dash-badge">Approved</span>
-      </div>
-    </div>
-    <div class="dash-stats">
-      <div class="dash-stat">
-        <div class="ds-label">Active Projects</div>
-        <div class="ds-val">3</div>
-        <div class="ds-sub">Currently live</div>
-      </div>
-      <div class="dash-stat">
-        <div class="ds-label">In Pipeline</div>
-        <div class="ds-val">2</div>
-        <div class="ds-sub">Briefing stage</div>
-      </div>
-      <div class="dash-stat">
-        <div class="ds-label">Completed</div>
-        <div class="ds-val">7</div>
-        <div class="ds-sub">All time</div>
-      </div>
-      <div class="dash-stat">
-        <div class="ds-label">Availability</div>
-        <div class="ds-val" style="font-size:9pt;color:#4ADE80;">Available</div>
-        <div class="ds-sub">Toggle to pause</div>
-      </div>
-    </div>
-    <div class="dash-two">
-      <div class="dash-card">
-        <div class="dash-card-head">Live Projects</div>
-        <div class="dash-card-body">
-          <div class="proj-row">
-            <span class="proj-name">BFSI · Hyderabad · 200 FTE</span>
-            <span class="proj-dot dot-active">Active</span>
-          </div>
-          <div class="proj-row">
-            <span class="proj-name">SaaS · Bengaluru · 80 FTE</span>
-            <span class="proj-dot dot-active">Active</span>
-          </div>
-          <div class="proj-row">
-            <span class="proj-name">Healthcare · Pune · 120 FTE</span>
-            <span class="proj-dot dot-pipeline">Pipeline</span>
-          </div>
-        </div>
-      </div>
-      <div class="dash-card">
-        <div class="dash-card-head">Your Pithonix PM</div>
-        <div class="dash-card-body">
-          <div class="pm-mini">
-            <div class="pm-avatar-mini">SD</div>
-            <div class="pm-info">
-              <div class="pm-name">Satyajit Dutta</div>
-              <div class="pm-role">Project Manager · Pithonix AI</div>
-            </div>
-          </div>
-          <div style="font-size:7pt;color:#475569;margin-top:6px;line-height:1.6;">
-            📧 satyajit.d@pithonix.ai<br/>
-            🌐 gcc-playbook.pithonix.ai
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="insight" style="margin-top: 14px;">
+    <div class="insight-lbl">The Logic of the Lead Window</div>
+    <p>When a GCC company completes their blueprint, the lead does not go to everyone at once. Platinum partners get a 48-hour exclusive window. If they do not respond or decline, the lead opens to Gold partners. After the Gold window, it enters the general pool for Silver partners. This means Platinum partners are always first in conversation with the most motivated companies, at the moment of highest intent.</p>
   </div>
 
-  <div class="sh" style="margin-top: 14px;">
-    <div class="sh-eye">What You Can Do in the PGS</div>
-    <div class="sh-title">Your <span>Dashboard Features</span></div>
-    <div class="sh-rule"></div>
-  </div>
-
-  <div class="three-col">
-    <div class="card">
-      <div class="card-icon">📁</div>
-      <div class="card-title">Project Tracker</div>
-      <p>See every project you are on. Active, pipeline, and completed. Status updated in real time by the Pithonix PM.</p>
-    </div>
-    <div class="card">
-      <div class="card-icon">🙋</div>
-      <div class="card-title">Profile Management</div>
-      <p>Edit your company details, service description, cities covered, and GCC experience at any time. Your profile is what drives how you are matched to projects.</p>
-    </div>
-    <div class="card">
-      <div class="card-icon">🔔</div>
-      <div class="card-title">Availability Toggle</div>
-      <p>Going into a busy period? Pause your availability. New projects will not be assigned while you are paused. Switch back on when you are ready.</p>
-    </div>
+  <div class="hl-box" style="margin-top:12px;">
+    <div class="hl-title">On Slot Limits: Why Fewer Is Better</div>
+    <p>There are only 2 Platinum slots per category per city. In Hyderabad, that means two legal firms, two real estate firms, two staffing firms — and so on across eight categories. This keeps recommendation quality high and ensures every Platinum partner receives a meaningful volume of projects, not a fraction of a crowded list. Gold has 5 slots. Silver is open, which means more competition but still real access to the pipeline.</p>
   </div>
 
   <div class="footer">
@@ -887,57 +593,101 @@
 </div>
 
 
-<!-- PAGE 5: THE BENEFIT IN PRACTICE -->
+<!-- PAGE 5: PGS DASHBOARD -->
 <div class="page">
   <div class="lh">
     <div class="lh-left">
-      <img src="logo.png" alt="Pithonix AI" class="lh-logo" onerror="this.style.display='none'"/>
-      <div class="lh-brand">
-        <div class="lh-wordmark">Pithonix AI</div>
-        <div class="lh-tagline">Information to Intelligence</div>
-      </div>
+      <img src="logo.png" alt="Pithonix AI" class="lh-logo" onerror="this.style.display:'none'"/>
+      <div><div class="lh-wordmark">Pithonix AI</div><div class="lh-tagline">Information to Intelligence</div></div>
     </div>
     <div class="lh-right"><strong>GCC PLAYBOOK PARTNER PROGRAMME</strong><br/>gcc-playbook.pithonix.ai</div>
   </div>
 
   <div class="sh">
     <div class="sh-eye">Section 06</div>
-    <div class="sh-title">The Benefit <span>in Practice</span></div>
+    <div class="sh-title">Partner Gateway <span>System</span></div>
     <div class="sh-rule"></div>
   </div>
 
-  <p class="lead">The question any specialist firm asks is straightforward: will this actually bring us real work? Here is what the partnership means in practical terms, by category.</p>
+  <p class="lead">The Partner Gateway System (PGS) is your private dashboard inside the Pithonix network. It is where you track your projects, manage your profile, toggle availability, and see the intelligence that tells you how your partnership is performing. What you see in the PGS depends on your engagement level.</p>
 
-  <div class="two-col">
-    <div class="hl-box">
-      <div class="hl-title">⚖️ Legal and Compliance Firms</div>
-      <p>Every GCC needs a WOS incorporated, board resolutions filed, and FEMA compliance set up before the first rupee moves. You are brought in at Phase 1, the earliest stage, before most other partners. Projects that start in Hyderabad or Bengaluru are likely to have ongoing compliance and contract work for years. The initial incorporation is the start of the relationship, not the end.</p>
+  <!-- PLATINUM DASHBOARD -->
+  <p style="font-size:8pt; font-weight:700; color:#C8960C; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:6px;">Platinum Dashboard — Full View</p>
+  <div class="dash-preview">
+    <div class="dash-bar">
+      <div><div class="dash-bar-brand">Partner Gateway System</div><div class="dash-bar-sub">gcc-playbook.pithonix.ai</div></div>
+      <span class="dash-badge-tier badge-plat">Certified GCC Partner</span>
     </div>
-    <div class="hl-box">
-      <div class="hl-title">🏢 Real Estate and Workspace</div>
-      <p>City selection in the blueprint is data-driven. When a company picks Hyderabad, you already know their headcount target, timeline, and whether they want managed workspace or a long-term lease. You are not doing discovery calls. You come in with a shortlist that fits the brief Pithonix has already confirmed with the client.</p>
+    <div class="dash-stats">
+      <div class="dash-stat"><div class="ds-label">Active Projects</div><div class="ds-val">4</div><div class="ds-sub">Live delivery</div></div>
+      <div class="dash-stat"><div class="ds-label">Pipeline</div><div class="ds-val">3</div><div class="ds-sub">In 48-hr window</div></div>
+      <div class="dash-stat"><div class="ds-label">Lead Conversion</div><div class="ds-val" style="font-size:11pt;color:#4ADE80;">22%</div><div class="ds-sub">Your rate this quarter</div></div>
+      <div class="dash-stat"><div class="ds-label">Availability</div><div class="ds-val" style="font-size:9pt;color:#4ADE80;">Active</div><div class="ds-sub">Toggle to pause</div></div>
     </div>
-    <div class="hl-box">
-      <div class="hl-title">👥 Recruitment and Staffing</div>
-      <p>The Talent Matcher and Skill Gap agents in JEET identify exactly what roles are needed and when. Your brief from Pithonix includes the role profile, the location, the salary benchmark, and the hiring window. You are not starting from a blank JD. The intelligence layer does the prep work. You do the hiring.</p>
-    </div>
-    <div class="hl-box">
-      <div class="hl-title">💻 IT Infrastructure</div>
-      <p>GCCs coming to India need network build-out, hardware procurement, security stack setup, and connectivity from day one. You know the office location, the headcount phasing, and the security requirements because Pithonix has already scoped these with the client. Your quote is based on real requirements, not assumptions.</p>
-    </div>
-    <div class="hl-box">
-      <div class="hl-title">💰 Banking and Finance</div>
-      <p>Account opening, payroll setup, FEMA-compliant transfers, and forex are all time-critical for a new GCC. You come in at the entity formation stage with the client already introduced by Pithonix. The relationship starts warm, not cold. The client needs a banking partner who understands GCC structures, and Pithonix has already told them you do.</p>
-    </div>
-    <div class="hl-box">
-      <div class="hl-title">🎓 Training and L&amp;D</div>
-      <p>JEET's Learning Path agent builds a personalised training roadmap for every hire from day one. When a client needs structured L&amp;D delivery, you know the workforce profile, the skills gaps identified by the platform, and the training timeline. You are not designing from scratch. You are delivering against a data-backed plan.</p>
+    <div class="dash-two">
+      <div class="dash-card">
+        <div class="dash-card-head">Live Projects</div>
+        <div class="dash-card-body">
+          <div class="proj-row"><span class="proj-name">BFSI · Hyderabad · 200 FTE</span><span class="proj-dot dot-active">Active</span></div>
+          <div class="proj-row"><span class="proj-name">SaaS · Bengaluru · 80 FTE</span><span class="proj-dot dot-active">Active</span></div>
+          <div class="proj-row"><span class="proj-name">Healthcare · Pune · 50 FTE</span><span class="proj-dot dot-pipeline">Pipeline</span></div>
+        </div>
+      </div>
+      <div class="analytics-card">
+        <div class="analytics-row"><span>Leads received (Q1)</span><span class="analytics-val">18</span></div>
+        <div class="analytics-row"><span>Leads converted</span><span class="analytics-val">4</span></div>
+        <div class="analytics-row"><span>Avg lead to brief</span><span class="analytics-val">1.8 days</span></div>
+        <div class="analytics-row"><span>Top sector (leads)</span><span class="analytics-val">BFSI</span></div>
+        <div class="analytics-row"><span>Conversion vs network</span><span class="analytics-val" style="color:#4ADE80;">+8% above avg</span></div>
+      </div>
     </div>
   </div>
 
-  <div class="insight" style="margin-top: 14px;">
-    <div class="insight-lbl">The Compounding Value</div>
-    <p>GCC setups are not one-time engagements. A company that opens a 50-person GCC in Year 1 is likely to scale to 150 by Year 3 and 400 by Year 5. Legal work, real estate expansion, new rounds of hiring, IT upgrades, and compliance renewal all come back around. Partners who deliver well on the first project stay inside the relationship for the lifecycle of that GCC, not just the setup phase.</p>
+  <!-- GOLD DASHBOARD -->
+  <p style="font-size:8pt; font-weight:700; color:#3B82F6; text-transform:uppercase; letter-spacing:1.5px; margin:10px 0 6px 0;">Gold Dashboard — Basic View</p>
+  <div class="dash-preview" style="padding:10px 14px;">
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+      <div style="font-size:7.5pt; font-weight:700; color:#F1F5F9;">Partner Gateway System</div>
+      <span class="dash-badge-tier badge-gold">Verified Partner</span>
+    </div>
+    <div class="dash-two">
+      <div class="dash-card">
+        <div class="dash-card-head">Projects</div>
+        <div class="dash-card-body">
+          <div class="proj-row"><span class="proj-name">IT · Hyderabad · 120 FTE</span><span class="proj-dot dot-active">Active</span></div>
+          <div class="proj-row"><span class="proj-name">CPG · Chennai · 60 FTE</span><span class="proj-dot dot-pipeline">Pipeline</span></div>
+        </div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-card-head">Lead Volume</div>
+        <div class="dash-card-body">
+          <div class="analytics-row"><span>Leads received (Q1)</span><span class="analytics-val">9</span></div>
+          <div class="analytics-row"><span>Active projects</span><span class="analytics-val">2</span></div>
+          <div class="analytics-row"><span style="color:#475569;">Conversion data</span><span style="color:#475569;font-size:7pt;">Platinum only</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SILVER -->
+  <p style="font-size:8pt; font-weight:700; color:#94A3B8; text-transform:uppercase; letter-spacing:1.5px; margin:10px 0 6px 0;">Silver — Project Updates by PM</p>
+  <div class="dash-preview" style="padding:10px 14px;">
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+      <div style="font-size:7.5pt; font-weight:700; color:#F1F5F9;">Partner Gateway System</div>
+      <span class="dash-badge-tier badge-silv">Partner</span>
+    </div>
+    <div class="dash-two">
+      <div class="dash-card">
+        <div class="dash-card-head">Projects</div>
+        <div class="dash-card-body">
+          <div class="proj-row"><span class="proj-name">Telecom · Hyderabad · 40 FTE</span><span class="proj-dot dot-active">Active</span></div>
+        </div>
+      </div>
+      <div class="locked-overlay">
+        <div class="locked-icon">🔒</div>
+        <div class="locked-text">Analytics available on Gold and Platinum. Upgrade to see lead volume, conversion rate, and sector breakdown.</div>
+      </div>
+    </div>
   </div>
 
   <div class="footer">
@@ -947,104 +697,50 @@
 </div>
 
 
-<!-- PAGE 6: GETTING ONBOARDED -->
+<!-- PAGE 6: BENEFIT BY PARTNER TYPE -->
 <div class="page">
   <div class="lh">
     <div class="lh-left">
-      <img src="logo.png" alt="Pithonix AI" class="lh-logo" onerror="this.style.display='none'"/>
-      <div class="lh-brand">
-        <div class="lh-wordmark">Pithonix AI</div>
-        <div class="lh-tagline">Information to Intelligence</div>
-      </div>
+      <img src="logo.png" alt="Pithonix AI" class="lh-logo" onerror="this.style.display:'none'"/>
+      <div><div class="lh-wordmark">Pithonix AI</div><div class="lh-tagline">Information to Intelligence</div></div>
     </div>
     <div class="lh-right"><strong>GCC PLAYBOOK PARTNER PROGRAMME</strong><br/>gcc-playbook.pithonix.ai</div>
   </div>
 
   <div class="sh">
     <div class="sh-eye">Section 07</div>
-    <div class="sh-title">Getting <span>Onboarded</span></div>
+    <div class="sh-title">What This Means <span>For Your Domain</span></div>
     <div class="sh-rule"></div>
   </div>
 
-  <p>The onboarding process is designed to be fast. Applications are reviewed within 48 hours. Once approved, you are live in the partner network and visible in blueprints for your service category and city coverage within a week of submission.</p>
-
-  <div class="timeline">
-    <div class="tl-item">
-      <div class="tl-dot">1</div>
-      <div class="tl-content">
-        <span class="tl-phase">Day 1</span>
-        <div class="tl-title">Apply at gcc-playbook.pithonix.ai/partner-apply.html</div>
-        <p>Fill in your company details, GST and CIN, service category, city coverage, and a description of your GCC experience. Takes about ten minutes. You receive a reference number for tracking.</p>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-dot">2</div>
-      <div class="tl-content">
-        <span class="tl-phase">Within 48 hours</span>
-        <div class="tl-title">Application reviewed by the Pithonix partnerships team</div>
-        <p>We review every application for GCC-relevant experience and the quality of service you can deliver to clients. You get a clear yes or no. If we need more information, we reach out directly.</p>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-dot">3</div>
-      <div class="tl-content">
-        <span class="tl-phase">Week 1</span>
-        <div class="tl-title">PGS dashboard access activated</div>
-        <p>Your login is created. You can access the Partner Gateway System, complete your profile, set your city and service coverage, and toggle your availability. Your firm is now visible in the network.</p>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-dot">4</div>
-      <div class="tl-content">
-        <span class="tl-phase">Ongoing</span>
-        <div class="tl-title">Projects are matched and briefed as they come in</div>
-        <p>When a GCC project comes in that matches your service and location, the Pithonix PM reaches out with a project brief. You review, confirm availability, and delivery begins. Your dashboard updates in real time throughout.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="hl-box" style="margin-top: 10px;">
-    <div class="hl-title">What You Need to Apply</div>
-    <p><strong>Company details:</strong> Legal name, GST number, CIN, year founded, and company website.</p>
-    <p><strong>Service information:</strong> Your category, the cities you operate in, and a short description of your GCC-relevant work and any past GCC projects you have delivered.</p>
-    <p><strong>Contact details:</strong> The name, designation, and email of the person who will be the primary point of contact for the Pithonix team.</p>
-  </div>
-
-  <div class="sh" style="margin-top: 16px;">
-    <div class="sh-eye">Partner Checklist</div>
-    <div class="sh-title">Before Your <span>First Project</span></div>
-    <div class="sh-rule"></div>
-  </div>
+  <p>The same engagement levels apply across all eight partner categories. What the benefits mean in practice is different for each domain. Here is how the three levels translate for the most active GCC service categories.</p>
 
   <div class="two-col">
-    <div style="display:flex;flex-direction:column;gap:6px;">
-      <div class="cl-item" style="padding: 5px 0; border-bottom: 1px solid #F5F5F5;">
-        <div class="cl-check">✓</div>
-        <div class="cl-text"><div class="cl-title">Profile complete on PGS</div></div>
-      </div>
-      <div class="cl-item" style="padding: 5px 0; border-bottom: 1px solid #F5F5F5;">
-        <div class="cl-check">✓</div>
-        <div class="cl-text"><div class="cl-title">City and region coverage set</div></div>
-      </div>
-      <div class="cl-item" style="padding: 5px 0; border-bottom: 1px solid #F5F5F5;">
-        <div class="cl-check">✓</div>
-        <div class="cl-text"><div class="cl-title">Availability toggled to active</div></div>
-      </div>
+    <div class="hl-box">
+      <div class="hl-title">⚖️ Legal and Compliance</div>
+      <p><strong>Platinum:</strong> You appear in every GCC proposal generated for your city. The client already knows your name before their first call with Pithonix. You get the incorporation mandate before any other legal firm in the market hears about the project. Quarterly roundtables put you in front of CFOs and General Counsels actively planning India entry.</p>
+      <p><strong>Gold and Silver:</strong> Still inside live projects, still with full PM support, but without the exclusive first-call position.</p>
     </div>
-    <div style="display:flex;flex-direction:column;gap:6px;">
-      <div class="cl-item" style="padding: 5px 0; border-bottom: 1px solid #F5F5F5;">
-        <div class="cl-check">✓</div>
-        <div class="cl-text"><div class="cl-title">PM contact saved from dashboard</div></div>
-      </div>
-      <div class="cl-item" style="padding: 5px 0; border-bottom: 1px solid #F5F5F5;">
-        <div class="cl-check">✓</div>
-        <div class="cl-text"><div class="cl-title">GCC experience summary added to profile</div></div>
-      </div>
-      <div class="cl-item" style="padding: 5px 0; border-bottom: 1px solid #F5F5F5;">
-        <div class="cl-check">✓</div>
-        <div class="cl-text"><div class="cl-title">Response protocol agreed with your team</div></div>
-      </div>
+    <div class="hl-box">
+      <div class="hl-title">🏢 Real Estate and Workspace</div>
+      <p><strong>Platinum:</strong> You know the headcount, the city, and the timeline before any other agent or developer. Your shortlist goes to the client when they are still in decision mode, not after they have already spoken to three other agents. Conversion data in the PGS tells you which sectors and sizes are driving the most enquiries to your city.</p>
+      <p><strong>Gold and Silver:</strong> Access to the same briefed projects, with slightly less timing advantage on the lead.</p>
     </div>
+    <div class="hl-box">
+      <div class="hl-title">👥 Recruitment and Staffing</div>
+      <p><strong>Platinum:</strong> JEET's intelligence layer has already identified the roles needed and the salary benchmarks. Your brief from Pithonix is specific: role profiles, location, hiring window, and compensation range. The 48-hour window means you are placing candidates before any competing agency has even been briefed. MNC roundtables are direct access to companies about to run their first India hiring cycle.</p>
+      <p><strong>Gold and Silver:</strong> Same quality brief, slightly delayed access to the lead after Platinum window.</p>
+    </div>
+    <div class="hl-box">
+      <div class="hl-title">💰 Banking and Finance</div>
+      <p><strong>Platinum:</strong> Your name is in the client's GCC blueprint before they have incorporated. They see you as the recommended banking partner at the exact moment they are deciding who to open accounts with. The TG-iPASS pre-approval means account setup moves faster, which reflects well on you as the banking partner. Full analytics shows you which GCC sectors are driving the most banking enquiries to your city.</p>
+      <p><strong>Gold and Silver:</strong> Directory listing and post-window lead access. Still warm, qualified leads.</p>
+    </div>
+  </div>
+
+  <div class="insight" style="margin-top:12px;">
+    <div class="insight-lbl">The Compounding Benefit Across All Levels</div>
+    <p>GCC setups are not one-time engagements. A company that opens a 50-person GCC in Year 1 scales to 150 by Year 3 and 400+ by Year 5. Every partner who delivers well on the first project stays inside the client relationship for the full lifecycle. Legal renewals, real estate expansion, new hiring rounds, IT upgrades, banking facility increases. The initial project is the start of the relationship, not the end.</p>
   </div>
 
   <div class="footer">
@@ -1058,53 +754,50 @@
 <div class="page">
   <div class="lh">
     <div class="lh-left">
-      <img src="logo.png" alt="Pithonix AI" class="lh-logo" onerror="this.style.display='none'"/>
-      <div class="lh-brand">
-        <div class="lh-wordmark">Pithonix AI</div>
-        <div class="lh-tagline">Information to Intelligence</div>
-      </div>
+      <img src="logo.png" alt="Pithonix AI" class="lh-logo" onerror="this.style.display:'none'"/>
+      <div><div class="lh-wordmark">Pithonix AI</div><div class="lh-tagline">Information to Intelligence</div></div>
     </div>
     <div class="lh-right"><strong>GCC PLAYBOOK PARTNER PROGRAMME</strong><br/>gcc-playbook.pithonix.ai</div>
   </div>
 
   <div class="sh">
     <div class="sh-eye">Section 08</div>
-    <div class="sh-title">What is <span>Coming Next</span></div>
+    <div class="sh-title">Where This <span>Goes Next</span></div>
     <div class="sh-rule"></div>
   </div>
 
-  <p class="lead">The GCC Playbook is a growing platform and the partner network grows with it. What you are joining today is early. Partners who are in from the start get first access to every new capability as it is rolled out.</p>
+  <p class="lead">The GCC Playbook launches in Telangana with Hyderabad as the primary city. The platform then expands city by city across India and then internationally. Partners who join early hold their slots as the platform scales. New city expansions open new partner slots. The network compounds.</p>
 
   <div class="two-col">
     <div class="scope-card">
-      <div class="scope-tag">Coming Soon</div>
-      <div class="scope-title">INDUS Certification Support</div>
-      <p>INDUS is India's first GCC-native certification standard, proposed for adoption by NASSCOM and BIS. As GCCs begin pursuing INDUS certification, partners who have delivered INDUS-aligned work will be preferred. Legal, compliance, and audit partners will be critical to this process. The certification framework is currently in working group stage and GCC clients will need specialist support to prepare.</p>
+      <div class="scope-tag">Phase 1 — Now</div>
+      <div class="scope-title">Telangana Launch</div>
+      <p>Hyderabad as primary city. 8 partner categories. 2 Platinum, 5 Gold, open Silver slots per category. TG-iPASS integration active. Platform receiving live GCC leads from companies across India, the US, UK, Middle East, and Southeast Asia.</p>
+    </div>
+    <div class="scope-card">
+      <div class="scope-tag">Phase 2 — 2026</div>
+      <div class="scope-title">National Expansion: 6 Cities</div>
+      <p>Bengaluru, Pune, Chennai, NCR, and Mumbai added. New partner slots open in each city. Platinum partners in Hyderabad get right of first offer on equivalent slots in new cities. National annual revenue from partner programme projected at Rs 32+ crore.</p>
     </div>
     <div class="scope-card">
       <div class="scope-tag">Coming Soon</div>
-      <div class="scope-title">Middle East and Southeast Asia Expansion</div>
-      <p>The GCC Playbook currently focuses on India. Expansion into the Middle East and Southeast Asia is on the roadmap. Partners with regional presence in the UAE, Saudi Arabia, Singapore, and Malaysia will be needed for GCC setups serving those markets. Getting into the network now means you are positioned for those projects as soon as they come.</p>
+      <div class="scope-title">INDUS Certification Layer</div>
+      <p>INDUS is India's first GCC-native certification standard, proposed for NASSCOM and BIS adoption. As GCCs pursue INDUS certification, legal, compliance, and audit partners with INDUS-aligned work become preferred delivery partners. Platinum partners get first access to this pipeline.</p>
+    </div>
+    <div class="scope-card">
+      <div class="scope-tag">Coming Soon</div>
+      <div class="scope-title">PGS Upgrade: Direct Briefing</div>
+      <p>The next version of the PGS will include direct messaging between partners and the Pithonix PM team, brief delivery inside the dashboard, and document exchange. No more switching between email and portal. Project briefs, questions, and confirmations all in one place.</p>
     </div>
     <div class="scope-card">
       <div class="scope-tag">Roadmap</div>
-      <div class="scope-title">PGS Direct Messaging and Brief Delivery</div>
-      <p>The next version of the Partner Gateway System will include direct messaging between partners and the Pithonix PM team, brief delivery inside the dashboard, and document sharing. You will receive project briefs, ask questions, and send deliverable confirmations without leaving the portal. No switching between email threads and the dashboard.</p>
+      <div class="scope-title">AI-Matched Project Routing</div>
+      <p>JEET's intelligence layer will power smarter partner matching over time. Your past project history, sector performance, city coverage, and client outcomes build a track record inside the system. The platform uses this to route the right projects to the right partner automatically.</p>
     </div>
     <div class="scope-card">
       <div class="scope-tag">Roadmap</div>
-      <div class="scope-title">AI-Matched Project Recommendations</div>
-      <p>The JEET intelligence layer will eventually power smarter partner matching. Based on your past project history, city performance, client feedback, and service specialisation, the platform will surface the right projects for your firm automatically. Partners build a track record inside the system, and the system uses it to send better matches over time.</p>
-    </div>
-    <div class="scope-card">
-      <div class="scope-tag">Roadmap</div>
-      <div class="scope-title">GCC Lifecycle Engagement</div>
-      <p>Right now, partners come in during the setup phase. As the JEET platform matures, partners will be able to stay connected to the GCC through the operating phase too. Compliance renewals, talent expansion rounds, and infrastructure upgrades will come back through the same partner network. Your relationship with the client extends beyond the setup milestone.</p>
-    </div>
-    <div class="scope-card">
-      <div class="scope-tag">Roadmap</div>
-      <div class="scope-title">Partner Co-Marketing</div>
-      <p>Pithonix engages with NASSCOM, CII, state investment boards, and industry events across India. As the platform scales, verified partners will be featured in co-marketing materials, event participation, and sector-specific GCC guides. Being listed as a Pithonix delivery partner puts your firm in front of the same audience Pithonix is already speaking to.</p>
+      <div class="scope-title">Middle East and Southeast Asia</div>
+      <p>GCC Playbook expansion into the UAE, Saudi Arabia, Singapore, and Malaysia is on the roadmap. Partners with regional presence will be needed for those markets. Getting in now means you are positioned for those projects as soon as they open.</p>
     </div>
   </div>
 
@@ -1119,74 +812,71 @@
 <div class="page">
   <div class="lh">
     <div class="lh-left">
-      <img src="logo.png" alt="Pithonix AI" class="lh-logo" onerror="this.style.display='none'"/>
-      <div class="lh-brand">
-        <div class="lh-wordmark">Pithonix AI</div>
-        <div class="lh-tagline">Information to Intelligence</div>
-      </div>
+      <img src="logo.png" alt="Pithonix AI" class="lh-logo" onerror="this.style.display:'none'"/>
+      <div><div class="lh-wordmark">Pithonix AI</div><div class="lh-tagline">Information to Intelligence</div></div>
     </div>
     <div class="lh-right"><strong>GCC PLAYBOOK PARTNER PROGRAMME</strong><br/>gcc-playbook.pithonix.ai</div>
   </div>
 
   <div class="sh">
     <div class="sh-eye">Section 09</div>
-    <div class="sh-title">Next <span>Steps</span></div>
+    <div class="sh-title">Getting <span>Started</span></div>
     <div class="sh-rule"></div>
   </div>
 
-  <p>There are three things to do. They take less than an hour in total. Everything else happens through the PGS from that point.</p>
+  <p>Three steps. The whole process takes less than an hour. After that, the PGS does the work.</p>
 
   <div class="timeline">
     <div class="tl-item">
       <div class="tl-dot">1</div>
       <div class="tl-content">
         <span class="tl-phase">Today</span>
-        <div class="tl-title">Visit the platform and run a simulation</div>
-        <p>Go to gcc-playbook.pithonix.ai and run a simulation as if you were a company setting up a GCC in the city you operate in. You will see exactly how the platform works, what a blueprint looks like, and where partners appear. This takes about two minutes and gives you full context on what you are joining.</p>
+        <div class="tl-title">Run the simulator yourself</div>
+        <p>Go to gcc-playbook.pithonix.ai and run a blueprint as if you were a company setting up a GCC in your city. You will see exactly how the platform works, what a blueprint looks like, and where partners appear. Two minutes. No login needed.</p>
       </div>
     </div>
     <div class="tl-item">
       <div class="tl-dot">2</div>
       <div class="tl-content">
         <span class="tl-phase">This Week</span>
-        <div class="tl-title">Submit your partner application</div>
-        <p>Go to gcc-playbook.pithonix.ai/partner-apply.html and fill in the application form. It takes about ten minutes. The partnerships team reviews every application within 48 hours. You receive a reference number on submission so you can follow up if needed.</p>
+        <div class="tl-title">Apply and choose your engagement level</div>
+        <p>Go to gcc-playbook.pithonix.ai/partner-apply.html. Fill in your company details, service category, city coverage, and GCC experience. The commercial conversation on your engagement level happens in the 48-hour review call — not in the form. Apply first. The Pithonix team reaches out within 48 hours.</p>
       </div>
     </div>
     <div class="tl-item">
       <div class="tl-dot">3</div>
       <div class="tl-content">
         <span class="tl-phase">On Approval</span>
-        <div class="tl-title">Log in to the PGS and complete your profile</div>
-        <p>Once approved, you receive your PGS login. Set your availability, confirm your city coverage, add your GCC experience summary, and save your Pithonix PM contact. From that point, project briefs come to you directly through the dashboard when a match is identified.</p>
+        <div class="tl-title">Log in to the PGS and go live</div>
+        <p>Your PGS login is activated on approval. Set your availability, confirm your cities, complete your profile, and you are live in the network. From that point, project briefs come to you through the dashboard when a match is identified. Platinum partners start receiving leads within their first 48-hour window immediately.</p>
       </div>
     </div>
   </div>
 
   <div class="cta-block">
     <h3>Ready to <span>Join the Network?</span></h3>
-    <p>India is adding 36 GCCs every two weeks. The pipeline is live today.</p>
+    <p>Platinum slots in Hyderabad are limited to 2 per category. First-mover partners hold those slots as the platform scales.</p>
     <a class="cta-url" href="https://gcc-playbook.pithonix.ai/partner-apply.html">Apply at gcc-playbook.pithonix.ai</a>
   </div>
 
-  <div style="margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-    <div style="padding: 12px 14px; background: #F8F8F8; border-radius: 7px; font-size: 8.5pt; color: #555; line-height: 1.7;">
-      <strong style="color:#1A1A2E; display:block; margin-bottom: 4px;">Satyajit Dutta</strong>
+  <div style="margin-top:16px; display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+    <div style="padding:12px 14px; background:#F8F8F8; border-radius:7px; font-size:8.5pt; color:#555; line-height:1.7;">
+      <strong style="color:#1A1A2E; display:block; margin-bottom:4px;">Satyajit Dutta</strong>
       Founder and CEO<br/>
       PITHONIX AI INDIA PRIVATE LIMITED<br/>
       satyajit.d@pithonix.ai<br/>
       gcc-playbook.pithonix.ai
     </div>
-    <div style="padding: 12px 14px; background: #F8F8F8; border-radius: 7px; font-size: 8.5pt; color: #555; line-height: 1.7;">
-      <strong style="color:#1A1A2E; display:block; margin-bottom: 4px;">Platform Links</strong>
-      GCC Simulator: gcc-playbook.pithonix.ai<br/>
+    <div style="padding:12px 14px; background:#F8F8F8; border-radius:7px; font-size:8.5pt; color:#555; line-height:1.7;">
+      <strong style="color:#1A1A2E; display:block; margin-bottom:4px;">Platform Links</strong>
+      Simulator: gcc-playbook.pithonix.ai<br/>
       Partner Application: /partner-apply.html<br/>
       Partner Login: /partner-portal.html<br/>
-      General: pithonix.ai
+      Main site: pithonix.ai
     </div>
   </div>
 
-  <div style="margin-top: 14px; padding: 10px 12px; background: #F0F0F0; border-radius: 6px; font-size: 7pt; color: #999; line-height: 1.7; text-align: center;">
+  <div style="margin-top:14px; padding:10px 12px; background:#F0F0F0; border-radius:6px; font-size:7pt; color:#999; text-align:center; line-height:1.7;">
     PITHONIX AI INDIA PRIVATE LIMITED &nbsp;|&nbsp; CIN: U62090TS2026PTC213220 &nbsp;|&nbsp; PAN: AAQCP8532M &nbsp;|&nbsp; DPIIT Recognised Startup<br/>
     No 2-106/D405, Accurate Wind Chimes, Narsingi, K.V.Rangareddy, Rajendranagar, Telangana, India, 500075 &nbsp;|&nbsp; info@pithonix.ai
   </div>
