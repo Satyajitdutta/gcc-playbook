@@ -211,7 +211,14 @@
       /* Tighten spacing so content fits exactly per page */
       .lh { padding-bottom: 7px; margin-bottom: 10px; }
       .lh-logo { height: 34px; }
-      .lh-wordmark { font-size: 17pt; }
+      .lh-wordmark {
+        font-size: 17pt;
+        background: none !important;
+        -webkit-background-clip: unset !important;
+        background-clip: unset !important;
+        -webkit-text-fill-color: #4A4A4A !important;
+        color: #4A4A4A !important;
+      }
       .sh { margin: 10px 0 7px 0; }
       .sh-title { font-size: 14pt; }
       p { font-size: 8.5pt; margin-bottom: 6px; line-height: 1.5; }
