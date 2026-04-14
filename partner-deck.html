@@ -192,8 +192,29 @@
     .cta-url { display: inline-block; background: #00C49A; color: #001A14; font-weight: 700; font-size: 9pt; padding: 8px 20px; border-radius: 6px; text-decoration: none; }
 
     @media print {
-      body { background: #fff; }
-      .page { margin: 0; box-shadow: none; width: 210mm; padding: 16mm 15mm 26mm 15mm; }
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      html, body {
+        background: #fff;
+        width: 210mm;
+      }
+      .page {
+        margin: 0;
+        box-shadow: none;
+        width: 210mm;
+        min-height: 297mm;
+        height: 297mm;
+        padding: 16mm 15mm 26mm 15mm;
+        page-break-after: always;
+        break-after: page;
+        overflow: hidden;
+      }
+      .page:last-child {
+        page-break-after: auto;
+        break-after: auto;
+      }
       .download-btn { display: none !important; }
     }
     .download-btn {
