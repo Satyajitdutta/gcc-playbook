@@ -21,7 +21,8 @@
   ],
   "rewrites": [
     { "source": "/partner-apply", "destination": "/partner-apply.html" },
-    { "source": "/partner-portal", "destination": "/partner-portal.html" }
+    { "source": "/partner-portal", "destination": "/partner-portal.html" },
+    { "source": "/partner-deck", "destination": "/partner-deck.html" }
   ],
   "headers": [
     {
