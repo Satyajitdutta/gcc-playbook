@@ -191,29 +191,94 @@
     .cta-block p { font-size: 9pt; color: #9ECFC4; margin-bottom: 10px; }
     .cta-url { display: inline-block; background: #00C49A; color: #001A14; font-weight: 700; font-size: 9pt; padding: 8px 20px; border-radius: 6px; text-decoration: none; }
 
-    @page {
-      size: A4;
-      margin: 0;
-    }
+    @page { size: A4; margin: 0; }
     @media print {
-      html, body {
-        background: #fff;
-        width: 210mm;
-      }
+      html, body { background: #fff; width: 210mm; }
       .page {
         margin: 0;
         box-shadow: none;
         width: 210mm;
-        min-height: 297mm;
-        padding: 16mm 15mm 26mm 15mm;
+        height: 297mm;
+        min-height: unset;
+        padding: 11mm 13mm 18mm 13mm;
         page-break-after: always;
         break-after: page;
+        overflow: hidden;
       }
-      .page:last-child {
-        page-break-after: auto;
-        break-after: auto;
-      }
+      .page:last-child { page-break-after: auto; break-after: auto; }
       .download-btn { display: none !important; }
+
+      /* Tighten spacing so content fits exactly per page */
+      .lh { padding-bottom: 7px; margin-bottom: 10px; }
+      .lh-logo { height: 34px; }
+      .lh-wordmark { font-size: 17pt; }
+      .sh { margin: 10px 0 7px 0; }
+      .sh-title { font-size: 14pt; }
+      p { font-size: 8.5pt; margin-bottom: 6px; line-height: 1.5; }
+      .lead { font-size: 9.5pt; margin-bottom: 8px; }
+      .cover-hl { font-size: 26pt; }
+      .cover-sub { font-size: 9.5pt; margin-bottom: 12px; }
+      .cover-divider { margin: 10px 0; }
+      .stat-row { gap: 8px; margin: 8px 0; }
+      .sc-num { font-size: 20pt; }
+      .sc-desc { font-size: 7pt; }
+      .two-col { gap: 8px; margin: 8px 0; }
+      .three-col { gap: 8px; margin: 8px 0; }
+      .card { padding: 10px 11px; }
+      .card-icon { font-size: 15pt; margin-bottom: 3px; }
+      .card-title { font-size: 8.5pt; margin-bottom: 3px; }
+      .card p { font-size: 7.5pt; }
+      .insight { padding: 10px 12px; margin: 8px 0; }
+      .insight p { font-size: 8.5pt; }
+      .insight-lbl { font-size: 6pt; }
+      .partner-type-grid { gap: 6px; margin: 8px 0; }
+      .pt-card { padding: 7px 5px; }
+      .pt-icon { font-size: 14pt; margin-bottom: 2px; }
+      .pt-name { font-size: 6.5pt; }
+      .flow { margin: 8px 0; }
+      .flow-num { width: 34px; height: 34px; font-size: 11pt; }
+      .flow-label { font-size: 7pt; }
+      .flow-sub { font-size: 6pt; }
+      .tier-grid { gap: 8px; margin: 8px 0; }
+      .tc-head { padding: 9px 11px; }
+      .tc-name { font-size: 14pt; }
+      .tc-slots { font-size: 6.5pt; }
+      .tc-body { padding: 8px 10px; }
+      .tc-row { padding: 4px 0; }
+      .tc-label { font-size: 6.5pt; }
+      .tc-val { font-size: 6.5pt; }
+      .comp-table { font-size: 7.5pt; }
+      .comp-table td { padding: 5px 8px; }
+      .comp-table th { padding: 6px 8px; font-size: 6.5pt; }
+      .hl-box { padding: 9px 11px; margin: 8px 0; }
+      .hl-title { font-size: 8.5pt; margin-bottom: 3px; }
+      .hl-box p { font-size: 7.5pt; margin-bottom: 3px; }
+      .dash-preview { padding: 10px; margin: 8px 0; }
+      .dash-stats { gap: 6px; margin-bottom: 8px; }
+      .dash-stat { padding: 6px 8px; }
+      .ds-val { font-size: 9pt; }
+      .ds-label { font-size: 5pt; }
+      .ds-sub { font-size: 5.5pt; }
+      .dash-two { gap: 6px; }
+      .dash-card-head { padding: 5px 8px; font-size: 6.5pt; }
+      .dash-card-body { padding: 7px 8px; }
+      .proj-row { font-size: 6.5pt; padding: 3px 0; }
+      .analytics-row { font-size: 6pt; padding: 3px 0; }
+      .analytics-card { padding: 7px; }
+      .locked-overlay { padding: 10px; }
+      .locked-icon { font-size: 14pt; margin-bottom: 3px; }
+      .locked-text { font-size: 6.5pt; }
+      .timeline { margin: 8px 0; }
+      .tl-item { padding-bottom: 8px; gap: 9px; }
+      .tl-dot { width: 24px; height: 24px; font-size: 7.5pt; }
+      .tl-content .tl-title { font-size: 8.5pt; }
+      .tl-content p { font-size: 7.5pt; }
+      .scope-card { padding: 9px 11px; }
+      .scope-title { font-size: 8.5pt; margin-bottom: 3px; }
+      .scope-card p { font-size: 7.5pt; }
+      .cta-block { padding: 12px 14px; margin: 10px 0; }
+      .cta-block h3 { font-size: 15pt; margin-bottom: 4px; }
+      .cta-block p { font-size: 8pt; margin-bottom: 7px; }
     }
     .download-btn {
       position: fixed;
