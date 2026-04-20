@@ -1563,6 +1563,12 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
 var dynYear=new Date().getFullYear(),dynPrevYear=dynYear-1;
 document.querySelectorAll('.dyn-year').forEach(function(el){el.textContent=dynYear;});
 document.querySelectorAll('.dyn-pyear').forEach(function(el){el.textContent=dynPrevYear;});
+// Update aria-label on city benchmark table
+var benchTable=document.querySelector('.geo-table[aria-label]');
+if(benchTable)benchTable.setAttribute('aria-label','GCC setup cost benchmarks by Indian city '+dynYear);
+// Update meta keywords with current year pair
+var kwMeta=document.querySelector('meta[name="keywords"]');
+if(kwMeta)kwMeta.content=kwMeta.content.replace('GCC 2025 2026','GCC '+dynPrevYear+' '+dynYear);
 
 // ── CANVAS PARTICLE BACKGROUND ──
 (function(){
