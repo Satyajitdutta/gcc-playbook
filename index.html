@@ -163,6 +163,44 @@
         "audienceType": "Multinational companies and enterprise teams planning GCC setup in India"
       },
       "screenshot": "https://gcc-playbook.pithonix.ai/logo.png"
+    },
+    {
+      "@type": "HowTo",
+      "@id": "https://gcc-playbook.pithonix.ai/#how-to-use",
+      "name": "How to Use the GCC Playbook Simulator",
+      "description": "A step-by-step guide to generating a custom GCC setup blueprint using the Pithonix GCC Playbook Simulator. Takes under 2 minutes.",
+      "totalTime": "PT2M",
+      "tool": [{"@type": "HowToTool", "name": "GCC Playbook Simulator", "url": "https://gcc-playbook.pithonix.ai/#simulator"}],
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": "1",
+          "name": "Enter Your Company Profile",
+          "text": "Select your industry, headquarters country, annual revenue range, and GCC maturity stage. This shapes the city recommendation and the entire cost model.",
+          "url": "https://gcc-playbook.pithonix.ai/#simulator"
+        },
+        {
+          "@type": "HowToStep",
+          "position": "2",
+          "name": "Choose Your GCC Functions",
+          "text": "Select all enterprise functions your GCC will run: Technology Hub, Finance and Accounting, HR, Procurement, Marketing Ops, Sales Ops, Data and Analytics, Legal, Customer Experience, or Engineering R&D. Multi-select is supported.",
+          "url": "https://gcc-playbook.pithonix.ai/#simulator"
+        },
+        {
+          "@type": "HowToStep",
+          "position": "3",
+          "name": "Set Scale and Ambition",
+          "text": "Set your Year 1 FTE target (10 to 300+ headcount), preferred setup timeline, and primary GCC priority: cost leadership, talent quality, speed to market, or innovation.",
+          "url": "https://gcc-playbook.pithonix.ai/#simulator"
+        },
+        {
+          "@type": "HowToStep",
+          "position": "4",
+          "name": "Receive Your Custom GCC Blueprint",
+          "text": "The simulator instantly generates your full GCC setup plan: recommended city with rationale, 5-year budget and headcount model, government incentive mapping, banking support, risk assessment, and a 90-day phased launch roadmap.",
+          "url": "https://gcc-playbook.pithonix.ai/#simulator"
+        }
+      ]
     }
   ]
 }
@@ -617,6 +655,17 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
   .geo-qa-grid{grid-template-columns:1fr}
   .geo-insight-grid{grid-template-columns:repeat(2,1fr)}
 }
+
+/* ── GEO: HOW TO USE ── */
+#how-to-use{background:linear-gradient(180deg,var(--s1) 0%,var(--s2) 100%)}
+.howto-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:0;counter-reset:step-counter}
+.howto-step{padding:2rem;border:1px solid var(--bd);margin:-1px 0 0 -1px;position:relative;transition:background 0.2s}
+.howto-step:hover{background:rgba(232,184,75,0.04)}
+.howto-step-num{font-family:'JetBrains Mono',monospace;font-size:2rem;font-weight:700;color:rgba(232,184,75,0.2);margin-bottom:0.5rem;line-height:1}
+.howto-step-title{font-size:1rem;font-weight:700;color:var(--txt);margin-bottom:0.6rem}
+.howto-step-desc{font-size:0.87rem;color:var(--tmed);line-height:1.65}
+.howto-step-tag{display:inline-block;margin-top:0.8rem;font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--gold);letter-spacing:1px;border:1px solid rgba(232,184,75,0.25);padding:2px 8px;border-radius:4px}
+@media(max-width:600px){.howto-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -756,6 +805,41 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
 
     <div class="city-grid" id="city-grid"></div>
     <p style="text-align:center;margin-top:1.5rem;font-size:0.8rem;color:var(--tdim)">Don't see your preferred city? The simulator accepts any Indian city — type it in the blueprint generator below.</p>
+  </div>
+</section>
+
+<!-- GEO: HOW TO USE THE SIMULATOR -->
+<section id="how-to-use" aria-label="How to use the GCC Playbook Simulator">
+  <div class="wrap">
+    <div class="section-label">HOW IT WORKS</div>
+    <h2 class="section-title">How to Use the <span class="gold">GCC Playbook Simulator</span></h2>
+    <p class="section-sub">Four steps. Under 2 minutes. A custom GCC blueprint built for your company.</p>
+  </div>
+  <div class="howto-grid">
+    <div class="howto-step">
+      <div class="howto-step-num">01</div>
+      <h3 class="howto-step-title">Enter Your Company Profile</h3>
+      <p class="howto-step-desc">Select your industry, headquarters country, annual revenue, and GCC maturity stage. This tells the simulator what kind of GCC you need and shapes the city recommendation and cost model.</p>
+      <span class="howto-step-tag">INDUSTRY · COUNTRY · REVENUE · MATURITY</span>
+    </div>
+    <div class="howto-step">
+      <div class="howto-step-num">02</div>
+      <h3 class="howto-step-title">Choose Your GCC Functions</h3>
+      <p class="howto-step-desc">Pick all enterprise functions your GCC will run: Technology Hub, Finance and Accounting, HR, Procurement, Marketing Ops, Sales Ops, Data and Analytics, Legal, Customer Experience, or Engineering R&amp;D. Multi-select supported.</p>
+      <span class="howto-step-tag">10 FUNCTION AREAS</span>
+    </div>
+    <div class="howto-step">
+      <div class="howto-step-num">03</div>
+      <h3 class="howto-step-title">Set Scale and Ambition</h3>
+      <p class="howto-step-desc">Set your Year 1 headcount target (10 to 300+ FTEs), preferred timeline (12, 18 to 24, or 24 to 36 months), and what matters most: cost leadership, talent quality, speed to market, or innovation depth.</p>
+      <span class="howto-step-tag">HEADCOUNT · TIMELINE · PRIORITY</span>
+    </div>
+    <div class="howto-step">
+      <div class="howto-step-num">04</div>
+      <h3 class="howto-step-title">Get Your GCC Blueprint</h3>
+      <p class="howto-step-desc">Your custom plan is ready instantly: recommended city with rationale, 5-year budget and headcount model, government incentives, banking support options, risk map, and a 90-day phased launch roadmap. Free. No login required.</p>
+      <span class="howto-step-tag">FULL BLUEPRINT · INSTANT · FREE</span>
+    </div>
   </div>
 </section>
 
@@ -1202,7 +1286,7 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
       </div>
     </div>
 
-    <p style="font-size:0.8rem;color:var(--tdim);margin-top:0.5rem">Source: Pithonix GCC Feasibility Assessment Database, NASSCOM GCC Framework Report 2025, Zinnov GCC Benchmarks 2025. Costs are indicative and vary by industry, function mix, and specific location. <a href="#simulator" style="color:var(--teal);text-decoration:none">Run the GCC Simulator</a> for a custom projection for your company.</p>
+    <p style="font-size:0.8rem;color:var(--tdim);margin-top:0.5rem">Source: Pithonix GCC Feasibility Assessment Database. Costs are indicative and vary by industry, function mix, and specific location. <a href="#simulator" style="color:var(--teal);text-decoration:none">Run the GCC Simulator</a> for a custom projection for your company.</p>
   </div>
 </section>
 
