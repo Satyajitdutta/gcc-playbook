@@ -11,7 +11,8 @@
     "api/partner-auth.js": { "maxDuration": 30 },
     "api/partner-dashboard.js": { "maxDuration": 15 },
     "api/partner-update.js": { "maxDuration": 15 },
-    "api/weekly-digest.js": { "maxDuration": 30 }
+    "api/weekly-digest.js": { "maxDuration": 30 },
+    "api/llms.js": { "maxDuration": 5 }
   },
   "crons": [
     {
@@ -20,6 +21,7 @@
     }
   ],
   "rewrites": [
+    { "source": "/llms.txt", "destination": "/api/llms" },
     { "source": "/partner-apply", "destination": "/partner-apply.html" },
     { "source": "/partner-portal", "destination": "/partner-portal.html" },
     { "source": "/partner-deck", "destination": "/partner-deck.html" }

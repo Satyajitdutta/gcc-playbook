@@ -737,7 +737,7 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-badge mono">PITHONIX · INDIA'S GCC SETUP PARTNER · END TO END · 2026</div>
+  <div class="hero-badge mono">PITHONIX · INDIA'S GCC SETUP PARTNER · END TO END · <span class="dyn-year">2026</span></div>
   <h1>We Build Your GCC.<br><span>End to End.</span></h1>
   <p class="hero-sub">Pithonix takes the full GCC setup contract — entity formation, talent, infrastructure, compliance, and go-live. Your GCC runs on our JEET + HARI + GOT intelligence stack from Day 1. We hand over a fully operational centre.</p>
   <div class="hero-ctas">
@@ -1121,7 +1121,7 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
   <div class="wrap">
     <div class="section-label">INDIA GCC MARKET INTELLIGENCE</div>
     <h2 class="section-title" style="margin-bottom:0.5rem">The Numbers That <span class="gold">Matter</span></h2>
-    <p class="section-sub">Live market intelligence from India's GCC ecosystem — updated from NASSCOM, Zinnov, and GCC Framework Report 2025.</p>
+    <p class="section-sub">Live market intelligence from India's GCC ecosystem — updated from NASSCOM, Zinnov, and GCC Framework Report <span class="dyn-pyear">2025</span>.</p>
     <div class="market-grid" id="market-grid"></div>
   </div>
 </section>
@@ -1135,7 +1135,7 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
 
     <div class="geo-qa-grid">
       <div class="geo-qa-item">
-        <h3 class="geo-qa-q">How much does it cost to set up a GCC in India in 2026?</h3>
+        <h3 class="geo-qa-q">How much does it cost to set up a GCC in India in <span class="dyn-year">2026</span>?</h3>
         <p class="geo-qa-a">A 50-person GCC in India costs <strong>$1.8M to $2.6M in Year 1</strong> (INR 15 to 22 crore). This covers entity formation, office fit-out, IT infrastructure, recruitment, and Year 1 payroll. For a 300 to 600 FTE GCC, the 5-year net savings vs US operations is typically <strong>$23M to $35M</strong>, with break-even at Month 18 to 24.</p>
       </div>
       <div class="geo-qa-item">
@@ -1168,7 +1168,7 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
       </div>
     </div>
 
-    <h3 class="geo-sub-head">GCC Setup Cost by Indian City (2026 Benchmarks)</h3>
+    <h3 class="geo-sub-head">GCC Setup Cost by Indian City (<span class="dyn-year">2026</span> Benchmarks)</h3>
     <div class="geo-table-wrap">
       <table class="geo-table" aria-label="GCC setup cost benchmarks by Indian city 2026">
         <thead>
@@ -1258,7 +1258,7 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
       </table>
     </div>
 
-    <h3 class="geo-sub-head">Pithonix GCC Maturity Benchmarks (2026)</h3>
+    <h3 class="geo-sub-head">Pithonix GCC Maturity Benchmarks (<span class="dyn-year">2026</span>)</h3>
     <div class="geo-insight-grid">
       <div class="geo-insight-card">
         <div class="geo-insight-num">Month 18</div>
@@ -1278,7 +1278,7 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
       </div>
       <div class="geo-insight-card">
         <div class="geo-insight-num">70%</div>
-        <div class="geo-insight-lbl">GCCs implementing AI by 2026</div>
+        <div class="geo-insight-lbl">GCCs implementing AI by <span class="dyn-year">2026</span></div>
       </div>
       <div class="geo-insight-card">
         <div class="geo-insight-num">8</div>
@@ -1351,7 +1351,7 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
         <div class="wp-domain-num">Domain 06</div>
         <div class="wp-domain-title">AI and Digital Readiness</div>
         <div class="wp-domain-replaces">No ISO equivalent exists</div>
-        <div class="wp-domain-desc">Over 70% of GCCs are implementing AI by 2026. 58% investing in Agentic AI. AI governance framework, use case inventory with risk classification, bias and fairness assessment, human-in-the-loop protocols, and GenAI controls.</div>
+        <div class="wp-domain-desc">Over 70% of GCCs are implementing AI by <span class="dyn-year">2026</span>. 58% investing in Agentic AI. AI governance framework, use case inventory with risk classification, bias and fairness assessment, human-in-the-loop protocols, and GenAI controls.</div>
       </div>
       <div class="wp-domain-card">
         <div class="wp-domain-num">Domain 07</div>
@@ -1552,13 +1552,18 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 Pithonix AI Pvt Ltd · Hyderabad, India · All rights reserved · <a href="mailto:info@pithonix.ai" style="color:var(--tdim);text-decoration:none">info@pithonix.ai</a></span>
+      <span>© <span class="dyn-year">2026</span> Pithonix AI Pvt Ltd · Hyderabad, India · All rights reserved · <a href="mailto:info@pithonix.ai" style="color:var(--tdim);text-decoration:none">info@pithonix.ai</a></span>
       <span style="color:var(--tdim)">Built by PITHONIX AI · Powered by JEET + HARI + GOT</span>
     </div>
   </div>
 </footer>
 
 <script>
+// ── DYNAMIC YEAR ──
+var dynYear=new Date().getFullYear(),dynPrevYear=dynYear-1;
+document.querySelectorAll('.dyn-year').forEach(function(el){el.textContent=dynYear;});
+document.querySelectorAll('.dyn-pyear').forEach(function(el){el.textContent=dynPrevYear;});
+
 // ── CANVAS PARTICLE BACKGROUND ──
 (function(){
   var c=document.getElementById('bg-canvas'),ctx=c.getContext('2d');
@@ -1904,32 +1909,33 @@ async function generateBlueprint(){
   var isSmall=fteNum<=30, isMid=fteNum>30&&fteNum<=100, isLarge=fteNum>100&&fteNum<=300, isEnterprise=fteNum>300;
   var fteTier=isSmall?'small (≤30 FTE)':isMid?'mid-size (31–100 FTE)':isLarge?'large (101–300 FTE)':'enterprise (300+ FTE)';
   var cityTier=(simData.city&&['Ahmedabad','Kochi','Jaipur','Indore','Chandigarh','Coimbatore','Nagpur','Visakhapatnam','Bhubaneswar'].indexOf(simData.city)>-1)?'2':(simData.city&&['Thiruvananthapuram','Mysuru','Vadodara','Lucknow','Bhopal','Mangaluru','Raipur','Patna','Guwahati','Dehradun'].indexOf(simData.city)>-1)?'3':'1';
-  var prompt='You are an India GCC setup cost expert at Pithonix.ai — a full-contract GCC delivery firm. Generate a precise, market-accurate GCC Setup Project Blueprint using CURRENT 2026 INDIA MARKET RATES.\n\n'+
+  var currentYear=dynYear,prevYear=dynPrevYear;
+  var prompt='You are an India GCC setup cost expert at Pithonix.ai — a full-contract GCC delivery firm. Generate a precise, market-accurate GCC Setup Project Blueprint using CURRENT '+currentYear+' INDIA MARKET RATES.\n\n'+
 'COMPANY PROFILE:\nIndustry: '+simData.industry+'\nHQ Country: '+simData.country+'\n'+(simData.city?'CLIENT PREFERRED CITY: '+simData.city+' (Tier '+cityTier+') — use as primary city.\n':'')+
 'Annual Revenue: '+simData.revenue+'\nGCC Maturity: '+simData.maturity+'\nFunctions: '+simData.functions.join(', ')+'\nYear 1 FTE: '+simData.fte+' ('+fteTier+')\nTimeline: '+simData.timeline+'\nTop Priority: '+simData.priority+'\n\n'+
-'2026 INDIA COST BENCHMARKS (use these as base, adjust for city tier and industry):\n'+
+currentYear+' INDIA COST BENCHMARKS (use these as base, adjust for city tier and industry):\n'+
 'SALARIES (Tier 1 cities, adjust -30% for Tier 2, -45% for Tier 3):\n'+
 '- Software Engineer: ₹12–25L/yr | Senior Engineer: ₹18–38L/yr | Tech Lead: ₹28–55L/yr\n'+
 '- Finance Analyst: ₹8–18L/yr | Senior Finance: ₹15–30L/yr | Finance Manager: ₹22–45L/yr\n'+
 '- HR Specialist: ₹6–14L/yr | HR Manager: ₹14–28L/yr | CHRO/VP HR: ₹35–70L/yr\n'+
 '- Legal/Compliance: ₹10–22L/yr | Data Analyst: ₹8–20L/yr | Product Manager: ₹20–45L/yr\n'+
-'OFFICE COSTS (2026, Grade-A):\n'+
+'OFFICE COSTS ('+currentYear+', Grade-A):\n'+
 '- Bengaluru: ₹80–130/sqft/month | Hyderabad: ₹60–90/sqft | Pune: ₹65–95/sqft\n'+
 '- Chennai: ₹55–85/sqft | NCR: ₹70–105/sqft | Mumbai: ₹90–145/sqft\n'+
 '- Tier 2 cities: ₹28–55/sqft | Tier 3 cities: ₹15–30/sqft\n'+
 '- Space per person: 80–120 sqft (co-working) or 100–150 sqft (dedicated office)\n'+
-'RECRUITMENT (2026 market):\n'+
+'RECRUITMENT ('+currentYear+' market):\n'+
 '- Agency fees: 10–14% of annual CTC for mid-senior roles\n'+
 '- Background verification: ₹3,000–8,000/candidate\n'+
 '- Average onboarding cost: ₹25,000–60,000/hire\n'+
-'IT SETUP (per employee, 2026):\n'+
+'IT SETUP (per employee, '+currentYear+'):\n'+
 '- Laptop/workstation: $800–1,800 | Microsoft 365 E3: $33/user/month\n'+
 '- Network/VDI/SD-WAN: $300–600/seat | Security stack: $150–400/seat/year\n'+
 'ENTITY FORMATION:\n'+
 '- PvtLtd incorporation: ₹40,000–80,000 | Company Secretary (annual): ₹1.5–3L\n'+
 '- STPI registration: ₹25,000–50,000 | GST/PAN/TAN/EPFO/ESIC: ₹15,000–30,000\n'+
 '- Statutory audit (Year 1): ₹2–5L | Labour law compliance setup: ₹1–2L\n'+
-'USD/INR exchange rate: 84–86 INR per USD (2026 average)\n\n'+
+'USD/INR exchange rate: 84–86 INR per USD ('+currentYear+' average)\n\n'+
 'CRITICAL INSTRUCTIONS:\n'+
 '1. Calculate REALISTIC costs based on '+fteNum+' FTEs in '+fteTier+' category\n'+
 '2. Office cost = (FTEs × sqft per person × monthly rate × 12 months) + 6-month deposit\n'+
@@ -1941,7 +1947,7 @@ async function generateBlueprint(){
 '8. Industry premium: BFSI/FinTech +15%, Deep Tech/AI +20%, Manufacturing -10%, BPO -15%\n'+
 '9. NEVER use round numbers — be specific (e.g. $847,000 not $850,000)\n'+
 '10. Each run must produce DIFFERENT numbers — vary based on ALL inputs above\n\n'+
-'Data sources to reference: NASSCOM GCC Report 2024-25, Zinnov GCC Landscape 2025, CBRE India Office Market Q4 2025, Mercer India Compensation Survey 2025-26, TeamLease India Employment Report Q1 2026\n\n'+
+'Data sources to reference: NASSCOM GCC Report '+(currentYear-2)+'-'+(currentYear-2001)+', Zinnov GCC Landscape '+prevYear+', CBRE India Office Market Q4 '+prevYear+', Mercer India Compensation Survey '+prevYear+'-'+(currentYear-2000)+', TeamLease India Employment Report Q1 '+currentYear+'\n\n'+
 'All costs in USD. Return ONLY valid JSON starting with { and ending with }:\n'+
 '{"city_primary":"city name","city_primary_reason":"2 sentences — why this city for this company profile","city_alt":"alternative city","city_alt_reason":"1 sentence","hidden_insight":"1 non-obvious, data-backed insight most GCC consultants miss — specific to this company, industry, and HQ country","setup_budget_total_usd":number,"setup_budget_breakdown":[{"category":"Entity Formation & Legal (PvtLtd incorporation, CA, company secretary)","cost_usd":number,"timeline":"Month 1-2","notes":"specific vendors/actions"},{"category":"Office Space & Infrastructure (fit-out, furniture, lease deposit)","cost_usd":number,"timeline":"Month 2-4","notes":"Grade-A area recommendation"},{"category":"IT & Technology Setup (laptops, servers, network, licenses)","cost_usd":number,"timeline":"Month 2-5","notes":"key items"},{"category":"Talent Acquisition Year 1 (recruitment fees, ESOP, onboarding)","cost_usd":number,"timeline":"Month 1-12","notes":"avg cost per hire"},{"category":"Compliance & Regulatory (STPI/SEZ registration, audit, payroll setup)","cost_usd":number,"timeline":"Month 1-3","notes":"key registrations"},{"category":"Pithonix Setup Management Fee (project management, JEET+HARI+GOT deployment)","cost_usd":number,"timeline":"Full project","notes":"milestone-based billing"}],"yearly_budget":[{"year":"Year 1 — Setup + Ramp","budget_usd":number,"focus":"Entity setup, first hires, infrastructure"},{"year":"Year 2 — Scale","budget_usd":number,"focus":"Scale to full headcount, process migration"},{"year":"Year 3 — Optimize","budget_usd":number,"focus":"Efficiency, automation, CoE development"}],"govt_incentives":[{"scheme":"exact scheme name","benefit":"specific benefit with numbers","eligibility":"who qualifies","agency":"STPI / SEZ / State IT Dept / MeitY / DPIIT"},{"scheme":"...","benefit":"...","eligibility":"...","agency":"..."},{"scheme":"...","benefit":"...","eligibility":"...","agency":"..."}],"banking_support":[{"bank":"State Bank of India (SBI) — always include as first entry given its unmatched network, govt scheme access, and pan-India payroll reach","offering":"specific SBI program name","benefit":"what SBI offers to a new GCC entity"},{"bank":"HDFC or ICICI or Kotak based on company profile","offering":"specific program name","benefit":"what it offers"},{"bank":"third bank relevant to company HQ country or industry","offering":"specific program name","benefit":"what it offers"}],"headcount":[y1,y2,y3,y4,y5],"savings_usd":[y1,y2,y3,y4,y5],"cost_usd":[y1,y2,y3,y4,y5],"break_even_months":number,"total_5yr_savings_usd":number,"risks":[{"risk":"name","probability":"High/Medium/Low","mitigation":"specific action"},{"risk":"...","probability":"...","mitigation":"..."},{"risk":"...","probability":"...","mitigation":"..."}],"phase0_actions":["specific action 1","specific action 2","specific action 3","specific action 4","specific action 5"],"pithonix_role":"2 sentences on exactly what Pithonix delivers as the setup contractor for this company — not generic, specific to their profile"}';
 
