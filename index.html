@@ -418,7 +418,16 @@ section{position:relative;z-index:2;padding:6rem 0}
 .fdi-benefit-icon{font-size:1.4rem;flex-shrink:0;margin-top:0.1rem}
 .fdi-benefit-body{}
 .fdi-benefit-title{font-size:0.88rem;font-weight:700;color:var(--txt);margin-bottom:0.2rem}
-.fdi-benefit-desc{font-size:0.78rem;color:var(--tmed);line-height:1.5}
+.fdi-benefit-desc{font-size:0.78rem;color:var(--tmed);line-height:1.6;margin-bottom:0.5rem}
+.fdi-benefit-detail{font-size:0.74rem;color:var(--tdim);line-height:1.6;margin-bottom:0.5rem;padding-left:0.75rem;border-left:2px solid rgba(255,255,255,0.08)}
+.fdi-benefit-detail li{margin-bottom:0.25rem}
+.fdi-eligibility{font-size:0.72rem;color:var(--tmed);margin-bottom:0.5rem;font-style:italic}
+.fdi-read-link{display:inline-flex;align-items:center;gap:0.3rem;font-size:0.7rem;font-weight:700;letter-spacing:0.06em;color:var(--teal);text-decoration:none;padding:0.25rem 0.7rem;border:1px solid rgba(40,168,136,0.35);border-radius:5px;background:rgba(40,168,136,0.06);transition:all 0.2s;margin-top:0.1rem}
+.fdi-read-link:hover{background:rgba(40,168,136,0.18);border-color:rgba(40,168,136,0.6);color:#fff}
+.fdi-read-link.state{color:var(--gold);border-color:rgba(232,184,75,0.35);background:rgba(232,184,75,0.06)}
+.fdi-read-link.state:hover{background:rgba(232,184,75,0.18)}
+.fdi-read-link.labour{color:#b090e4;border-color:rgba(136,96,212,0.35);background:rgba(136,96,212,0.06)}
+.fdi-read-link.labour:hover{background:rgba(136,96,212,0.18)}
 .fdi-benefit-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:1px;padding:1px 6px;border-radius:3px;margin-bottom:0.3rem}
 .fdi-benefit-tag.central{color:var(--teal);background:rgba(40,168,136,0.12);border:1px solid rgba(40,168,136,0.25)}
 .fdi-benefit-tag.state{color:var(--gold);background:rgba(232,184,75,0.1);border:1px solid rgba(232,184,75,0.25)}
@@ -843,61 +852,175 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
         </div>
       </div>
       <div class="fdi-hero-right fdi-benefit-stack">
-        <div style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:1px;color:var(--tdim);margin-bottom:0.3rem">PRIORITISED BENEFIT STACK — ALL APPLICABLE TO YOUR GCC</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:1px;color:var(--tdim);margin-bottom:0.5rem">PRIORITISED BENEFIT STACK — LEGALLY CLAIMABLE BY YOUR GCC FROM DAY 1</div>
         <div class="fdi-benefit-card central">
-          <div class="fdi-benefit-icon">🏦</div>
+          <div class="fdi-benefit-icon">&#127968;</div>
           <div class="fdi-benefit-body">
-            <div class="fdi-benefit-tag central">CENTRAL — INCOME TAX</div>
-            <div class="fdi-benefit-title">Section 10AA SEZ Tax Holiday</div>
-            <div class="fdi-benefit-desc">100% income tax exemption on export profits for Years 1-5. 50% in Years 6-10. 50% reinvested for Years 11-15. Source: Income Tax Act 2025, Section 144.</div>
+            <div class="fdi-benefit-tag central">CENTRAL — INCOME TAX ACT 2025</div>
+            <div class="fdi-benefit-title">Section 10AA (Sec 144, ITA 2025) — SEZ Export Profit Tax Holiday</div>
+            <div class="fdi-benefit-desc">The most significant income tax benefit available to GCCs in India. A multi-stage tax holiday on all export profits earned by a unit operating within a notified Special Economic Zone.</div>
+            <ul class="fdi-benefit-detail">
+              <li><strong>Years 1–5:</strong> 100% income tax exemption on export profits</li>
+              <li><strong>Years 6–10:</strong> 50% income tax exemption on export profits</li>
+              <li><strong>Years 11–15:</strong> 50% exemption on profits reinvested in India</li>
+              <li>Intercompany services billed in convertible foreign exchange qualify as exports</li>
+              <li>Requires separate books of accounts for SEZ vs non-SEZ operations</li>
+              <li>Form 34 (formerly Form 56F) certified by a Chartered Accountant required annually</li>
+            </ul>
+            <div class="fdi-eligibility">Eligibility: GCC unit established within a notified SEZ, engaged in IT/ITeS services, earning export income in convertible foreign exchange. New units post-March 2024 should confirm applicable regime under ITA 2025.</div>
+            <a href="https://www.sezindia.nic.in/facilities-and-incentives.asp" target="_blank" rel="noopener" class="fdi-read-link">&#8594; Read Official SEZ Incentives (sezindia.nic.in)</a>
           </div>
         </div>
         <div class="fdi-benefit-card central">
-          <div class="fdi-benefit-icon">🏗️</div>
+          <div class="fdi-benefit-icon">&#127963;</div>
           <div class="fdi-benefit-body">
             <div class="fdi-benefit-tag central">CENTRAL — STPI / MeitY</div>
-            <div class="fdi-benefit-title">STPI Scheme: Zero Customs + Single Window</div>
-            <div class="fdi-benefit-desc">100% customs duty exemption on all hardware and software imports. 100% FDI via automatic route. 100% depreciation on IT assets over 5 years. Single-window clearance for all central + state approvals. Source: stpi.in</div>
+            <div class="fdi-benefit-title">STPI Scheme — Zero Customs Duty, Single Window, 100% FDI Automatic Route</div>
+            <div class="fdi-benefit-desc">The primary route for GCCs not located within an SEZ. Registration under the Software Technology Parks of India scheme confers a full Export Oriented Unit (EOU) framework with multiple stacked benefits.</div>
+            <ul class="fdi-benefit-detail">
+              <li><strong>Zero customs duty</strong> on all hardware, software, and capital goods imports including second-hand equipment</li>
+              <li><strong>100% FDI via automatic route</strong> — no prior government approval for foreign investment</li>
+              <li><strong>100% depreciation</strong> on computers and peripherals over 5 years; 10 years for other capital assets</li>
+              <li><strong>Single-window clearance</strong> for all central and state-level approvals (projects under Rs 100M cleared directly by STPI)</li>
+              <li><strong>GST refund on domestic procurement</strong> under CGST Notification 48/2017 (deemed exports)</li>
+              <li><strong>Domestic sales permitted</strong> up to 50% of total export value</li>
+              <li><strong>Free repatriation</strong> of capital, dividends, royalties, and technical fees after tax</li>
+              <li><strong>Positive Net Foreign Exchange</strong> calculated cumulatively over 5 years — no fixed annual export target</li>
+            </ul>
+            <div class="fdi-eligibility">Eligibility: IT/ITeS companies registering as a 100% Export Oriented Unit with the jurisdictional STPI authority. Registration takes 6–8 weeks. Apply from Day 1 of entity formation.</div>
+            <a href="https://www.stpi.in/stp-scheme" target="_blank" rel="noopener" class="fdi-read-link">&#8594; Read Official STPI Scheme (stpi.in)</a>
           </div>
         </div>
         <div class="fdi-benefit-card central">
-          <div class="fdi-benefit-icon">📊</div>
+          <div class="fdi-benefit-icon">&#128202;</div>
           <div class="fdi-benefit-body">
-            <div class="fdi-benefit-tag central">CENTRAL — GST / IGST</div>
-            <div class="fdi-benefit-title">Zero GST on All Service Exports + Full ITC Refund</div>
-            <div class="fdi-benefit-desc">All intercompany services billed to the overseas parent are zero-rated under Section 16, IGST Act 2017. Full Input Tax Credit refund on all domestic purchases used for export services. Source: IGST Act 2017.</div>
+            <div class="fdi-benefit-tag central">CENTRAL — IGST ACT 2017</div>
+            <div class="fdi-benefit-title">Zero GST on Service Exports + Full Input Tax Credit Refund</div>
+            <div class="fdi-benefit-desc">Under Section 16 of the IGST Act 2017, all services exported to an overseas parent company are zero-rated. This means no GST on your primary revenue line, plus a full refund of all GST paid on inputs and input services.</div>
+            <ul class="fdi-benefit-detail">
+              <li><strong>Zero GST on export revenue:</strong> Intercompany services billed to overseas parent = zero-rated supply under Section 16, IGST Act 2017</li>
+              <li><strong>Full ITC Refund (LUT Route):</strong> Export under Letter of Undertaking without paying IGST. Claim full unutilised Input Tax Credit refund via Form RFD-01</li>
+              <li><strong>IGST Payment Route:</strong> Pay IGST on exports, claim 100% refund. Refund = (Zero-rated turnover x Net ITC) / Adjusted total turnover (Rule 89(4), CGST Rules)</li>
+              <li><strong>SEZ zero-rating:</strong> All domestic vendor supplies to SEZ GCCs attract zero GST. Vendor supplies under LUT with no IGST charge</li>
+              <li><strong>STPI deemed exports:</strong> Domestic procurement by STPI units notified as deemed exports under CGST Notification 48/2017 — GST-neutral procurement</li>
+              <li>Five conditions for export of services under Section 2(6) IGST Act must be met (supplier in India, recipient outside India, payment in foreign exchange, etc.)</li>
+            </ul>
+            <div class="fdi-eligibility">Eligibility: All GCCs billing intercompany services to overseas parent entities in convertible foreign exchange. LUT must be filed annually on the GST portal (Form RFD-11).</div>
+            <a href="https://www.cbic-gst.gov.in/gst-goods-services-rates.html" target="_blank" rel="noopener" class="fdi-read-link">&#8594; CBIC GST Export of Services Rules</a>
+            <a href="https://www.gst.gov.in/newsandupdates/read/563" target="_blank" rel="noopener" class="fdi-read-link" style="margin-left:0.4rem">&#8594; CGST Notification 48/2017</a>
           </div>
         </div>
         <div class="fdi-benefit-card central">
-          <div class="fdi-benefit-icon">👥</div>
+          <div class="fdi-benefit-icon">&#128101;</div>
           <div class="fdi-benefit-body">
-            <div class="fdi-benefit-tag central">CENTRAL — INCOME TAX</div>
-            <div class="fdi-benefit-title">Section 80JJAA: 30% New Hire Deduction (3 Years)</div>
-            <div class="fdi-benefit-desc">30% deduction of additional employee cost for three consecutive assessment years for every net new hire. Directly reduces taxable income during GCC ramp-up. Source: Income Tax Act, 1961 / 2025.</div>
+            <div class="fdi-benefit-tag central">CENTRAL — INCOME TAX ACT 1961 / 2025</div>
+            <div class="fdi-benefit-title">Section 80JJAA — 30% New Employee Cost Deduction for 3 Years</div>
+            <div class="fdi-benefit-desc">A direct incentive for job creation. For every net new employee added to the payroll, the employer can claim a 30% deduction of that employee's cost for three consecutive assessment years, reducing taxable income during the critical ramp-up phase.</div>
+            <ul class="fdi-benefit-detail">
+              <li><strong>Deduction rate:</strong> 30% of additional employee cost for each new hire</li>
+              <li><strong>Duration:</strong> Three consecutive assessment years per employee cohort</li>
+              <li><strong>Salary cap:</strong> New employees must earn below Rs 25,000 per month to qualify</li>
+              <li><strong>Minimum days:</strong> Employee must work for at least 240 days in the year (150 days for certain sectors)</li>
+              <li><strong>Impact:</strong> For a GCC adding 100 employees at an average Rs 18L CTC, the 3-year deduction is approximately Rs 1.6 crore on taxable income</li>
+              <li>Applies to employers in manufacturing or service operations; GCCs in IT and ITeS qualify</li>
+            </ul>
+            <div class="fdi-eligibility">Eligibility: GCC entities under the Income Tax Act filing as Indian Private Limited companies and hiring net new employees. Standard audit and compliance filing required. Salary threshold of Rs 25,000/month applies per employee.</div>
+            <a href="https://www.incometaxindia.gov.in/pages/acts/income-tax-act.aspx" target="_blank" rel="noopener" class="fdi-read-link">&#8594; Income Tax Act — Official Portal (incometaxindia.gov.in)</a>
           </div>
         </div>
         <div class="fdi-benefit-card central">
-          <div class="fdi-benefit-icon">🔬</div>
+          <div class="fdi-benefit-icon">&#128300;</div>
           <div class="fdi-benefit-body">
-            <div class="fdi-benefit-tag central">CENTRAL — INCOME TAX</div>
-            <div class="fdi-benefit-title">Section 35: R<!-- CITY INTELLIGENCE — moved before simulator so client picks city first -->amp;D Weighted Deduction</div>
-            <div class="fdi-benefit-desc">Approved in-house R<!-- CITY INTELLIGENCE — moved before simulator so client picks city first -->amp;D expenditure qualifies for a weighted deduction above actual cost. Applicable to engineering GCCs and innovation labs. Engineering R<!-- CITY INTELLIGENCE — moved before simulator so client picks city first -->amp;D GCCs grow 1.3x faster. Source: Income Tax Act.</div>
+            <div class="fdi-benefit-tag central">CENTRAL — INCOME TAX ACT 1961 / 2025</div>
+            <div class="fdi-benefit-title">Section 35 — Research and Development Weighted Deduction</div>
+            <div class="fdi-benefit-desc">GCCs conducting approved in-house Research and Development are eligible for a weighted deduction on R&amp;D expenditure above the actual cost incurred. Particularly relevant for engineering GCCs, AI/ML centres, and GCCs with dedicated innovation labs.</div>
+            <ul class="fdi-benefit-detail">
+              <li><strong>In-house R&amp;D:</strong> Approved in-house R&amp;D expenditure qualifies for weighted deduction (rate dependent on DSIR approval)</li>
+              <li><strong>Capital expenditure:</strong> Capital expenditure on R&amp;D (excluding land) can be fully deducted in the year of expenditure</li>
+              <li><strong>Who benefits most:</strong> Engineering R&amp;D GCCs, AI/ML centres, semiconductor design units, healthcare tech labs</li>
+              <li><strong>Growth signal:</strong> Engineering R&amp;D GCCs grow 1.3x faster than the overall GCC sector (Economic Survey 2024-25)</li>
+              <li>DSIR (Department of Scientific and Industrial Research) approval required for in-house R&amp;D recognition</li>
+              <li>Carried forward under the Income Tax Act 2025 with consistent treatment</li>
+            </ul>
+            <div class="fdi-eligibility">Eligibility: GCC entities with an approved in-house R&amp;D facility recognised by DSIR under the Ministry of Science and Technology. Application for DSIR recognition should be initiated during the GCC setup phase.</div>
+            <a href="https://www.dsir.gov.in/in-house-r-d-unit-recognition" target="_blank" rel="noopener" class="fdi-read-link">&#8594; DSIR In-House R&amp;D Recognition (dsir.gov.in)</a>
+            <a href="https://www.incometaxindia.gov.in/pages/acts/income-tax-act.aspx" target="_blank" rel="noopener" class="fdi-read-link" style="margin-left:0.4rem">&#8594; Section 35, Income Tax Act</a>
+          </div>
+        </div>
+        <div class="fdi-benefit-card central">
+          <div class="fdi-benefit-icon">&#9878;&#65039;</div>
+          <div class="fdi-benefit-body">
+            <div class="fdi-benefit-tag central">CENTRAL — INCOME TAX RULES 2026</div>
+            <div class="fdi-benefit-title">Transfer Pricing Safe Harbour — 15.5% Margin, Rs 20 Billion Threshold (Budget 2026)</div>
+            <div class="fdi-benefit-desc">All GCCs transact with their overseas parent via intercompany service agreements. These are subject to Indian transfer pricing rules. The Safe Harbour Rules eliminate transfer pricing disputes for GCCs that meet the prescribed benchmarks, significantly reducing compliance risk and tax exposure.</div>
+            <ul class="fdi-benefit-detail">
+              <li><strong>Safe Harbour margin (Budget 2026):</strong> Operating profit margin reduced to 15.5% for IT services — the threshold within which the Income Tax Department accepts the transfer price without scrutiny</li>
+              <li><strong>Threshold raised:</strong> Eligible transaction value raised to Rs 20 billion under Budget 2026 proposal — covering virtually all GCC intercompany service volumes</li>
+              <li><strong>What it prevents:</strong> Transfer pricing disputes, reassessments, penalties, and the cost of Advance Pricing Agreements</li>
+              <li><strong>Rules reference:</strong> Section 167, Income Tax Act 2025; Rules 86–102, Income Tax Rules 2026 (formerly Section 92 series, ITA 1961)</li>
+              <li>GCC must file Form 3CEFA (the Safe Harbour form) annually with its income tax return</li>
+              <li>Separate books, cost allocation methodology, and functional analysis documentation required</li>
+            </ul>
+            <div class="fdi-eligibility">Eligibility: GCCs providing IT and ITeS services to overseas associated enterprises. Annual intercompany transaction value must not exceed Rs 20 billion. Operating profit must be within the safe harbour margin of 15.5%.</div>
+            <a href="https://www.incometax.gov.in/iec/foportal/help/how-to-guidelines/safe-harbour-rules" target="_blank" rel="noopener" class="fdi-read-link">&#8594; Safe Harbour Rules — Income Tax Portal</a>
+            <a href="https://dpiit.gov.in/policies/fdi-policy" target="_blank" rel="noopener" class="fdi-read-link" style="margin-left:0.4rem">&#8594; DPIIT FDI Policy</a>
           </div>
         </div>
         <div class="fdi-benefit-card labour">
-          <div class="fdi-benefit-icon">⚖️</div>
+          <div class="fdi-benefit-icon">&#9878;&#65039;</div>
           <div class="fdi-benefit-body">
-            <div class="fdi-benefit-tag labour">CENTRAL — LABOUR CODES</div>
-            <div class="fdi-benefit-title">Four Labour Codes: 29 Laws Into 4 (Nov 2025)</div>
-            <div class="fdi-benefit-desc">Single registration, licence, and return across all labour law categories. Flexible 8-12 hour workdays within 48-hour cap. Women in night shifts permitted. Retrenchment threshold raised to 300 workers. Fixed-term employment with full social security. Source: Ministry of Labour, 21 Nov 2025.</div>
+            <div class="fdi-benefit-tag labour">CENTRAL — MINISTRY OF LABOUR</div>
+            <div class="fdi-benefit-title">Four Labour Codes — 29 Laws Consolidated (Effective 21 November 2025)</div>
+            <div class="fdi-benefit-desc">India's most significant labour law reform in its post-independence history. Effective 21 November 2025, 29 central labour laws were consolidated into four codes, dramatically reducing compliance complexity and giving GCCs operational flexibility that was previously unavailable.</div>
+            <ul class="fdi-benefit-detail">
+              <li><strong>Code on Wages:</strong> Uniform definition of wages across all labour laws. Mandatory payroll timelines. Simplified calculation for PF, ESI, gratuity</li>
+              <li><strong>Industrial Relations Code:</strong> Retrenchment threshold raised to 300 workers (from 100) — GCCs below 300 headcount have full workforce flexibility without government approval</li>
+              <li><strong>OSH Code:</strong> Flexible workdays of 8–12 hours within a 48-hour weekly cap — enables alignment with global parent operating hours and multi-shift models</li>
+              <li><strong>Women in night shifts:</strong> Now legally permitted with employee consent and appropriate safeguards — critical for 24x7 GCC operations</li>
+              <li><strong>Social Security Code:</strong> Fixed-term employees receive PF, ESI, and gratuity on a pro-rated basis — enables project-based hiring without benefits gaps</li>
+              <li><strong>Single registration:</strong> One registration, one licence, one annual return replaces 29 separate compliance filings</li>
+            </ul>
+            <div class="fdi-eligibility">Applicability: All GCC entities employing workers in India. The four codes apply to all IT and ITeS establishments. State governments are notifying their own rules under each code; check state-specific rules with your legal counsel.</div>
+            <a href="https://labour.gov.in/labour-codes" target="_blank" rel="noopener" class="fdi-read-link labour">&#8594; Labour Codes — Ministry of Labour Official Portal</a>
+          </div>
+        </div>
+        <div class="fdi-benefit-card central">
+          <div class="fdi-benefit-icon">&#128308;</div>
+          <div class="fdi-benefit-body">
+            <div class="fdi-benefit-tag central">CENTRAL — MeitY SCHEME</div>
+            <div class="fdi-benefit-title">GENESIS &amp; EMC 2.0 — MeitY Plug-and-Play Infrastructure for GCCs</div>
+            <div class="fdi-benefit-desc">The Ministry of Electronics and Information Technology operates two flagship schemes directly supporting GCC establishment: GENESIS for startup-GCC co-creation and EMC 2.0 for plug-and-play physical infrastructure, particularly in Tier-2 cities.</div>
+            <ul class="fdi-benefit-detail">
+              <li><strong>GENESIS (Gen-Next Support for Innovative Startups):</strong> Rs 490 crore budget. Enables GCCs to co-locate and co-create with MeitY-backed startups in Tier-2 and Tier-3 cities. Accelerates access to local AI, ML, and deep-tech talent pipelines</li>
+              <li><strong>EMC 2.0 (Modified Electronics Manufacturing Clusters):</strong> World-class Ready Built Factory sheds and plug-and-play facilities. GCCs can be operational in weeks rather than months using pre-built Grade-A space with power, data, and compliance infrastructure already in place</li>
+              <li><strong>Future Skills Prime (MeitY + NASSCOM):</strong> Over 4 million professionals certified in cloud, AI, cybersecurity, and analytics. GCCs can directly tap this pre-trained talent pipeline</li>
+              <li><strong>National GCC Framework (Union Budget 2025-26):</strong> MeitY constituted a dedicated panel to build the national GCC framework covering talent, infrastructure, bylaw reforms, and a single-window interface for incoming GCC investors in Tier-2 cities</li>
+            </ul>
+            <div class="fdi-eligibility">Eligibility: GCCs establishing in Tier-2 cities with a technology or innovation function are primary beneficiaries. GENESIS co-location requires a MoU with the relevant incubator. EMC 2.0 facilities available through state nodal agencies.</div>
+            <a href="https://www.meity.gov.in/schemes" target="_blank" rel="noopener" class="fdi-read-link">&#8594; MeitY Schemes — Official Portal (meity.gov.in)</a>
           </div>
         </div>
         <div class="fdi-benefit-card state">
-          <div class="fdi-benefit-icon">🏛️</div>
+          <div class="fdi-benefit-icon">&#127963;</div>
           <div class="fdi-benefit-body">
-            <div class="fdi-benefit-tag state">STATE — CITY-SPECIFIC</div>
-            <div class="fdi-benefit-title">State GCC Policies: Capital Subsidy + Power + Stamp Duty</div>
-            <div class="fdi-benefit-desc">10 states have dedicated GCC policies (2024-2026). Capital subsidies of 15-25% on fixed assets, power tariff subsidies, stamp duty exemptions, and plug-and-play infrastructure. Stackable on top of all central benefits. Run the simulator or see city cards below.</div>
+            <div class="fdi-benefit-tag state">STATE POLICIES — CITY-SPECIFIC (STACKABLE ON ALL CENTRAL BENEFITS)</div>
+            <div class="fdi-benefit-title">10 State GCC Policies: Capital Subsidy + Power Tariff + Stamp Duty + Employment Incentives</div>
+            <div class="fdi-benefit-desc">Between 2024 and 2026, ten Indian states formally notified dedicated GCC policies. These are entirely stackable on top of all central government benefits listed above. A GCC can simultaneously claim STPI benefits, zero-GST treatment, Section 80JJAA, AND a state capital subsidy.</div>
+            <ul class="fdi-benefit-detail">
+              <li><strong>Telangana (ITIR Policy):</strong> 25% capital subsidy on fixed assets up to Rs 2 crore. Power tariff subsidy of Rs 1/unit for 5 years. Stamp duty exemption on property transactions. Source: Telangana ITE&amp;C Dept</li>
+              <li><strong>Karnataka (K-TECH 2024-2029):</strong> 20% capital grant on qualifying investments. Employment subsidy for 5 years. Stamp duty exemption. Source: eitbt.karnataka.gov.in</li>
+              <li><strong>Uttar Pradesh (UP GCC Policy 2024):</strong> Employment subsidy linked to headcount. Stamp duty exemption. Land at concessional rates. Source: invest.up.gov.in</li>
+              <li><strong>Gujarat (GCC Policy 2025-30):</strong> 25% capital subsidy. GIFT City IFSC benefits for BFSI GCCs (zero corporate tax for 10 years within IFSC). Source: api.giftgujarat.in</li>
+              <li><strong>Maharashtra (Magnetic Maharashtra):</strong> Capital grants, power subsidies, stamp duty exemptions across Pune, Nagpur, and Mumbai. Source: maitri.maharashtra.gov.in</li>
+              <li><strong>Andhra Pradesh (AP IT &amp; GCC Policy 4.0, 2024-2029):</strong> Employment-linked subsidies, power tariff concessions, infrastructure support. Source: apit.ap.gov.in</li>
+              <li><strong>Madhya Pradesh (MP GCC Policy 2025):</strong> 20% fixed asset subsidy. Plug-and-play ITSES parks. Source: invest.mp.gov.in</li>
+              <li><strong>Tier-2 City Multiplier (National Framework):</strong> Union Budget 2025-26 mandates a benefits multiplier for GCCs in Tier-2 cities. States expected to offer 110-120% of standard package for Tier-2 locations</li>
+            </ul>
+            <div class="fdi-eligibility">Eligibility varies by state policy. Generally requires entity incorporation in the state, minimum investment threshold, and minimum headcount commitment over a defined period. All state policies are stackable on top of central government benefits. See city cards below for city-specific schemes.</div>
+            <a href="https://www.sezindia.nic.in/facilities-and-incentives.asp" target="_blank" rel="noopener" class="fdi-read-link state">&#8594; SEZ Incentives (sezindia.nic.in)</a>
+            <a href="https://eitbt.karnataka.gov.in" target="_blank" rel="noopener" class="fdi-read-link state" style="margin-left:0.4rem">&#8594; Karnataka K-TECH</a>
+            <a href="https://invest.up.gov.in" target="_blank" rel="noopener" class="fdi-read-link state" style="margin-left:0.4rem">&#8594; UP GCC Policy 2024</a>
+            <a href="https://api.giftgujarat.in" target="_blank" rel="noopener" class="fdi-read-link state" style="margin-left:0.4rem">&#8594; Gujarat GCC Policy</a>
           </div>
         </div>
       </div>
