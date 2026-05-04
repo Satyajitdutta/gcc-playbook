@@ -514,7 +514,7 @@ section{position:relative;z-index:2;padding:6rem 0}
 .wi-tab.active{background:rgba(232,184,75,0.08);color:var(--gold)}
 .wi-tab-icon{font-size:1.1rem;display:block;margin-bottom:0.2rem}
 .wi-panel{display:none;animation:fadeIn 0.3s ease}
-.wi-panel.active{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.wi-panel.active{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;overflow-anchor:none}
 @media(max-width:768px){.wi-panel.active{grid-template-columns:1fr}}
 .wi-card{background:rgba(255,255,255,0.02);border:1px solid var(--bd);border-radius:var(--r);padding:1.4rem}
 .wi-card-icon{font-size:1.6rem;margin-bottom:0.6rem}
@@ -528,7 +528,7 @@ section{position:relative;z-index:2;padding:6rem 0}
 .wi-card.highlight-purple{border-color:rgba(136,96,212,0.3);background:rgba(136,96,212,0.04)}
 /* ── CITIES ── */
 #cities{background:var(--s1)}
-.city-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.2rem}
+.city-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.2rem;overflow-anchor:none}
 .city-tier-btn{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);border-radius:6px;color:var(--tmed);padding:0.4rem 1rem;font-size:0.8rem;font-weight:700;cursor:pointer;letter-spacing:0.05em;transition:all 0.2s}
 .city-tier-btn.active,.city-tier-btn:hover{background:rgba(232,184,75,0.15);border-color:rgba(232,184,75,0.5);color:var(--gold)}
 .city-block{background:rgba(255,255,255,0.02);border:1px solid var(--bd);border-radius:var(--r);padding:1.5rem;transition:all 0.3s;position:relative;overflow:hidden}
@@ -546,7 +546,7 @@ section{position:relative;z-index:2;padding:6rem 0}
 
 /* ── MARKET ── */
 #market{background:var(--bg);padding:5rem 0}
-.market-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem}
+.market-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;overflow-anchor:none}
 .market-card{text-align:center;padding:2rem 1.5rem;background:rgba(255,255,255,0.02);border:1px solid var(--bd);border-radius:var(--r);transition:all 0.3s}
 .market-card:hover{border-color:rgba(232,184,75,0.3);transform:translateY(-3px)}
 .market-num{font-family:'JetBrains Mono',monospace;font-size:2.2rem;font-weight:700;color:var(--gold);display:block;margin-bottom:0.3rem}
@@ -1428,7 +1428,7 @@ if(document.readyState==="loading"){
 </section>
 
 <!-- SIMULATOR -->
-<section id="simulator">
+<section id="simulator" style="overflow-anchor:auto">
   <div class="wrap">
     <div class="section-label">GCC SETUP PROJECT ESTIMATOR</div>
     <h2 class="section-title">GCC Project <span class="gold">Blueprint</span></h2>
@@ -2610,6 +2610,8 @@ function selectPriority(el,val){
 }
 
 function goStep(n){
+  // Lock scroll position so pane height changes don't jump the page
+  var sy=window.scrollY;
   var tabs=document.querySelectorAll('.sim-step-tab');
   var panes=document.querySelectorAll('.sim-pane');
   tabs.forEach(function(t,i){
@@ -2619,6 +2621,8 @@ function goStep(n){
     if(i+1===n)t.classList.add('active');
   });
   panes.forEach(function(p,i){p.classList.toggle('active',i+1===n);});
+  // Restore scroll position after layout settles
+  requestAnimationFrame(function(){window.scrollTo({top:sy,behavior:'instant'});});
 }
 
 function getSelectedFunctions(){
