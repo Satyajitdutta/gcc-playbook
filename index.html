@@ -399,6 +399,36 @@ section{position:relative;z-index:2;padding:6rem 0}
 .yearly-year{font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:1px;color:rgba(58,127,212,0.8);margin-bottom:0.3rem}
 .yearly-amt{font-size:1.2rem;font-weight:700;color:var(--txt);margin-bottom:0.3rem}
 .yearly-focus{font-size:0.78rem;color:var(--tmed)}
+/* ── FDI GOVT HERO SECTION ── */
+#fdi-hero{background:linear-gradient(160deg,rgba(10,9,20,0.0) 0%,rgba(30,20,60,0.5) 100%);border-top:1px solid rgba(232,184,75,0.12);border-bottom:1px solid rgba(232,184,75,0.12);padding:4rem 0}
+.fdi-hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+@media(max-width:768px){.fdi-hero-grid{grid-template-columns:1fr}}
+.fdi-hero-left h2{font-size:clamp(1.6rem,3vw,2.4rem);margin-bottom:0.75rem}
+.fdi-hero-left p{color:var(--tmed);font-size:0.95rem;line-height:1.7;margin-bottom:1.5rem}
+.fdi-stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin-bottom:2rem}
+.fdi-stat{background:rgba(232,184,75,0.05);border:1px solid rgba(232,184,75,0.2);border-radius:10px;padding:1rem;text-align:center}
+.fdi-stat-num{font-family:'JetBrains Mono',monospace;font-size:1.3rem;font-weight:700;color:var(--gold);display:block;margin-bottom:0.2rem}
+.fdi-stat-lbl{font-size:0.7rem;color:var(--tmed);letter-spacing:0.5px}
+.fdi-benefit-stack{display:flex;flex-direction:column;gap:0.75rem}
+.fdi-benefit-card{background:rgba(255,255,255,0.02);border:1px solid var(--bd);border-radius:10px;padding:1rem 1.2rem;display:flex;gap:1rem;align-items:flex-start;transition:border-color 0.2s}
+.fdi-benefit-card:hover{border-color:rgba(40,168,136,0.4)}
+.fdi-benefit-card.central{border-left:3px solid var(--teal)}
+.fdi-benefit-card.state{border-left:3px solid var(--gold)}
+.fdi-benefit-card.labour{border-left:3px solid #b090e4}
+.fdi-benefit-icon{font-size:1.4rem;flex-shrink:0;margin-top:0.1rem}
+.fdi-benefit-body{}
+.fdi-benefit-title{font-size:0.88rem;font-weight:700;color:var(--txt);margin-bottom:0.2rem}
+.fdi-benefit-desc{font-size:0.78rem;color:var(--tmed);line-height:1.5}
+.fdi-benefit-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:1px;padding:1px 6px;border-radius:3px;margin-bottom:0.3rem}
+.fdi-benefit-tag.central{color:var(--teal);background:rgba(40,168,136,0.12);border:1px solid rgba(40,168,136,0.25)}
+.fdi-benefit-tag.state{color:var(--gold);background:rgba(232,184,75,0.1);border:1px solid rgba(232,184,75,0.25)}
+.fdi-benefit-tag.labour{color:#b090e4;background:rgba(136,96,212,0.1);border:1px solid rgba(136,96,212,0.25)}
+.fdi-cta-row{display:flex;gap:1rem;flex-wrap:wrap;margin-top:1rem}
+/* City scheme pills */
+.city-schemes{display:flex;flex-wrap:wrap;gap:0.3rem;margin:0.5rem 0}
+.city-scheme-pill{font-size:0.65rem;font-weight:700;padding:0.15rem 0.5rem;border-radius:4px;letter-spacing:0.04em}
+.city-scheme-pill.central{color:var(--teal);background:rgba(40,168,136,0.12);border:1px solid rgba(40,168,136,0.25)}
+.city-scheme-pill.state{color:var(--gold);background:rgba(232,184,75,0.1);border:1px solid rgba(232,184,75,0.2)}
 /* Govt Incentives */
 .incentives-section{margin-bottom:2rem}
 .incentives-section h3{font-size:1rem;margin-bottom:0.75rem}
@@ -408,6 +438,11 @@ section{position:relative;z-index:2;padding:6rem 0}
 .incentive-agency{font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:1px;color:var(--tdim);margin-bottom:0.4rem}
 .incentive-benefit{font-size:0.82rem;color:var(--txt);margin-bottom:0.25rem}
 .incentive-elig{font-size:0.75rem;color:var(--tmed)}
+.incentive-priority{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:1px;padding:1px 6px;border-radius:3px;margin-bottom:0.4rem}
+.incentive-priority.central{color:var(--teal);background:rgba(40,168,136,0.12);border:1px solid rgba(40,168,136,0.25)}
+.incentive-priority.state{color:var(--gold);background:rgba(232,184,75,0.1);border:1px solid rgba(232,184,75,0.25)}
+.incentive-priority.gst{color:#b090e4;background:rgba(136,96,212,0.1);border:1px solid rgba(136,96,212,0.25)}
+.incentive-value{font-size:0.8rem;font-weight:700;color:var(--gold);margin:0.25rem 0}
 /* Banking Support */
 .banking-section{margin-bottom:2rem}
 .banking-section h3{font-size:1rem;margin-bottom:0.75rem}
@@ -723,6 +758,7 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
     <div class="nav-links">
       <a href="#simulator">Simulator</a>
       <a href="#journey">Playbook</a>
+      <a href="#fdi-hero">Govt Benefits</a>
       <a href="#cities">India Intel</a>
       <a href="#whitepaper">White Paper</a>
       <a href="#partners">Partners</a>
@@ -782,6 +818,93 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
 <div class="ticker-wrap">
   <div class="ticker-track" id="ticker"></div>
 </div>
+
+<!-- FDI GOVT BENEFITS HERO -->
+<section id="fdi-hero" aria-label="India Government Benefits and FDI Incentives for GCCs">
+  <div class="wrap">
+    <div class="section-label">INDIA GOVERNMENT &amp; FDI ADVANTAGE</div>
+    <div class="fdi-hero-grid">
+      <div class="fdi-hero-left">
+        <h2>India Does Not Just <span class="gold">Welcome Your GCC.</span><br>It Funds It.</h2>
+        <p>India offers the most comprehensive government incentive stack for Global Capability Centres of any country in the world. 100% FDI on automatic route. Zero customs duty. Zero GST on exports. Tax holidays. State capital subsidies. Labour code simplification. No other destination matches this across all five dimensions simultaneously.</p>
+        <div class="fdi-stat-row">
+          <div class="fdi-stat"><span class="fdi-stat-num">$81B</span><span class="fdi-stat-lbl">FDI in FY 2024-25</span></div>
+          <div class="fdi-stat"><span class="fdi-stat-num">100%</span><span class="fdi-stat-lbl">FDI Automatic Route for IT/ITeS</span></div>
+          <div class="fdi-stat"><span class="fdi-stat-num">10</span><span class="fdi-stat-lbl">States with Dedicated GCC Policies</span></div>
+        </div>
+        <div class="fdi-stat-row">
+          <div class="fdi-stat"><span class="fdi-stat-num">0%</span><span class="fdi-stat-lbl">GST on Service Exports</span></div>
+          <div class="fdi-stat"><span class="fdi-stat-num">0%</span><span class="fdi-stat-lbl">Customs Duty (STPI/SEZ)</span></div>
+          <div class="fdi-stat"><span class="fdi-stat-num">4</span><span class="fdi-stat-lbl">Labour Codes (29 → 4, Nov 2025)</span></div>
+        </div>
+        <div class="fdi-cta-row">
+          <a href="#simulator" class="btn-primary">Calculate My Benefits →</a>
+          <a href="#cities" class="btn-outline" style="padding:0.7rem 1.5rem;border:1px solid rgba(232,184,75,0.4);border-radius:8px;color:var(--gold);text-decoration:none;font-size:0.88rem;font-weight:700;transition:all 0.2s" onmouseover="this.style.background='rgba(232,184,75,0.1)'" onmouseout="this.style.background='transparent'">City-wise Incentives →</a>
+        </div>
+      </div>
+      <div class="fdi-hero-right fdi-benefit-stack">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:1px;color:var(--tdim);margin-bottom:0.3rem">PRIORITISED BENEFIT STACK — ALL APPLICABLE TO YOUR GCC</div>
+        <div class="fdi-benefit-card central">
+          <div class="fdi-benefit-icon">🏦</div>
+          <div class="fdi-benefit-body">
+            <div class="fdi-benefit-tag central">CENTRAL — INCOME TAX</div>
+            <div class="fdi-benefit-title">Section 10AA SEZ Tax Holiday</div>
+            <div class="fdi-benefit-desc">100% income tax exemption on export profits for Years 1-5. 50% in Years 6-10. 50% reinvested for Years 11-15. Source: Income Tax Act 2025, Section 144.</div>
+          </div>
+        </div>
+        <div class="fdi-benefit-card central">
+          <div class="fdi-benefit-icon">🏗️</div>
+          <div class="fdi-benefit-body">
+            <div class="fdi-benefit-tag central">CENTRAL — STPI / MeitY</div>
+            <div class="fdi-benefit-title">STPI Scheme: Zero Customs + Single Window</div>
+            <div class="fdi-benefit-desc">100% customs duty exemption on all hardware and software imports. 100% FDI via automatic route. 100% depreciation on IT assets over 5 years. Single-window clearance for all central + state approvals. Source: stpi.in</div>
+          </div>
+        </div>
+        <div class="fdi-benefit-card central">
+          <div class="fdi-benefit-icon">📊</div>
+          <div class="fdi-benefit-body">
+            <div class="fdi-benefit-tag central">CENTRAL — GST / IGST</div>
+            <div class="fdi-benefit-title">Zero GST on All Service Exports + Full ITC Refund</div>
+            <div class="fdi-benefit-desc">All intercompany services billed to the overseas parent are zero-rated under Section 16, IGST Act 2017. Full Input Tax Credit refund on all domestic purchases used for export services. Source: IGST Act 2017.</div>
+          </div>
+        </div>
+        <div class="fdi-benefit-card central">
+          <div class="fdi-benefit-icon">👥</div>
+          <div class="fdi-benefit-body">
+            <div class="fdi-benefit-tag central">CENTRAL — INCOME TAX</div>
+            <div class="fdi-benefit-title">Section 80JJAA: 30% New Hire Deduction (3 Years)</div>
+            <div class="fdi-benefit-desc">30% deduction of additional employee cost for three consecutive assessment years for every net new hire. Directly reduces taxable income during GCC ramp-up. Source: Income Tax Act, 1961 / 2025.</div>
+          </div>
+        </div>
+        <div class="fdi-benefit-card central">
+          <div class="fdi-benefit-icon">🔬</div>
+          <div class="fdi-benefit-body">
+            <div class="fdi-benefit-tag central">CENTRAL — INCOME TAX</div>
+            <div class="fdi-benefit-title">Section 35: R<!-- CITY INTELLIGENCE — moved before simulator so client picks city first -->amp;D Weighted Deduction</div>
+            <div class="fdi-benefit-desc">Approved in-house R<!-- CITY INTELLIGENCE — moved before simulator so client picks city first -->amp;D expenditure qualifies for a weighted deduction above actual cost. Applicable to engineering GCCs and innovation labs. Engineering R<!-- CITY INTELLIGENCE — moved before simulator so client picks city first -->amp;D GCCs grow 1.3x faster. Source: Income Tax Act.</div>
+          </div>
+        </div>
+        <div class="fdi-benefit-card labour">
+          <div class="fdi-benefit-icon">⚖️</div>
+          <div class="fdi-benefit-body">
+            <div class="fdi-benefit-tag labour">CENTRAL — LABOUR CODES</div>
+            <div class="fdi-benefit-title">Four Labour Codes: 29 Laws Into 4 (Nov 2025)</div>
+            <div class="fdi-benefit-desc">Single registration, licence, and return across all labour law categories. Flexible 8-12 hour workdays within 48-hour cap. Women in night shifts permitted. Retrenchment threshold raised to 300 workers. Fixed-term employment with full social security. Source: Ministry of Labour, 21 Nov 2025.</div>
+          </div>
+        </div>
+        <div class="fdi-benefit-card state">
+          <div class="fdi-benefit-icon">🏛️</div>
+          <div class="fdi-benefit-body">
+            <div class="fdi-benefit-tag state">STATE — CITY-SPECIFIC</div>
+            <div class="fdi-benefit-title">State GCC Policies: Capital Subsidy + Power + Stamp Duty</div>
+            <div class="fdi-benefit-desc">10 states have dedicated GCC policies (2024-2026). Capital subsidies of 15-25% on fixed assets, power tariff subsidies, stamp duty exemptions, and plug-and-play infrastructure. Stackable on top of all central benefits. Run the simulator or see city cards below.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:0.72rem;color:var(--tdim);margin-top:2rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,0.05)">Sources: Income Tax Act 2025, IGST Act 2017, stpi.in, sezindia.gov.in, DPIIT FDI Policy, Ministry of Labour notification Nov 2025, NASSCOM GCC Framework 2025, Union Budget 2025-26. Benefits subject to eligibility, registration type, and state of incorporation. Consult qualified tax and legal advisors before claiming benefits.</p>
+  </div>
+</section>
 
 <!-- CITY INTELLIGENCE — moved before simulator so client picks city first -->
 <section id="cities">
@@ -1681,33 +1804,11 @@ function showPhase(i){
 // ── CITY DATA ──
 var cities=[
   // TIER 1
-  {name:'Hyderabad',state:'Telangana',tier:'1',stats:[['GCC Count','250+'],['Tech Talent','900K+'],['Avg Eng Salary','₹12–22L/yr'],['Office Cost','₹55–80/sqft'],['GCC Share','12–13%']],tags:['IT/ITES','BFSI','Pharma','Manufacturing'],incentive:'ITIR Policy + STPI'},
-  {name:'Bengaluru',state:'Karnataka',tier:'1',stats:[['GCC Count','600+'],['Tech Talent','1.5M+'],['Avg Eng Salary','₹15–28L/yr'],['Office Cost','₹75–120/sqft'],['GCC Share','34–35%']],tags:['Deep Tech','AI/ML','SaaS','ER&D'],incentive:'K-TECH + STPI'},
-  {name:'Pune',state:'Maharashtra',tier:'1',stats:[['GCC Count','180+'],['Tech Talent','600K+'],['Avg Eng Salary','₹12–20L/yr'],['Office Cost','₹60–90/sqft'],['GCC Share','9–10%']],tags:['Automotive','IT','Engineering','BFSI'],incentive:'Magnetic Maharashtra'},
-  {name:'Chennai',state:'Tamil Nadu',tier:'1',stats:[['GCC Count','175+'],['Tech Talent','500K+'],['Avg Eng Salary','₹11–19L/yr'],['Office Cost','₹55–80/sqft'],['GCC Share','9–10%']],tags:['Manufacturing','IT','Retail','CPG'],incentive:'TIDEL + STPI'},
-  {name:'NCR / Delhi',state:'Delhi NCR',tier:'1',stats:[['GCC Count','290+'],['Tech Talent','700K+'],['Avg Eng Salary','₹13–22L/yr'],['Office Cost','₹65–100/sqft'],['GCC Share','15–16%']],tags:['BFSI','Telecom','Government','CPG'],incentive:'DSIIDC + STPI'},
-  {name:'Mumbai',state:'Maharashtra',tier:'1',stats:[['GCC Count','120+'],['Tech Talent','500K+'],['Avg Eng Salary','₹14–25L/yr'],['Office Cost','₹80–140/sqft'],['GCC Share','5–6%']],tags:['BFSI','FinTech','Media','Consulting'],incentive:'Magnetic Maharashtra'},
+  {name:'Hyderabad',state:'Telangana',tier:'1',stats:[['GCC Count','250+'],['Tech Talent','900K+'],['Avg Eng Salary','12-22L/yr'],['Office Cost','55-80/sqft'],['GCC Share','12-13%']],tags:['IT/ITES','BFSI','Pharma','Manufacturing'],incentive:'ITIR Policy + STPI',govtSchemes:[{name:'STPI',type:'central'},{name:'ITIR Capital Subsidy 25%',type:'state'},{name:'Power Tariff Subsidy',type:'state'},{name:'Stamp Duty Exempt',type:'state'}]},{name:'Bengaluru',state:'Karnataka',tier:'1',stats:[['GCC Count','600+'],['Tech Talent','1.5M+'],['Avg Eng Salary','15-28L/yr'],['Office Cost','75-120/sqft'],['GCC Share','34-35%']],tags:['Deep Tech','AI/ML','SaaS','ER&D'],incentive:'K-TECH + STPI',govtSchemes:[{name:'STPI',type:'central'},{name:'K-TECH 20% Capital Grant',type:'state'},{name:'Stamp Duty Exempt',type:'state'},{name:'Employment Subsidy 5yr',type:'state'}]},{name:'Pune',state:'Maharashtra',tier:'1',stats:[['GCC Count','180+'],['Tech Talent','600K+'],['Avg Eng Salary','12-20L/yr'],['Office Cost','60-90/sqft'],['GCC Share','9-10%']],tags:['Automotive','IT','Engineering','BFSI'],incentive:'Magnetic Maharashtra',govtSchemes:[{name:'STPI',type:'central'},{name:'Magnetic Maharashtra Grant',type:'state'},{name:'Stamp Duty Exempt',type:'state'},{name:'Power Subsidy',type:'state'}]},{name:'Chennai',state:'Tamil Nadu',tier:'1',stats:[['GCC Count','175+'],['Tech Talent','500K+'],['Avg Eng Salary','11-19L/yr'],['Office Cost','55-80/sqft'],['GCC Share','9-10%']],tags:['Manufacturing','IT','Retail','CPG'],incentive:'TIDEL + STPI',govtSchemes:[{name:'STPI',type:'central'},{name:'TIDEL Park 15% Subsidy',type:'state'},{name:'Industrial Power Rate',type:'state'}]},{name:'NCR / Delhi',state:'Delhi NCR',tier:'1',stats:[['GCC Count','290+'],['Tech Talent','700K+'],['Avg Eng Salary','13-22L/yr'],['Office Cost','65-100/sqft'],['GCC Share','15-16%']],tags:['BFSI','Telecom','Government','CPG'],incentive:'DSIIDC + STPI',govtSchemes:[{name:'STPI',type:'central'},{name:'DSIIDC IT Park',type:'state'},{name:'DPIIT Startup Benefits',type:'central'}]},{name:'Mumbai',state:'Maharashtra',tier:'1',stats:[['GCC Count','120+'],['Tech Talent','500K+'],['Avg Eng Salary','14-25L/yr'],['Office Cost','80-140/sqft'],['GCC Share','5-6%']],tags:['BFSI','FinTech','Media','Consulting'],incentive:'Magnetic Maharashtra',govtSchemes:[{name:'STPI',type:'central'},{name:'GIFT City IFSC Benefits',type:'central'},{name:'Magnetic Maharashtra',type:'state'}]},
   // TIER 2
-  {name:'Ahmedabad',state:'Gujarat',tier:'2',stats:[['GCC Count','40+'],['Tech Talent','180K+'],['Avg Eng Salary','₹8–16L/yr'],['Office Cost','₹35–55/sqft'],['Cost vs T1','~45% lower']],tags:['Manufacturing','FinTech','CPG','Pharma'],incentive:'Gujarat IT Policy + GIFT City'},
-  {name:'Kochi',state:'Kerala',tier:'2',stats:[['GCC Count','35+'],['Tech Talent','150K+'],['Avg Eng Salary','₹8–15L/yr'],['Office Cost','₹30–50/sqft'],['Cost vs T1','~50% lower']],tags:['IT/ITES','BFSI','Healthcare','Logistics'],incentive:'Smart City + KSITIL'},
-  {name:'Jaipur',state:'Rajasthan',tier:'2',stats:[['GCC Count','25+'],['Tech Talent','120K+'],['Avg Eng Salary','₹7–14L/yr'],['Office Cost','₹28–45/sqft'],['Cost vs T1','~55% lower']],tags:['IT','Textile Tech','Tourism','E-commerce'],incentive:'iStart Rajasthan'},
-  {name:'Indore',state:'Madhya Pradesh',tier:'2',stats:[['GCC Count','20+'],['Tech Talent','100K+'],['Avg Eng Salary','₹7–13L/yr'],['Office Cost','₹25–40/sqft'],['Cost vs T1','~55% lower']],tags:['IT/ITES','Manufacturing','Retail','Pharma'],incentive:'MP IT Policy'},
-  {name:'Chandigarh',state:'Punjab/Haryana',tier:'2',stats:[['GCC Count','18+'],['Tech Talent','90K+'],['Avg Eng Salary','₹8–15L/yr'],['Office Cost','₹30–50/sqft'],['Cost vs T1','~48% lower']],tags:['IT','Agritech','Healthcare','Education'],incentive:'Punjab IT Policy'},
-  {name:'Coimbatore',state:'Tamil Nadu',tier:'2',stats:[['GCC Count','22+'],['Tech Talent','110K+'],['Avg Eng Salary','₹7–13L/yr'],['Office Cost','₹25–40/sqft'],['Cost vs T1','~52% lower']],tags:['Manufacturing','Engineering','Textile','IT'],incentive:'TIDEL Parks + STPI'},
-  {name:'Nagpur',state:'Maharashtra',tier:'2',stats:[['GCC Count','15+'],['Tech Talent','80K+'],['Avg Eng Salary','₹7–13L/yr'],['Office Cost','₹22–38/sqft'],['Cost vs T1','~55% lower']],tags:['Logistics','IT','Agriculture','Mining'],incentive:'Mihan SEZ + Magnetic Maharashtra'},
-  {name:'Visakhapatnam',state:'Andhra Pradesh',tier:'2',stats:[['GCC Count','18+'],['Tech Talent','85K+'],['Avg Eng Salary','₹7–13L/yr'],['Office Cost','₹25–40/sqft'],['Cost vs T1','~52% lower']],tags:['Port & Logistics','IT','Pharma','Defence'],incentive:'AP IT Policy 2021–24'},
-  {name:'Bhubaneswar',state:'Odisha',tier:'2',stats:[['GCC Count','12+'],['Tech Talent','70K+'],['Avg Eng Salary','₹6–12L/yr'],['Office Cost','₹20–35/sqft'],['Cost vs T1','~58% lower']],tags:['IT/ITES','Mining Tech','Steel Tech','Education'],incentive:'Odisha IT Policy'},
+  {name:'Ahmedabad',state:'Gujarat',tier:'2',stats:[['GCC Count','40+'],['Tech Talent','180K+'],['Avg Eng Salary','8-16L/yr'],['Office Cost','35-55/sqft'],['Cost vs T1','~45% lower']],tags:['Manufacturing','FinTech','CPG','Pharma'],incentive:'Gujarat IT Policy + GIFT City',govtSchemes:[{name:'STPI',type:'central'},{name:'Gujarat GCC Policy 2025-30',type:'state'},{name:'GIFT City IFSC Tax Break',type:'central'},{name:'25% Capital Subsidy',type:'state'}]},{name:'Kochi',state:'Kerala',tier:'2',stats:[['GCC Count','35+'],['Tech Talent','150K+'],['Avg Eng Salary','8-15L/yr'],['Office Cost','30-50/sqft'],['Cost vs T1','~50% lower']],tags:['IT/ITES','BFSI','Healthcare','Logistics'],incentive:'Smart City + KSITIL',govtSchemes:[{name:'STPI',type:'central'},{name:'KSITIL IT Policy',type:'state'},{name:'Smart City Infra',type:'state'}]},{name:'Jaipur',state:'Rajasthan',tier:'2',stats:[['GCC Count','25+'],['Tech Talent','120K+'],['Avg Eng Salary','7-14L/yr'],['Office Cost','28-45/sqft'],['Cost vs T1','~55% lower']],tags:['IT','Textile Tech','Tourism','E-commerce'],incentive:'iStart Rajasthan',govtSchemes:[{name:'STPI',type:'central'},{name:'iStart RIPS Capital Grant',type:'state'},{name:'Power Tariff Subsidy',type:'state'}]},{name:'Indore',state:'Madhya Pradesh',tier:'2',stats:[['GCC Count','20+'],['Tech Talent','100K+'],['Avg Eng Salary','7-13L/yr'],['Office Cost','25-40/sqft'],['Cost vs T1','~55% lower']],tags:['IT/ITES','Manufacturing','Retail','Pharma'],incentive:'MP IT Policy',govtSchemes:[{name:'STPI',type:'central'},{name:'MP GCC Policy 2025',type:'state'},{name:'20% Fixed Asset Subsidy',type:'state'}]},{name:'Chandigarh',state:'Punjab/Haryana',tier:'2',stats:[['GCC Count','18+'],['Tech Talent','90K+'],['Avg Eng Salary','8-15L/yr'],['Office Cost','30-50/sqft'],['Cost vs T1','~48% lower']],tags:['IT','Agritech','Healthcare','Education'],incentive:'Punjab IT Policy',govtSchemes:[{name:'STPI',type:'central'},{name:'Punjab IT Policy',type:'state'},{name:'Stamp Duty Exempt',type:'state'}]},{name:'Coimbatore',state:'Tamil Nadu',tier:'2',stats:[['GCC Count','22+'],['Tech Talent','110K+'],['Avg Eng Salary','7-13L/yr'],['Office Cost','25-40/sqft'],['Cost vs T1','~52% lower']],tags:['Manufacturing','Engineering','Textile','IT'],incentive:'TIDEL Parks + STPI',govtSchemes:[{name:'STPI',type:'central'},{name:'TIDEL Park',type:'state'},{name:'Tier-2 Budget Multiplier',type:'central'}]},{name:'Nagpur',state:'Maharashtra',tier:'2',stats:[['GCC Count','15+'],['Tech Talent','80K+'],['Avg Eng Salary','7-13L/yr'],['Office Cost','22-38/sqft'],['Cost vs T1','~55% lower']],tags:['Logistics','IT','Agriculture','Mining'],incentive:'Mihan SEZ + Magnetic Maharashtra',govtSchemes:[{name:'SEZ Zero GST + Duty Free',type:'central'},{name:'Mihan SEZ Benefits',type:'central'},{name:'Magnetic Maharashtra',type:'state'}]},{name:'Visakhapatnam',state:'Andhra Pradesh',tier:'2',stats:[['GCC Count','18+'],['Tech Talent','85K+'],['Avg Eng Salary','7-13L/yr'],['Office Cost','25-40/sqft'],['Cost vs T1','~52% lower']],tags:['Port & Logistics','IT','Pharma','Defence'],incentive:'AP IT Policy 2021-24',govtSchemes:[{name:'STPI',type:'central'},{name:'AP IT & GCC Policy 4.0',type:'state'},{name:'Employment Linked Subsidy',type:'state'}]},{name:'Bhubaneswar',state:'Odisha',tier:'2',stats:[['GCC Count','12+'],['Tech Talent','70K+'],['Avg Eng Salary','6-12L/yr'],['Office Cost','20-35/sqft'],['Cost vs T1','~58% lower']],tags:['IT/ITES','Mining Tech','Steel Tech','Education'],incentive:'Odisha IT Policy',govtSchemes:[{name:'STPI',type:'central'},{name:'Odisha MSME IT Policy',type:'state'},{name:'Tier-2 Budget Multiplier',type:'central'}]},
   // TIER 3
-  {name:'Thiruvananthapuram',state:'Kerala',tier:'3',stats:[['Tech Talent','55K+'],['Avg Eng Salary','₹6–11L/yr'],['Office Cost','₹18–30/sqft'],['Attrition','Very Low'],['Cost vs T1','~60% lower']],tags:['IT/ITES','Space Tech','Healthcare','Education'],incentive:'Technopark + KSITIL'},
-  {name:'Mysuru',state:'Karnataka',tier:'3',stats:[['Tech Talent','50K+'],['Avg Eng Salary','₹6–11L/yr'],['Office Cost','₹18–30/sqft'],['Attrition','Very Low'],['Cost vs T1','~62% lower']],tags:['IT','Tourism Tech','Silk & Textile','Education'],incentive:'K-TECH Karnataka'},
-  {name:'Vadodara',state:'Gujarat',tier:'3',stats:[['Tech Talent','55K+'],['Avg Eng Salary','₹6–12L/yr'],['Office Cost','₹18–32/sqft'],['Attrition','Very Low'],['Cost vs T1','~58% lower']],tags:['Engineering','Chemicals','IT','Defence'],incentive:'Gujarat IT Policy'},
-  {name:'Lucknow',state:'Uttar Pradesh',tier:'3',stats:[['Tech Talent','65K+'],['Avg Eng Salary','₹6–12L/yr'],['Office Cost','₹18–30/sqft'],['Attrition','Very Low'],['Cost vs T1','~60% lower']],tags:['IT/ITES','Government Tech','Healthcare','Retail'],incentive:'UP IT Policy 2022'},
-  {name:'Bhopal',state:'Madhya Pradesh',tier:'3',stats:[['Tech Talent','45K+'],['Avg Eng Salary','₹5–10L/yr'],['Office Cost','₹15–28/sqft'],['Attrition','Very Low'],['Cost vs T1','~63% lower']],tags:['IT','Government Tech','Agriculture','Education'],incentive:'MP IT Policy'},
-  {name:'Mangaluru',state:'Karnataka',tier:'3',stats:[['Tech Talent','40K+'],['Avg Eng Salary','₹5–10L/yr'],['Office Cost','₹15–25/sqft'],['Attrition','Very Low'],['Cost vs T1','~65% lower']],tags:['IT/ITES','Fishing Tech','Banking','Healthcare'],incentive:'K-TECH Karnataka'},
-  {name:'Raipur',state:'Chhattisgarh',tier:'3',stats:[['Tech Talent','30K+'],['Avg Eng Salary','₹5–9L/yr'],['Office Cost','₹12–22/sqft'],['Attrition','Very Low'],['Cost vs T1','~65% lower']],tags:['Mining Tech','Steel','Agriculture','Government'],incentive:'CG IT Policy'},
-  {name:'Patna',state:'Bihar',tier:'3',stats:[['Tech Talent','35K+'],['Avg Eng Salary','₹5–9L/yr'],['Office Cost','₹12–22/sqft'],['Attrition','Very Low'],['Cost vs T1','~65% lower']],tags:['Government Tech','Agriculture','Education','Healthcare'],incentive:'Bihar IT Policy'},
-  {name:'Guwahati',state:'Assam',tier:'3',stats:[['Tech Talent','28K+'],['Avg Eng Salary','₹5–9L/yr'],['Office Cost','₹12–20/sqft'],['Attrition','Very Low'],['Cost vs T1','~67% lower']],tags:['IT/ITES','Agriculture Tech','Tea Tech','Logistics'],incentive:'Assam IT Policy + NE Incentives'},
-  {name:'Dehradun',state:'Uttarakhand',tier:'3',stats:[['Tech Talent','30K+'],['Avg Eng Salary','₹5–10L/yr'],['Office Cost','₹14–24/sqft'],['Attrition','Very Low'],['Cost vs T1','~63% lower']],tags:['IT','Tourism Tech','Defence','Education'],incentive:'Uttarakhand IT Policy'}
+  {name:'Thiruvananthapuram',state:'Kerala',tier:'3',stats:[['Tech Talent','55K+'],['Avg Eng Salary','6-11L/yr'],['Office Cost','18-30/sqft'],['Attrition','Very Low'],['Cost vs T1','~60% lower']],tags:['IT/ITES','Space Tech','Healthcare','Education'],incentive:'Technopark + KSITIL',govtSchemes:[{name:'STPI',type:'central'},{name:'KSITIL + Technopark',type:'state'},{name:'Kerala Special Incentives',type:'state'}]},{name:'Mysuru',state:'Karnataka',tier:'3',stats:[['Tech Talent','50K+'],['Avg Eng Salary','6-11L/yr'],['Office Cost','18-30/sqft'],['Attrition','Very Low'],['Cost vs T1','~62% lower']],tags:['IT','Tourism Tech','Silk & Textile','Education'],incentive:'K-TECH Karnataka',govtSchemes:[{name:'STPI',type:'central'},{name:'K-TECH Capital Grant',type:'state'},{name:'Tier-2 Budget Multiplier',type:'central'}]},{name:'Vadodara',state:'Gujarat',tier:'3',stats:[['Tech Talent','55K+'],['Avg Eng Salary','6-12L/yr'],['Office Cost','18-32/sqft'],['Attrition','Very Low'],['Cost vs T1','~58% lower']],tags:['Engineering','Chemicals','IT','Defence'],incentive:'Gujarat IT Policy',govtSchemes:[{name:'STPI',type:'central'},{name:'Gujarat GCC Policy 2025-30',type:'state'},{name:'25% Capital Subsidy',type:'state'}]},{name:'Lucknow',state:'Uttar Pradesh',tier:'3',stats:[['Tech Talent','65K+'],['Avg Eng Salary','6-12L/yr'],['Office Cost','18-30/sqft'],['Attrition','Very Low'],['Cost vs T1','~60% lower']],tags:['IT/ITES','Government Tech','Healthcare','Retail'],incentive:'UP IT Policy 2022',govtSchemes:[{name:'STPI',type:'central'},{name:'UP GCC Policy 2024',type:'state'},{name:'Employment Subsidy 5yr',type:'state'},{name:'Stamp Duty Exempt',type:'state'}]},{name:'Bhopal',state:'Madhya Pradesh',tier:'3',stats:[['Tech Talent','45K+'],['Avg Eng Salary','5-10L/yr'],['Office Cost','15-28/sqft'],['Attrition','Very Low'],['Cost vs T1','~63% lower']],tags:['IT','Government Tech','Agriculture','Education'],incentive:'MP IT Policy',govtSchemes:[{name:'STPI',type:'central'},{name:'MP GCC Policy 2025',type:'state'},{name:'Tier-2 Budget Multiplier',type:'central'}]},{name:'Mangaluru',state:'Karnataka',tier:'3',stats:[['Tech Talent','40K+'],['Avg Eng Salary','5-10L/yr'],['Office Cost','15-25/sqft'],['Attrition','Very Low'],['Cost vs T1','~65% lower']],tags:['IT/ITES','Fishing Tech','Banking','Healthcare'],incentive:'K-TECH Karnataka',govtSchemes:[{name:'STPI',type:'central'},{name:'K-TECH Karnataka',type:'state'}]},{name:'Raipur',state:'Chhattisgarh',tier:'3',stats:[['Tech Talent','30K+'],['Avg Eng Salary','5-9L/yr'],['Office Cost','12-22/sqft'],['Attrition','Very Low'],['Cost vs T1','~65% lower']],tags:['Mining Tech','Steel','Agriculture','Government'],incentive:'CG IT Policy',govtSchemes:[{name:'STPI',type:'central'},{name:'CG IT Policy',type:'state'}]},{name:'Patna',state:'Bihar',tier:'3',stats:[['Tech Talent','35K+'],['Avg Eng Salary','5-9L/yr'],['Office Cost','12-22/sqft'],['Attrition','Very Low'],['Cost vs T1','~65% lower']],tags:['Government Tech','Agriculture','Education','Healthcare'],incentive:'Bihar IT Policy',govtSchemes:[{name:'STPI',type:'central'},{name:'Bihar IT Policy',type:'state'},{name:'GENESIS MeitY Tier-2',type:'central'}]},{name:'Guwahati',state:'Assam',tier:'3',stats:[['Tech Talent','28K+'],['Avg Eng Salary','5-9L/yr'],['Office Cost','12-20/sqft'],['Attrition','Very Low'],['Cost vs T1','~67% lower']],tags:['IT/ITES','Agriculture Tech','Tea Tech','Logistics'],incentive:'Assam IT Policy + NE Incentives',govtSchemes:[{name:'STPI',type:'central'},{name:'NE Region Special Incentives',type:'central'},{name:'Assam IT Policy',type:'state'}]},{name:'Dehradun',state:'Uttarakhand',tier:'3',stats:[['Tech Talent','30K+'],['Avg Eng Salary','5-10L/yr'],['Office Cost','14-24/sqft'],['Attrition','Very Low'],['Cost vs T1','~63% lower']],tags:['IT','Tourism Tech','Defence','Education'],incentive:'Uttarakhand IT Policy',govtSchemes:[{name:'STPI',type:'central'},{name:'Uttarakhand IT Policy',type:'state'},{name:'GENESIS MeitY',type:'central'}]}
 ];
 
 function renderCities(tierFilter){
@@ -1723,7 +1824,7 @@ function renderCities(tierFilter){
     '<div><h3 style="margin:0 0 0.2rem">'+c.name+'</h3><div class="city-state">'+c.state+'</div></div>'+
     tierBadge+'</div>'+
     c.stats.map(function(s){return'<div class="city-stat"><span class="cs-k">'+s[0]+'</span><span class="cs-v">'+s[1]+'</span></div>';}).join('')+
-    (c.incentive?'<div style="font-size:0.7rem;color:var(--teal);margin:0.4rem 0 0.5rem">🏛 '+c.incentive+'</div>':'')+
+    (c.govtSchemes&&c.govtSchemes.length?'<div class="city-schemes">'+c.govtSchemes.map(function(s){return'<span class="city-scheme-pill '+s.type+'">'+s.name+'</span>';}).join('')+'</div>':'')+
     '<div class="city-tags">'+c.tags.map(function(t){return'<span class="city-tag-pill">'+t+'</span>';}).join('')+'</div>'+
     '<button onclick="runSimulatorForCity(\''+c.name+'\')" style="width:100%;margin-top:0.75rem;padding:0.45rem;background:rgba(232,184,75,0.12);border:1px solid rgba(232,184,75,0.35);border-radius:7px;color:var(--gold);font-size:0.78rem;font-weight:700;cursor:pointer;letter-spacing:0.05em" onmouseover="this.style.background=\'rgba(232,184,75,0.25)\'" onmouseout="this.style.background=\'rgba(232,184,75,0.12)\'">Build Blueprint for '+c.name+' →</button>'+
     '</div>';
@@ -1955,7 +2056,7 @@ currentYear+' INDIA COST BENCHMARKS (use these as base, adjust for city tier and
 '10. Each run must produce DIFFERENT numbers — vary based on ALL inputs above\n\n'+
 'Data sources to reference: NASSCOM GCC Report '+(currentYear-2)+'-'+(currentYear-2001)+', Zinnov GCC Landscape '+prevYear+', CBRE India Office Market Q4 '+prevYear+', Mercer India Compensation Survey '+prevYear+'-'+(currentYear-2000)+', TeamLease India Employment Report Q1 '+currentYear+'\n\n'+
 'All costs in USD. Return ONLY valid JSON starting with { and ending with }:\n'+
-'{"city_primary":"city name","city_primary_reason":"2 sentences — why this city for this company profile","city_alt":"alternative city","city_alt_reason":"1 sentence","hidden_insight":"1 non-obvious, data-backed insight most GCC consultants miss — specific to this company, industry, and HQ country","setup_budget_total_usd":number,"setup_budget_breakdown":[{"category":"Entity Formation & Legal (PvtLtd incorporation, CA, company secretary)","cost_usd":number,"timeline":"Month 1-2","notes":"specific vendors/actions"},{"category":"Office Space & Infrastructure (fit-out, furniture, lease deposit)","cost_usd":number,"timeline":"Month 2-4","notes":"Grade-A area recommendation"},{"category":"IT & Technology Setup (laptops, servers, network, licenses)","cost_usd":number,"timeline":"Month 2-5","notes":"key items"},{"category":"Talent Acquisition Year 1 (recruitment fees, ESOP, onboarding)","cost_usd":number,"timeline":"Month 1-12","notes":"avg cost per hire"},{"category":"Compliance & Regulatory (STPI/SEZ registration, audit, payroll setup)","cost_usd":number,"timeline":"Month 1-3","notes":"key registrations"},{"category":"Pithonix Setup Management Fee (project management, JEET+HARI+GOT deployment)","cost_usd":number,"timeline":"Full project","notes":"milestone-based billing"}],"yearly_budget":[{"year":"Year 1 — Setup + Ramp","budget_usd":number,"focus":"Entity setup, first hires, infrastructure"},{"year":"Year 2 — Scale","budget_usd":number,"focus":"Scale to full headcount, process migration"},{"year":"Year 3 — Optimize","budget_usd":number,"focus":"Efficiency, automation, CoE development"}],"govt_incentives":[{"scheme":"exact scheme name","benefit":"specific benefit with numbers","eligibility":"who qualifies","agency":"STPI / SEZ / State IT Dept / MeitY / DPIIT"},{"scheme":"...","benefit":"...","eligibility":"...","agency":"..."},{"scheme":"...","benefit":"...","eligibility":"...","agency":"..."}],"banking_support":[{"bank":"State Bank of India (SBI) — always include as first entry given its unmatched network, govt scheme access, and pan-India payroll reach","offering":"specific SBI program name","benefit":"what SBI offers to a new GCC entity"},{"bank":"HDFC or ICICI or Kotak based on company profile","offering":"specific program name","benefit":"what it offers"},{"bank":"third bank relevant to company HQ country or industry","offering":"specific program name","benefit":"what it offers"}],"headcount":[y1,y2,y3,y4,y5],"savings_usd":[y1,y2,y3,y4,y5],"cost_usd":[y1,y2,y3,y4,y5],"break_even_months":number,"total_5yr_savings_usd":number,"risks":[{"risk":"name","probability":"High/Medium/Low","mitigation":"specific action"},{"risk":"...","probability":"...","mitigation":"..."},{"risk":"...","probability":"...","mitigation":"..."}],"phase0_actions":["specific action 1","specific action 2","specific action 3","specific action 4","specific action 5"],"pithonix_role":"2 sentences on exactly what Pithonix delivers as the setup contractor for this company — not generic, specific to their profile"}';
+'{"city_primary":"city name","city_primary_reason":"2 sentences — why this city for this company profile","city_alt":"alternative city","city_alt_reason":"1 sentence","hidden_insight":"1 non-obvious, data-backed insight most GCC consultants miss — specific to this company, industry, and HQ country","setup_budget_total_usd":number,"setup_budget_breakdown":[{"category":"Entity Formation & Legal (PvtLtd incorporation, CA, company secretary)","cost_usd":number,"timeline":"Month 1-2","notes":"specific vendors/actions"},{"category":"Office Space & Infrastructure (fit-out, furniture, lease deposit)","cost_usd":number,"timeline":"Month 2-4","notes":"Grade-A area recommendation"},{"category":"IT & Technology Setup (laptops, servers, network, licenses)","cost_usd":number,"timeline":"Month 2-5","notes":"key items"},{"category":"Talent Acquisition Year 1 (recruitment fees, ESOP, onboarding)","cost_usd":number,"timeline":"Month 1-12","notes":"avg cost per hire"},{"category":"Compliance & Regulatory (STPI/SEZ registration, audit, payroll setup)","cost_usd":number,"timeline":"Month 1-3","notes":"key registrations"},{"category":"Pithonix Setup Management Fee (project management, JEET+HARI+GOT deployment)","cost_usd":number,"timeline":"Full project","notes":"milestone-based billing"}],"yearly_budget":[{"year":"Year 1 — Setup + Ramp","budget_usd":number,"focus":"Entity setup, first hires, infrastructure"},{"year":"Year 2 — Scale","budget_usd":number,"focus":"Scale to full headcount, process migration"},{"year":"Year 3 — Optimize","budget_usd":number,"focus":"Efficiency, automation, CoE development"}],"govt_incentives":[{"scheme":"exact scheme name","benefit":"specific benefit with quantified numbers — e.g. 100% tax holiday for 5 years, ~Rs X crore saved","eligibility":"who qualifies","agency":"STPI / SEZ / State IT Dept / MeitY / DPIIT","priority":"central","est_value_usd":number},{"scheme":"...","benefit":"...","eligibility":"...","agency":"...","priority":"state","est_value_usd":number},{"scheme":"...","benefit":"...","eligibility":"...","agency":"...","priority":"central","est_value_usd":number},{"scheme":"...","benefit":"...","eligibility":"...","agency":"...","priority":"state","est_value_usd":number}],"banking_support":[{"bank":"State Bank of India (SBI) — always include as first entry given its unmatched network, govt scheme access, and pan-India payroll reach","offering":"specific SBI program name","benefit":"what SBI offers to a new GCC entity"},{"bank":"HDFC or ICICI or Kotak based on company profile","offering":"specific program name","benefit":"what it offers"},{"bank":"third bank relevant to company HQ country or industry","offering":"specific program name","benefit":"what it offers"}],"headcount":[y1,y2,y3,y4,y5],"savings_usd":[y1,y2,y3,y4,y5],"cost_usd":[y1,y2,y3,y4,y5],"break_even_months":number,"total_5yr_savings_usd":number,"risks":[{"risk":"name","probability":"High/Medium/Low","mitigation":"specific action"},{"risk":"...","probability":"...","mitigation":"..."},{"risk":"...","probability":"...","mitigation":"..."}],"phase0_actions":["specific action 1","specific action 2","specific action 3","specific action 4","specific action 5"],"pithonix_role":"2 sentences on exactly what Pithonix delivers as the setup contractor for this company — not generic, specific to their profile"}';
 
   try{
     var resp=await fetch('/api/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({_model:'gemini-2.5-flash',contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:1.0,maxOutputTokens:8000,thinkingConfig:{thinkingBudget:0}}})});
@@ -2059,7 +2160,9 @@ function renderBlueprint(bp){
   // Govt Incentives
   var incWrap=document.getElementById('out-incentives-wrap');
   if(bp.govt_incentives&&bp.govt_incentives.length){
-    incWrap.innerHTML='<h3 style="margin-bottom:0.75rem;font-size:1rem">Government Incentives & Support</h3><div class="incentive-cards">'+
+    var totalBenefitUsd=(bp.govt_incentives||[]).reduce(function(s,g){return s+(g.est_value_usd||0);},0);
+    var benefitNote=totalBenefitUsd>0?'<div style="background:rgba(40,168,136,0.08);border:1px solid rgba(40,168,136,0.25);border-radius:10px;padding:1rem 1.2rem;margin-bottom:1rem;display:flex;align-items:flex-start;gap:0.8rem"><span style="font-size:1.5rem">💡</span><div><div style="font-size:0.78rem;font-weight:700;color:var(--teal);margin-bottom:0.25rem">YOUR BLUEPRINT COST INCLUDES THESE GOVERNMENT BENEFITS</div><div style="font-size:0.82rem;color:var(--tmed);line-height:1.6">Your projected setup cost of <strong style="color:var(--txt)">'+fmt(bp.setup_budget_total_usd)+'</strong> can be significantly reduced through the government incentives listed below. These benefits are real, legally claimable, and most GCCs forfeit them because they do not apply at the right time. Pithonix maps and files all applicable schemes on Day 1 of your setup. The indicative 5-year benefit value for your profile is estimated at <strong style="color:var(--gold)">'+fmt(totalBenefitUsd)+'</strong>. This is money you are legally entitled to. We make sure you get it.</div></div></div>':'<div style="background:rgba(40,168,136,0.08);border:1px solid rgba(40,168,136,0.25);border-radius:10px;padding:1rem 1.2rem;margin-bottom:1rem;display:flex;align-items:flex-start;gap:0.8rem"><span style="font-size:1.5rem">💡</span><div><div style="font-size:0.78rem;font-weight:700;color:var(--teal);margin-bottom:0.25rem">YOUR BLUEPRINT COST CAN BE PARTIALLY OFFSET BY GOVERNMENT BENEFITS</div><div style="font-size:0.82rem;color:var(--tmed);line-height:1.6">The cost forecast in your blueprint does not account for government incentives. The schemes below are available to your GCC and most companies only discover them 12-18 months after setup. Pithonix applies all of these on Day 1. Central benefits like STPI zero-duty and zero-GST on exports alone can offset tens of lakhs to crores across your first 3 years.</div></div></div>';
+    incWrap.innerHTML='<h3 style="margin-bottom:0.75rem;font-size:1rem">Government Incentives & Support</h3>'+benefitNote+'<div class="incentive-cards">'+
       bp.govt_incentives.map(function(g){
         var schemeLinks={'STPI':'https://www.stpi.in/','Software Technology Parks of India':'https://www.stpi.in/','DPIIT':'https://dpiit.gov.in/','Startup India':'https://www.startupindia.gov.in/','Telangana':'https://www.tsiic.telangana.gov.in/','Karnataka':'https://itbt.karnataka.gov.in/','Maharashtra':'https://maitri.maharashtra.gov.in/','Tamil Nadu':'https://www.investtn.in/','MeitY':'https://www.meity.gov.in/','SEZ':'https://www.sezindia.nic.in/','Rajasthan':'https://istart.rajasthan.gov.in/','RIPS':'https://istart.rajasthan.gov.in/','iStart':'https://istart.rajasthan.gov.in/','Gujarat':'https://icds.gujarat.gov.in/','GIFT':'https://giftcity.in/','Andhra Pradesh':'https://www.investap.in/','Odisha':'https://investodisha.gov.in/','Madhya Pradesh':'https://invest.mp.gov.in/','Uttar Pradesh':'https://invest.up.gov.in/','Kerala':'https://www.ksitil.org/','Chandigarh':'https://www.phinma.gov.in/','Punjab':'https://invest.punjab.gov.in/','Assam':'https://industryassam.in/','Bihar':'https://biada.in/','Chhattisgarh':'https://www.cgminfo.nic.in/','Uttarakhand':'https://www.uiip.co.in/','NCR':'https://dipp.gov.in/','Delhi':'https://ditt.delhi.gov.in/','CBIC':'https://www.cbic.gov.in/','GST':'https://www.gst.gov.in/','Income Tax':'https://www.incometax.gov.in/','RBI':'https://www.rbi.org.in/','FEMA':'https://www.rbi.org.in/','Companies Act':'https://www.mca.gov.in/','MCA':'https://www.mca.gov.in/','Ministry of Finance':'https://finmin.nic.in/','Ministry of Commerce':'https://commerce.gov.in/','Labour':'https://labour.gov.in/','EPF':'https://www.epfindia.gov.in/','ESIC':'https://www.esic.in/','GIFT City':'https://giftcity.in/','NASSCOM':'https://nasscom.in/','SIDBI':'https://www.sidbi.in/','MSDE':'https://www.msde.gov.in/','DGT':'https://dgt.gov.in/','Apprenticeship':'https://www.apprenticeship.gov.in/','Skill':'https://www.skillindiadigital.gov.in/','NSDC':'https://nsdcindia.org/','PMGDISHA':'https://www.pmgdisha.in/','PLI':'https://pli.gov.in/','Make in India':'https://www.makeinindia.com/','Digital India':'https://www.digitalindia.gov.in/','EXIM':'https://www.eximbankindia.in/'};
         var link='';
@@ -2067,7 +2170,10 @@ function renderBlueprint(bp){
         // Fallback: pre-search the exact scheme name on Google so user lands on relevant results
         if(!link)link='https://www.google.com/search?q='+encodeURIComponent(g.scheme+' India government scheme eligibility apply');
         var applyBtn=link?'<a href="'+link+'" target="_blank" rel="noopener" style="display:inline-block;margin-top:0.6rem;padding:0.3rem 0.8rem;background:rgba(40,168,136,0.15);border:1px solid rgba(40,168,136,0.4);border-radius:6px;color:var(--teal);font-size:0.72rem;font-weight:700;letter-spacing:0.05em;text-decoration:none">→ Apply / Learn More</a>':'';
-        return'<div class="incentive-card"><div class="incentive-scheme">'+g.scheme+'</div><div class="incentive-agency">'+g.agency+'</div><div class="incentive-benefit">'+g.benefit+'</div><div class="incentive-elig">Eligibility: '+g.eligibility+'</div>'+applyBtn+'</div>';
+        var priorityLabel=g.priority==='central'?'CENTRAL — GOVT OF INDIA':g.priority==='state'?'STATE POLICY':'GST / INDIRECT TAX';
+        var priorityCls=g.priority==='central'?'central':g.priority==='state'?'state':'gst';
+        var valueHtml=g.est_value_usd>0?'<div class="incentive-value">Est. 5-yr benefit: '+fmt(g.est_value_usd)+'</div>':'';
+        return'<div class="incentive-card"><div class="incentive-priority '+priorityCls+'">'+priorityLabel+'</div><div class="incentive-scheme">'+g.scheme+'</div><div class="incentive-agency">'+g.agency+'</div><div class="incentive-benefit">'+g.benefit+'</div>'+valueHtml+'<div class="incentive-elig">Eligibility: '+g.eligibility+'</div>'+applyBtn+'</div>';
       }).join('')+'</div>';
     incWrap.style.display='block';
   } else { incWrap.style.display='none'; }
