@@ -2708,6 +2708,7 @@ currentYear+' INDIA COST BENCHMARKS (use these as base, adjust for city tier and
       pithonix_fee_high:Math.round(((bp.setup_budget_breakdown||[]).find(function(b){return b.category&&b.category.toLowerCase().includes('pithonix');})||{cost_usd:0}).cost_usd*1.15),
       line_items:(bp.setup_budget_breakdown||[]).map(function(b){return{category:b.category,client_usd:b.cost_usd,low_usd:Math.round(b.cost_usd*0.85),high_usd:Math.round(b.cost_usd*1.15)};})
     };
+    simData.blueprint=bp;
     renderBlueprint(bp);
   }catch(e){
     console.error(e);
@@ -2875,7 +2876,8 @@ async function submitLead(){
       internal_yr1_range:'$'+(simData.internalVariance&&simData.internalVariance.yr1_low?simData.internalVariance.yr1_low.toLocaleString():'-')+' – $'+(simData.internalVariance&&simData.internalVariance.yr1_high?simData.internalVariance.yr1_high.toLocaleString():'-'),
       internal_yr2_range:'$'+(simData.internalVariance&&simData.internalVariance.yr2_low?simData.internalVariance.yr2_low.toLocaleString():'-')+' – $'+(simData.internalVariance&&simData.internalVariance.yr2_high?simData.internalVariance.yr2_high.toLocaleString():'-'),
       internal_pithonix_fee_range:'$'+(simData.internalVariance&&simData.internalVariance.pithonix_fee_low?simData.internalVariance.pithonix_fee_low.toLocaleString():'-')+' – $'+(simData.internalVariance&&simData.internalVariance.pithonix_fee_high?simData.internalVariance.pithonix_fee_high.toLocaleString():'-'),
-      internal_line_items:JSON.stringify(simData.internalVariance&&simData.internalVariance.line_items||[])
+      internal_line_items:JSON.stringify(simData.internalVariance&&simData.internalVariance.line_items||[]),
+      blueprint:JSON.stringify(simData.blueprint||{})
     })});
   }catch(e){}
   document.getElementById('lead-form-area').innerHTML='<div style="color:var(--teal);font-size:0.95rem;padding:1rem 0">✓ Sent! We\'ll be in touch within 24 hours.</div>';
