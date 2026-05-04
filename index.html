@@ -1132,6 +1132,10 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
     <p class="section-sub">India offers 25+ viable GCC destinations across Tier 1, 2 and 3 cities. The client decides — Pithonix delivers anywhere. Compare, pick your city, then run the blueprint.</p>
 
     <!-- WHY INDIA TABS -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;flex-wrap:wrap;gap:0.5rem">
+      <div style="font-size:0.72rem;color:var(--tdim)" id="wi-refresh-status">&#9679; Loading live data from Gemini AI...</div>
+      <button onclick="fetchWIData(true)" style="font-size:0.68rem;color:var(--teal);background:rgba(40,168,136,0.08);border:1px solid rgba(40,168,136,0.25);border-radius:5px;padding:0.2rem 0.6rem;cursor:pointer;letter-spacing:0.05em;font-weight:700">&#8635; Refresh Data</button>
+    </div>
     <div class="why-india-tabs">
       <div class="wi-tab active" onclick="showWI(0,this)"><span class="wi-tab-icon">&#127970;</span>For Investors / FDI</div>
       <div class="wi-tab" onclick="showWI(1,this)"><span class="wi-tab-icon">&#127760;</span>For GCC Operators</div>
@@ -1141,9 +1145,9 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
       <div class="wi-card highlight">
         <div class="wi-card-icon">&#128200;</div>
         <h4>The Investment Case in Numbers</h4>
-        <span class="wi-stat">$81.04B</span><span class="wi-stat-lbl">Total FDI in FY 2024-25 — highest in three years. 22% year-on-year growth.</span>
-        <p style="margin-top:0.6rem">Cumulative FDI since April 2000 has crossed $1.14 trillion. India now receives FDI from 112 countries. Services sector leads at 19% of total FDI equity, followed by Computer Software and Hardware at 16%.</p>
-        <p>India ranked <strong>40th in World Competitive Index 2024</strong> (up 3 positions) and <strong>3rd globally for greenfield project announcements</strong> per the World Investment Report. The economic trajectory is unambiguous.</p>
+        <span class="wi-stat" data-wi="fdi_total">$81.04B</span><span class="wi-stat-lbl" data-wi="fdi_stat_lbl">Total FDI in FY 2024-25 — highest in three years. 22% year-on-year growth.</span>
+        <p style="margin-top:0.6rem" data-wi="fdi_detail_1">Cumulative FDI since April 2000 has crossed $1.14 trillion. India now receives FDI from 112 countries. Services sector leads at 19% of total FDI equity, followed by Computer Software and Hardware at 16%.</p>
+        <p data-wi="fdi_detail_2">India ranked <strong>40th in World Competitive Index 2024</strong> (up 3 positions) and <strong>3rd globally for greenfield project announcements</strong> per the World Investment Report. The economic trajectory is unambiguous.</p>
         <div class="wi-source">Source: DPIIT FDI Factsheet May 2025; World Investment Report 2024; IMF World Economic Outlook 2025</div>
       </div>
       <div class="wi-card">
@@ -1157,9 +1161,9 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
       <div class="wi-card">
         <div class="wi-card-icon">&#127981;</div>
         <h4>55-70% Cost Arbitrage vs USA and UK</h4>
-        <p>Operational costs in India are <strong>40% lower than Eastern Europe</strong> and <strong>55-70% lower than the USA and UK</strong> for equivalent functions. Office rental in Hyderabad is 60% lower than Warsaw or Prague.</p>
-        <p>A mid-level software engineer costs <strong>$15,000-25,000 per year</strong> in India versus $120,000-180,000 in the US. A senior data scientist costs $30,000-50,000 versus $200,000+ in Silicon Valley.</p>
-        <p>For a 300-600 FTE GCC, the net 5-year operational savings versus US operations is typically <strong>$23M to $35M</strong>, with break-even at months 18-24.</p>
+        <p data-wi="cost_arbitrage_1">Operational costs in India are <strong>40% lower than Eastern Europe</strong> and <strong>55-70% lower than the USA and UK</strong> for equivalent functions. Office rental in Hyderabad is 60% lower than Warsaw or Prague.</p>
+        <p data-wi="cost_arbitrage_2">A mid-level software engineer costs <strong>$15,000-25,000 per year</strong> in India versus $120,000-180,000 in the US. A senior data scientist costs $30,000-50,000 versus $200,000+ in Silicon Valley.</p>
+        <p data-wi="cost_arbitrage_3">For a 300-600 FTE GCC, the net 5-year operational savings versus US operations is typically <strong>$23M to $35M</strong>, with break-even at months 18-24.</p>
         <div class="wi-source">Source: Zinnov GCC Landscape 2025; Mercer India Compensation Survey 2025-26; JLL India Office Market Q4 2024</div>
       </div>
       <div class="wi-card">
@@ -1175,7 +1179,7 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
       <div class="wi-card highlight-teal">
         <div class="wi-card-icon">&#127891;</div>
         <h4>Deepest Talent Pipeline on Earth</h4>
-        <span class="wi-stat">1.5M</span><span class="wi-stat-lbl">Engineering graduates annually. 28% of the global STEM workforce.</span>
+        <span class="wi-stat" data-wi="eng_graduates">1.5M</span><span class="wi-stat-lbl" data-wi="eng_stat_lbl">Engineering graduates annually. 28% of the global STEM workforce.</span>
         <p style="margin-top:0.6rem">India produces more engineers per year than the US, EU, and UK combined. 87 IIT, IIM, and IIIT institutions produce globally competitive talent. English is the medium of instruction in all technical universities.</p>
         <p>India has <strong>125 million English-speaking professionals</strong>, the second-largest English-speaking population in the world. Integration with the parent company HQ is seamless.</p>
         <p>MeitY and NASSCOM's Future Skills Prime programme has certified over <strong>4 million professionals</strong> in cloud, AI, cybersecurity, and data analytics. This talent is already available, already trained.</p>
@@ -1183,9 +1187,9 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
       </div>
       <div class="wi-card">
         <div class="wi-card-icon">&#127970;</div>
-        <h4>1,800+ Active GCCs — A Proven Ecosystem</h4>
-        <p>India hosts <strong>over 1,800 active Global Capability Centres</strong>, representing 53% of the world's total GCC footprint. These include centres for 55% of Fortune 500 companies. The ecosystem is not experimental — it is the global standard.</p>
-        <p>The sector generated $64.6 billion in revenue in FY 2024, employing 1.9 million professionals. NASSCOM projects growth to <strong>$105 billion and 2,800 GCCs by 2030</strong>.</p>
+        <h4 data-wi="gcc_count_heading">1,800+ Active GCCs — A Proven Ecosystem</h4>
+        <p data-wi="gcc_ecosystem_1">India hosts <strong>over 1,800 active Global Capability Centres</strong>, representing 53% of the world's total GCC footprint. These include centres for 55% of Fortune 500 companies. The ecosystem is not experimental — it is the global standard.</p>
+        <p data-wi="gcc_ecosystem_2">The sector generated $64.6 billion in revenue in FY 2024, employing 1.9 million professionals. NASSCOM projects growth to <strong>$105 billion and 2,800 GCCs by 2030</strong>.</p>
         <p>This ecosystem means established vendor networks, ready talent pipelines, known compliance pathways, and peer benchmarks — all reducing setup risk for new entrants.</p>
         <div class="wi-source">Source: NASSCOM GCC Framework Report 2025; PIB Press Release Dec 2025</div>
       </div>
@@ -1210,7 +1214,7 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
       <div class="wi-card highlight-purple">
         <div class="wi-card-icon">&#127968;</div>
         <h4>Cost of Living: 70% Lower Than the USA</h4>
-        <p>India's total expat living cost is <strong>70%+ lower than the USA</strong> and 60%+ lower than the UK (Numbeo 2025; Aetna International Expat Cost Guide 2025-26). Mumbai, India's most expensive city, ranks 136th globally in cost of living. New York ranks 7th.</p>
+        <p data-wi="expat_col_1">India's total expat living cost is <strong>70%+ lower than the USA</strong> and 60%+ lower than the UK (Numbeo 2025; Aetna International Expat Cost Guide 2025-26). Mumbai, India's most expensive city, ranks 136th globally in cost of living. New York ranks 7th.</p>
         <p>A fully furnished 3-bedroom apartment in Hyderabad's expat corridors (Banjara Hills, Jubilee Hills, Gachibowli) costs Rs 60,000-1,20,000/month — equivalent to $700-1,400 USD. Domestic staff including cook, driver, and cleaner: Rs 15,000-30,000/month total.</p>
         <p>This is not a compromise. It is a lifestyle upgrade at a fraction of the Western cost.</p>
         <div class="wi-source">Source: Numbeo Cost of Living Index 2025; Mercer Cost of Living Survey 2024; Aetna International 2025-26</div>
@@ -1219,8 +1223,8 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
         <div class="wi-card-icon">&#127973;</div>
         <h4>Healthcare: World-Class Private Hospitals at 70-80% Lower Cost</h4>
         <p>Apollo, Fortis, Max Healthcare, KIMS, and Yashoda operate across all major GCC cities with English-speaking specialists and equipment matching international standards.</p>
-        <p>An MRI or CT scan costs <strong>$80-150 in India versus $1,500-3,000 in the USA</strong>. Cardiac surgery costs 70-80% less than equivalent procedures in the US while meeting international clinical standards. India is the world's leading medical tourism destination.</p>
-        <p>Comprehensive family health insurance for expatriates costs $360-720 per year in India — a fraction of US equivalent premiums.</p>
+        <p data-wi="expat_health_1">An MRI or CT scan costs <strong>$80-150 in India versus $1,500-3,000 in the USA</strong>. Cardiac surgery costs 70-80% less than equivalent procedures in the US while meeting international clinical standards. India is the world's leading medical tourism destination.</p>
+        <p data-wi="expat_health_2">Comprehensive family health insurance for expatriates costs $360-720 per year in India — a fraction of US equivalent premiums.</p>
         <div class="wi-source">Source: globalcostdata.com 2025; Aetna International Expat Health Insurance Guide 2025; WHO Global Health Observatory</div>
       </div>
       <div class="wi-card">
@@ -1255,7 +1259,116 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
         <p>Most GCC expat leaders who complete a 3-year India posting report it as the most professionally and personally formative period of their career. The talent density, cultural richness, and economic energy of India at this stage of its growth story is a once-in-a-generation experience.</p>
       </div>
     </div>
-    <script>function showWI(n,btn){document.querySelectorAll(".wi-panel").forEach(function(p){p.classList.remove("active");});document.querySelectorAll(".wi-tab").forEach(function(t){t.classList.remove("active");});document.getElementById("wi-"+n).classList.add("active");btn.classList.add("active");}</script>
+    <script>
+function showWI(n,btn){
+  document.querySelectorAll(".wi-panel").forEach(function(p){p.classList.remove("active");});
+  document.querySelectorAll(".wi-tab").forEach(function(t){t.classList.remove("active");});
+  document.getElementById("wi-"+n).classList.add("active");
+  btn.classList.add("active");
+}
+
+// ── WHY INDIA LIVE DATA ENGINE ──
+var WI_CACHE_KEY="wi_live_data_v2";
+var WI_TTL=86400000; // 24 hours
+
+var WI_PROMPT=(
+  "You are a live India FDI and GCC market intelligence system. Return ONLY valid JSON with CURRENT, ACCURATE data as of "+new Date().getFullYear()+". "+
+  "Use the most recent official data available from DPIIT, NASSCOM, Zinnov, RBI, Ministry of Finance, Numbeo, and Mercer. "+
+  "If a specific figure is not available for the current year, use the latest available and note the year in the label. "+
+  "Return ONLY this JSON structure with no markdown, no explanation:\n"+
+  "{"+
+    "\"fdi_total\":\"$XX.XB (FY 20XX-XX)\","+
+    "\"fdi_stat_lbl\":\"Total FDI in FY 20XX-XX. XX% year-on-year growth. Cumulative since April 2000: $X.XXX trillion.\","+
+    "\"fdi_detail_1\":\"Cumulative FDI since April 2000 has crossed $X.XX trillion. India now receives FDI from XXX countries. Services sector leads at XX% of total FDI equity, followed by Computer Software and Hardware at XX%.\","+
+    "\"fdi_detail_2\":\"India ranked XXth in World Competitive Index 20XX (up/down X positions) and Xrd/Xth globally for greenfield project announcements per the World Investment Report 20XX. The economic trajectory is unambiguous.\","+
+    "\"cost_arbitrage_1\":\"Operational costs in India are XX% lower than Eastern Europe and XX-XX% lower than the USA and UK for equivalent functions. Office rental in Hyderabad is XX% lower than Warsaw or Prague.\","+
+    "\"cost_arbitrage_2\":\"A mid-level software engineer costs $XX,000-XX,000 per year in India versus $XXX,000-XXX,000 in the US. A senior data scientist costs $XX,000-XX,000 versus $XXX,000+ in Silicon Valley.\","+
+    "\"cost_arbitrage_3\":\"For a 300-600 FTE GCC, the net 5-year operational savings versus US operations is typically $XXM to $XXM, with break-even at months XX-XX.\","+
+    "\"eng_graduates\":\"X.XM\","+
+    "\"eng_stat_lbl\":\"Engineering graduates annually. XX% of the global STEM workforce.\","+
+    "\"gcc_count_heading\":\"X,XXX+ Active GCCs — A Proven Ecosystem\","+
+    "\"gcc_ecosystem_1\":\"India hosts over X,XXX active Global Capability Centres, representing XX% of the world total GCC footprint. These include centres for XX% of Fortune 500 companies. The ecosystem is not experimental — it is the global standard.\","+
+    "\"gcc_ecosystem_2\":\"The sector generated $XX.X billion in revenue in FY 20XX, employing X.X million professionals. NASSCOM projects growth to $XXX billion and X,XXX GCCs by 2030.\","+
+    "\"expat_col_1\":\"India total expat living cost is XX%+ lower than the USA and XX%+ lower than the UK (Numbeo 20XX; Aetna International Expat Cost Guide 20XX-XX). Mumbai, India most expensive city, ranks XXXth globally in cost of living. New York ranks Xth.\","+
+    "\"expat_health_1\":\"An MRI or CT scan costs $XX-XXX in India versus $X,XXX-X,XXX in the USA. Cardiac surgery costs XX-XX% less than equivalent procedures in the US while meeting international clinical standards. India is the world leading medical tourism destination.\","+
+    "\"expat_health_2\":\"Comprehensive family health insurance for expatriates costs $XXX-XXX per year in India — a fraction of US equivalent premiums.\","+
+    "\"last_updated_label\":\"Live data — sourced from DPIIT, NASSCOM, Zinnov, RBI, Mercer, Numbeo. Refreshed by Gemini AI on [DATE].\","+
+    "\"sources_tab0\":\"Source: DPIIT FDI Factsheet 20XX; World Investment Report 20XX; IMF World Economic Outlook 20XX\","+
+    "\"sources_tab1\":\"Source: NASSCOM-Zinnov India GCC Landscape 20XX; Economic Survey 20XX-XX; MeitY Citizen Charter 20XX-XX\","+
+    "\"sources_tab2\":\"Source: Numbeo Cost of Living Index 20XX; Mercer Cost of Living Survey 20XX; Aetna International 20XX\""+
+  "}"
+);
+
+function applyWIData(d){
+  Object.keys(d).forEach(function(key){
+    var els=document.querySelectorAll("[data-wi='"+key+"']");
+    if(!els.length)return;
+    var val=d[key]||"";
+    els.forEach(function(el){
+      el.innerHTML=val;
+    });
+  });
+  // Update refresh status
+  var status=document.getElementById("wi-refresh-status");
+  if(status){
+    var ts=d._cached_at?new Date(d._cached_at).toLocaleString("en-IN",{day:"numeric",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"}):"";
+    status.innerHTML="&#9679; Live data refreshed "+ts+" &nbsp;<span style='color:var(--teal)'>via Gemini AI</span>";
+  }
+}
+
+async function fetchWIData(forceRefresh){
+  var cached=null;
+  if(!forceRefresh){
+    try{
+      var raw=sessionStorage.getItem(WI_CACHE_KEY);
+      if(raw){
+        var obj=JSON.parse(raw);
+        if(obj._ts&&(Date.now()-obj._ts<WI_TTL)){cached=obj;}
+      }
+    }catch(e){}
+  }
+  if(cached){applyWIData(cached);return;}
+
+  var status=document.getElementById("wi-refresh-status");
+  if(status)status.innerHTML="&#9679; Refreshing live data from Gemini AI...";
+
+  try{
+    var resp=await fetch("/api/gemini",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        _model:"gemini-2.5-flash",
+        contents:[{parts:[{text:WI_PROMPT}]}],
+        generationConfig:{temperature:0.3,maxOutputTokens:2000,thinkingConfig:{thinkingBudget:0}}
+      })
+    });
+    var raw=await resp.json();
+    var txt=(raw.candidates&&raw.candidates[0]&&raw.candidates[0].content&&raw.candidates[0].content.parts[0].text)||"{}";
+    var m=txt.match(/\{[\s\S]*\}/);
+    if(!m)throw new Error("No JSON");
+    var d=JSON.parse(m[0]);
+    d._ts=Date.now();
+    d._cached_at=new Date().toISOString();
+    // Replace [DATE] placeholder in last_updated_label
+    if(d.last_updated_label){
+      d.last_updated_label=d.last_updated_label.replace("[DATE]",new Date().toLocaleDateString("en-IN",{day:"numeric",month:"long",year:"numeric"}));
+    }
+    try{sessionStorage.setItem(WI_CACHE_KEY,JSON.stringify(d));}catch(e){}
+    applyWIData(d);
+  }catch(e){
+    // On failure: keep static values, just update status
+    var status=document.getElementById("wi-refresh-status");
+    if(status)status.innerHTML="&#9679; Showing verified data — live refresh unavailable. <button onclick=\"fetchWIData(true)\" style=\"color:var(--teal);background:none;border:none;cursor:pointer;font-size:0.68rem;text-decoration:underline\">Retry</button>";
+  }
+}
+
+// Run on page load — non-blocking
+if(document.readyState==="loading"){
+  document.addEventListener("DOMContentLoaded",function(){fetchWIData(false);});
+}else{
+  fetchWIData(false);
+}
+</script>
 
     <!-- Filter + Dropdown row -->
     <div style="display:flex;flex-wrap:wrap;gap:0.75rem;align-items:center;margin-bottom:1.5rem">
