@@ -1371,6 +1371,10 @@ if(document.readyState==="loading"){
 </script>
 
     <!-- Filter + Dropdown row -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.6rem;flex-wrap:wrap;gap:0.5rem">
+      <div style="font-size:0.7rem;color:var(--tdim)" id="city-data-status">&#9679; Loading live salary &amp; cost data...</div>
+      <button onclick="fetchCityData(true)" style="font-size:0.68rem;color:var(--teal);background:rgba(40,168,136,0.08);border:1px solid rgba(40,168,136,0.25);border-radius:5px;padding:0.2rem 0.6rem;cursor:pointer;letter-spacing:0.05em;font-weight:700">&#8635; Refresh City Data</button>
+    </div>
     <div style="display:flex;flex-wrap:wrap;gap:0.75rem;align-items:center;margin-bottom:1.5rem">
       <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
         <button class="city-tier-btn active" onclick="filterCities('all',this)">All Cities</button>
@@ -2280,7 +2284,7 @@ function renderCities(tierFilter){
     '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem">'+
     '<div><h3 style="margin:0 0 0.2rem">'+c.name+'</h3><div class="city-state">'+c.state+'</div></div>'+
     tierBadge+'</div>'+
-    c.stats.map(function(s){return'<div class="city-stat"><span class="cs-k">'+s[0]+'</span><span class="cs-v">'+s[1]+'</span></div>';}).join('')+
+    c.stats.map(function(s){var ck=c.name.replace(/[^a-z]/gi,'').toLowerCase();var da='';if(s[0]==='Avg Eng Salary')da=' data-city-stat="'+ck+'_salary"';if(s[0]==='Office Cost')da=' data-city-stat="'+ck+'_office_cost"';return'<div class="city-stat"><span class="cs-k">'+s[0]+'</span><span class="cs-v"'+da+'>'+s[1]+'</span></div>';}).join('')+
     (c.govtSchemes&&c.govtSchemes.length?'<div class="city-schemes">'+c.govtSchemes.map(function(s){return'<span class="city-scheme-pill '+s.type+'">'+s.name+'</span>';}).join('')+'</div>':'')+
     '<div class="city-tags">'+c.tags.map(function(t){return'<span class="city-tag-pill">'+t+'</span>';}).join('')+'</div>'+
     '<button onclick="runSimulatorForCity(\''+c.name+'\')" style="width:100%;margin-top:0.75rem;padding:0.45rem;background:rgba(232,184,75,0.12);border:1px solid rgba(232,184,75,0.35);border-radius:7px;color:var(--gold);font-size:0.78rem;font-weight:700;cursor:pointer;letter-spacing:0.05em" onmouseover="this.style.background=\'rgba(232,184,75,0.25)\'" onmouseout="this.style.background=\'rgba(232,184,75,0.12)\'">Build Blueprint for '+c.name+' →</button>'+
@@ -2325,6 +2329,104 @@ function runSimulatorForCity(cityName){
 }
 
 renderCities('all');
+
+// ── CITY LIVE DATA ENGINE ──
+var CITY_CACHE_KEY="city_live_data_v1";
+var CITY_TTL=86400000; // 24 hours
+
+var CITY_PROMPT=(
+  "You are a live India GCC city market intelligence system. Return ONLY valid JSON with CURRENT salary and office rental data as of "+new Date().getFullYear()+". "+
+  "Use the latest available data from NASSCOM, JLL, CBRE, Colliers, Zinnov, PayScale India, AmbitionBox, and Glassdoor India. "+
+  "All salaries are in Indian Rupees Lakhs per Annum (L/yr). Office costs are INR per sqft per month. "+
+  "Return ONLY this JSON with no markdown, no explanation:\n"+
+  "{"+
+  "\"hyderabad_salary\":\"XX-XXL/yr\",\"hyderabad_office_cost\":\"XX-XX/sqft\","+
+  "\"bengaluru_salary\":\"XX-XXL/yr\",\"bengaluru_office_cost\":\"XX-XX/sqft\","+
+  "\"pune_salary\":\"XX-XXL/yr\",\"pune_office_cost\":\"XX-XX/sqft\","+
+  "\"chennai_salary\":\"XX-XXL/yr\",\"chennai_office_cost\":\"XX-XX/sqft\","+
+  "\"ncrdelhi_salary\":\"XX-XXL/yr\",\"ncrdelhi_office_cost\":\"XX-XX/sqft\","+
+  "\"mumbai_salary\":\"XX-XXL/yr\",\"mumbai_office_cost\":\"XX-XX/sqft\","+
+  "\"ahmedabad_salary\":\"XX-XXL/yr\",\"ahmedabad_office_cost\":\"XX-XX/sqft\","+
+  "\"kochi_salary\":\"XX-XXL/yr\",\"kochi_office_cost\":\"XX-XX/sqft\","+
+  "\"jaipur_salary\":\"XX-XXL/yr\",\"jaipur_office_cost\":\"XX-XX/sqft\","+
+  "\"indore_salary\":\"XX-XXL/yr\",\"indore_office_cost\":\"XX-XX/sqft\","+
+  "\"chandigarh_salary\":\"XX-XXL/yr\",\"chandigarh_office_cost\":\"XX-XX/sqft\","+
+  "\"coimbatore_salary\":\"XX-XXL/yr\",\"coimbatore_office_cost\":\"XX-XX/sqft\","+
+  "\"nagpur_salary\":\"XX-XXL/yr\",\"nagpur_office_cost\":\"XX-XX/sqft\","+
+  "\"visakhapatnam_salary\":\"XX-XXL/yr\",\"visakhapatnam_office_cost\":\"XX-XX/sqft\","+
+  "\"bhubaneswar_salary\":\"XX-XXL/yr\",\"bhubaneswar_office_cost\":\"XX-XX/sqft\","+
+  "\"thiruvananthapuram_salary\":\"XX-XXL/yr\",\"thiruvananthapuram_office_cost\":\"XX-XX/sqft\","+
+  "\"mysuru_salary\":\"XX-XXL/yr\",\"mysuru_office_cost\":\"XX-XX/sqft\","+
+  "\"vadodara_salary\":\"XX-XXL/yr\",\"vadodara_office_cost\":\"XX-XX/sqft\","+
+  "\"lucknow_salary\":\"XX-XXL/yr\",\"lucknow_office_cost\":\"XX-XX/sqft\","+
+  "\"bhopal_salary\":\"XX-XXL/yr\",\"bhopal_office_cost\":\"XX-XX/sqft\","+
+  "\"mangaluru_salary\":\"XX-XXL/yr\",\"mangaluru_office_cost\":\"XX-XX/sqft\","+
+  "\"raipur_salary\":\"XX-XXL/yr\",\"raipur_office_cost\":\"XX-XX/sqft\","+
+  "\"patna_salary\":\"XX-XXL/yr\",\"patna_office_cost\":\"XX-XX/sqft\","+
+  "\"guwahati_salary\":\"XX-XXL/yr\",\"guwahati_office_cost\":\"XX-XX/sqft\","+
+  "\"dehradun_salary\":\"XX-XXL/yr\",\"dehradun_office_cost\":\"XX-XX/sqft\""+
+  "}"
+);
+
+function applyCityData(d){
+  document.querySelectorAll("[data-city-stat]").forEach(function(el){
+    var key=el.getAttribute("data-city-stat");
+    if(d[key])el.innerHTML=d[key];
+  });
+  var status=document.getElementById("city-data-status");
+  if(status){
+    var ts=d._cached_at?new Date(d._cached_at).toLocaleString("en-IN",{day:"numeric",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"}):"";
+    status.innerHTML="&#9679; Live salary &amp; cost data refreshed "+ts+" &nbsp;<span style='color:var(--teal)'>via Gemini AI</span>";
+  }
+}
+
+async function fetchCityData(forceRefresh){
+  var cached=null;
+  if(!forceRefresh){
+    try{
+      var raw=sessionStorage.getItem(CITY_CACHE_KEY);
+      if(raw){
+        var obj=JSON.parse(raw);
+        if(obj._ts&&(Date.now()-obj._ts<CITY_TTL)){cached=obj;}
+      }
+    }catch(e){}
+  }
+  if(cached){applyCityData(cached);return;}
+
+  var status=document.getElementById("city-data-status");
+  if(status)status.innerHTML="&#9679; Refreshing live salary &amp; cost data...";
+
+  try{
+    var resp=await fetch("/api/gemini",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        _model:"gemini-2.5-flash",
+        contents:[{parts:[{text:CITY_PROMPT}]}],
+        generationConfig:{temperature:0.2,maxOutputTokens:2000,thinkingConfig:{thinkingBudget:0}}
+      })
+    });
+    var raw=await resp.json();
+    var txt=(raw.candidates&&raw.candidates[0]&&raw.candidates[0].content&&raw.candidates[0].content.parts[0].text)||"{}";
+    var m=txt.match(/\{[\s\S]*\}/);
+    if(!m)throw new Error("No JSON");
+    var d=JSON.parse(m[0]);
+    d._ts=Date.now();
+    d._cached_at=new Date().toISOString();
+    try{sessionStorage.setItem(CITY_CACHE_KEY,JSON.stringify(d));}catch(e){}
+    applyCityData(d);
+  }catch(e){
+    var status=document.getElementById("city-data-status");
+    if(status)status.innerHTML="&#9679; Showing verified data — live refresh unavailable. <button onclick=\"fetchCityData(true)\" style=\"color:var(--teal);background:none;border:none;cursor:pointer;font-size:0.68rem;text-decoration:underline\">Retry</button>";
+  }
+}
+
+// Run on page load after cities are rendered — non-blocking
+if(document.readyState==="loading"){
+  document.addEventListener("DOMContentLoaded",function(){fetchCityData(false);});
+}else{
+  fetchCityData(false);
+}
 
 // ── MARKET NUMBERS ──
 var marketData=[
