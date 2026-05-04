@@ -401,7 +401,7 @@ section{position:relative;z-index:2;padding:6rem 0}
 .yearly-focus{font-size:0.78rem;color:var(--tmed)}
 /* ── FDI GOVT HERO SECTION ── */
 #fdi-hero{background:linear-gradient(160deg,rgba(10,9,20,0.0) 0%,rgba(30,20,60,0.5) 100%);border-top:1px solid rgba(232,184,75,0.12);border-bottom:1px solid rgba(232,184,75,0.12);padding:4rem 0}
-.fdi-hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.fdi-hero-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:3rem;align-items:start}
 @media(max-width:768px){.fdi-hero-grid{grid-template-columns:1fr}}
 .fdi-hero-left h2{font-size:clamp(1.6rem,3vw,2.4rem);margin-bottom:0.75rem}
 .fdi-hero-left p{color:var(--tmed);font-size:0.95rem;line-height:1.7;margin-bottom:1.5rem}
@@ -409,13 +409,25 @@ section{position:relative;z-index:2;padding:6rem 0}
 .fdi-stat{background:rgba(232,184,75,0.05);border:1px solid rgba(232,184,75,0.2);border-radius:10px;padding:1rem;text-align:center}
 .fdi-stat-num{font-family:'JetBrains Mono',monospace;font-size:1.3rem;font-weight:700;color:var(--gold);display:block;margin-bottom:0.2rem}
 .fdi-stat-lbl{font-size:0.7rem;color:var(--tmed);letter-spacing:0.5px}
-.fdi-benefit-stack{display:flex;flex-direction:column;gap:0.75rem}
-.fdi-benefit-card{background:rgba(255,255,255,0.02);border:1px solid var(--bd);border-radius:10px;padding:1rem 1.2rem;display:flex;gap:1rem;align-items:flex-start;transition:border-color 0.2s}
-.fdi-benefit-card:hover{border-color:rgba(40,168,136,0.4)}
+.fdi-benefit-stack{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;align-content:start}
+@media(max-width:960px){.fdi-benefit-stack{grid-template-columns:1fr}}
+/* Accordion benefit cards */
+.fdi-benefit-card{background:rgba(255,255,255,0.02);border:1px solid var(--bd);border-radius:10px;overflow:hidden;transition:border-color 0.2s,box-shadow 0.2s}
 .fdi-benefit-card.central{border-left:3px solid var(--teal)}
 .fdi-benefit-card.state{border-left:3px solid var(--gold)}
 .fdi-benefit-card.labour{border-left:3px solid #b090e4}
-.fdi-benefit-icon{font-size:1.4rem;flex-shrink:0;margin-top:0.1rem}
+.fdi-benefit-card.open{border-color:rgba(40,168,136,0.4);box-shadow:0 4px 20px rgba(0,0,0,0.2)}
+.fdi-benefit-card.open.state{border-color:rgba(232,184,75,0.4)}
+.fdi-benefit-card.open.labour{border-color:rgba(136,96,212,0.4)}
+.fdi-acc-header{display:flex;align-items:center;gap:0.75rem;padding:0.85rem 1rem;cursor:pointer;user-select:none;transition:background 0.2s}
+.fdi-acc-header:hover{background:rgba(255,255,255,0.03)}
+.fdi-benefit-icon{font-size:1.2rem;flex-shrink:0}
+.fdi-acc-titles{flex:1;min-width:0}
+.fdi-acc-arrow{font-size:0.7rem;color:var(--tdim);flex-shrink:0;transition:transform 0.3s;margin-left:auto}
+.fdi-benefit-card.open .fdi-acc-arrow{transform:rotate(180deg)}
+.fdi-acc-body{display:none;padding:0 1rem 1rem 1rem;border-top:1px solid rgba(255,255,255,0.06)}
+.fdi-benefit-card.open .fdi-acc-body{display:block}
+.fdi-benefit-card.open{grid-column:1/-1}
 .fdi-benefit-body{}
 .fdi-benefit-title{font-size:0.88rem;font-weight:700;color:var(--txt);margin-bottom:0.2rem}
 .fdi-benefit-desc{font-size:0.78rem;color:var(--tmed);line-height:1.6;margin-bottom:0.5rem}
@@ -852,10 +864,18 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
         </div>
       </div>
       <div class="fdi-hero-right fdi-benefit-stack">
-        <div style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:1px;color:var(--tdim);margin-bottom:0.5rem">PRIORITISED BENEFIT STACK — LEGALLY CLAIMABLE BY YOUR GCC FROM DAY 1</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:1px;color:var(--tdim);margin-bottom:0.3rem;grid-column:1/-1">PRIORITISED BENEFIT STACK — LEGALLY CLAIMABLE BY YOUR GCC FROM DAY 1</div>
+        <div style="font-size:0.72rem;color:var(--tdim);margin-bottom:0.4rem;grid-column:1/-1">Click any card to read full details and access the official government portal.</div>
         <div class="fdi-benefit-card central">
-          <div class="fdi-benefit-icon">&#127968;</div>
-          <div class="fdi-benefit-body">
+          <div class="fdi-acc-header" onclick="this.parentElement.classList.toggle('open')">
+            <div class="fdi-benefit-icon">&#127968;</div>
+            <div class="fdi-acc-titles">
+              <div class="fdi-benefit-tag central" style="margin-bottom:0.2rem">CENTRAL — INCOME TAX ACT 2025</div>
+              <div class="fdi-benefit-title" style="margin:0;font-size:0.84rem;line-height:1.4">Section 10AA (Sec 144, ITA 2025) — SEZ Export Profit Tax Holiday</div>
+            </div>
+            <div class="fdi-acc-arrow">&#9660;</div>
+          </div>
+          <div class="fdi-acc-body">
             <div class="fdi-benefit-tag central">CENTRAL — INCOME TAX ACT 2025</div>
             <div class="fdi-benefit-title">Section 10AA (Sec 144, ITA 2025) — SEZ Export Profit Tax Holiday</div>
             <div class="fdi-benefit-desc">The most significant income tax benefit available to GCCs in India. A multi-stage tax holiday on all export profits earned by a unit operating within a notified Special Economic Zone.</div>
@@ -872,8 +892,15 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
           </div>
         </div>
         <div class="fdi-benefit-card central">
-          <div class="fdi-benefit-icon">&#127963;</div>
-          <div class="fdi-benefit-body">
+          <div class="fdi-acc-header" onclick="this.parentElement.classList.toggle('open')">
+            <div class="fdi-benefit-icon">&#127963;</div>
+            <div class="fdi-acc-titles">
+              <div class="fdi-benefit-tag central" style="margin-bottom:0.2rem">CENTRAL — STPI / MeitY</div>
+              <div class="fdi-benefit-title" style="margin:0;font-size:0.84rem;line-height:1.4">STPI Scheme — Zero Customs Duty, Single Window, 100% FDI Automatic Route</div>
+            </div>
+            <div class="fdi-acc-arrow">&#9660;</div>
+          </div>
+          <div class="fdi-acc-body">
             <div class="fdi-benefit-tag central">CENTRAL — STPI / MeitY</div>
             <div class="fdi-benefit-title">STPI Scheme — Zero Customs Duty, Single Window, 100% FDI Automatic Route</div>
             <div class="fdi-benefit-desc">The primary route for GCCs not located within an SEZ. Registration under the Software Technology Parks of India scheme confers a full Export Oriented Unit (EOU) framework with multiple stacked benefits.</div>
@@ -892,8 +919,15 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
           </div>
         </div>
         <div class="fdi-benefit-card central">
-          <div class="fdi-benefit-icon">&#128202;</div>
-          <div class="fdi-benefit-body">
+          <div class="fdi-acc-header" onclick="this.parentElement.classList.toggle('open')">
+            <div class="fdi-benefit-icon">&#128202;</div>
+            <div class="fdi-acc-titles">
+              <div class="fdi-benefit-tag central" style="margin-bottom:0.2rem">CENTRAL — IGST ACT 2017</div>
+              <div class="fdi-benefit-title" style="margin:0;font-size:0.84rem;line-height:1.4">Zero GST on Service Exports + Full Input Tax Credit Refund</div>
+            </div>
+            <div class="fdi-acc-arrow">&#9660;</div>
+          </div>
+          <div class="fdi-acc-body">
             <div class="fdi-benefit-tag central">CENTRAL — IGST ACT 2017</div>
             <div class="fdi-benefit-title">Zero GST on Service Exports + Full Input Tax Credit Refund</div>
             <div class="fdi-benefit-desc">Under Section 16 of the IGST Act 2017, all services exported to an overseas parent company are zero-rated. This means no GST on your primary revenue line, plus a full refund of all GST paid on inputs and input services.</div>
@@ -911,8 +945,15 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
           </div>
         </div>
         <div class="fdi-benefit-card central">
-          <div class="fdi-benefit-icon">&#128101;</div>
-          <div class="fdi-benefit-body">
+          <div class="fdi-acc-header" onclick="this.parentElement.classList.toggle('open')">
+            <div class="fdi-benefit-icon">&#128101;</div>
+            <div class="fdi-acc-titles">
+              <div class="fdi-benefit-tag central" style="margin-bottom:0.2rem">CENTRAL — INCOME TAX ACT 1961 / 2025</div>
+              <div class="fdi-benefit-title" style="margin:0;font-size:0.84rem;line-height:1.4">Section 80JJAA — 30% New Employee Cost Deduction for 3 Years</div>
+            </div>
+            <div class="fdi-acc-arrow">&#9660;</div>
+          </div>
+          <div class="fdi-acc-body">
             <div class="fdi-benefit-tag central">CENTRAL — INCOME TAX ACT 1961 / 2025</div>
             <div class="fdi-benefit-title">Section 80JJAA — 30% New Employee Cost Deduction for 3 Years</div>
             <div class="fdi-benefit-desc">A direct incentive for job creation. For every net new employee added to the payroll, the employer can claim a 30% deduction of that employee's cost for three consecutive assessment years, reducing taxable income during the critical ramp-up phase.</div>
@@ -929,8 +970,15 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
           </div>
         </div>
         <div class="fdi-benefit-card central">
-          <div class="fdi-benefit-icon">&#128300;</div>
-          <div class="fdi-benefit-body">
+          <div class="fdi-acc-header" onclick="this.parentElement.classList.toggle('open')">
+            <div class="fdi-benefit-icon">&#128300;</div>
+            <div class="fdi-acc-titles">
+              <div class="fdi-benefit-tag central" style="margin-bottom:0.2rem">CENTRAL — INCOME TAX ACT 1961 / 2025</div>
+              <div class="fdi-benefit-title" style="margin:0;font-size:0.84rem;line-height:1.4">Section 35 — Research and Development Weighted Deduction</div>
+            </div>
+            <div class="fdi-acc-arrow">&#9660;</div>
+          </div>
+          <div class="fdi-acc-body">
             <div class="fdi-benefit-tag central">CENTRAL — INCOME TAX ACT 1961 / 2025</div>
             <div class="fdi-benefit-title">Section 35 — Research and Development Weighted Deduction</div>
             <div class="fdi-benefit-desc">GCCs conducting approved in-house Research and Development are eligible for a weighted deduction on R&amp;D expenditure above the actual cost incurred. Particularly relevant for engineering GCCs, AI/ML centres, and GCCs with dedicated innovation labs.</div>
@@ -948,8 +996,15 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
           </div>
         </div>
         <div class="fdi-benefit-card central">
-          <div class="fdi-benefit-icon">&#9878;&#65039;</div>
-          <div class="fdi-benefit-body">
+          <div class="fdi-acc-header" onclick="this.parentElement.classList.toggle('open')">
+            <div class="fdi-benefit-icon">&#9878;&#65039;</div>
+            <div class="fdi-acc-titles">
+              <div class="fdi-benefit-tag central" style="margin-bottom:0.2rem">CENTRAL — INCOME TAX RULES 2026</div>
+              <div class="fdi-benefit-title" style="margin:0;font-size:0.84rem;line-height:1.4">Transfer Pricing Safe Harbour — 15.5% Margin, Rs 20 Billion Threshold (Budget 2026)</div>
+            </div>
+            <div class="fdi-acc-arrow">&#9660;</div>
+          </div>
+          <div class="fdi-acc-body">
             <div class="fdi-benefit-tag central">CENTRAL — INCOME TAX RULES 2026</div>
             <div class="fdi-benefit-title">Transfer Pricing Safe Harbour — 15.5% Margin, Rs 20 Billion Threshold (Budget 2026)</div>
             <div class="fdi-benefit-desc">All GCCs transact with their overseas parent via intercompany service agreements. These are subject to Indian transfer pricing rules. The Safe Harbour Rules eliminate transfer pricing disputes for GCCs that meet the prescribed benchmarks, significantly reducing compliance risk and tax exposure.</div>
@@ -967,8 +1022,15 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
           </div>
         </div>
         <div class="fdi-benefit-card labour">
-          <div class="fdi-benefit-icon">&#9878;&#65039;</div>
-          <div class="fdi-benefit-body">
+          <div class="fdi-acc-header" onclick="this.parentElement.classList.toggle('open')">
+            <div class="fdi-benefit-icon">&#9878;&#65039;</div>
+            <div class="fdi-acc-titles">
+              <div class="fdi-benefit-tag labour" style="margin-bottom:0.2rem">CENTRAL — MINISTRY OF LABOUR</div>
+              <div class="fdi-benefit-title" style="margin:0;font-size:0.84rem;line-height:1.4">Four Labour Codes — 29 Laws Consolidated (Effective 21 November 2025)</div>
+            </div>
+            <div class="fdi-acc-arrow">&#9660;</div>
+          </div>
+          <div class="fdi-acc-body">
             <div class="fdi-benefit-tag labour">CENTRAL — MINISTRY OF LABOUR</div>
             <div class="fdi-benefit-title">Four Labour Codes — 29 Laws Consolidated (Effective 21 November 2025)</div>
             <div class="fdi-benefit-desc">India's most significant labour law reform in its post-independence history. Effective 21 November 2025, 29 central labour laws were consolidated into four codes, dramatically reducing compliance complexity and giving GCCs operational flexibility that was previously unavailable.</div>
@@ -985,8 +1047,15 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
           </div>
         </div>
         <div class="fdi-benefit-card central">
-          <div class="fdi-benefit-icon">&#128308;</div>
-          <div class="fdi-benefit-body">
+          <div class="fdi-acc-header" onclick="this.parentElement.classList.toggle('open')">
+            <div class="fdi-benefit-icon">&#128308;</div>
+            <div class="fdi-acc-titles">
+              <div class="fdi-benefit-tag central" style="margin-bottom:0.2rem">CENTRAL — MeitY SCHEME</div>
+              <div class="fdi-benefit-title" style="margin:0;font-size:0.84rem;line-height:1.4">GENESIS &amp; EMC 2.0 — MeitY Plug-and-Play Infrastructure for GCCs</div>
+            </div>
+            <div class="fdi-acc-arrow">&#9660;</div>
+          </div>
+          <div class="fdi-acc-body">
             <div class="fdi-benefit-tag central">CENTRAL — MeitY SCHEME</div>
             <div class="fdi-benefit-title">GENESIS &amp; EMC 2.0 — MeitY Plug-and-Play Infrastructure for GCCs</div>
             <div class="fdi-benefit-desc">The Ministry of Electronics and Information Technology operates two flagship schemes directly supporting GCC establishment: GENESIS for startup-GCC co-creation and EMC 2.0 for plug-and-play physical infrastructure, particularly in Tier-2 cities.</div>
@@ -1001,8 +1070,15 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
           </div>
         </div>
         <div class="fdi-benefit-card state">
-          <div class="fdi-benefit-icon">&#127963;</div>
-          <div class="fdi-benefit-body">
+          <div class="fdi-acc-header" onclick="this.parentElement.classList.toggle('open')">
+            <div class="fdi-benefit-icon">&#127963;</div>
+            <div class="fdi-acc-titles">
+              <div class="fdi-benefit-tag state" style="margin-bottom:0.2rem">STATE POLICIES — CITY-SPECIFIC (STACKABLE ON ALL CENTRAL BENEFITS)</div>
+              <div class="fdi-benefit-title" style="margin:0;font-size:0.84rem;line-height:1.4">10 State GCC Policies: Capital Subsidy + Power Tariff + Stamp Duty + Employment Incentives</div>
+            </div>
+            <div class="fdi-acc-arrow">&#9660;</div>
+          </div>
+          <div class="fdi-acc-body">
             <div class="fdi-benefit-tag state">STATE POLICIES — CITY-SPECIFIC (STACKABLE ON ALL CENTRAL BENEFITS)</div>
             <div class="fdi-benefit-title">10 State GCC Policies: Capital Subsidy + Power Tariff + Stamp Duty + Employment Incentives</div>
             <div class="fdi-benefit-desc">Between 2024 and 2026, ten Indian states formally notified dedicated GCC policies. These are entirely stackable on top of all central government benefits listed above. A GCC can simultaneously claim STPI benefits, zero-GST treatment, Section 80JJAA, AND a state capital subsidy.</div>
