@@ -507,6 +507,25 @@ section{position:relative;z-index:2;padding:6rem 0}
 .pithonix-role h4{font-size:0.82rem;color:var(--purple);margin-bottom:0.4rem;letter-spacing:0.5px}
 .pithonix-role p{font-size:0.85rem;color:var(--tmed)}
 
+/* ── WHY INDIA ── */
+.why-india-tabs{display:flex;gap:0;border:1px solid var(--bd);border-radius:10px;overflow:hidden;margin-bottom:2rem;flex-wrap:wrap}
+.wi-tab{flex:1;padding:0.9rem 1rem;text-align:center;cursor:pointer;font-size:0.85rem;font-weight:700;color:var(--tdim);transition:all 0.2s;border-right:1px solid var(--bd);letter-spacing:0.02em;min-width:140px}
+.wi-tab:last-child{border-right:none}
+.wi-tab.active{background:rgba(232,184,75,0.08);color:var(--gold)}
+.wi-tab-icon{font-size:1.1rem;display:block;margin-bottom:0.2rem}
+.wi-panel{display:none;animation:fadeIn 0.3s ease}
+.wi-panel.active{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+@media(max-width:768px){.wi-panel.active{grid-template-columns:1fr}}
+.wi-card{background:rgba(255,255,255,0.02);border:1px solid var(--bd);border-radius:var(--r);padding:1.4rem}
+.wi-card-icon{font-size:1.6rem;margin-bottom:0.6rem}
+.wi-card h4{font-size:0.95rem;margin-bottom:0.4rem;color:var(--txt)}
+.wi-card p{font-size:0.82rem;color:var(--tmed);line-height:1.65;margin-bottom:0.5rem}
+.wi-card .wi-stat{font-family:'JetBrains Mono',monospace;font-size:1rem;font-weight:700;color:var(--gold);display:block;margin-bottom:0.15rem}
+.wi-card .wi-stat-lbl{font-size:0.72rem;color:var(--tdim)}
+.wi-card .wi-source{font-size:0.68rem;color:var(--tdim);margin-top:0.5rem;font-style:italic}
+.wi-card.highlight{border-color:rgba(232,184,75,0.3);background:rgba(232,184,75,0.04)}
+.wi-card.highlight-teal{border-color:rgba(40,168,136,0.3);background:rgba(40,168,136,0.04)}
+.wi-card.highlight-purple{border-color:rgba(136,96,212,0.3);background:rgba(136,96,212,0.04)}
 /* ── CITIES ── */
 #cities{background:var(--s1)}
 .city-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.2rem}
@@ -1111,6 +1130,132 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
     <div class="section-label">INDIA CITY INTELLIGENCE</div>
     <h2 class="section-title">Choose Your <span class="gold">GCC Location</span></h2>
     <p class="section-sub">India offers 25+ viable GCC destinations across Tier 1, 2 and 3 cities. The client decides — Pithonix delivers anywhere. Compare, pick your city, then run the blueprint.</p>
+
+    <!-- WHY INDIA TABS -->
+    <div class="why-india-tabs">
+      <div class="wi-tab active" onclick="showWI(0,this)"><span class="wi-tab-icon">&#127970;</span>For Investors / FDI</div>
+      <div class="wi-tab" onclick="showWI(1,this)"><span class="wi-tab-icon">&#127760;</span>For GCC Operators</div>
+      <div class="wi-tab" onclick="showWI(2,this)"><span class="wi-tab-icon">&#128100;</span>For Expat Leaders</div>
+    </div>
+    <div class="wi-panel active" id="wi-0">
+      <div class="wi-card highlight">
+        <div class="wi-card-icon">&#128200;</div>
+        <h4>The Investment Case in Numbers</h4>
+        <span class="wi-stat">$81.04B</span><span class="wi-stat-lbl">Total FDI in FY 2024-25 — highest in three years. 22% year-on-year growth.</span>
+        <p style="margin-top:0.6rem">Cumulative FDI since April 2000 has crossed $1.14 trillion. India now receives FDI from 112 countries. Services sector leads at 19% of total FDI equity, followed by Computer Software and Hardware at 16%.</p>
+        <p>India ranked <strong>40th in World Competitive Index 2024</strong> (up 3 positions) and <strong>3rd globally for greenfield project announcements</strong> per the World Investment Report. The economic trajectory is unambiguous.</p>
+        <div class="wi-source">Source: DPIIT FDI Factsheet May 2025; World Investment Report 2024; IMF World Economic Outlook 2025</div>
+      </div>
+      <div class="wi-card">
+        <div class="wi-card-icon">&#128176;</div>
+        <h4>100% FDI on Automatic Route — No Prior Approval</h4>
+        <p>For IT, ITeS, and GCC operations, India permits <strong>100% Foreign Direct Investment under the Automatic Route</strong>. No prior government approval is required. No cabinet committee. No sector caps.</p>
+        <p>Free repatriation of capital, dividends, royalties, and technical fees after payment of applicable taxes. Governed under FEMA 1999. Intercompany transfer pricing governed under Income Tax Act 2025 (Sections 304-315).</p>
+        <p>The 2026 Budget raised the Safe Harbour threshold for IT service transactions to Rs 20 billion, and cut the acceptable operating profit margin to <strong>15.5%</strong>, the most favourable regime India has ever offered GCCs.</p>
+        <div class="wi-source">Source: DPIIT FDI Policy Circular; FEMA Regulations; Union Budget 2026; Income Tax Rules 2026, Rules 86-102</div>
+      </div>
+      <div class="wi-card">
+        <div class="wi-card-icon">&#127981;</div>
+        <h4>55-70% Cost Arbitrage vs USA and UK</h4>
+        <p>Operational costs in India are <strong>40% lower than Eastern Europe</strong> and <strong>55-70% lower than the USA and UK</strong> for equivalent functions. Office rental in Hyderabad is 60% lower than Warsaw or Prague.</p>
+        <p>A mid-level software engineer costs <strong>$15,000-25,000 per year</strong> in India versus $120,000-180,000 in the US. A senior data scientist costs $30,000-50,000 versus $200,000+ in Silicon Valley.</p>
+        <p>For a 300-600 FTE GCC, the net 5-year operational savings versus US operations is typically <strong>$23M to $35M</strong>, with break-even at months 18-24.</p>
+        <div class="wi-source">Source: Zinnov GCC Landscape 2025; Mercer India Compensation Survey 2025-26; JLL India Office Market Q4 2024</div>
+      </div>
+      <div class="wi-card">
+        <div class="wi-card-icon">&#9878;&#65039;</div>
+        <h4>Legal and Institutional Framework Built for Global Business</h4>
+        <p>India operates a <strong>common law legal system</strong> with English-language courts. Commercial arbitration is recognised under the Arbitration and Conciliation Act. GIFT City IFSC has its own IFSCA regulatory framework purpose-built for financial sector GCCs.</p>
+        <p>India is a signatory to TRIPS, the Berne Convention, and the Patent Cooperation Treaty. The Indian Patent Office processes applications across all major technology domains.</p>
+        <p>100% profit repatriation permitted under FEMA after tax compliance. No capital controls on investment principal. Full repatriation of dividends, royalties, and technical fees.</p>
+        <div class="wi-source">Source: RBI FEMA Regulations; IFSCA Act 2019; Indian Patents Act 1970; Arbitration and Conciliation Act 1996</div>
+      </div>
+    </div>
+    <div class="wi-panel" id="wi-1">
+      <div class="wi-card highlight-teal">
+        <div class="wi-card-icon">&#127891;</div>
+        <h4>Deepest Talent Pipeline on Earth</h4>
+        <span class="wi-stat">1.5M</span><span class="wi-stat-lbl">Engineering graduates annually. 28% of the global STEM workforce.</span>
+        <p style="margin-top:0.6rem">India produces more engineers per year than the US, EU, and UK combined. 87 IIT, IIM, and IIIT institutions produce globally competitive talent. English is the medium of instruction in all technical universities.</p>
+        <p>India has <strong>125 million English-speaking professionals</strong>, the second-largest English-speaking population in the world. Integration with the parent company HQ is seamless.</p>
+        <p>MeitY and NASSCOM's Future Skills Prime programme has certified over <strong>4 million professionals</strong> in cloud, AI, cybersecurity, and data analytics. This talent is already available, already trained.</p>
+        <div class="wi-source">Source: NASSCOM-Zinnov India GCC Landscape 2025; Economic Survey 2024-25; MeitY Citizen's Charter 2025-26</div>
+      </div>
+      <div class="wi-card">
+        <div class="wi-card-icon">&#127970;</div>
+        <h4>1,800+ Active GCCs — A Proven Ecosystem</h4>
+        <p>India hosts <strong>over 1,800 active Global Capability Centres</strong>, representing 53% of the world's total GCC footprint. These include centres for 55% of Fortune 500 companies. The ecosystem is not experimental — it is the global standard.</p>
+        <p>The sector generated $64.6 billion in revenue in FY 2024, employing 1.9 million professionals. NASSCOM projects growth to <strong>$105 billion and 2,800 GCCs by 2030</strong>.</p>
+        <p>This ecosystem means established vendor networks, ready talent pipelines, known compliance pathways, and peer benchmarks — all reducing setup risk for new entrants.</p>
+        <div class="wi-source">Source: NASSCOM GCC Framework Report 2025; PIB Press Release Dec 2025</div>
+      </div>
+      <div class="wi-card">
+        <div class="wi-card-icon">&#128300;</div>
+        <h4>Engineering R&amp;D Growing 1.3x Faster</h4>
+        <p>Indian GCCs have moved well beyond back-office functions. Aerospace, defence, semiconductor design, and AI/ML centres are the fastest-growing segment, with <strong>Engineering R&amp;D GCCs growing 1.3x faster</strong> than the overall GCC growth rate.</p>
+        <p>55% of Fortune 500 enterprise technology products are now developed in Indian GCCs. Microsoft's largest global R&amp;D campus is in Hyderabad. Google, Amazon, Samsung, and SAP run innovation-grade centres from India.</p>
+        <p>India's 5G network covers all major cities. Average data cost is Rs 8-12/GB, among the lowest globally, making cloud-first, AI-native GCC operations economically straightforward.</p>
+        <div class="wi-source">Source: Economic Survey 2024-25, Ministry of Finance; NASSCOM Engineering R&amp;D Report 2025</div>
+      </div>
+      <div class="wi-card">
+        <div class="wi-card-icon">&#9878;&#65039;</div>
+        <h4>Four Labour Codes: Operational Flexibility You Cannot Get Elsewhere</h4>
+        <p>As of 21 November 2025, India's 29 central labour laws are consolidated into four codes. For GCC operators, this means: <strong>flexible 8-12 hour workdays within a 48-hour weekly cap</strong>, enabling alignment with global parent time zones.</p>
+        <p>Women can now legally work night shifts with appropriate safeguards — enabling 24x7 operations. Retrenchment threshold raised to 300 workers. Fixed-term employees receive full social security on pro-rated basis.</p>
+        <p>Single registration, single licence, single annual return replaces 29 separate compliance filings. GCC HR and Legal teams save hundreds of person-hours per year on pure compliance administration.</p>
+        <div class="wi-source">Source: Ministry of Labour and Employment notification, 21 November 2025; KPMG GMS Flash Alert November 2025</div>
+      </div>
+    </div>
+    <div class="wi-panel" id="wi-2">
+      <div class="wi-card highlight-purple">
+        <div class="wi-card-icon">&#127968;</div>
+        <h4>Cost of Living: 70% Lower Than the USA</h4>
+        <p>India's total expat living cost is <strong>70%+ lower than the USA</strong> and 60%+ lower than the UK (Numbeo 2025; Aetna International Expat Cost Guide 2025-26). Mumbai, India's most expensive city, ranks 136th globally in cost of living. New York ranks 7th.</p>
+        <p>A fully furnished 3-bedroom apartment in Hyderabad's expat corridors (Banjara Hills, Jubilee Hills, Gachibowli) costs Rs 60,000-1,20,000/month — equivalent to $700-1,400 USD. Domestic staff including cook, driver, and cleaner: Rs 15,000-30,000/month total.</p>
+        <p>This is not a compromise. It is a lifestyle upgrade at a fraction of the Western cost.</p>
+        <div class="wi-source">Source: Numbeo Cost of Living Index 2025; Mercer Cost of Living Survey 2024; Aetna International 2025-26</div>
+      </div>
+      <div class="wi-card">
+        <div class="wi-card-icon">&#127973;</div>
+        <h4>Healthcare: World-Class Private Hospitals at 70-80% Lower Cost</h4>
+        <p>Apollo, Fortis, Max Healthcare, KIMS, and Yashoda operate across all major GCC cities with English-speaking specialists and equipment matching international standards.</p>
+        <p>An MRI or CT scan costs <strong>$80-150 in India versus $1,500-3,000 in the USA</strong>. Cardiac surgery costs 70-80% less than equivalent procedures in the US while meeting international clinical standards. India is the world's leading medical tourism destination.</p>
+        <p>Comprehensive family health insurance for expatriates costs $360-720 per year in India — a fraction of US equivalent premiums.</p>
+        <div class="wi-source">Source: globalcostdata.com 2025; Aetna International Expat Health Insurance Guide 2025; WHO Global Health Observatory</div>
+      </div>
+      <div class="wi-card">
+        <div class="wi-card-icon">&#127979;</div>
+        <h4>International Schools: IB, Cambridge, and American Curricula in Every City</h4>
+        <p>Hyderabad alone has <strong>30+ international schools</strong>, including the International School of Hyderabad (ISH), serving students from 20+ nationalities. IB, Cambridge IGCSE, and American curricula are available in all Tier-1 GCC cities.</p>
+        <p>Annual fees at top-tier international schools range from Rs 7-17 lakhs per year — significantly lower than comparable schools in London ($40,000-60,000/year), New York, or Sydney.</p>
+        <p>Bengaluru, Pune, Chennai, and NCR all have established international school ecosystems purpose-built for the GCC and multinational expat community.</p>
+        <div class="wi-source">Source: Expat.com Hyderabad Guide 2025; Aetna International 2025; ISH official fees 2025-26</div>
+      </div>
+      <div class="wi-card">
+        <div class="wi-card-icon">&#9992;&#65039;</div>
+        <h4>Connectivity, Safety, and Quality of Life</h4>
+        <p>Hyderabad, Bengaluru, Mumbai, and Delhi offer <strong>direct flights to 50+ international destinations</strong>. Hyderabad International Airport serves 30+ international airlines including Emirates, Qatar, Singapore Airlines, and Lufthansa.</p>
+        <p>Hyderabad ranks among India's top 10 safest cities. All major GCC cities have robust law enforcement in IT corridors and expat residential zones. Emergency response times in premium zones are comparable to Western cities.</p>
+        <p>India offers a cultural experience unlike any other: ancient heritage, diverse cuisine, festivals, and a living civilisation 5,000 years old. The expat community across Hyderabad, Bengaluru, and Pune numbers in the tens of thousands — a fully formed social ecosystem.</p>
+      </div>
+      <div class="wi-card">
+        <div class="wi-card-icon">&#128196;</div>
+        <h4>Visa and Residency: Simple Framework for Senior Leaders</h4>
+        <p><strong>Employment Visa:</strong> Issued for contract duration up to 5 years. Minimum annual salary threshold of $25,000 (approx. Rs 20 lakhs). Specialised skills or qualifications required. Multiple-entry permitted.</p>
+        <p><strong>Business Visa:</strong> Multiple-entry for senior executives visiting India regularly. Processing through Indian missions in 112 source countries. E-Visa available for nationals from 165 countries.</p>
+        <p><strong>OCI Card:</strong> Overseas Citizens of India provides lifelong multiple-entry privileges for persons of Indian origin — facilitating return of diaspora talent for GCC leadership roles. India's 32 million diaspora is the world's largest.</p>
+        <p><strong>FRRO Registration:</strong> Foreigners staying beyond 180 days register with FRRO within 14 days of arrival. Online registration available at indianfrro.gov.in.</p>
+        <div class="wi-source">Source: Ministry of Home Affairs, Government of India; indianfrro.gov.in; MEA Visa Services 2025</div>
+      </div>
+      <div class="wi-card">
+        <div class="wi-card-icon">&#127881;</div>
+        <h4>The Lifestyle Advantage No Brochure Mentions</h4>
+        <p>India offers a lifestyle that Western markets simply cannot replicate at equivalent income levels. Domestic staff at Rs 15,000-30,000/month. Premium gym memberships at Rs 3,000-8,000/month. Fine dining for two at Rs 2,000-5,000.</p>
+        <p>Weekend getaways to Goa, Coorg, Ooty, Kerala, or Rajasthan cost a fraction of equivalent European trips. Short-haul flights within India average $40-80 one-way. India's rail network connects every major city.</p>
+        <p>Most GCC expat leaders who complete a 3-year India posting report it as the most professionally and personally formative period of their career. The talent density, cultural richness, and economic energy of India at this stage of its growth story is a once-in-a-generation experience.</p>
+      </div>
+    </div>
+    <script>function showWI(n,btn){document.querySelectorAll(".wi-panel").forEach(function(p){p.classList.remove("active");});document.querySelectorAll(".wi-tab").forEach(function(t){t.classList.remove("active");});document.getElementById("wi-"+n).classList.add("active");btn.classList.add("active");}</script>
 
     <!-- Filter + Dropdown row -->
     <div style="display:flex;flex-wrap:wrap;gap:0.75rem;align-items:center;margin-bottom:1.5rem">
