@@ -1892,7 +1892,7 @@ if(document.readyState==="loading"){
     <div class="section-label" style="margin-top:1rem">THE CORE ARGUMENT</div>
     <h3 class="section-title" style="font-size:1.6rem;margin-bottom:1rem">ISO Was Built for Independent Companies. <span class="gold">GCCs Are Not That.</span></h3>
     <div class="wp-core-box reveal">
-      <p>India hosts 1,700 to 1,800 Global Capability Centres employing approximately 2 million professionals and generating $64.6 billion in annual revenue. By 2030, this reaches $105 billion. India accounts for over 53% of all GCCs globally.</p>
+      <p data-market="wp_gcc_intro">India hosts 1,700 to 1,800 Global Capability Centres employing approximately 2 million professionals and generating $64.6 billion in annual revenue. By 2030, this reaches $105 billion. India accounts for over 53% of all GCCs globally.</p>
       <p style="margin-top:0.75rem">Despite this scale, GCCs are certified using ISO standards designed for independent companies with their own customers, their own governance, and their own P&L. A GCC is none of those things. A GCC is a wholly owned captive entity of a parent corporation. Its governance is set abroad. Its customers are internal. Its financial model is based on transfer pricing, not market revenue. Its data flows across borders by design.</p>
       <p style="margin-top:0.75rem">Applying ISO standards to this entity is like measuring a submarine with an aircraft's flight checklist. Both are engineering marvels. Both require rigorous standards. But the frameworks must match the operating reality. INDUS is that match.</p>
     </div>
@@ -2430,22 +2430,93 @@ if(document.readyState==="loading"){
 
 // ── MARKET NUMBERS ──
 var marketData=[
-  {n:'1,800+',l:'GCCs Operating in India',s:'FY 2025'},
-  {n:'2.16M',l:'Professionals Employed',s:'Growing at 7% CAGR'},
-  {n:'$46B+',l:'Annual GCC Revenue',s:'40% growth 2023–2025'},
-  {n:'$182B',l:'Total Economic Impact',s:'Direct + Indirect + Induced'},
-  {n:'5.4M',l:'STEM Graduates Annually',s:'Largest pipeline globally'},
-  {n:'55–70%',l:'Cost Arbitrage vs US/UK',s:'Salary + operational'},
-  {n:'13%',l:'ER&D CAGR (3-Year)',s:'Fastest growing segment'},
-  {n:'$100B',l:'2030 Revenue Target',s:'NASSCOM projection'},
+  {k:'gcc_count',n:'1,800+',l:'GCCs Operating in India',s:'FY 2025'},
+  {k:'professionals',n:'2.16M',l:'Professionals Employed',s:'Growing at 7% CAGR'},
+  {k:'annual_revenue',n:'$46B+',l:'Annual GCC Revenue',s:'40% growth 2023–2025'},
+  {k:'economic_impact',n:'$182B',l:'Total Economic Impact',s:'Direct + Indirect + Induced'},
+  {k:'stem_grads',n:'5.4M',l:'STEM Graduates Annually',s:'Largest pipeline globally'},
+  {k:'cost_arbitrage',n:'55–70%',l:'Cost Arbitrage vs US/UK',s:'Salary + operational'},
+  {k:'erd_cagr',n:'13%',l:'ER&D CAGR (3-Year)',s:'Fastest growing segment'},
+  {k:'target_2030',n:'$100B',l:'2030 Revenue Target',s:'NASSCOM projection'},
 ];
 (function(){
   var g=document.getElementById('market-grid');
   g.innerHTML=marketData.map(function(m){
-    return'<div class="market-card reveal"><span class="market-num">'+m.n+'</span><div class="market-lbl">'+m.l+'</div><div class="market-sub">'+m.s+'</div></div>';
+    return'<div class="market-card reveal"><span class="market-num" data-market="'+m.k+'_n">'+m.n+'</span><div class="market-lbl">'+m.l+'</div><div class="market-sub" data-market="'+m.k+'_s">'+m.s+'</div></div>';
   }).join('');
   document.querySelectorAll('.reveal').forEach(function(el){revObs.observe(el);});
 })();
+
+// ── MARKET STATS LIVE DATA ENGINE ──
+var MKT_CACHE_KEY="mkt_live_data_v1";
+var MKT_TTL=86400000; // 24 hours
+
+var MKT_PROMPT=(
+  "You are a live India GCC market intelligence system. Return ONLY valid JSON with CURRENT, ACCURATE data as of "+new Date().getFullYear()+". "+
+  "Use the most recent data from NASSCOM, Zinnov, RBI, DPIIT, IBEF, and Ministry of Finance. "+
+  "Return ONLY this JSON with no markdown, no explanation:\n"+
+  "{"+
+  "\"gcc_count_n\":\"X,XXX+\",\"gcc_count_s\":\"FY 20XX\","+
+  "\"professionals_n\":\"X.XXM\",\"professionals_s\":\"Growing at X% CAGR\","+
+  "\"annual_revenue_n\":\"$XXB+\",\"annual_revenue_s\":\"XX% growth 20XX-20XX\","+
+  "\"economic_impact_n\":\"$XXXB\",\"economic_impact_s\":\"Direct + Indirect + Induced\","+
+  "\"stem_grads_n\":\"X.XM\",\"stem_grads_s\":\"Largest pipeline globally\","+
+  "\"cost_arbitrage_n\":\"XX-XX%\",\"cost_arbitrage_s\":\"Salary + operational\","+
+  "\"erd_cagr_n\":\"XX%\",\"erd_cagr_s\":\"Fastest growing segment\","+
+  "\"target_2030_n\":\"$XXXB\",\"target_2030_s\":\"NASSCOM projection\","+
+  "\"wp_gcc_intro\":\"India hosts X,XXX to X,XXX Global Capability Centres employing approximately X million professionals and generating $XX.X billion in annual revenue. By 2030, this reaches $XXX billion. India accounts for over XX% of all GCCs globally.\""+
+  "}"
+);
+
+function applyMktData(d){
+  // Map data keys to data-market attributes: gcc_count_n -> data-market="gcc_count_n"
+  Object.keys(d).forEach(function(key){
+    var els=document.querySelectorAll("[data-market='"+key+"']");
+    els.forEach(function(el){if(d[key])el.innerHTML=d[key];});
+  });
+}
+
+async function fetchMktData(forceRefresh){
+  var cached=null;
+  if(!forceRefresh){
+    try{
+      var raw=sessionStorage.getItem(MKT_CACHE_KEY);
+      if(raw){
+        var obj=JSON.parse(raw);
+        if(obj._ts&&(Date.now()-obj._ts<MKT_TTL)){cached=obj;}
+      }
+    }catch(e){}
+  }
+  if(cached){applyMktData(cached);return;}
+
+  try{
+    var resp=await fetch("/api/gemini",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        _model:"gemini-2.5-flash",
+        contents:[{parts:[{text:MKT_PROMPT}]}],
+        generationConfig:{temperature:0.2,maxOutputTokens:1000,thinkingConfig:{thinkingBudget:0}}
+      })
+    });
+    var raw=await resp.json();
+    var txt=(raw.candidates&&raw.candidates[0]&&raw.candidates[0].content&&raw.candidates[0].content.parts[0].text)||"{}";
+    var m=txt.match(/\{[\s\S]*\}/);
+    if(!m)throw new Error("No JSON");
+    var d=JSON.parse(m[0]);
+    d._ts=Date.now();
+    try{sessionStorage.setItem(MKT_CACHE_KEY,JSON.stringify(d));}catch(e){}
+    applyMktData(d);
+  }catch(e){
+    // Silently fail — static values remain
+  }
+}
+
+if(document.readyState==="loading"){
+  document.addEventListener("DOMContentLoaded",function(){fetchMktData(false);});
+}else{
+  fetchMktData(false);
+}
 
 // ── PARTNER ECOSYSTEM ──
 var cats=['All','Real Estate & Workspace','Legal & Compliance','Recruitment & Staffing','IT Infrastructure','Payroll & Benefits','Training & L&D','Banking & Finance','Technology Partner'];
