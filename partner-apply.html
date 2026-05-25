@@ -155,6 +155,9 @@
   .bcl-call { background: var(--teal); color: #000; }
   .bcl-mail { background: rgba(255,255,255,0.08); border: 1px solid var(--bd); color: var(--text); }
   .bundle-cta-links a:hover { opacity: 0.85; }
+  .cat-pill.selected:first-of-type, .cat-pill.selected[data-primary="true"] { border-color: var(--teal); }
+  .cat-badge { pointer-events: none; }
+  #fee-bundle-wrap .fee-panel { display: block; margin-bottom: 0; }
 </style>
 </head>
 <body>
@@ -218,25 +221,29 @@
         <h3>Partnership Details</h3>
       </div>
       <div class="form-grid">
-        <div class="form-group">
-          <label>Primary Service Category <span class="req">*</span></label>
-          <select id="partner_category" onchange="updateFeePanel()">
-            <option value="">Select category</option>
-            <option>01 — Legal and Company Secretarial</option>
-            <option>02 — Real Estate and Workspace</option>
-            <option>03 — Banking and Financial Services</option>
-            <option>04 — Payroll and HR Technology</option>
-            <option>05 — Staffing and Recruitment</option>
-            <option>06 — Tax and Transfer Pricing</option>
-            <option>07 — IT Infrastructure and Cloud</option>
-            <option>08 — Compliance and Regulatory</option>
-            <option>09 — ERP and Technology Integration</option>
-            <option>10 — Learning and Development</option>
-            <option>11 — Facilities and Admin Management</option>
-            <option>12 — Cybersecurity and Data Privacy</option>
-          </select>
+        <div class="form-group full">
+          <label>Service Categories You Deliver <span class="req">*</span></label>
+          <p style="font-size:0.78rem;color:var(--tmed);margin:0.25rem 0 0.75rem">Tap your primary category first. It gets highlighted. Then tap any additional categories you also deliver. Each one adds to your registration.</p>
+          <div class="multi-select-box" id="cat-pill-box">
+            <div class="ms-pills" id="cat-pills">
+              <label class="ms-pill cat-pill" data-val="01 — Legal and Company Secretarial"><input type="checkbox">⚖️ Legal and Company Secretarial</label>
+              <label class="ms-pill cat-pill" data-val="02 — Real Estate and Workspace"><input type="checkbox">🏢 Real Estate and Workspace</label>
+              <label class="ms-pill cat-pill" data-val="03 — Banking and Financial Services"><input type="checkbox">🏦 Banking and Financial Services</label>
+              <label class="ms-pill cat-pill" data-val="04 — Payroll and HR Technology"><input type="checkbox">💳 Payroll and HR Technology</label>
+              <label class="ms-pill cat-pill" data-val="05 — Staffing and Recruitment"><input type="checkbox">👥 Staffing and Recruitment</label>
+              <label class="ms-pill cat-pill" data-val="06 — Tax and Transfer Pricing"><input type="checkbox">📊 Tax and Transfer Pricing</label>
+              <label class="ms-pill cat-pill" data-val="07 — IT Infrastructure and Cloud"><input type="checkbox">☁️ IT Infrastructure and Cloud</label>
+              <label class="ms-pill cat-pill" data-val="08 — Compliance and Regulatory"><input type="checkbox">🛡️ Compliance and Regulatory</label>
+              <label class="ms-pill cat-pill" data-val="09 — ERP and Technology Integration"><input type="checkbox">🔗 ERP and Technology Integration</label>
+              <label class="ms-pill cat-pill" data-val="10 — Learning and Development"><input type="checkbox">🎓 Learning and Development</label>
+              <label class="ms-pill cat-pill" data-val="11 — Facilities and Admin Management"><input type="checkbox">🏗️ Facilities and Admin Management</label>
+              <label class="ms-pill cat-pill" data-val="12 — Cybersecurity and Data Privacy"><input type="checkbox">🔐 Cybersecurity and Data Privacy</label>
+            </div>
+          </div>
+          <div id="cat-summary" style="margin-top:0.6rem;font-size:0.78rem;color:var(--tmed);min-height:1.2em">No category selected yet.</div>
+          <input type="hidden" id="partner_category">
         </div>
-        <div class="form-group">
+        <div class="form-group full">
           <label>Partnership Tier Applying For <span class="req">*</span></label>
           <select id="partner_tier" onchange="showTierBenefits(this.value); updateFeePanel();">
             <option value="">Select tier</option>
@@ -245,13 +252,26 @@
             <option value="Silver">Silver</option>
           </select>
           <div id="tier-benefits" style="display:none;margin-top:0.75rem;border-radius:10px;padding:1rem 1.2rem;border:1.5px solid;font-size:0.84rem"></div>
-          <div id="fee-panel" class="fee-panel">
-            <div class="fee-panel-title">Annual Badge Fee — <span id="fee-cat-name"></span></div>
-            <div class="fee-row"><span class="fee-label">Annual Badge Fee</span><span class="fee-value">Rs <span id="fee-badge"></span> Lakhs / year</span></div>
-            <div class="fee-row"><span class="fee-label">Success Fee</span><span class="fee-value"><span id="fee-success"></span> of Year 1 contract value</span></div>
-            <div class="fee-note">Fee is confirmed after vetting. Final number within the range above is agreed before onboarding.</div>
-          </div>
           <div style="margin-top:0.5rem;font-size:0.75rem;color:var(--tmed)">All tiers compete openly. Tier = quality standard, not an exclusive slot. <a href="/partner-deck" target="_blank" style="color:var(--blue)">See full comparison →</a></div>
+        </div>
+        <!-- Fee + bundle panel — shown after category + tier selected -->
+        <div class="form-group full" id="fee-bundle-wrap" style="display:none">
+          <div id="fee-panel" class="fee-panel" style="display:block;margin-bottom:0.75rem">
+            <div class="fee-panel-title">Fee Summary — <span id="fee-tier-name"></span> Tier</div>
+            <div id="fee-rows-inner"></div>
+            <div class="fee-note" id="fee-note-text"></div>
+          </div>
+          <div class="bundle-breakdown visible" id="bundle-breakdown" style="display:none">
+            <div id="bundle-rows"></div>
+            <div class="bundle-total"><span>Total (individual rates)</span><span id="bundle-total-val"></span></div>
+            <div class="bundle-cta">
+              <p>You have selected <strong id="bundle-cat-count">0</strong> service categories. Each needs a separate badge. Call or email us to discuss a bundle rate — typically 10 to 20% off the total.</p>
+              <div class="bundle-cta-links">
+                <a href="tel:+914048569999" class="bcl-call">Call to Negotiate Bundle</a>
+                <a href="mailto:partnerships@pithonix.ai?subject=Bundle%20Partnership%20Enquiry" class="bcl-mail">Email Partnerships Team</a>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="form-group full">
           <label>Operating Zone <span class="req">*</span></label>
@@ -322,34 +342,6 @@
           </div>
           <div class="location-summary" id="location-summary">No locations selected yet.</div>
           <input type="hidden" id="cities">
-        </div>
-        <div class="form-group full">
-          <label>Delivering in Additional Service Categories? <span style="font-weight:400;color:rgba(148,163,184,0.5)">(optional — select all that apply)</span></label>
-          <div class="bundle-cats" id="bundle-cats">
-            <label class="bundle-pill" data-cat="01 — Legal and Company Secretarial"><input type="checkbox" value="01 — Legal and Company Secretarial">Legal and Company Secretarial</label>
-            <label class="bundle-pill" data-cat="02 — Real Estate and Workspace"><input type="checkbox" value="02 — Real Estate and Workspace">Real Estate and Workspace</label>
-            <label class="bundle-pill" data-cat="03 — Banking and Financial Services"><input type="checkbox" value="03 — Banking and Financial Services">Banking and Financial Services</label>
-            <label class="bundle-pill" data-cat="04 — Payroll and HR Technology"><input type="checkbox" value="04 — Payroll and HR Technology">Payroll and HR Technology</label>
-            <label class="bundle-pill" data-cat="05 — Staffing and Recruitment"><input type="checkbox" value="05 — Staffing and Recruitment">Staffing and Recruitment</label>
-            <label class="bundle-pill" data-cat="06 — Tax and Transfer Pricing"><input type="checkbox" value="06 — Tax and Transfer Pricing">Tax and Transfer Pricing</label>
-            <label class="bundle-pill" data-cat="07 — IT Infrastructure and Cloud"><input type="checkbox" value="07 — IT Infrastructure and Cloud">IT Infrastructure and Cloud</label>
-            <label class="bundle-pill" data-cat="08 — Compliance and Regulatory"><input type="checkbox" value="08 — Compliance and Regulatory">Compliance and Regulatory</label>
-            <label class="bundle-pill" data-cat="09 — ERP and Technology Integration"><input type="checkbox" value="09 — ERP and Technology Integration">ERP and Technology Integration</label>
-            <label class="bundle-pill" data-cat="10 — Learning and Development"><input type="checkbox" value="10 — Learning and Development">Learning and Development</label>
-            <label class="bundle-pill" data-cat="11 — Facilities and Admin Management"><input type="checkbox" value="11 — Facilities and Admin Management">Facilities and Admin Management</label>
-            <label class="bundle-pill" data-cat="12 — Cybersecurity and Data Privacy"><input type="checkbox" value="12 — Cybersecurity and Data Privacy">Cybersecurity and Data Privacy</label>
-          </div>
-          <div class="bundle-breakdown" id="bundle-breakdown">
-            <div id="bundle-rows"></div>
-            <div class="bundle-total"><span>Estimated Total (individual rates)</span><span id="bundle-total-val"></span></div>
-            <div class="bundle-cta">
-              <p>You have selected <strong id="bundle-cat-count">0</strong> service categories. Each category requires a separate badge registration. If you operate across multiple categories, call us to negotiate a bundled rate. Depending on the combination, we typically offer 10 to 20% off the total badge fee.</p>
-              <div class="bundle-cta-links">
-                <a href="tel:+919876543210" class="bcl-call">Call to Negotiate Bundle</a>
-                <a href="mailto:partnerships@pithonix.ai?subject=Bundle%20Partnership%20Enquiry" class="bcl-mail">Email Partnerships Team</a>
-              </div>
-            </div>
-          </div>
         </div>
         <div class="form-group">
           <label>GCC / Enterprise Projects Handled</label>
@@ -481,56 +473,103 @@ var FEE_MATRIX = {
 
 var SUCCESS_FEE = { Platinum: '0.5–1%', Gold: '1–2%', Silver: '2–3%' };
 
-function updateFeePanel() {
-  var cat = document.getElementById('partner_category').value;
-  var tier = document.getElementById('partner_tier').value;
-  var panel = document.getElementById('fee-panel');
-  if (!cat || !tier || !FEE_MATRIX[cat]) { panel.style.display = 'none'; return; }
-  var tierKey = tier.toLowerCase();
-  document.getElementById('fee-cat-name').textContent = cat.split(' — ')[1] || cat;
-  document.getElementById('fee-badge').textContent = FEE_MATRIX[cat][tierKey];
-  document.getElementById('fee-success').textContent = SUCCESS_FEE[tier] || '';
-  panel.style.display = 'block';
-  updateBundleBreakdown();
-  filterBundlePills();
-}
+// ── CATEGORY PILLS — unified primary + add-on logic ──
+var selectedCats = []; // ordered: [0] = primary, rest = add-ons
 
-function filterBundlePills() {
-  var primaryCat = document.getElementById('partner_category').value;
-  document.querySelectorAll('.bundle-pill').forEach(function(pill) {
-    var cat = pill.dataset.cat;
-    if (cat === primaryCat) {
-      pill.style.display = 'none';
-      var cb = pill.querySelector('input');
-      cb.checked = false;
-      pill.classList.remove('selected');
+document.querySelectorAll('.cat-pill').forEach(function(pill) {
+  pill.addEventListener('click', function(e) {
+    e.preventDefault();
+    var val = pill.dataset.val;
+    var idx = selectedCats.indexOf(val);
+    if (idx === -1) {
+      selectedCats.push(val);
+      pill.classList.add('selected');
+      // Mark first selected with primary badge visual
     } else {
-      pill.style.display = '';
+      selectedCats.splice(idx, 1);
+      pill.classList.remove('selected');
+    }
+    rebuildCatState();
+  });
+});
+
+function rebuildCatState() {
+  // Primary = first in selectedCats, add-ons = rest
+  var primary = selectedCats[0] || '';
+  document.getElementById('partner_category').value = primary;
+
+  // Update pill visual: first selected gets a "Primary" ring
+  document.querySelectorAll('.cat-pill').forEach(function(pill) {
+    var val = pill.dataset.val;
+    var idx = selectedCats.indexOf(val);
+    pill.classList.toggle('selected', idx !== -1);
+    // Add a number badge
+    var existing = pill.querySelector('.cat-badge');
+    if (existing) existing.remove();
+    if (idx !== -1) {
+      var badge = document.createElement('span');
+      badge.className = 'cat-badge';
+      badge.textContent = idx === 0 ? 'Primary' : '+' + idx;
+      badge.style.cssText = 'font-size:0.6rem;font-weight:700;padding:0.1rem 0.4rem;border-radius:8px;margin-left:0.3rem;' +
+        (idx === 0 ? 'background:rgba(6,182,212,0.3);color:var(--teal)' : 'background:rgba(59,130,246,0.25);color:var(--blue)');
+      pill.appendChild(badge);
     }
   });
-  updateBundleBreakdown();
+
+  // Summary text
+  var summary = document.getElementById('cat-summary');
+  if (selectedCats.length === 0) {
+    summary.textContent = 'No category selected yet.';
+  } else if (selectedCats.length === 1) {
+    summary.innerHTML = '<span style="color:var(--teal)">Primary:</span> ' + (primary.split(' — ')[1] || primary);
+  } else {
+    var addons = selectedCats.slice(1).map(function(c){ return c.split(' — ')[1] || c; }).join(', ');
+    summary.innerHTML = '<span style="color:var(--teal)">Primary:</span> ' + (primary.split(' — ')[1] || primary) +
+      ' &nbsp;+&nbsp; <span style="color:var(--blue)">' + selectedCats.length - 1 + ' add-on' + (selectedCats.length > 2 ? 's' : '') + ':</span> ' + addons;
+  }
+
+  updateFeePanel();
 }
 
-function updateBundleBreakdown() {
+function updateFeePanel() {
+  var primary = selectedCats[0] || '';
   var tier = document.getElementById('partner_tier').value;
-  var primaryCat = document.getElementById('partner_category').value;
-  var tierKey = tier ? tier.toLowerCase() : '';
-  var selected = Array.from(document.querySelectorAll('#bundle-cats input:checked')).map(function(i){ return i.value; });
-  var bd = document.getElementById('bundle-breakdown');
-  if (selected.length === 0 || !tier || !primaryCat) { bd.classList.remove('visible'); return; }
+  var wrap = document.getElementById('fee-bundle-wrap');
 
-  var allCats = [primaryCat].concat(selected);
-  var rows = '';
-  allCats.forEach(function(cat, idx) {
-    var fee = FEE_MATRIX[cat] ? FEE_MATRIX[cat][tierKey] : '—';
-    var label = (cat.split(' — ')[1] || cat);
-    var badge = idx === 0 ? ' <span style="font-size:0.65rem;background:rgba(59,130,246,0.2);padding:0.1rem 0.4rem;border-radius:10px;color:var(--blue)">Primary</span>' : '';
-    rows += '<div class="bundle-row"><span class="bl">' + label + badge + '</span><span class="bv">Rs ' + fee + 'L / yr</span></div>';
-  });
-  document.getElementById('bundle-rows').innerHTML = rows;
-  document.getElementById('bundle-cat-count').textContent = allCats.length;
-  document.getElementById('bundle-total-val').textContent = 'Rs ' + allCats.length + ' × individual rates';
-  bd.classList.add('visible');
+  if (!primary || !tier || !FEE_MATRIX[primary]) { wrap.style.display = 'none'; return; }
+  wrap.style.display = 'block';
+
+  var tierKey = tier.toLowerCase();
+  document.getElementById('fee-tier-name').textContent = tier;
+
+  if (selectedCats.length === 1) {
+    // Single category — simple fee panel
+    document.getElementById('bundle-breakdown').style.display = 'none';
+    document.getElementById('fee-rows-inner').innerHTML =
+      '<div class="fee-row"><span class="fee-label">Annual Badge Fee (' + (primary.split(' — ')[1] || primary) + ')</span>' +
+      '<span class="fee-value">Rs ' + FEE_MATRIX[primary][tierKey] + ' Lakhs / year</span></div>' +
+      '<div class="fee-row"><span class="fee-label">Success Fee</span>' +
+      '<span class="fee-value">' + (SUCCESS_FEE[tier] || '') + ' of Year 1 contract value</span></div>';
+    document.getElementById('fee-note-text').textContent = 'Final fee within this range is agreed after vetting, before onboarding.';
+  } else {
+    // Multi category — show fee per line + bundle breakdown
+    var feeRows = '';
+    selectedCats.forEach(function(cat, idx) {
+      var fee = FEE_MATRIX[cat] ? FEE_MATRIX[cat][tierKey] : '—';
+      var label = (cat.split(' — ')[1] || cat);
+      var badge = idx === 0 ? ' <span style="font-size:0.6rem;background:rgba(6,182,212,0.25);color:var(--teal);padding:0.1rem 0.35rem;border-radius:6px">Primary</span>' : '';
+      feeRows += '<div class="fee-row"><span class="fee-label">' + label + badge + '</span><span class="fee-value">Rs ' + fee + 'L / yr</span></div>';
+    });
+    feeRows += '<div class="fee-row"><span class="fee-label">Success Fee (all categories)</span><span class="fee-value">' + (SUCCESS_FEE[tier] || '') + ' of Year 1 contract</span></div>';
+    document.getElementById('fee-rows-inner').innerHTML = feeRows;
+    document.getElementById('fee-note-text').textContent = 'Rates above are individual. Call us to negotiate your bundle discount.';
+
+    // Bundle CTA section
+    var bd = document.getElementById('bundle-breakdown');
+    bd.style.display = 'block';
+    document.getElementById('bundle-cat-count').textContent = selectedCats.length;
+    document.getElementById('bundle-total-val').textContent = selectedCats.length + ' categories × individual rates';
+  }
 }
 
 var selectedFiles = [];
@@ -644,15 +683,6 @@ document.querySelectorAll('.ms-pill').forEach(function(pill) {
   });
 });
 
-// Bundle category pills
-document.querySelectorAll('.bundle-pill').forEach(function(pill) {
-  pill.addEventListener('click', function() {
-    var cb = pill.querySelector('input[type="checkbox"]');
-    cb.checked = !cb.checked;
-    pill.classList.toggle('selected', cb.checked);
-    updateBundleBreakdown();
-  });
-});
 
 function updateLocationSummary() {
   var zones = Array.from(document.querySelectorAll('#zone-pills input:checked')).map(function(i){ return i.value; });
@@ -724,7 +754,7 @@ async function submitApplication() {
     } catch(e) { console.log('File read error', e); }
   }
 
-  var additionalCats = Array.from(document.querySelectorAll('#bundle-cats input:checked')).map(function(i){ return i.value; });
+  var additionalCats = selectedCats.slice(1);
   var tierKey = partnerTier.toLowerCase();
   var primaryFee = (FEE_MATRIX[partnerCategory] && tierKey) ? FEE_MATRIX[partnerCategory][tierKey] : '';
   var successFee = SUCCESS_FEE[partnerTier] || '';
