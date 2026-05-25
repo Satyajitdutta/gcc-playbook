@@ -281,6 +281,8 @@ h1,h2,h3{line-height:1.2;font-weight:700}
 .ticker-sep{color:rgba(232,184,75,0.3)}
 @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
+/* ── PARTNER TIER GRID ── */
+@media(max-width:768px){#partners .section-sub+div[style*="grid-template-columns:repeat(3"]{grid-template-columns:1fr!important}}
 /* ── POLICY PULSE ── */
 .policy-pulse{background:linear-gradient(135deg,rgba(10,110,56,0.08) 0%,rgba(122,88,0,0.06) 100%);border-top:2px solid rgba(122,88,0,0.3);border-bottom:1px solid rgba(10,110,56,0.2);padding:2.5rem 0;position:relative;z-index:2}
 .policy-pulse-inner{max-width:1200px;margin:0 auto;padding:0 2rem}
@@ -2139,14 +2141,32 @@ if(document.readyState==="loading"){
 <!-- PARTNER ECOSYSTEM -->
 <section id="partners">
   <div class="wrap">
-    <div class="section-label">CO-DELIVERY PARTNERS</div>
-    <h2 class="section-title">Join Our GCC <span class="gold">Delivery Network</span></h2>
-    <p class="section-sub" style="margin-bottom:2rem">Pithonix manages GCC setup projects end-to-end. We bring in specialist partners for legal, real estate, IT, staffing, and compliance — working alongside us on live GCC projects. If you're best-in-class in your domain, join the delivery network.</p>
+    <div class="section-label">GCC ECOSYSTEM PARTNER PROGRAMME</div>
+    <h2 class="section-title">Platinum · Gold · Silver <span class="gold">Open Competition</span></h2>
+    <p class="section-sub" style="margin-bottom:1.5rem">12 service categories. 3 quality tiers. No exclusive slots. Every Platinum partner competes equally for every GCC client. The best pitch wins. Tiers are quality badges, not monopoly positions.</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem" class="reveal">
+      <div style="background:linear-gradient(135deg,rgba(122,88,0,0.12),rgba(122,88,0,0.06));border:1px solid rgba(122,88,0,0.4);border-radius:10px;padding:1rem 1.2rem">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:2px;color:var(--gold);font-weight:700;margin-bottom:0.4rem">PLATINUM</div>
+        <div style="font-size:0.84rem;font-weight:600;color:var(--txt);margin-bottom:0.3rem">Featured in GCC Blueprints</div>
+        <div style="font-size:0.78rem;color:var(--tmed)">Direct 20-min pitch to clients. Monthly win rate reports. Rs 12–25L/year + 0.5–1.5% success fee.</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.4);border:1px solid rgba(10,110,56,0.25);border-radius:10px;padding:1rem 1.2rem">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:2px;color:var(--teal);font-weight:700;margin-bottom:0.4rem">GOLD</div>
+        <div style="font-size:0.84rem;font-weight:600;color:var(--txt);margin-bottom:0.3rem">Included in Blueprints</div>
+        <div style="font-size:0.78rem;color:var(--tmed)">Profile-matched referrals. Quarterly win data. Rs 5–10L/year + 1–2% success fee.</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.25);border:1px solid rgba(10,110,56,0.15);border-radius:10px;padding:1rem 1.2rem">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:2px;color:var(--tdim);font-weight:700;margin-bottom:0.4rem">SILVER</div>
+        <div style="font-size:0.84rem;font-weight:600;color:var(--txt);margin-bottom:0.3rem">Ecosystem Directory</div>
+        <div style="font-size:0.78rem;color:var(--tmed)">GCC clients contact directly. Rs 1.5–3L/year + 2–3% success fee.</div>
+      </div>
+    </div>
+    <div style="font-size:0.72rem;color:var(--tdim);margin-bottom:2rem;font-style:italic">12 categories: Legal &amp; Company Secretarial · Real Estate &amp; Workspace · Banking &amp; Financial Services · Payroll &amp; HR Technology · Staffing &amp; Recruitment · Tax &amp; Transfer Pricing · IT Infrastructure &amp; Cloud · Compliance &amp; Regulatory · ERP &amp; Technology Integration · Learning &amp; Development · Facilities &amp; Admin Management · Cybersecurity &amp; Data Privacy</div>
     <div class="cat-tabs" id="cat-tabs"></div>
     <div class="vendor-grid" id="vendor-grid"></div>
     <div class="partner-form-wrap reveal" style="text-align:center">
-      <h3>Apply to Join the GCC Delivery Network</h3>
-      <p>Pithonix works with specialist partners on live GCC setup projects. We need domain experts in legal, real estate, IT infrastructure, talent, compliance, and more — who can co-deliver with us on live GCC setups.</p>
+      <h3>Apply to the GCC Ecosystem Partner Programme</h3>
+      <p>Open to specialist firms across all 12 GCC service categories. Vetting takes 15 to 20 working days. All 5 vetting gates must be cleared. Once live, you compete openly for every GCC client your profile matches — no monopoly, no favouritism, no guaranteed referrals. Win rate decides your ranking.</p>
       <div style="display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap;margin-top:1.5rem">
         <a href="/partner-apply" class="btn-partner" style="text-decoration:none;display:inline-block">Apply as a Partner →</a>
         <a href="/partner-portal" style="text-decoration:none;display:inline-block;background:#ffffff;border:1px solid rgba(29,184,104,0.15);color:var(--txt);font-weight:600;padding:0.85rem 2rem;border-radius:8px;font-size:0.95rem;font-family:'DM Sans',sans-serif">Partner Login</a>

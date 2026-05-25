@@ -190,15 +190,29 @@
           <label>Partner Category <span class="req">*</span></label>
           <select id="partner_category">
             <option value="">Select category</option>
-            <option>Real Estate &amp; Workspace</option>
-            <option>Legal &amp; Compliance</option>
-            <option>Recruitment &amp; Staffing</option>
-            <option>IT Infrastructure</option>
-            <option>Payroll &amp; Benefits</option>
-            <option>Training &amp; L&amp;D</option>
-            <option>Banking &amp; Finance</option>
-            <option>Technology Partner</option>
+            <option>01 — Legal and Company Secretarial</option>
+            <option>02 — Real Estate and Workspace</option>
+            <option>03 — Banking and Financial Services</option>
+            <option>04 — Payroll and HR Technology</option>
+            <option>05 — Staffing and Recruitment</option>
+            <option>06 — Tax and Transfer Pricing</option>
+            <option>07 — IT Infrastructure and Cloud</option>
+            <option>08 — Compliance and Regulatory</option>
+            <option>09 — ERP and Technology Integration</option>
+            <option>10 — Learning and Development</option>
+            <option>11 — Facilities and Admin Management</option>
+            <option>12 — Cybersecurity and Data Privacy</option>
           </select>
+        </div>
+        <div class="form-group">
+          <label>Partnership Tier Applying For <span class="req">*</span></label>
+          <select id="partner_tier">
+            <option value="">Select tier</option>
+            <option value="Platinum">Platinum — Rs 10 to 25 Lakhs/year + 0.5–1.5% success fee. Featured in GCC blueprints. Direct client pitches.</option>
+            <option value="Gold">Gold — Rs 5 to 10 Lakhs/year + 1–2% success fee. Included in blueprints. Profile-matched referrals.</option>
+            <option value="Silver">Silver — Rs 1.5 to 3 Lakhs/year + 2–3% success fee. Ecosystem directory listing.</option>
+          </select>
+          <div style="margin-top:0.5rem;font-size:0.75rem;color:var(--tmed)">All tiers compete openly for every client. Tier = quality standard, not an exclusive slot. <a href="/partner-deck" target="_blank" style="color:var(--blue)">See full tier comparison →</a></div>
         </div>
         <div class="form-group full">
           <label>Operating Zone <span class="req">*</span></label>
@@ -256,6 +270,14 @@
                 <label class="ms-pill"><input type="checkbox" value="Nashik"> Nashik</label>
                 <label class="ms-pill"><input type="checkbox" value="Bhopal"> Bhopal</label>
                 <label class="ms-pill"><input type="checkbox" value="Dehradun"> Dehradun</label>
+              </div>
+            </div>
+            <div class="ms-tier">
+              <div class="ms-tier-label">Beyond CUR — Telangana Corridor (New GCC Policy 2026)</div>
+              <div class="ms-pills" id="city-pills-t4">
+                <label class="ms-pill"><input type="checkbox" value="Warangal"> Warangal</label>
+                <label class="ms-pill"><input type="checkbox" value="Karimnagar"> Karimnagar</label>
+                <label class="ms-pill"><input type="checkbox" value="Nizamabad"> Nizamabad</label>
               </div>
             </div>
           </div>
@@ -460,6 +482,7 @@ async function submitApplication() {
   var email = document.getElementById('email').value.trim();
   var phone = document.getElementById('phone').value.trim();
   var partnerCategory = document.getElementById('partner_category').value;
+  var partnerTier = document.getElementById('partner_tier').value;
   var gstNumber = document.getElementById('gst_number').value.trim();
   var cinNumber = document.getElementById('cin_number').value.trim();
   var yearFounded = document.getElementById('year_founded').value;
@@ -467,7 +490,7 @@ async function submitApplication() {
 
   var citiesVal = document.getElementById('cities').value.trim();
 
-  if (!companyName || !contactName || !email || !phone || !partnerCategory || !gstNumber || !cinNumber || !yearFounded || !description || !citiesVal) {
+  if (!companyName || !contactName || !email || !phone || !partnerCategory || !partnerTier || !gstNumber || !cinNumber || !yearFounded || !description || !citiesVal) {
     errorArea.innerHTML = '<div class="error-banner" style="margin-bottom:1rem">Please fill in all required fields marked with *. Make sure to select at least one zone or city.</div>';
     errorArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
     return;
@@ -499,6 +522,7 @@ async function submitApplication() {
     designation: document.getElementById('designation').value.trim(),
     website: document.getElementById('website').value.trim(),
     partner_category: partnerCategory,
+    partner_tier: partnerTier,
     gst_number: gstNumber,
     cin_number: cinNumber,
     year_founded: yearFounded,
