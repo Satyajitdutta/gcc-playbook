@@ -46,7 +46,11 @@ async function ensureTable(client) {
     )
   `);
   // Add new columns if upgrading from older schema
-  const cols = ['backup_email VARCHAR(255)', 'approval_token VARCHAR(100)', 'approved_at TIMESTAMPTZ'];
+  const cols = [
+    'backup_email VARCHAR(255)', 'approval_token VARCHAR(100)', 'approved_at TIMESTAMPTZ',
+    'partner_tier VARCHAR(50)', 'additional_categories TEXT', 'badge_fee_range VARCHAR(100)',
+    'success_fee VARCHAR(50)', 'is_bundle BOOLEAN DEFAULT FALSE'
+  ];
   for (const col of cols) {
     const name = col.split(' ')[0];
     await client.query(`ALTER TABLE gcc_partner_applications ADD COLUMN IF NOT EXISTS ${name} ${col.split(' ').slice(1).join(' ')}`).catch(() => {});
@@ -81,6 +85,10 @@ function buildNotificationEmail(d, id, token) {
         ${row('Year Founded', d.year_founded)}
         ${row('Website', d.website)}
         ${row('Partner Category', d.partner_category)}
+        ${row('Partner Tier', d.partner_tier ? `<strong style="color:${d.partner_tier==='Platinum'?'#B8860B':d.partner_tier==='Gold'?'#2A6080':'#555'}">${d.partner_tier}</strong>` : '')}
+        ${row('Annual Badge Fee', d.badge_fee_range || '')}
+        ${row('Success Fee', d.success_fee ? d.success_fee + ' of Year 1 contract' : '')}
+        ${d.is_bundle && d.additional_categories?.length ? row('Additional Categories', d.additional_categories.map(c => c.split(' — ')[1]||c).join(', ') + ' <span style="color:#c2410c;font-weight:700">[BUNDLE — call to negotiate rate]</span>') : ''}
         ${row('Cities', d.cities)}
         ${row('GCC Projects', d.gcc_projects)}
         ${row('Team Size', d.team_size)}
@@ -123,12 +131,35 @@ function buildConfirmationEmail(d, id) {
     </div>
     <div style="background:#fff;padding:28px;border-radius:0 0 12px 12px;border:1px solid #e2e8f0;border-top:none">
       <p style="color:#374151;font-size:14px">Hi ${d.contact_name},</p>
-      <p style="color:#374151;font-size:14px;line-height:1.6">Thank you for applying to join the Pithonix GCC Partner Network. We have received your application from <strong>${d.company_name}</strong> for the <strong>${d.partner_category || 'General'}</strong> category.</p>
-      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:16px 20px;margin:20px 0;text-align:center">
-        <p style="margin:0;font-size:12px;color:#64748b;text-transform:uppercase;letter-spacing:1px">Application Reference</p>
-        <p style="margin:6px 0 0;font-size:28px;font-weight:700;color:#0f172a">#${id}</p>
+      <p style="color:#374151;font-size:14px;line-height:1.6">Thank you for applying to the Pithonix GCC Partner Network. We have received your application from <strong>${d.company_name}</strong>. Here is a summary of your submission.</p>
+
+      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:16px 20px;margin:20px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+        <div><p style="margin:0;font-size:12px;color:#64748b;text-transform:uppercase;letter-spacing:1px">Application Reference</p>
+        <p style="margin:4px 0 0;font-size:28px;font-weight:700;color:#0f172a">#${id}</p></div>
+        ${d.partner_tier ? `<div style="text-align:right"><p style="margin:0;font-size:12px;color:#64748b;text-transform:uppercase;letter-spacing:1px">Tier Applied For</p>
+        <p style="margin:4px 0 0;font-size:20px;font-weight:700;color:${d.partner_tier==='Platinum'?'#B8860B':d.partner_tier==='Gold'?'#2A6080':'#555'}">${d.partner_tier}</p></div>` : ''}
       </div>
-      <p style="color:#374151;font-size:14px;line-height:1.6">Our partnerships team will review your application and respond within <strong>48 hours</strong>. You can check your application status anytime:</p>
+
+      ${d.badge_fee_range ? `
+      <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:14px 18px;margin-bottom:20px">
+        <p style="margin:0 0 8px;font-size:11px;font-weight:700;color:#0369a1;text-transform:uppercase;letter-spacing:1px">Your Fee Summary</p>
+        <table style="width:100%;border-collapse:collapse">
+          <tr><td style="padding:5px 0;font-size:13px;color:#374151">Annual Badge Fee (${(d.partner_category||'').split(' — ')[1]||d.partner_category})</td>
+              <td style="padding:5px 0;font-size:13px;font-weight:700;color:#0f172a;text-align:right">${d.badge_fee_range}</td></tr>
+          ${d.success_fee ? `<tr><td style="padding:5px 0;font-size:13px;color:#374151">Success Fee</td>
+              <td style="padding:5px 0;font-size:13px;font-weight:700;color:#0f172a;text-align:right">${d.success_fee} of Year 1 contract value</td></tr>` : ''}
+        </table>
+        <p style="margin:8px 0 0;font-size:11px;color:#64748b">The final fee within this range is confirmed after vetting and agreed before onboarding.</p>
+      </div>` : ''}
+
+      ${d.is_bundle && d.additional_categories?.length ? `
+      <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:14px 18px;margin-bottom:20px">
+        <p style="margin:0 0 6px;font-size:11px;font-weight:700;color:#c2410c;text-transform:uppercase;letter-spacing:1px">Bundle Interest Noted</p>
+        <p style="margin:0 0 10px;font-size:13px;color:#374151;line-height:1.6">You have indicated interest in ${(d.additional_categories?.length||0)+1} service categories. Fees above are per-category individual rates. Our partnerships team will reach out to discuss a bundle rate. We typically offer 10 to 20% off the total annual badge fee for multi-category registrations.</p>
+        <a href="mailto:partnerships@pithonix.ai?subject=Bundle%20Enquiry%20—%20Ref%20%23${id}" style="display:inline-block;background:#c2410c;color:#fff;font-weight:700;padding:8px 18px;border-radius:6px;text-decoration:none;font-size:13px">Email Partnerships Team</a>
+      </div>` : ''}
+
+      <p style="color:#374151;font-size:14px;line-height:1.6">Our team reviews all applications within <strong>48 hours</strong>. Track your status anytime:</p>
       <div style="text-align:center;margin-top:16px">
         <a href="https://gcc-playbook.pithonix.ai/partner-portal" style="display:inline-block;background:#0f172a;color:#fff;padding:12px 28px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:600">Check Application Status</a>
       </div>
@@ -153,7 +184,8 @@ export default async function handler(req, res) {
   } catch(e) { res.status(400).json({ error: 'Invalid JSON' }); return; }
 
   const { company_name, contact_name, email, backup_email, phone, designation, website,
-    partner_category, gst_number, cin_number, year_founded, cities, gcc_projects,
+    partner_category, partner_tier, additional_categories, badge_fee_range, success_fee, is_bundle,
+    gst_number, cin_number, year_founded, cities, gcc_projects,
     team_size, description, doc_link, documents } = body;
 
   if (!company_name || !email || !contact_name) {
@@ -169,15 +201,19 @@ export default async function handler(req, res) {
       try {
         await ensureTable(client);
         const docNames = documents?.length ? documents.map(d => d.name).join(', ') : null;
+        const extraCatsStr = Array.isArray(additional_categories) ? additional_categories.join(', ') : null;
         const result = await client.query(`
           INSERT INTO gcc_partner_applications
           (company_name, contact_name, email, backup_email, phone, designation, website,
-           partner_category, gst_number, cin_number, year_founded, cities, gcc_projects,
+           partner_category, partner_tier, additional_categories, badge_fee_range, success_fee, is_bundle,
+           gst_number, cin_number, year_founded, cities, gcc_projects,
            team_size, description, doc_link, document_names, approval_token)
-          VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18)
+          VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23)
           RETURNING id
         `, [company_name, contact_name, email, backup_email || null, phone || null,
             designation || null, website || null, partner_category || null,
+            partner_tier || null, extraCatsStr, badge_fee_range || null,
+            success_fee || null, is_bundle || false,
             gst_number || null, cin_number || null,
             year_founded ? parseInt(year_founded) : null,
             cities || null, gcc_projects || null, team_size || null,
@@ -198,19 +234,30 @@ export default async function handler(req, res) {
           if (doc.data && doc.name) attachments.push({ filename: doc.name, content: doc.data });
         }
       }
-      const d = { company_name, contact_name, email, backup_email, phone, designation, website, partner_category, gst_number, cin_number, year_founded, cities, gcc_projects, team_size, description, doc_link, document_names: documents?.map(d => d.name).join(', ') };
+      const extraCats = Array.isArray(additional_categories) ? additional_categories : [];
+      const isBundle = is_bundle || extraCats.length > 0;
+      const d = {
+        company_name, contact_name, email, backup_email, phone, designation, website,
+        partner_category, partner_tier, additional_categories: extraCats, badge_fee_range,
+        success_fee, is_bundle: isBundle, gst_number, cin_number, year_founded, cities,
+        gcc_projects, team_size, description, doc_link,
+        document_names: documents?.map(d => d.name).join(', ')
+      };
+
+      const tierLabel = partner_tier ? ` — ${partner_tier}` : '';
+      const bundleFlag = isBundle ? ' [BUNDLE]' : '';
       await resend.emails.send({
         from: 'Pithonix GCC Platform <info@pithonix.ai>',
         to: 'satyajit.d@pithonix.ai',
         cc: 'info@pithonix.ai',
-        subject: `[New Partner Application] ${company_name} — ${partner_category || 'General'}`,
+        subject: `[New Partner Application${bundleFlag}] ${company_name}${tierLabel} — ${partner_category || 'General'}`,
         html: buildNotificationEmail(d, applicationId, token),
         ...(attachments.length ? { attachments } : {})
       });
       await resend.emails.send({
         from: 'Pithonix GCC Platform <info@pithonix.ai>',
         to: email,
-        subject: `Partnership Application Received — Ref #${applicationId}`,
+        subject: `Application Confirmed — Pithonix GCC ${partner_tier || ''} Partner Programme — Ref #${applicationId}`,
         html: buildConfirmationEmail(d, applicationId)
       });
     } catch(e) { console.error('Email error:', e.message); }

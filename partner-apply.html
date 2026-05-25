@@ -123,6 +123,38 @@
 
   /* FOOTER */
   footer { background: var(--s1); border-top: 1px solid var(--bd); padding: 1.5rem 2rem; text-align: center; color: var(--tmed); font-size: 0.8rem; }
+
+  /* FEE PANEL */
+  .fee-panel { margin-top: 0.75rem; border-radius: 10px; padding: 1rem 1.2rem; background: rgba(59,130,246,0.06); border: 1.5px solid rgba(59,130,246,0.25); display: none; }
+  .fee-panel-title { font-size: 0.72rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--teal); margin-bottom: 0.6rem; }
+  .fee-row { display: flex; justify-content: space-between; align-items: baseline; padding: 0.35rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 0.84rem; }
+  .fee-row:last-child { border-bottom: none; }
+  .fee-label { color: var(--tmed); }
+  .fee-value { font-weight: 700; color: var(--text); }
+  .fee-note { font-size: 0.75rem; color: rgba(148,163,184,0.6); margin-top: 0.5rem; }
+
+  /* BUNDLE */
+  .bundle-section { padding: 0 1.5rem 1.5rem; }
+  .bundle-header { font-size: 0.82rem; font-weight: 600; color: var(--tmed); margin-bottom: 0.75rem; }
+  .bundle-cats { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+  .bundle-pill { display: inline-flex; align-items: center; gap: 0.35rem; background: rgba(255,255,255,0.04); border: 1px solid var(--bd); border-radius: 20px; padding: 0.3rem 0.75rem; font-size: 0.78rem; color: var(--tmed); cursor: pointer; transition: all 0.15s; user-select: none; }
+  .bundle-pill:hover { border-color: var(--teal); color: var(--text); }
+  .bundle-pill input[type="checkbox"] { display: none; }
+  .bundle-pill.selected { background: rgba(6,182,212,0.12); border-color: rgba(6,182,212,0.45); color: var(--teal); font-weight: 600; }
+  .bundle-breakdown { background: rgba(255,255,255,0.03); border: 1px solid var(--bd); border-radius: 10px; padding: 1rem 1.2rem; display: none; }
+  .bundle-breakdown.visible { display: block; }
+  .bundle-row { display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.83rem; }
+  .bundle-row:last-child { border-bottom: none; }
+  .bundle-row .bl { color: var(--tmed); }
+  .bundle-row .bv { font-weight: 600; color: var(--text); }
+  .bundle-total { display: flex; justify-content: space-between; padding: 0.6rem 0 0.3rem; font-size: 0.9rem; font-weight: 700; color: var(--text); border-top: 1px solid rgba(255,255,255,0.15); margin-top: 0.35rem; }
+  .bundle-cta { margin-top: 1rem; background: linear-gradient(135deg, rgba(6,182,212,0.12), rgba(59,130,246,0.1)); border: 1px solid rgba(6,182,212,0.35); border-radius: 10px; padding: 1rem 1.2rem; }
+  .bundle-cta p { font-size: 0.82rem; color: var(--tmed); margin-bottom: 0.6rem; line-height: 1.5; }
+  .bundle-cta-links { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .bundle-cta-links a { display: inline-block; font-size: 0.8rem; font-weight: 700; padding: 0.45rem 1rem; border-radius: 6px; text-decoration: none; transition: opacity 0.2s; }
+  .bcl-call { background: var(--teal); color: #000; }
+  .bcl-mail { background: rgba(255,255,255,0.08); border: 1px solid var(--bd); color: var(--text); }
+  .bundle-cta-links a:hover { opacity: 0.85; }
 </style>
 </head>
 <body>
@@ -187,8 +219,8 @@
       </div>
       <div class="form-grid">
         <div class="form-group">
-          <label>Partner Category <span class="req">*</span></label>
-          <select id="partner_category">
+          <label>Primary Service Category <span class="req">*</span></label>
+          <select id="partner_category" onchange="updateFeePanel()">
             <option value="">Select category</option>
             <option>01 — Legal and Company Secretarial</option>
             <option>02 — Real Estate and Workspace</option>
@@ -206,14 +238,20 @@
         </div>
         <div class="form-group">
           <label>Partnership Tier Applying For <span class="req">*</span></label>
-          <select id="partner_tier" onchange="showTierBenefits(this.value)">
+          <select id="partner_tier" onchange="showTierBenefits(this.value); updateFeePanel();">
             <option value="">Select tier</option>
             <option value="Platinum">Platinum</option>
             <option value="Gold">Gold</option>
             <option value="Silver">Silver</option>
           </select>
           <div id="tier-benefits" style="display:none;margin-top:0.75rem;border-radius:10px;padding:1rem 1.2rem;border:1.5px solid;font-size:0.84rem"></div>
-          <div style="margin-top:0.5rem;font-size:0.75rem;color:var(--tmed)">All tiers compete openly for every client. Tier = quality standard, not an exclusive slot. <a href="/partner-deck" target="_blank" style="color:var(--blue)">See full tier comparison →</a></div>
+          <div id="fee-panel" class="fee-panel">
+            <div class="fee-panel-title">Annual Badge Fee — <span id="fee-cat-name"></span></div>
+            <div class="fee-row"><span class="fee-label">Annual Badge Fee</span><span class="fee-value">Rs <span id="fee-badge"></span> Lakhs / year</span></div>
+            <div class="fee-row"><span class="fee-label">Success Fee</span><span class="fee-value"><span id="fee-success"></span> of Year 1 contract value</span></div>
+            <div class="fee-note">Fee is confirmed after vetting. Final number within the range above is agreed before onboarding.</div>
+          </div>
+          <div style="margin-top:0.5rem;font-size:0.75rem;color:var(--tmed)">All tiers compete openly. Tier = quality standard, not an exclusive slot. <a href="/partner-deck" target="_blank" style="color:var(--blue)">See full comparison →</a></div>
         </div>
         <div class="form-group full">
           <label>Operating Zone <span class="req">*</span></label>
@@ -284,6 +322,34 @@
           </div>
           <div class="location-summary" id="location-summary">No locations selected yet.</div>
           <input type="hidden" id="cities">
+        </div>
+        <div class="form-group full">
+          <label>Delivering in Additional Service Categories? <span style="font-weight:400;color:rgba(148,163,184,0.5)">(optional — select all that apply)</span></label>
+          <div class="bundle-cats" id="bundle-cats">
+            <label class="bundle-pill" data-cat="01 — Legal and Company Secretarial"><input type="checkbox" value="01 — Legal and Company Secretarial">Legal and Company Secretarial</label>
+            <label class="bundle-pill" data-cat="02 — Real Estate and Workspace"><input type="checkbox" value="02 — Real Estate and Workspace">Real Estate and Workspace</label>
+            <label class="bundle-pill" data-cat="03 — Banking and Financial Services"><input type="checkbox" value="03 — Banking and Financial Services">Banking and Financial Services</label>
+            <label class="bundle-pill" data-cat="04 — Payroll and HR Technology"><input type="checkbox" value="04 — Payroll and HR Technology">Payroll and HR Technology</label>
+            <label class="bundle-pill" data-cat="05 — Staffing and Recruitment"><input type="checkbox" value="05 — Staffing and Recruitment">Staffing and Recruitment</label>
+            <label class="bundle-pill" data-cat="06 — Tax and Transfer Pricing"><input type="checkbox" value="06 — Tax and Transfer Pricing">Tax and Transfer Pricing</label>
+            <label class="bundle-pill" data-cat="07 — IT Infrastructure and Cloud"><input type="checkbox" value="07 — IT Infrastructure and Cloud">IT Infrastructure and Cloud</label>
+            <label class="bundle-pill" data-cat="08 — Compliance and Regulatory"><input type="checkbox" value="08 — Compliance and Regulatory">Compliance and Regulatory</label>
+            <label class="bundle-pill" data-cat="09 — ERP and Technology Integration"><input type="checkbox" value="09 — ERP and Technology Integration">ERP and Technology Integration</label>
+            <label class="bundle-pill" data-cat="10 — Learning and Development"><input type="checkbox" value="10 — Learning and Development">Learning and Development</label>
+            <label class="bundle-pill" data-cat="11 — Facilities and Admin Management"><input type="checkbox" value="11 — Facilities and Admin Management">Facilities and Admin Management</label>
+            <label class="bundle-pill" data-cat="12 — Cybersecurity and Data Privacy"><input type="checkbox" value="12 — Cybersecurity and Data Privacy">Cybersecurity and Data Privacy</label>
+          </div>
+          <div class="bundle-breakdown" id="bundle-breakdown">
+            <div id="bundle-rows"></div>
+            <div class="bundle-total"><span>Estimated Total (individual rates)</span><span id="bundle-total-val"></span></div>
+            <div class="bundle-cta">
+              <p>You have selected <strong id="bundle-cat-count">0</strong> service categories. Each category requires a separate badge registration. If you operate across multiple categories, call us to negotiate a bundled rate. Depending on the combination, we typically offer 10 to 20% off the total badge fee.</p>
+              <div class="bundle-cta-links">
+                <a href="tel:+919876543210" class="bcl-call">Call to Negotiate Bundle</a>
+                <a href="mailto:partnerships@pithonix.ai?subject=Bundle%20Partnership%20Enquiry" class="bcl-mail">Email Partnerships Team</a>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="form-group">
           <label>GCC / Enterprise Projects Handled</label>
@@ -397,6 +463,76 @@
 </footer>
 
 <script>
+// ── FEE MATRIX (Annual Badge Fee in Rs Lakhs) ──
+var FEE_MATRIX = {
+  '01 — Legal and Company Secretarial':  { platinum: '18–26', gold: '7–11',   silver: '1.5–2.5', tier: 'mid'      },
+  '02 — Real Estate and Workspace':      { platinum: '35–45', gold: '14–18',  silver: '3–4',     tier: 'high'     },
+  '03 — Banking and Financial Services': { platinum: '22–32', gold: '9–13',   silver: '2–3',     tier: 'high'     },
+  '04 — Payroll and HR Technology':      { platinum: '10–16', gold: '4–8',    silver: '1–2',     tier: 'standard' },
+  '05 — Staffing and Recruitment':       { platinum: '14–22', gold: '6–10',   silver: '1.5–2',   tier: 'mid'      },
+  '06 — Tax and Transfer Pricing':       { platinum: '16–24', gold: '7–10',   silver: '1.5–2.5', tier: 'mid'      },
+  '07 — IT Infrastructure and Cloud':    { platinum: '28–38', gold: '11–15',  silver: '2.5–3.5', tier: 'high'     },
+  '08 — Compliance and Regulatory':      { platinum: '10–16', gold: '4–7',    silver: '1–1.75',  tier: 'standard' },
+  '09 — ERP and Technology Integration': { platinum: '25–35', gold: '10–14',  silver: '2–3',     tier: 'high'     },
+  '10 — Learning and Development':       { platinum: '7–12',  gold: '3–5',    silver: '0.75–1.25', tier: 'light'  },
+  '11 — Facilities and Admin Management':{ platinum: '8–14',  gold: '3.5–6',  silver: '0.75–1.5',  tier: 'light'  },
+  '12 — Cybersecurity and Data Privacy': { platinum: '14–20', gold: '6–9',    silver: '1.5–2',   tier: 'mid'      }
+};
+
+var SUCCESS_FEE = { Platinum: '0.5–1%', Gold: '1–2%', Silver: '2–3%' };
+
+function updateFeePanel() {
+  var cat = document.getElementById('partner_category').value;
+  var tier = document.getElementById('partner_tier').value;
+  var panel = document.getElementById('fee-panel');
+  if (!cat || !tier || !FEE_MATRIX[cat]) { panel.style.display = 'none'; return; }
+  var tierKey = tier.toLowerCase();
+  document.getElementById('fee-cat-name').textContent = cat.split(' — ')[1] || cat;
+  document.getElementById('fee-badge').textContent = FEE_MATRIX[cat][tierKey];
+  document.getElementById('fee-success').textContent = SUCCESS_FEE[tier] || '';
+  panel.style.display = 'block';
+  updateBundleBreakdown();
+  filterBundlePills();
+}
+
+function filterBundlePills() {
+  var primaryCat = document.getElementById('partner_category').value;
+  document.querySelectorAll('.bundle-pill').forEach(function(pill) {
+    var cat = pill.dataset.cat;
+    if (cat === primaryCat) {
+      pill.style.display = 'none';
+      var cb = pill.querySelector('input');
+      cb.checked = false;
+      pill.classList.remove('selected');
+    } else {
+      pill.style.display = '';
+    }
+  });
+  updateBundleBreakdown();
+}
+
+function updateBundleBreakdown() {
+  var tier = document.getElementById('partner_tier').value;
+  var primaryCat = document.getElementById('partner_category').value;
+  var tierKey = tier ? tier.toLowerCase() : '';
+  var selected = Array.from(document.querySelectorAll('#bundle-cats input:checked')).map(function(i){ return i.value; });
+  var bd = document.getElementById('bundle-breakdown');
+  if (selected.length === 0 || !tier || !primaryCat) { bd.classList.remove('visible'); return; }
+
+  var allCats = [primaryCat].concat(selected);
+  var rows = '';
+  allCats.forEach(function(cat, idx) {
+    var fee = FEE_MATRIX[cat] ? FEE_MATRIX[cat][tierKey] : '—';
+    var label = (cat.split(' — ')[1] || cat);
+    var badge = idx === 0 ? ' <span style="font-size:0.65rem;background:rgba(59,130,246,0.2);padding:0.1rem 0.4rem;border-radius:10px;color:var(--blue)">Primary</span>' : '';
+    rows += '<div class="bundle-row"><span class="bl">' + label + badge + '</span><span class="bv">Rs ' + fee + 'L / yr</span></div>';
+  });
+  document.getElementById('bundle-rows').innerHTML = rows;
+  document.getElementById('bundle-cat-count').textContent = allCats.length;
+  document.getElementById('bundle-total-val').textContent = 'Rs ' + allCats.length + ' × individual rates';
+  bd.classList.add('visible');
+}
+
 var selectedFiles = [];
 
 var TIER_BENEFITS = {
@@ -508,6 +644,16 @@ document.querySelectorAll('.ms-pill').forEach(function(pill) {
   });
 });
 
+// Bundle category pills
+document.querySelectorAll('.bundle-pill').forEach(function(pill) {
+  pill.addEventListener('click', function() {
+    var cb = pill.querySelector('input[type="checkbox"]');
+    cb.checked = !cb.checked;
+    pill.classList.toggle('selected', cb.checked);
+    updateBundleBreakdown();
+  });
+});
+
 function updateLocationSummary() {
   var zones = Array.from(document.querySelectorAll('#zone-pills input:checked')).map(function(i){ return i.value; });
   var cities = Array.from(document.querySelectorAll('#city-pills-t1 input:checked, #city-pills-t2 input:checked, #city-pills-t3 input:checked')).map(function(i){ return i.value; });
@@ -578,6 +724,11 @@ async function submitApplication() {
     } catch(e) { console.log('File read error', e); }
   }
 
+  var additionalCats = Array.from(document.querySelectorAll('#bundle-cats input:checked')).map(function(i){ return i.value; });
+  var tierKey = partnerTier.toLowerCase();
+  var primaryFee = (FEE_MATRIX[partnerCategory] && tierKey) ? FEE_MATRIX[partnerCategory][tierKey] : '';
+  var successFee = SUCCESS_FEE[partnerTier] || '';
+
   var payload = {
     company_name: companyName,
     contact_name: contactName,
@@ -596,7 +747,11 @@ async function submitApplication() {
     description: description,
     backup_email: document.getElementById('backup_email').value.trim(),
     doc_link: document.getElementById('doc_link').value.trim(),
-    documents: documents
+    documents: documents,
+    additional_categories: additionalCats,
+    badge_fee_range: primaryFee ? 'Rs ' + primaryFee + ' Lakhs/year' : '',
+    success_fee: successFee,
+    is_bundle: additionalCats.length > 0
   };
 
   try {
