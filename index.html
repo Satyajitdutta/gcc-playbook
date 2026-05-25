@@ -630,9 +630,7 @@ section{position:relative;z-index:2;padding:6rem 0}
 .cat-tabs{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:2rem}
 .cat-tab{padding:0.5rem 1.1rem;border:1px solid var(--bd);border-radius:20px;font-size:0.82rem;font-weight:600;color:var(--tdim);cursor:pointer;transition:all 0.2s}
 .cat-tab.active,.cat-tab:hover{border-color:var(--gold);color:var(--gold);background:rgba(232,184,75,0.08)}
-.vendor-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.2rem;margin-bottom:3rem}
-.vendor-card{background:rgba(255,255,255,0.85);border:1px solid var(--bd);border-radius:var(--r);padding:1.5rem;transition:border-color 0.2s;display:none}
-.vendor-card.show{display:block}
+
 .vendor-empty{border-style:dashed;text-align:center;cursor:pointer}
 .vendor-empty:hover{border-color:var(--gold)}
 .vendor-empty .ve-icon{font-size:2rem;margin-bottom:0.5rem;opacity:0.4}
@@ -646,6 +644,17 @@ section{position:relative;z-index:2;padding:6rem 0}
 .ve-desc{font-size:0.82rem;color:var(--tmed);line-height:1.5;margin-bottom:0.75rem}
 .ve-website{font-size:0.8rem;color:var(--teal);text-decoration:none;font-weight:600}
 .ve-website:hover{text-decoration:underline}
+.ve-cat-header{display:flex;align-items:center;gap:0.6rem;margin-bottom:0.2rem}
+.ve-cat-icon{font-size:1.4rem;line-height:1}
+.ve-cat-num{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:2px;color:var(--tdim);font-weight:700}
+.ve-platinum-names{font-size:0.75rem;color:var(--tmed);margin-bottom:0.6rem;line-height:1.5}
+.ve-platinum-badge{background:linear-gradient(90deg,rgba(122,88,0,0.18),rgba(232,184,75,0.15));border:1px solid rgba(122,88,0,0.35);color:var(--gold);font-size:0.65rem;font-weight:700;padding:0.18rem 0.5rem;border-radius:20px;margin-right:0.3rem}
+.ve-plat-name{font-weight:600;color:var(--txt)}
+.ve-apply-btn{display:inline-block;margin-top:auto;font-size:0.78rem;font-weight:700;color:var(--teal);text-decoration:none;border:1px solid rgba(29,184,104,0.35);border-radius:6px;padding:0.4rem 0.9rem;transition:background 0.2s,border-color 0.2s}
+.ve-apply-btn:hover{background:rgba(29,184,104,0.1);border-color:var(--teal)}
+.vendor-card{display:none;background:rgba(255,255,255,0.85);border:1px solid var(--bd);border-radius:var(--r);padding:1.4rem;transition:border-color 0.2s,box-shadow 0.2s;flex-direction:column}
+.vendor-card.show{display:flex}
+.vendor-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.2rem;margin-bottom:3rem}
 
 /* Partner Form */
 .partner-form-wrap{background:rgba(255,255,255,0.85);border:1px solid var(--bd);border-radius:var(--r2);padding:2.5rem}
@@ -1954,7 +1963,7 @@ if(document.readyState==="loading"){
       <div class="wp-meta-item"><strong>Full Title</strong>Integrated National Digital Unified Standard for Global Capability Centres</div>
       <div class="wp-meta-item"><strong>Author</strong>Satyajit v Dutta, Founder and CEO, Pithonix AI India Private Limited</div>
       <div class="wp-meta-item"><strong>For Consideration By</strong>NASSCOM, CII, MeitY, Bureau of Indian Standards (BIS)</div>
-      <div class="wp-meta-item"><strong>Version</strong>1.0, April 2026</div>
+      <div class="wp-meta-item"><strong>Version</strong>1.0, <span class="dyn-month-year"></span></div>
     </div>
 
     <!-- Core argument -->
@@ -2164,7 +2173,6 @@ if(document.readyState==="loading"){
         <div style="font-size:0.78rem;color:var(--tmed)">Clients contact you directly from directory. Rs 1.5–3L/year + 2–3% success fee.</div>
       </div>
     </div>
-    <div style="font-size:0.72rem;color:var(--tdim);margin-bottom:2rem;font-style:italic">12 categories: Legal &amp; Company Secretarial · Real Estate &amp; Workspace · Banking &amp; Financial Services · Payroll &amp; HR Technology · Staffing &amp; Recruitment · Tax &amp; Transfer Pricing · IT Infrastructure &amp; Cloud · Compliance &amp; Regulatory · ERP &amp; Technology Integration · Learning &amp; Development · Facilities &amp; Admin Management · Cybersecurity &amp; Data Privacy</div>
     <div class="cat-tabs" id="cat-tabs"></div>
     <div class="vendor-grid" id="vendor-grid"></div>
     <div class="partner-form-wrap reveal" style="text-align:center">
@@ -2234,9 +2242,12 @@ if(document.readyState==="loading"){
 
 <script>
 // ── DYNAMIC YEAR ──
-var dynYear=new Date().getFullYear(),dynPrevYear=dynYear-1;
+var _now=new Date(),dynYear=_now.getFullYear(),dynPrevYear=dynYear-1;
+var _months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+var dynMonthYear=_months[_now.getMonth()]+' '+dynYear;
 document.querySelectorAll('.dyn-year').forEach(function(el){el.textContent=dynYear;});
 document.querySelectorAll('.dyn-pyear').forEach(function(el){el.textContent=dynPrevYear;});
+document.querySelectorAll('.dyn-month-year').forEach(function(el){el.textContent=dynMonthYear;});
 // Update aria-label on city benchmark table
 var benchTable=document.querySelector('.geo-table[aria-label]');
 if(benchTable)benchTable.setAttribute('aria-label','GCC setup cost benchmarks by Indian city '+dynYear);
@@ -2610,45 +2621,60 @@ if(document.readyState==="loading"){
 }
 
 // ── PARTNER ECOSYSTEM ──
-var cats=['All','Real Estate & Workspace','Legal & Compliance','Recruitment & Staffing','IT Infrastructure','Payroll & Benefits','Training & L&D','Banking & Finance','Technology Partner'];
+var ECOSYSTEM_CATS=[
+  {id:'01',name:'Legal and Company Secretarial',icon:'⚖️',desc:'Entity incorporation, company secretarial, contract management, and legal advisory for GCC setup.'},
+  {id:'02',name:'Real Estate and Workspace',icon:'🏢',desc:'Office leasing, coworking, fit-out, SEZ/STP liaison, and managed workspace solutions.'},
+  {id:'03',name:'Banking and Financial Services',icon:'🏦',desc:'Corporate banking, forex, treasury, and financial services onboarding for GCC entities.'},
+  {id:'04',name:'Payroll and HR Technology',icon:'💳',desc:'Payroll processing, statutory compliance, HR software integration, and benefits administration.'},
+  {id:'05',name:'Staffing and Recruitment',icon:'👥',desc:'Executive search, lateral hiring, campus recruitment, and bulk staffing across GCC functions.'},
+  {id:'06',name:'Tax and Transfer Pricing',icon:'📊',desc:'Direct and indirect tax advisory, transfer pricing documentation, and repatriation structuring.'},
+  {id:'07',name:'IT Infrastructure and Cloud',icon:'☁️',desc:'Data centre, cloud migration, network setup, endpoint management, and IT operations.'},
+  {id:'08',name:'Compliance and Regulatory',icon:'🛡️',desc:'FEMA, RBI, SEZ, and sectoral regulatory compliance for India-based GCC entities.'},
+  {id:'09',name:'ERP and Technology Integration',icon:'🔗',desc:'ERP implementation, API integration, digital transformation, and enterprise tech advisory.'},
+  {id:'10',name:'Learning and Development',icon:'🎓',desc:'Leadership programmes, skilling, certifications, and learning management for GCC teams.'},
+  {id:'11',name:'Facilities and Admin Management',icon:'🏗️',desc:'Facility management, transport, F&B, housekeeping, and admin operations for GCC offices.'},
+  {id:'12',name:'Cybersecurity and Data Privacy',icon:'🔐',desc:'SOC, VAPT, GDPR/DPDP compliance, zero-trust architecture, and security operations.'}
+];
+
 (function(){
-  var ct=document.getElementById('cat-tabs');
-  ct.innerHTML=cats.map(function(c,i){return'<div class="cat-tab'+(i===0?' active':'')+'" onclick="filterCat(this,\''+c+'\')">'+c+'</div>';}).join('');
+  document.getElementById('cat-tabs').style.display='none';
   loadPartners();
 })();
 
 async function loadPartners(){
   var g=document.getElementById('vendor-grid');
-  var partners=[];
+  var platinumMap={};
   try{
     var res=await fetch('/api/partners-list');
     var data=await res.json();
-    partners=data.partners||[];
+    (data.partners||[]).forEach(function(p){
+      if((p.partner_tier||'').toLowerCase()==='platinum'){
+        var key=(p.partner_category||'').trim();
+        if(!platinumMap[key])platinumMap[key]=[];
+        platinumMap[key].push(p.company_name);
+      }
+    });
   }catch(e){}
 
-  var approvedCats=partners.map(function(p){return p.partner_category;});
   var html='';
-
-  partners.forEach(function(p){
-    var desc=p.description?(p.description.length>130?p.description.substring(0,130)+'...':p.description):'';
-    html+='<div class="vendor-card show" data-cat="'+(p.partner_category||'')+'">'+
-      '<div class="ve-badges">'+
-      '<span class="ve-verified">✓ Pithonix Verified Partner</span>'+
-      '<span class="ve-cat">'+(p.partner_category||'Partner')+'</span>'+
+  ECOSYSTEM_CATS.forEach(function(cat){
+    var platinum=platinumMap[cat.name]||[];
+    var platinumHtml=platinum.length
+      ? '<div class="ve-platinum-names">'+
+          '<span class="ve-platinum-badge">&#11088; Platinum</span> '+
+          platinum.map(function(n){return'<span class="ve-plat-name">'+n+'</span>';}).join(', ')+
+        '</div>'
+      : '';
+    html+='<div class="vendor-card show" data-cat="'+cat.id+'">'+
+      '<div class="ve-cat-header">'+
+        '<span class="ve-cat-icon">'+cat.icon+'</span>'+
+        '<span class="ve-cat-num">'+cat.id+'</span>'+
       '</div>'+
-      '<div class="ve-name">'+p.company_name+'</div>'+
-      (p.cities?'<div class="ve-cities">📍 '+p.cities+'</div>':'')+
-      (desc?'<div class="ve-desc">'+desc+'</div>':'')+
-      (p.website?'<a href="'+(p.website.match(/^https?:\/\//)?p.website:'https://'+p.website)+'" target="_blank" rel="noopener" class="ve-website">Visit Website →</a>':'')+
-      '</div>';
-  });
-
-  cats.slice(1).forEach(function(cat){
-    if(!approvedCats.includes(cat)){
-      html+='<div class="vendor-card vendor-empty show" data-cat="'+cat+'" onclick="window.location.href=\'/partner-apply\'">'+
-        '<div class="ve-icon">+</div><div class="ve-txt">'+cat+'</div>'+
-        '<div class="ve-cta">Apply to become a partner →</div></div>';
-    }
+      '<div class="ve-name" style="font-size:0.92rem;margin:0.5rem 0 0.4rem">'+cat.name+'</div>'+
+      '<div class="ve-desc" style="margin-bottom:0.75rem">'+cat.desc+'</div>'+
+      platinumHtml+
+      '<a href="/partner-apply?category='+encodeURIComponent(cat.name)+'" class="ve-apply-btn">Request Partnership &rarr;</a>'+
+    '</div>';
   });
 
   g.innerHTML=html;
