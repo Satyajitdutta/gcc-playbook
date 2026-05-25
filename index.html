@@ -281,6 +281,23 @@ h1,h2,h3{line-height:1.2;font-weight:700}
 .ticker-sep{color:rgba(232,184,75,0.3)}
 @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
+/* ── POLICY PULSE ── */
+.policy-pulse{background:linear-gradient(135deg,rgba(10,110,56,0.08) 0%,rgba(122,88,0,0.06) 100%);border-top:2px solid rgba(122,88,0,0.3);border-bottom:1px solid rgba(10,110,56,0.2);padding:2.5rem 0;position:relative;z-index:2}
+.policy-pulse-inner{max-width:1200px;margin:0 auto;padding:0 2rem}
+.policy-pulse-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.policy-pulse-badge{font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:3px;color:#fff;background:var(--red);padding:0.25rem 0.7rem;border-radius:4px;font-weight:700;text-transform:uppercase;animation:pulse-badge 2s ease-in-out infinite}
+@keyframes pulse-badge{0%,100%{opacity:1}50%{opacity:0.7}}
+.policy-pulse-title{font-size:1.1rem;font-weight:700;color:var(--txt)}
+.policy-pulse-date{font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--tdim);margin-left:auto}
+.policy-pulse-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:768px){.policy-pulse-grid{grid-template-columns:1fr}}
+.pp-card{background:rgba(255,255,255,0.5);border:1px solid rgba(10,110,56,0.2);border-radius:10px;padding:1rem 1.2rem;display:flex;gap:0.75rem;align-items:flex-start}
+.pp-card.highlight{border-color:rgba(122,88,0,0.4);background:rgba(122,88,0,0.06)}
+.pp-icon{font-size:1.2rem;flex-shrink:0;margin-top:0.1rem}
+.pp-tag{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:2px;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:0.2rem}
+.pp-text{font-size:0.84rem;color:var(--tmed);line-height:1.55}
+.pp-text strong{color:var(--txt)}
+.pp-footer{margin-top:1.2rem;font-size:0.72rem;color:var(--tdim);font-style:italic}
 /* ── SECTION BASE ── */
 section{position:relative;z-index:2;padding:6rem 0}
 .section-label{font-family:'JetBrains Mono',monospace;font-size:0.72rem;letter-spacing:3px;color:var(--gold);margin-bottom:1rem;text-transform:uppercase;font-weight:700}
@@ -866,6 +883,48 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
   <div class="ticker-track" id="ticker"></div>
 </div>
 
+<!-- POLICY PULSE — TELANGANA GCC DIRECTIVE MAY 2026 -->
+<div class="policy-pulse">
+  <div class="policy-pulse-inner">
+    <div class="policy-pulse-header">
+      <span class="policy-pulse-badge">&#9679; Policy Alert</span>
+      <span class="policy-pulse-title">Telangana CM Directs New GCC Policy: Beyond Hyderabad</span>
+      <span class="policy-pulse-date">May 2026 &middot; High-Level Review, MCR HRD Institute</span>
+    </div>
+    <div class="policy-pulse-grid">
+      <div class="pp-card highlight">
+        <div class="pp-icon">&#127981;</div>
+        <div class="pp-body">
+          <div class="pp-tag">Tier-2 Corridor Push</div>
+          <p class="pp-text">CM Revanth Reddy has directed officials to formulate a <strong>dedicated GCC Policy for Beyond CUR (Core Urban Region)</strong> areas. Special incentives being designed for GCCs and Data Centers along the <strong>Nizamabad, Karimnagar, and Warangal highway corridors.</strong></p>
+        </div>
+      </div>
+      <div class="pp-card highlight">
+        <div class="pp-icon">&#127963;</div>
+        <div class="pp-body">
+          <div class="pp-tag">AI City + Future City</div>
+          <p class="pp-text">The proposed <strong>AI City within Future City</strong> has been directed to commence immediately, with world-class infrastructure and Net-Zero policies. Companies in the Future City Industrial Corridor must enter skill agreements with <strong>Young India Skills University.</strong></p>
+        </div>
+      </div>
+      <div class="pp-card">
+        <div class="pp-icon">&#128200;</div>
+        <div class="pp-body">
+          <div class="pp-tag">Invest Telangana Society</div>
+          <p class="pp-text">A new <strong>Invest Telangana</strong> investment promotion agency is being created with a dedicated Escort Officer assigned to each investor from arrival to go-live. End-to-end support across Energy, Finance, IT, and Industries departments.</p>
+        </div>
+      </div>
+      <div class="pp-card">
+        <div class="pp-icon">&#128241;</div>
+        <div class="pp-body">
+          <div class="pp-tag">T-Fiber + Data Centre Push</div>
+          <p class="pp-text">All government offices in Telangana transitioning to <strong>T-Fiber</strong> within 3 months (already generating Rs 54 crore in orders). Officials directed to identify new Data Centre locations around Hyderabad where IT expansion has been limited.</p>
+        </div>
+      </div>
+    </div>
+    <p class="pp-footer">Source: Telangana CM High-Level Review Meeting, MCR HRD Institute, May 2026. IT and Industries Minister Duddilla Sridhar Babu present. Pithonix is positioned to deliver GCC setups in all Beyond CUR Tier-2 corridors from Day 1.</p>
+  </div>
+</div>
+
 <!-- FDI GOVT BENEFITS HERO -->
 <section id="fdi-hero" aria-label="India Government Benefits and FDI Incentives for GCCs">
   <div class="wrap">
@@ -1109,7 +1168,7 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
             <div class="fdi-benefit-title">10 State GCC Policies: Capital Subsidy + Power Tariff + Stamp Duty + Employment Incentives</div>
             <div class="fdi-benefit-desc">Between 2024 and 2026, ten Indian states formally notified dedicated GCC policies. These are entirely stackable on top of all central government benefits listed above. A GCC can simultaneously claim STPI benefits, zero-GST treatment, Section 80JJAA, AND a state capital subsidy.</div>
             <ul class="fdi-benefit-detail">
-              <li><strong>Telangana (ITIR Policy):</strong> 25% capital subsidy on fixed assets up to Rs 2 crore. Power tariff subsidy of Rs 1/unit for 5 years. Stamp duty exemption on property transactions. Source: Telangana ITE&amp;C Dept</li>
+              <li><strong>Telangana (ITIR Policy + New GCC Beyond CUR Directive, May 2026):</strong> 25% capital subsidy on fixed assets up to Rs 2 crore. Power tariff subsidy of Rs 1/unit for 5 years. Stamp duty exemption. <strong>New (May 2026):</strong> CM Revanth Reddy has directed a dedicated GCC Policy with special incentives for Tier-2 corridors along Nizamabad, Karimnagar, and Warangal highways. Invest Telangana end-to-end investor support society being established. Source: Telangana ITE&amp;C Dept; MCR HRD Institute High-Level Review, May 2026.</li>
               <li><strong>Karnataka (K-TECH 2024-2029):</strong> 20% capital grant on qualifying investments. Employment subsidy for 5 years. Stamp duty exemption. Source: eitbt.karnataka.gov.in</li>
               <li><strong>Uttar Pradesh (UP GCC Policy 2024):</strong> Employment subsidy linked to headcount. Stamp duty exemption. Land at concessional rates. Source: invest.up.gov.in</li>
               <li><strong>Gujarat (GCC Policy 2025-30):</strong> 25% capital subsidy. GIFT City IFSC benefits for BFSI GCCs (zero corporate tax for 10 years within IFSC). Source: api.giftgujarat.in</li>
