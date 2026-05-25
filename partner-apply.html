@@ -206,12 +206,13 @@
         </div>
         <div class="form-group">
           <label>Partnership Tier Applying For <span class="req">*</span></label>
-          <select id="partner_tier">
+          <select id="partner_tier" onchange="showTierBenefits(this.value)">
             <option value="">Select tier</option>
-            <option value="Platinum">Platinum — Rs 10 to 25 Lakhs/year + 0.5–1.5% success fee. Featured in GCC blueprints. Direct client pitches.</option>
-            <option value="Gold">Gold — Rs 5 to 10 Lakhs/year + 1–2% success fee. Included in blueprints. Profile-matched referrals.</option>
-            <option value="Silver">Silver — Rs 1.5 to 3 Lakhs/year + 2–3% success fee. Ecosystem directory listing.</option>
+            <option value="Platinum">Platinum</option>
+            <option value="Gold">Gold</option>
+            <option value="Silver">Silver</option>
           </select>
+          <div id="tier-benefits" style="display:none;margin-top:0.75rem;border-radius:10px;padding:1rem 1.2rem;border:1.5px solid;font-size:0.84rem"></div>
           <div style="margin-top:0.5rem;font-size:0.75rem;color:var(--tmed)">All tiers compete openly for every client. Tier = quality standard, not an exclusive slot. <a href="/partner-deck" target="_blank" style="color:var(--blue)">See full tier comparison →</a></div>
         </div>
         <div class="form-group full">
@@ -397,6 +398,69 @@
 
 <script>
 var selectedFiles = [];
+
+var TIER_BENEFITS = {
+  Platinum: {
+    color: '#B8860B',
+    bg: 'rgba(184,134,11,0.08)',
+    border: 'rgba(184,134,11,0.5)',
+    label: '🏆 Platinum Partner Benefits',
+    items: [
+      { icon: '⚡', title: '4-Day Lead Advantage', desc: 'You receive every matched GCC lead 4 days before Gold and Silver partners. First-mover advantage on every opportunity in your category.' },
+      { icon: '📋', title: 'Featured in GCC Blueprints', desc: 'Your full profile appears in the AI-generated blueprint every matched client receives — with credentials, case studies, and a direct pitch link.' },
+      { icon: '🎯', title: 'Direct 20-Minute Client Pitch', desc: 'Pithonix facilitates a dedicated 20-minute pitch slot with shortlisted GCC clients within 48 hours of introduction.' },
+      { icon: '📊', title: 'Monthly Win Rate Report', desc: 'Individual win rate tracked and shared monthly. Higher win rate = higher algorithm ranking in blueprints.' },
+      { icon: '🤝', title: 'Priority Co-Delivery', desc: 'First offered on Pithonix-managed GCC projects. Founding partner at GCC Impact Conclave.' },
+      { icon: '💰', title: 'Fees', desc: 'Rs 12 to 25 Lakhs/year (by category) + 0.5 to 1.5% success fee on first-year contract value.' }
+    ]
+  },
+  Gold: {
+    color: '#2A6080',
+    bg: 'rgba(42,96,128,0.08)',
+    border: 'rgba(42,96,128,0.4)',
+    label: '🥇 Gold Partner Benefits',
+    items: [
+      { icon: '⏱', title: '1-Day Lead Advantage', desc: 'You receive every matched GCC lead 1 day ahead of Silver partners. Platinum partners receive it 3 days before you — invest in upgrading to close that gap.' },
+      { icon: '📋', title: 'Included in GCC Blueprints', desc: 'Your profile is included in blueprints with credentials and contact details, ranked after Platinum partners by fit score.' },
+      { icon: '📩', title: 'Profile View + Email Introduction', desc: 'Pithonix sends an email introduction to matched clients. Client selects and contacts you directly from the blueprint.' },
+      { icon: '📊', title: 'Quarterly Win Rate Report', desc: 'Individual win rate tracked and shared quarterly.' },
+      { icon: '🤝', title: 'Co-Delivery Eligible', desc: 'Offered on Pithonix-managed GCC projects when Platinum is unavailable. Invited as ecosystem partner to GCC Impact Conclave.' },
+      { icon: '💰', title: 'Fees', desc: 'Rs 5 to 10 Lakhs/year (by category) + 1 to 2% success fee on first-year contract value.' }
+    ]
+  },
+  Silver: {
+    color: '#4A4A4A',
+    bg: 'rgba(74,74,74,0.06)',
+    border: 'rgba(74,74,74,0.3)',
+    label: '🥈 Silver Partner Benefits',
+    items: [
+      { icon: '📂', title: 'Leads Shared on Request', desc: 'You are listed in the Pithonix Ecosystem Directory. GCC clients can find and contact you directly. Leads are not pushed to you — clients reach out based on your directory profile.' },
+      { icon: '🗂', title: 'Ecosystem Directory Listing', desc: 'Basic listing with company profile, contact details, and category. Visible to all GCC clients browsing the directory.' },
+      { icon: '⬆', title: 'Path to Gold and Platinum', desc: 'Meet the vetting standards and upgrade at any annual renewal. Gold gives you blueprint placement and 1-day lead. Platinum gives you 4-day lead and direct client pitches.' },
+      { icon: '💰', title: 'Fees', desc: 'Rs 1.5 to 3 Lakhs/year (by category) + 2 to 3% success fee on first-year contract value.' }
+    ]
+  }
+};
+
+function showTierBenefits(tier) {
+  var panel = document.getElementById('tier-benefits');
+  if (!tier || !TIER_BENEFITS[tier]) { panel.style.display = 'none'; return; }
+  var t = TIER_BENEFITS[tier];
+  var html = '<div style="font-weight:700;font-size:0.9rem;color:' + t.color + ';margin-bottom:0.75rem">' + t.label + '</div>';
+  html += '<div style="display:flex;flex-direction:column;gap:0.55rem">';
+  t.items.forEach(function(item) {
+    html += '<div style="display:flex;gap:0.6rem;align-items:flex-start">';
+    html += '<span style="font-size:1rem;flex-shrink:0;margin-top:0.05rem">' + item.icon + '</span>';
+    html += '<div><span style="font-weight:600;color:' + t.color + '">' + item.title + '</span> — <span style="color:var(--tmed)">' + item.desc + '</span></div>';
+    html += '</div>';
+  });
+  html += '</div>';
+  panel.style.background = t.bg;
+  panel.style.borderColor = t.border;
+  panel.style.color = 'var(--text)';
+  panel.innerHTML = html;
+  panel.style.display = 'block';
+}
 
 function handleFiles(files) {
   var warning = document.getElementById('file-warning');
