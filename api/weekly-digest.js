@@ -119,7 +119,7 @@ export default async function handler(req, res) {
     const resend = new Resend(process.env.RESEND_API_KEY);
     await resend.emails.send({
       from: 'Pithonix GCC Platform <info@pithonix.ai>',
-      to: 'satyajit.d@pithonix.ai',
+      to: 'satyajitv.dutta@pithonix.ai',
       subject: `GCC Partner Network — Weekly Digest (${partners.length} active partners)`,
       html: buildDigestEmail(partners, pendingCount)
     });
