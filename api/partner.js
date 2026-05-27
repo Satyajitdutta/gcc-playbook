@@ -250,7 +250,7 @@ export default async function handler(req, res) {
       const bundleFlag = isBundle ? ' [BUNDLE]' : '';
       await resend.emails.send({
         from: 'Pithonix GCC Platform <info@pithonix.ai>',
-        to: 'satyajitv.dutta@pithonix.ai',
+        to: 'satyajitv.d@pithonix.ai',
         cc: 'info@pithonix.ai',
         subject: `[New Partner Application${bundleFlag}] ${company_name}${tierLabel} — ${partner_category || 'General'}`,
         html: buildNotificationEmail(d, applicationId, token),

@@ -1,6 +1,6 @@
 // Pithonix GCC Playbook — Lead & Partner Notification
 // Flow: Form submit → send email via Resend
-// To: satyajitv.dutta@pithonix.ai  |  CC: info@pithonix.ai
+// To: satyajitv.d@pithonix.ai  |  CC: info@pithonix.ai
 // Tags: [Partnership Request] or [GCC Lead Request]
 
 import { Resend } from 'resend';
@@ -34,8 +34,8 @@ async function sendEmail(subject, html, toOverride) {
   const resend = new Resend(process.env.RESEND_API_KEY);
   await resend.emails.send({
     from: 'Pithonix GCC Platform <info@pithonix.ai>',
-    to: toOverride || 'satyajitv.dutta@pithonix.ai',
-    cc: toOverride ? 'satyajitv.dutta@pithonix.ai' : 'info@pithonix.ai',
+    to: toOverride || 'satyajitv.d@pithonix.ai',
+    cc: toOverride ? 'satyajitv.d@pithonix.ai' : 'info@pithonix.ai',
     subject,
     html
   });

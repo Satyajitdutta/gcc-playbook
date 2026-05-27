@@ -52,7 +52,7 @@ Single-repo, no framework. Two serverless API functions + one static HTML page.
 
 - `index.html` — Entire frontend (~2000 lines). All sections, JS, and inline CSS in one file.
 - `api/gemini.js` — Server-side Gemini proxy. Reads `GEMINI_API_KEY` env var. Accepts `_model` field to select model. Default: `gemini-2.5-flash` with `thinkingBudget:0` for simulator (fast, reliable).
-- `api/lead.js` — Lead and partner capture. Sends email via M365 SMTP (`SMTP_USER`, `SMTP_PASS` env vars). Tags: `[Partnership Request]` or `[GCC Lead Request]`. To: satyajitv.dutta@pithonix.ai, CC: info@pithonix.ai. For GCC leads, also calls outreach engine and sends enriched follow-up email.
+- `api/lead.js` — Lead and partner capture. Sends email via M365 SMTP (`SMTP_USER`, `SMTP_PASS` env vars). Tags: `[Partnership Request]` or `[GCC Lead Request]`. To: satyajitv.d@pithonix.ai, CC: info@pithonix.ai. For GCC leads, also calls outreach engine and sends enriched follow-up email.
 - `vercel.json` — Both functions have `maxDuration: 60`.
 - `stpi-proposal.html` — Standalone STPI partnership proposal. Self-contained, print-to-PDF enabled.
 
@@ -73,7 +73,7 @@ Single-repo, no framework. Two serverless API functions + one static HTML page.
 
 ## Email Pipeline
 
-Form → `api/lead.js` → M365 SMTP → to: satyajitv.dutta@pithonix.ai, CC: info@pithonix.ai
+Form → `api/lead.js` → M365 SMTP → to: satyajitv.d@pithonix.ai, CC: info@pithonix.ai
 Subject tags: `[Partnership Request]` for partner forms, `[GCC Lead Request]` for simulator leads.
 GCC leads also trigger outreach engine: `pithonix-outreach-engine.vercel.app/api/research` — returns `{content:[{type:"text",text:"JSON string"}]}`. Must parse `content[0].text`. Outreach emails sent as a second email.
 
