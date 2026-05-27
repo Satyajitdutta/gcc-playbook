@@ -503,7 +503,7 @@ async function sendOTP() {
   S.loading = true;
   render();
   try {
-    var r = await fetch('/api/partner-auth', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({action:'send',email}) });
+    var r = await fetch('/api/partner-portal', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({action:'send',email}) });
     await r.json();
     S.screen = 'otp';
     S.info = 'Code sent. Check your inbox (and spam folder).';
@@ -522,7 +522,7 @@ async function verifyOTP() {
   S.loading = true;
   render();
   try {
-    var r = await fetch('/api/partner-auth', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({action:'verify',email:S.email, otp}) });
+    var r = await fetch('/api/partner-portal', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({action:'verify',email:S.email, otp}) });
     var data = await r.json();
     if (!r.ok || !data.token) { S.error = data.error || 'Invalid code. Please try again.'; S.loading = false; render(); return; }
     S.token = data.token;
@@ -538,7 +538,7 @@ async function verifyOTP() {
 
 async function loadDashboard() {
   try {
-    var r = await fetch('/api/partner-dashboard', { headers:{'X-Partner-Token': S.token} });
+    var r = await fetch('/api/partner-portal', { headers:{'X-Partner-Token': S.token} });
     var data = await r.json();
     if (!r.ok) {
       localStorage.removeItem('pp_token');
@@ -603,7 +603,7 @@ async function saveProfile() {
     description: document.getElementById('ef-desc').value.trim()
   };
   try {
-    var r = await fetch('/api/partner-update', { method:'POST', headers:{'Content-Type':'application/json','X-Partner-Token':S.token}, body:JSON.stringify(Object.assign({action:'profile'},body)) });
+    var r = await fetch('/api/partner-portal', { method:'POST', headers:{'Content-Type':'application/json','X-Partner-Token':S.token}, body:JSON.stringify(Object.assign({action:'profile'},body)) });
     var d = await r.json();
     if (d.success) {
       Object.assign(S.partner, body);
@@ -617,7 +617,7 @@ async function toggleAvail() {
   var chk = document.getElementById('avail-chk');
   var newVal = chk ? chk.checked : !S.partner.is_available;
   try {
-    var r = await fetch('/api/partner-update', { method:'POST', headers:{'Content-Type':'application/json','X-Partner-Token':S.token}, body:JSON.stringify({action:'availability',is_available:newVal}) });
+    var r = await fetch('/api/partner-portal', { method:'POST', headers:{'Content-Type':'application/json','X-Partner-Token':S.token}, body:JSON.stringify({action:'availability',is_available:newVal}) });
     var d = await r.json();
     if (d.success) { S.partner.is_available = d.is_available; render(); }
   } catch(e) {}
@@ -625,7 +625,7 @@ async function toggleAvail() {
 
 async function toggleChecklist(key, completed) {
   try {
-    var r = await fetch('/api/partner-update', { method:'POST', headers:{'Content-Type':'application/json','X-Partner-Token':S.token}, body:JSON.stringify({action:'checklist',item_key:key, completed}) });
+    var r = await fetch('/api/partner-portal', { method:'POST', headers:{'Content-Type':'application/json','X-Partner-Token':S.token}, body:JSON.stringify({action:'checklist',item_key:key, completed}) });
     var d = await r.json();
     if (d.success) {
       S.checklist = S.checklist.map(function(c) {
