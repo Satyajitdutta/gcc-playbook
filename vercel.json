@@ -26,8 +26,7 @@
     { "source": "/partner-apply", "destination": "/partner-apply.html" },
     { "source": "/partner-portal", "destination": "/partner-portal.html" },
     { "source": "/partner-deck", "destination": "/partner-deck.html" },
-    { "source": "/indus-whitepaper", "destination": "/indus-whitepaper.html" },
-    { "source": "/api/indus-framework", "destination": "/api/indus-framework.js" }
+    { "source": "/indus-whitepaper", "destination": "/indus-whitepaper.html" }
   ],
   "headers": [
     {
