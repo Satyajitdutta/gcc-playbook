@@ -12,7 +12,8 @@
     "api/partner-dashboard.js": { "maxDuration": 15 },
     "api/partner-update.js": { "maxDuration": 15 },
     "api/weekly-digest.js": { "maxDuration": 30 },
-    "api/llms.js": { "maxDuration": 5 }
+    "api/llms.js": { "maxDuration": 5 },
+    "api/indus-framework.js": { "maxDuration": 15 }
   },
   "crons": [
     {
@@ -24,7 +25,9 @@
     { "source": "/llms.txt", "destination": "/api/llms" },
     { "source": "/partner-apply", "destination": "/partner-apply.html" },
     { "source": "/partner-portal", "destination": "/partner-portal.html" },
-    { "source": "/partner-deck", "destination": "/partner-deck.html" }
+    { "source": "/partner-deck", "destination": "/partner-deck.html" },
+    { "source": "/indus-whitepaper", "destination": "/indus-whitepaper.html" },
+    { "source": "/api/indus-framework", "destination": "/api/indus-framework.js" }
   ],
   "headers": [
     {
