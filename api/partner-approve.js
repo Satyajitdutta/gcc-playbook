@@ -60,6 +60,22 @@ function buildApprovedEmail(name, company, category, id) {
   </div>`;
 }
 
+function buildRemovedEmail(name, company) {
+  return `
+  <div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;background:#f8fafc;padding:24px">
+    <div style="background:#0f172a;padding:22px 28px;border-radius:12px 12px 0 0">
+      <p style="margin:0;color:#94a3b8;font-size:11px;letter-spacing:2px;text-transform:uppercase">Pithonix GCC Platform</p>
+      <h2 style="margin:8px 0 0;color:#fff;font-size:22px">Partnership Status Update</h2>
+    </div>
+    <div style="background:#fff;padding:28px;border-radius:0 0 12px 12px;border:1px solid #e2e8f0;border-top:none">
+      <p style="color:#374151;font-size:14px">Hi ${name},</p>
+      <p style="color:#374151;font-size:14px;line-height:1.6">We are writing to let you know that <strong>${company}</strong> has been removed from the active Pithonix GCC Ecosystem listing. This may be due to a category restructure, renewal lapse, or a mutual decision.</p>
+      <p style="color:#374151;font-size:14px;line-height:1.6">If you believe this was done in error or would like to discuss reinstatement, please reach out to us directly at <a href="mailto:partnerships@pithonix.ai" style="color:#3b82f6">partnerships@pithonix.ai</a>.</p>
+      <p style="color:#94a3b8;font-size:11px;margin-top:28px;border-top:1px solid #f1f5f9;padding-top:16px">PITHONIX AI INDIA PRIVATE LIMITED | CIN: U62090TS2026PTC213220 | Hyderabad, Telangana | pithonix.ai</p>
+    </div>
+  </div>`;
+}
+
 function buildRejectedEmail(name, company) {
   return `
   <div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;background:#f8fafc;padding:24px">
@@ -81,7 +97,7 @@ export default async function handler(req, res) {
 
   const { id, token, action } = req.query || {};
 
-  if (!id || !token || !['approve', 'reject'].includes(action)) {
+  if (!id || !token || !['approve', 'reject', 'remove'].includes(action)) {
     res.setHeader('Content-Type', 'text/html');
     res.status(400).send(page('Invalid Link', 'Invalid Link',
       '<div class="icon">⚠️</div><h1>Invalid Link</h1><p>This approval link is invalid or has expired. Please check your email for the correct link.</p>',
@@ -114,11 +130,48 @@ export default async function handler(req, res) {
       }
       partner = check.rows[0];
 
+      // Allow remove action on already-approved partners
+      if (action === 'remove') {
+        if (partner.status === 'Removed') {
+          res.setHeader('Content-Type', 'text/html');
+          res.status(200).send(page('Already Removed', 'Already Removed',
+            `<div class="icon">🗑️</div><h1>Already Removed</h1><p><strong>${partner.company_name}</strong> was already removed from the ecosystem.</p>`,
+            '#94a3b8'));
+          return;
+        }
+        await client.query(
+          `UPDATE gcc_partner_applications SET status = 'Removed', approved_at = NULL WHERE id = $1`,
+          [parseInt(id)]
+        );
+        // Send delist notification to partner
+        if (process.env.RESEND_API_KEY) {
+          try {
+            const resend = new Resend(process.env.RESEND_API_KEY);
+            const toEmails = [partner.email];
+            if (partner.backup_email) toEmails.push(partner.backup_email);
+            await resend.emails.send({
+              from: 'Pithonix GCC Platform <info@pithonix.ai>',
+              to: toEmails,
+              subject: `Partnership Update — ${partner.company_name}`,
+              html: buildRemovedEmail(partner.contact_name, partner.company_name)
+            });
+          } catch(e) { console.error('Email error:', e.message); }
+        }
+        res.setHeader('Content-Type', 'text/html');
+        res.status(200).send(page('Partner Removed', 'Partner Removed',
+          `<div class="icon">🗑️</div><h1>Partner Removed</h1><p><strong>${partner.company_name}</strong> has been delisted from the GCC ecosystem. They have been notified by email.</p>`,
+          '#f87171'));
+        return;
+      }
+
       if (partner.status === 'Approved' || partner.status === 'Rejected') {
         const editUrl = `https://gcc-playbook.pithonix.ai/api/partner-edit?id=${id}&token=${token}`;
+        const removeUrl = `https://gcc-playbook.pithonix.ai/api/partner-approve?id=${id}&token=${token}&action=remove`;
         res.setHeader('Content-Type', 'text/html');
         res.status(200).send(page('Already Processed', 'Already Done',
-          `<div class="icon">${partner.status === 'Approved' ? '✅' : '❌'}</div><h1>Already ${partner.status}</h1><p>This application from <strong>${partner.company_name}</strong> was already ${partner.status.toLowerCase()}.</p><a href="${editUrl}" style="margin-top:0.75rem;background:rgba(59,130,246,0.15);border-color:rgba(59,130,246,0.4);color:#93c5fd">Edit Details</a>`,
+          `<div class="icon">${partner.status === 'Approved' ? '✅' : '❌'}</div><h1>Already ${partner.status}</h1><p>This application from <strong>${partner.company_name}</strong> was already ${partner.status.toLowerCase()}.</p>
+          <a href="${editUrl}" style="margin-top:0.75rem;background:rgba(59,130,246,0.15);border-color:rgba(59,130,246,0.4);color:#93c5fd">Edit Details</a>
+          ${partner.status === 'Approved' ? `<a href="${removeUrl}" onclick="return confirm('Remove ${partner.company_name} from the ecosystem?')" style="display:block;margin-top:0.75rem;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.35);color:#fca5a5;padding:0.75rem 2rem;border-radius:8px;text-decoration:none;font-weight:600;font-size:0.9rem">Remove from Ecosystem</a>` : ''}`,
           partner.status === 'Approved' ? '#22c55e' : '#f87171'));
         return;
       }
@@ -165,6 +218,7 @@ export default async function handler(req, res) {
 
   const isApprove = action === 'approve';
   const editUrl = `https://gcc-playbook.pithonix.ai/api/partner-edit?id=${id}&token=${token}`;
+  const removeUrl = `https://gcc-playbook.pithonix.ai/api/partner-approve?id=${id}&token=${token}&action=remove`;
   res.setHeader('Content-Type', 'text/html');
   res.status(200).send(page(
     isApprove ? 'Partner Approved' : 'Application Rejected',
@@ -172,7 +226,8 @@ export default async function handler(req, res) {
     `<div class="icon">${isApprove ? '✅' : '❌'}</div>
     <h1>${isApprove ? 'Partner Approved' : 'Application Rejected'}</h1>
     <p><strong>${partner.company_name}</strong> has been ${isApprove ? 'approved and is now live on the GCC Playbook site' : 'rejected and notified by email'}.</p>
-    <a href="${editUrl}" style="margin-top:0.75rem;background:rgba(59,130,246,0.12);border-color:rgba(59,130,246,0.35);color:#93c5fd">Edit Details</a>`,
+    <a href="${editUrl}" style="background:rgba(59,130,246,0.12);border-color:rgba(59,130,246,0.35);color:#93c5fd">Edit Details</a>
+    ${isApprove ? `<a href="${removeUrl}" onclick="return confirm('Remove ${partner.company_name} from the ecosystem? They will be notified by email.')" style="display:block;margin-top:0.75rem;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:#fca5a5;padding:0.75rem 2rem;border-radius:8px;text-decoration:none;font-weight:600;font-size:0.9rem;text-align:center">Remove from Ecosystem</a>` : ''}`,
     isApprove ? '#22c55e' : '#f87171'
   ));
 }

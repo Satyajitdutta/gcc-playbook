@@ -23,7 +23,7 @@ export default async function handler(req, res) {
     try {
       // Only return public-safe fields — no email, phone, GST, CIN, tokens
       const result = await client.query(`
-        SELECT id, company_name, partner_category, cities, description, website, approved_at
+        SELECT id, company_name, partner_category, partner_tier, cities, description, website, approved_at
         FROM gcc_partner_applications
         WHERE status = 'Approved'
         ORDER BY approved_at ASC

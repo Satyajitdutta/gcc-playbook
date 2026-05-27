@@ -66,6 +66,7 @@ function buildNotificationEmail(d, id, token) {
   const base = 'https://gcc-playbook.pithonix.ai';
   const approveUrl = `${base}/api/partner-approve?id=${id}&token=${token}&action=approve`;
   const rejectUrl = `${base}/api/partner-approve?id=${id}&token=${token}&action=reject`;
+  const removeUrl = `${base}/api/partner-approve?id=${id}&token=${token}&action=remove`;
   const editUrl = `${base}/api/partner-edit?id=${id}&token=${token}`;
   return `
   <div style="font-family:'Segoe UI',Arial,sans-serif;max-width:680px;margin:0 auto;background:#f8fafc;padding:24px">
@@ -112,6 +113,7 @@ function buildNotificationEmail(d, id, token) {
         <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
           <a href="${approveUrl}" style="display:inline-block;background:#22c55e;color:#fff;padding:12px 32px;border-radius:8px;text-decoration:none;font-weight:700;font-size:15px">Approve Partner</a>
           <a href="${rejectUrl}" style="display:inline-block;background:#ef4444;color:#fff;padding:12px 32px;border-radius:8px;text-decoration:none;font-weight:700;font-size:15px">Reject Application</a>
+          <a href="${removeUrl}" style="display:inline-block;background:#1e293b;border:1px solid rgba(239,68,68,0.3);color:#fca5a5;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Remove if Already Live</a>
         </div>
         <div style="margin-top:12px">
           <a href="${editUrl}" style="display:inline-block;background:#1e293b;border:1px solid rgba(255,255,255,0.15);color:#94a3b8;padding:8px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px">Edit Details Before Deciding</a>
