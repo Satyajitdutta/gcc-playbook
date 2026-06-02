@@ -312,6 +312,18 @@ section{position:relative;z-index:2;padding:6rem 0}
 #simulator{background:linear-gradient(180deg,var(--bg) 0%,var(--s1) 100%)}
 .sim-wrap{background:#ffffff;border:1px solid var(--bd);border-radius:var(--r2);overflow:hidden;box-shadow:0 4px 28px rgba(10,110,56,0.12)}
 .sim-header{padding:2rem 2.5rem 1.5rem;border-bottom:1px solid var(--bd)}
+.sim-gate{padding:2.5rem;display:flex;flex-direction:column;align-items:center;text-align:center}
+.sim-gate-title{font-size:1.25rem;font-weight:700;color:var(--txt);margin-bottom:0.4rem}
+.sim-gate-sub{font-size:0.88rem;color:var(--tmed);margin-bottom:2rem;max-width:440px}
+.sim-gate-fields{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.85rem;width:100%;max-width:680px;margin-bottom:1rem}
+@media(max-width:640px){.sim-gate-fields{grid-template-columns:1fr}}
+.sim-gate-input{background:var(--s2);border:1.5px solid var(--bd);border-radius:10px;padding:0.75rem 1rem;color:var(--txt);font-family:'DM Sans',sans-serif;font-size:0.9rem;width:100%;transition:border-color 0.2s}
+.sim-gate-input:focus{outline:none;border-color:var(--teal)}
+.sim-gate-input.err{border-color:#f87171}
+.sim-gate-input::placeholder{color:var(--tdim)}
+.sim-gate-btn{margin-top:0.5rem;background:var(--teal);color:#fff;border:none;border-radius:10px;padding:0.85rem 2.5rem;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;transition:opacity 0.2s;letter-spacing:0.02em}
+.sim-gate-btn:hover{opacity:0.88}
+.sim-gate-note{font-size:0.72rem;color:var(--tdim);margin-top:0.75rem}
 .sim-header h2{font-size:1.7rem;margin-bottom:0.3rem}
 .sim-header p{color:var(--tmed);font-size:0.95rem}
 .sim-steps{display:flex;gap:0;border-bottom:1px solid var(--bd)}
@@ -1516,13 +1528,26 @@ if(document.readyState==="loading"){
         <h2>Build Your Custom GCC Blueprint</h2>
         <p>Takes 2 minutes · Powered by Gemini AI · Based on real India GCC data</p>
       </div>
-      <div class="sim-steps">
+      <!-- Gate: shown before step tabs, captures identity upfront -->
+      <div id="sim-gate" class="sim-gate">
+        <div class="sim-gate-title">Who is this GCC Blueprint for?</div>
+        <div class="sim-gate-sub">We personalise your blueprint to your company. Takes 2 minutes — powered by Gemini AI and real India GCC data.</div>
+        <div class="sim-gate-fields">
+          <input type="text" id="gate-company" class="sim-gate-input" placeholder="Company name *" autocomplete="organization">
+          <input type="text" id="gate-name" class="sim-gate-input" placeholder="Your name *" autocomplete="name">
+          <input type="email" id="gate-email" class="sim-gate-input" placeholder="Work email *" autocomplete="email">
+        </div>
+        <button class="sim-gate-btn" onclick="startSimulator()">Build My GCC Blueprint →</button>
+        <div class="sim-gate-note">Your information is kept confidential and used only to personalise this blueprint.</div>
+      </div>
+
+      <div class="sim-steps" id="sim-steps-tabs" style="display:none">
         <div class="sim-step-tab active" data-step="1"><span class="step-num">01</span>Company Profile</div>
         <div class="sim-step-tab" data-step="2"><span class="step-num">02</span>GCC Functions</div>
         <div class="sim-step-tab" data-step="3"><span class="step-num">03</span>Scale & Ambition</div>
         <div class="sim-step-tab" data-step="4"><span class="step-num">04</span>Your Blueprint</div>
       </div>
-      <div class="sim-body">
+      <div class="sim-body" id="sim-body-panes" style="display:none">
 
         <!-- Step 1 -->
         <div class="sim-pane active" id="pane1">
@@ -2726,6 +2751,29 @@ function selectPriority(el,val){
   simData.priority=val;
 }
 
+function startSimulator(){
+  var company=(document.getElementById('gate-company').value||'').trim();
+  var name=(document.getElementById('gate-name').value||'').trim();
+  var email=(document.getElementById('gate-email').value||'').trim();
+  var ok=true;
+  ['gate-company','gate-name','gate-email'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(!el.value.trim()){el.classList.add('err');ok=false;}
+    else el.classList.remove('err');
+  });
+  if(!ok){return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    document.getElementById('gate-email').classList.add('err');return;
+  }
+  simData.companyName=company;
+  simData.contactName=name;
+  simData.contactEmail=email;
+  document.getElementById('sim-gate').style.display='none';
+  document.getElementById('sim-steps-tabs').style.display='flex';
+  document.getElementById('sim-body-panes').style.display='block';
+  goStep(1);
+}
+
 function goStep(n){
   // Lock scroll position so pane height changes don't jump the page
   var sy=window.scrollY;
@@ -2769,7 +2817,7 @@ async function generateBlueprint(){
   var cityTier=(simData.city&&['Ahmedabad','Kochi','Jaipur','Indore','Chandigarh','Coimbatore','Nagpur','Visakhapatnam','Bhubaneswar'].indexOf(simData.city)>-1)?'2':(simData.city&&['Thiruvananthapuram','Mysuru','Vadodara','Lucknow','Bhopal','Mangaluru','Raipur','Patna','Guwahati','Dehradun'].indexOf(simData.city)>-1)?'3':'1';
   var currentYear=dynYear,prevYear=dynPrevYear;
   var prompt='You are an India GCC setup cost expert at Pithonix.ai — a full-contract GCC delivery firm. Generate a precise, market-accurate GCC Setup Project Blueprint using CURRENT '+currentYear+' INDIA MARKET RATES.\n\n'+
-'COMPANY PROFILE:\nIndustry: '+simData.industry+'\nHQ Country: '+simData.country+'\n'+(simData.city?'CLIENT PREFERRED CITY: '+simData.city+' (Tier '+cityTier+') — use as primary city.\n':'')+
+'COMPANY PROFILE:\n'+(simData.companyName?'Company: '+simData.companyName+'\n':'')+'Industry: '+simData.industry+'\nHQ Country: '+simData.country+'\n'+(simData.city?'CLIENT PREFERRED CITY: '+simData.city+' (Tier '+cityTier+') — use as primary city.\n':'')+
 'Annual Revenue: '+simData.revenue+'\nGCC Maturity: '+simData.maturity+'\nFunctions: '+simData.functions.join(', ')+'\nYear 1 FTE: '+simData.fte+' ('+fteTier+')\nTimeline: '+simData.timeline+'\nTop Priority: '+simData.priority+'\n\n'+
 currentYear+' INDIA COST BENCHMARKS (use these as base, adjust for city tier and industry):\n'+
 'SALARIES (Tier 1 cities, adjust -30% for Tier 2, -45% for Tier 3):\n'+
@@ -2831,6 +2879,9 @@ currentYear+' INDIA COST BENCHMARKS (use these as base, adjust for city tier and
     };
     simData.blueprint=bp;
     renderBlueprint(bp);
+    // Auto-capture: fire lead silently as soon as blueprint renders
+    // Captures every run even if user never submits the end form
+    silentCaptureLead();
   }catch(e){
     console.error(e);
     renderBlueprint({city_primary:'Hyderabad',city_primary_reason:'Hyderabad is Telangana\'s GCC capital with 700+ GCCs, strong state government incentives, and the deepest talent pool outside Bengaluru. HITEC City and Financial District offer Grade-A space at 30–40% lower cost than Bengaluru.',city_alt:'Bengaluru',city_alt_reason:'Bengaluru suits if deep-tech R&D talent density is the primary criteria over cost.',hidden_insight:'80% of GCCs negotiate office leases too late — after entity is formed. Lock in your co-working or pre-built space agreement in Month 1, before hiring starts; this alone saves 3–4 months of timeline slippage.',setup_budget_total_usd:1850000,setup_budget_breakdown:[{category:'Entity Formation & Legal',cost_usd:45000,timeline:'Month 1-2',notes:'PvtLtd incorporation, company secretary, MCA registration, PAN/TAN'},{category:'Office Space & Infrastructure',cost_usd:420000,timeline:'Month 2-4',notes:'Grade-A co-working or pre-built in HITEC City; 6-month deposit + fit-out'},{category:'IT & Technology Setup',cost_usd:280000,timeline:'Month 2-5',notes:'Laptops, VDI, MPLS/SD-WAN, Microsoft 365, security stack'},{category:'Talent Acquisition Year 1',cost_usd:750000,timeline:'Month 1-12',notes:'8-10% recruitment fee on CTC; avg ₹18L CTC for mid-senior roles'},{category:'Compliance & Regulatory',cost_usd:85000,timeline:'Month 1-3',notes:'STPI registration, SEZ evaluation, payroll setup, statutory audit'},{category:'Pithonix Setup Management Fee',cost_usd:270000,timeline:'Full project',notes:'Milestone-based: 40% at start, 40% at go-live, 20% at handover'}],yearly_budget:[{year:'Year 1 — Setup + Ramp',budget_usd:3200000,focus:'Entity setup, 50 hires, infrastructure, process migration start'},{year:'Year 2 — Scale',budget_usd:5800000,focus:'Scale to 150 FTEs, full process migration, JEET ERP integration'},{year:'Year 3 — Optimize',budget_usd:8100000,focus:'Automation, CoE development, 300 FTEs, productivity gains'}],headcount:[50,150,300,500,750],savings_usd:[2000000,7000000,15000000,24000000,35000000],cost_usd:[3200000,5800000,8100000,11000000,14000000],break_even_months:20,total_5yr_savings_usd:83000000,govt_incentives:[{scheme:'STPI (Software Technology Parks of India)',benefit:'100% export duty exemption, tax holiday for first 5 years on IT exports, single-window clearance',eligibility:'IT/ITES GCCs registered as 100% EOU',agency:'MeitY / STPI India'},{scheme:'Telangana IT Investment Region (ITIR) Policy',benefit:'25% capital subsidy on fixed assets up to ₹2 Cr; power tariff subsidy ₹1/unit for 5 years; stamp duty exemption',eligibility:'GCCs setting up in T-Hub, HITEC City, Genome Valley or designated IT parks',agency:'Telangana ITE&C Department'},{scheme:'DPIIT Startup Recognition',benefit:'Tax exemption under Section 80-IAC for 3 consecutive years; access to Fund of Funds; simplified compliance',eligibility:'Incorporated < 10 years, turnover < ₹100 Cr, DPIIT certificate required',agency:'DPIIT / Startup India'}],banking_support:[{bank:'State Bank of India (SBI)',offering:'SBI Corporate Banking for GCCs & Captives — India\'s largest banking network with 22,000+ branches',benefit:'Unmatched reach for pan-India payroll disbursement, lowest-cost export collection accounts, government scheme facilitation (STPI/SEZ linkage), dedicated GCC relationship desk in GIFT City and HITEC City'},{bank:'HDFC Bank',offering:'GCC Banking Suite — dedicated RM, multi-currency accounts, instant payroll processing',benefit:'Zero-fee corporate salary accounts for first 200 employees; FX rates 0.5% better than spot for export remittances'},{bank:'ICICI Bank',offering:'iStartup & GCC Accelerator Program',benefit:'Collateral-free working capital up to ₹5 Cr; digital payroll platform; integration with JEET ERP payroll module'},{bank:'Kotak Mahindra Bank',offering:'Kotak Corporate Banking for Captives & GCCs',benefit:'Dedicated forex desk; FEMA compliance support; ₹0 account maintenance for first year'}],risks:[{risk:'Talent Attrition',probability:'High',mitigation:'Strong EVP, ESOP, clear growth paths, GPTW certification target in Year 2'},{risk:'Process Migration Risk',probability:'Medium',mitigation:'Start with well-documented processes only; deploy JEET ERP for migration tracking'},{risk:'INR/USD Volatility',probability:'Medium',mitigation:'Annual FX review clauses in HQ contracts, quarterly benchmarking'}],phase0_actions:['Incorporate Private Limited Company — engage specialist CA firm within Month 1 (₹40–60K total cost)','Register with STPI for 100% export duty exemption — 6-8 week process, apply Day 1','Hire Country Head / GCC Director before all other hires — this person owns go-live','Lock in Grade-A co-working agreement in HITEC City or Financial District before signing leases','Apply for Telangana ITIR subsidy and DPIIT Startup recognition — both are stackable'],pithonix_modules:['JEET ERP','HARI','GOT'],pithonix_role:'Pithonix manages the full setup project — from entity incorporation to your first 50 FTEs going live. HARI handles talent acquisition and onboarding; JEET ERP is deployed as the operational backbone from Day 1, eliminating the need for separate HR, Finance, and Compliance tools during ramp-up.'});
@@ -2980,11 +3031,36 @@ function clearGOT(){
   document.querySelectorAll('.got-chip').forEach(function(c){c.classList.remove('active');});
 }
 
+function silentCaptureLead(){
+  // Fires automatically when blueprint renders — captures lead even if end form is skipped
+  try{
+    fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      name:simData.contactName||'',
+      email:simData.contactEmail||'',
+      company:simData.companyName||'',
+      industry:simData.industry||'',
+      country:simData.country||'',
+      functions:(simData.functions||[]).join(', '),
+      fte:simData.fte||'',
+      timeline:simData.timeline||'',
+      priority:simData.priority||'',
+      source:'sim_auto'
+    })});
+  }catch(e){}
+}
+
 async function submitLead(){
-  var name=document.getElementById('lead-name').value.trim();
-  var email=document.getElementById('lead-email').value.trim();
-  var company=document.getElementById('lead-company').value.trim();
-  if(!email){document.getElementById('lead-email').focus();return;}
+  // Pre-fill from gate data if fields are empty
+  var nameEl=document.getElementById('lead-name');
+  var emailEl=document.getElementById('lead-email');
+  var companyEl=document.getElementById('lead-company');
+  if(!nameEl.value&&simData.contactName)nameEl.value=simData.contactName;
+  if(!emailEl.value&&simData.contactEmail)emailEl.value=simData.contactEmail;
+  if(!companyEl.value&&simData.companyName)companyEl.value=simData.companyName;
+  var name=nameEl.value.trim();
+  var email=emailEl.value.trim();
+  var company=companyEl.value.trim();
+  if(!email){emailEl.focus();return;}
   var btn=document.querySelector('.lead-btn');
   btn.textContent='Sending…';btn.disabled=true;
   try{
@@ -3010,7 +3086,16 @@ function restartSim(){
   document.querySelectorAll('.priority-card').forEach(function(c){c.classList.remove('selected');});
   document.querySelectorAll('.sim-step-tab').forEach(function(t){t.classList.remove('active','done');});
   document.querySelector('.sim-step-tab').classList.add('active');
-  goStep(1);
+  // Clear gate fields and go back to gate
+  ['gate-company','gate-name','gate-email'].forEach(function(id){
+    var el=document.getElementById(id);
+    el.value='';el.classList.remove('err');
+  });
+  document.getElementById('sim-gate').style.display='flex';
+  document.getElementById('sim-gate').style.flexDirection='column';
+  document.getElementById('sim-gate').style.alignItems='center';
+  document.getElementById('sim-steps-tabs').style.display='none';
+  document.getElementById('sim-body-panes').style.display='none';
 }
 </script>
 </body>
