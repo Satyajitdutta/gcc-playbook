@@ -434,8 +434,9 @@ export default async function handler(req, res) {
   const partnerCompany = body.company_name || company;
   const partnerName = body.contact_name || name;
 
-  const isPartner = (source || '').toLowerCase().includes('partner') ||
-    !!(body.partner_category || body.partner_tier);
+  const isSimAuto = source === 'sim_auto';
+  const isPartner = !isSimAuto && ((source || '').toLowerCase().includes('partner') ||
+    !!(body.partner_category || body.partner_tier));
   const tag = isPartner ? 'Partnership Request' : 'GCC Lead Request';
   const subjectSuffix = isPartner
     ? `${partnerCompany || 'Unknown'} — ${body.partner_tier || ''} ${body.partner_category || functions || 'Partner'}`
@@ -452,6 +453,43 @@ export default async function handler(req, res) {
   console.log('SUBMISSION', JSON.stringify({
     timestamp: new Date().toISOString(), tag, source, name: partnerName, email: partnerEmail, company: partnerCompany
   }));
+
+  // Sim auto-capture: brief alert only, no outreach engine
+  if (isSimAuto && process.env.RESEND_API_KEY) {
+    try {
+      const resend = new Resend(process.env.RESEND_API_KEY);
+      await resend.emails.send({
+        from: 'Pithonix GCC Platform <info@pithonix.ai>',
+        to: 'satyajitv.d@pithonix.ai',
+        subject: `[Simulator Run] ${company || 'Unknown'} — ${industry || ''}`,
+        html: `<div style="font-family:'Segoe UI',Arial,sans-serif;max-width:500px;margin:0 auto;background:#f9f9f9;padding:24px">
+          <div style="background:#0f172a;padding:16px 20px;border-radius:8px 8px 0 0">
+            <p style="margin:0;color:#94a3b8;font-size:11px;letter-spacing:1px;text-transform:uppercase">Pithonix GCC Platform</p>
+            <h2 style="margin:4px 0 0;color:#fff;font-size:17px">Simulator Run Captured</h2>
+          </div>
+          <div style="background:#fff;padding:20px;border-radius:0 0 8px 8px;border:1px solid #e2e8f0;border-top:none">
+            <table style="width:100%;border-collapse:collapse">
+              ${row('Company', company)}
+              ${row('Name', name)}
+              ${row('Email', email ? `<a href="mailto:${email}" style="color:#3b82f6">${email}</a>` : '')}
+              ${row('Industry', industry)}
+              ${row('Country', country)}
+              ${row('Functions', functions)}
+              ${row('Year 1 FTE', fte)}
+              ${row('Timeline', timeline)}
+              ${row('Priority', priority)}
+              ${row('Time', new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) + ' IST')}
+            </table>
+            <p style="margin:16px 0 0;font-size:12px;color:#94a3b8">Auto-captured when blueprint generated. No outreach email sent.</p>
+          </div>
+        </div>`
+      });
+    } catch(e) {
+      console.error('Sim auto email error:', e.message);
+    }
+    res.status(200).json({ success: true });
+    return;
+  }
 
   // Send notification email to Pithonix team
   if (process.env.RESEND_API_KEY) {
