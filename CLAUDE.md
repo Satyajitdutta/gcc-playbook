@@ -80,3 +80,111 @@ GCC leads also trigger outreach engine: `pithonix-outreach-engine.vercel.app/api
 ## Assets
 
 - `logo.png` — Pithonix AI logo (teal/blue wave mark). Used in proposal and site nav.
+
+---
+
+# Second Brain: Operating Manual
+
+A self-improving knowledge base living at `knowledge-base/` in this repo.
+Based on Andrej Karpathy's LLM Wiki pattern: the LLM writes and maintains everything. You read and explore.
+
+## Where Things Live
+
+```
+gcc-playbook/                        <- workspace root (you are here)
+  CLAUDE.md                          <- this file (operating manual)
+  knowledge-base/
+    raw/                             <- junk drawer. NEVER edited. Source of truth.
+    raw/session-notes/               <- takeaways saved from our chats
+    raw/pages/                       <- ALL content pages (every topic, entity, synthesis, summary)
+    wiki/                            <- navigation + bookkeeping ONLY (3 files, nothing else)
+      index.md                       <- table of contents pointing to raw/pages/
+      log.md                         <- dated history of every operation
+      processed.md                   <- registry of raw files already ingested
+    outputs/                         <- finished briefings and reports
+```
+
+## Hard Rules
+
+1. `wiki/` contains ONLY `index.md`, `log.md`, and `processed.md`. Nothing else ever goes in wiki/.
+2. Every content page (topic, entity, synthesis, source summary) lives in `raw/pages/`.
+3. Files in `raw/` are NEVER edited. They are the immutable source of truth.
+4. To find what is NEW: compare files in `raw/` against `wiki/processed.md`. Never re-ingest a file already listed there.
+5. `[[wikilinks]]` resolve by filename regardless of folder. `index.md` is always the master table of contents.
+
+## The 5 Operations
+
+### 1. INGEST: "add this"
+
+When the user drops a link, file, or text and says "add this":
+1. Save the raw source as-is into `raw/` (never edit it)
+2. Read it and extract the key information
+3. Write or update the relevant page(s) in `raw/pages/`
+4. Update `wiki/index.md` (add any new pages to the table of contents)
+5. Append a line to `wiki/log.md`
+6. Record the raw file in `wiki/processed.md`
+
+Only process files NOT already listed in `wiki/processed.md`. This is how the brain only ever processes what is new.
+
+### 2. QUERY: "what do I know about ___"
+
+When the user asks a question:
+1. Read `wiki/index.md` to find relevant pages
+2. Read those pages in `raw/pages/`
+3. Synthesize a clear answer WITH citations to the source pages
+4. If the answer is valuable, file it as a new page in `raw/pages/` so the brain gets smarter
+
+The user can also say "save that" to file any answer as a new page.
+
+### 3. DREAM SEQUENCE: "dream sequence"
+
+A health check for the whole wiki. When triggered:
+1. Scan `raw/` against `wiki/processed.md` and ingest any NEW files found
+2. Check for contradictions between pages
+3. Flag or fix stale and outdated claims
+4. Find duplicate pages and merge them
+5. Identify orphan pages (no inbound links) and wire them in or flag them
+6. Note gaps worth filling (concepts mentioned but lacking their own page)
+7. Append a summary line to `wiki/log.md`
+
+Run this when the user says "dream sequence". Default cadence: weekly.
+To run more often, just say it more often (e.g. "run dream sequence daily" as a reminder to yourself, or trigger it manually each session).
+
+### 4. INDEX + LOG: kept current automatically
+
+- `wiki/index.md`: update on every ingest and every "save that" query.
+- `wiki/log.md`: append-only. One line per operation.
+
+**Log format:**
+```
+## [YYYY-MM-DD] ingest - raw/filename.md
+## [YYYY-MM-DD] query - What is X?
+## [YYYY-MM-DD] dream - weekly lint pass
+## [YYYY-MM-DD] session - session title
+```
+
+### 5. SESSION CAPTURE: "save this session"
+
+When the user says "save this session" (or at the end of a substantive chat):
+1. Write the key takeaways into `raw/session-notes/` as a new dated file (e.g. `2026-06-13-session.md`)
+2. Update `wiki/index.md` if the session introduced a notable new topic
+3. Append to `wiki/log.md`
+
+## Processed Registry Format
+
+Every entry in `wiki/processed.md` is one line:
+```
+raw/filename | YYYY-MM-DD | one-line summary
+```
+
+## The Self-Improving Rule
+
+Every ingest AND every valuable query MUST:
+- Update or create a page in `raw/pages/`
+- Append a line to `wiki/log.md`
+
+This automatic write-back is what makes the brain smarter with every single use.
+
+## Dream Sequence: Scheduling Note
+
+This knowledge base is hosted in a cloud environment (Claude Code on the web). Persistent cron jobs are not available here. The Dream Sequence runs on your command: just say "dream sequence" in any session. Weekly is the recommended cadence. To make it truly automatic when using Claude Code locally, add a weekly cron entry: `0 9 * * 1 cd /path/to/gcc-playbook && claude "dream sequence"` (every Monday at 9am).
