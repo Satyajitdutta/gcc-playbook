@@ -218,14 +218,14 @@
      tdim  = subdued / label text  teal     = primary Mercury green accent
      gold  = gold / wealth accent  glow-*   = box-shadow glows
   ────────────────────────────────────────────────────────────────────────── */
-  --bg:#dff0e7;--s1:#cde8d8;--s2:#bde0cc;--s3:#aad8be;
-  --bd:#7ab896;--bd2:#5aa07a;
+  --bg:#cfe0d5;--s1:#bbcfc4;--s2:#a8c0b3;--s3:#94b0a2;
+  --bd:#5e9878;--bd2:#3e7858;
   --gold:#7a5800;--gold2:#a87808;--golddim:rgba(122,88,0,0.12);
-  --blue:#0a6e38;--teal:#0a6e38;--orange:#b04a00;--purple:#1a5e32;
+  --blue:#0a6e38;--teal:#0c7040;--orange:#b04a00;--purple:#7850c8;
   --red:#982808;--green:#0a6e38;
   --txt:#061209;--tdim:#0d4a1e;--tmed:#093818;
   --glow-gold:0 0 20px rgba(200,150,10,0.25);
-  --glow-blue:0 0 20px rgba(29,184,104,0.3);
+  --glow-blue:0 0 20px rgba(12,112,64,0.35);
   --r:12px;--r2:20px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
@@ -239,7 +239,7 @@ h1,h2,h3{line-height:1.2;font-weight:700}
 
 /* ── NAV ── */
 #nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:background 0.3s,border-color 0.3s;border-bottom:1px solid transparent;backdrop-filter:blur(0px)}
-#nav.scrolled{background:rgba(223,240,231,0.97);border-color:var(--bd);backdrop-filter:blur(20px)}
+#nav.scrolled{background:rgba(207,224,213,0.97);border-color:var(--bd);backdrop-filter:blur(20px)}
 .nav-inner{max-width:1280px;margin:0 auto;padding:0 2rem;height:64px;display:flex;align-items:center;gap:2rem}
 .nav-brand{display:flex;align-items:center;gap:0.6rem;text-decoration:none}
 .nav-logo-img{height:28px;width:auto;margin-right:0.4rem;filter:drop-shadow(0 0 6px rgba(40,168,136,0.5))}
@@ -788,6 +788,73 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
 .howto-step-desc{font-size:0.87rem;color:var(--txt);line-height:1.65}
 .howto-step-tag{display:inline-block;margin-top:0.8rem;font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--gold);letter-spacing:1px;border:1px solid rgba(232,184,75,0.25);padding:2px 8px;border-radius:4px}
 @media(max-width:600px){.howto-grid{grid-template-columns:1fr}}
+
+/* ── SIMULATOR PROGRESS BAR ── */
+.sim-progress-wrap{padding:1rem 1.5rem 0;display:none}
+.sim-progress-track{height:4px;background:rgba(12,112,64,0.15);border-radius:2px;overflow:hidden;margin-bottom:0.4rem}
+.sim-progress-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--gold));border-radius:2px;transition:width 0.4s ease;width:0%}
+.sim-progress-label{font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--tdim);letter-spacing:1px;text-align:right}
+
+/* ── BLUEPRINT GATE ── */
+.bp-gated{position:relative}
+.bp-gated.locked>*:not(.bp-unlock-overlay){filter:blur(5px);pointer-events:none;user-select:none}
+.bp-unlock-overlay{position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:flex-start;justify-content:center;padding-top:3rem;z-index:10;background:linear-gradient(to bottom,rgba(207,224,213,0.2) 0%,rgba(207,224,213,0.92) 15%,rgba(207,224,213,0.96) 100%)}
+.bp-unlock-overlay.hidden{display:none}
+.bp-unlock-box{background:#fff;border:1px solid rgba(232,184,75,0.4);border-radius:16px;padding:2rem 2.5rem;max-width:440px;width:100%;text-align:center;box-shadow:0 8px 40px rgba(10,110,56,0.12)}
+.bp-unlock-box .bp-unlock-icon{font-size:2rem;margin-bottom:0.75rem}
+.bp-unlock-box h3{font-size:1.15rem;color:var(--txt);margin-bottom:0.5rem}
+.bp-unlock-box p{font-size:0.85rem;color:var(--tmed);margin-bottom:1.25rem;line-height:1.6}
+.bp-unlock-fields{display:grid;gap:0.6rem;margin-bottom:1rem}
+.bp-unlock-btn{background:linear-gradient(135deg,var(--gold),#d4a438);color:#0f2418;font-weight:700;font-size:0.95rem;padding:0.75rem 2rem;border-radius:8px;border:none;cursor:pointer;width:100%;transition:transform 0.2s,box-shadow 0.2s}
+.bp-unlock-btn:hover{transform:translateY(-1px);box-shadow:var(--glow-gold)}
+.bp-unlock-note{font-size:0.72rem;color:var(--tdim);margin-top:0.5rem}
+
+/* ── MOBILE HAMBURGER ── */
+.nav-hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:0.4rem;margin-left:auto}
+.nav-hamburger span{display:block;width:22px;height:2px;background:var(--txt);border-radius:2px;transition:transform 0.3s,opacity 0.3s}
+.nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-hamburger.open span:nth-child(2){opacity:0}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(207,224,213,0.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--bd);z-index:99;padding:1rem 2rem 1.5rem;flex-direction:column;gap:0.75rem}
+.mobile-menu.open{display:flex}
+.mobile-menu a{color:var(--txt);text-decoration:none;font-size:1rem;font-weight:600;padding:0.4rem 0;border-bottom:1px solid rgba(10,110,56,0.08)}
+.mobile-menu a:last-child{border-bottom:none;margin-top:0.5rem;background:linear-gradient(135deg,var(--gold),#d4a438);color:#0f2418;text-align:center;padding:0.65rem 1.2rem;border-radius:8px}
+@media(max-width:768px){
+  .nav-links{display:none}
+  .nav-hamburger{display:flex}
+}
+
+/* ── STICKY CTA ── */
+.sticky-cta{position:fixed;bottom:0;left:0;right:0;background:rgba(207,224,213,0.97);backdrop-filter:blur(20px);border-top:1px solid var(--bd);z-index:90;padding:0.75rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;transform:translateY(100%);transition:transform 0.35s ease;box-shadow:0 -4px 20px rgba(10,110,56,0.08)}
+.sticky-cta.visible{transform:translateY(0)}
+.sticky-cta-text{font-size:0.85rem;color:var(--tmed);font-weight:500}
+.sticky-cta-text strong{color:var(--txt)}
+.sticky-cta-btn{background:linear-gradient(135deg,var(--gold),#d4a438);color:#0f2418;font-weight:700;font-size:0.85rem;padding:0.55rem 1.4rem;border-radius:7px;text-decoration:none;white-space:nowrap;flex-shrink:0;transition:transform 0.2s}
+.sticky-cta-btn:hover{transform:translateY(-1px)}
+.sticky-cta-close{background:none;border:none;cursor:pointer;color:var(--tdim);font-size:1.1rem;padding:0.25rem;flex-shrink:0}
+@media(max-width:600px){
+  .sticky-cta-text{display:none}
+  .sticky-cta{justify-content:center;gap:1rem}
+}
+
+/* ── POLICY PULSE SUBSCRIBE ── */
+.pp-subscribe{margin-top:1.5rem;background:rgba(255,255,255,0.5);border:1px solid rgba(10,110,56,0.2);border-radius:10px;padding:1rem 1.2rem;display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+.pp-subscribe-label{font-size:0.85rem;color:var(--txt);font-weight:600;flex-shrink:0}
+.pp-subscribe-input{flex:1;min-width:200px;padding:0.45rem 0.9rem;border:1px solid var(--bd);border-radius:7px;background:#fff;font-size:0.85rem;color:var(--txt);font-family:'DM Sans',sans-serif}
+.pp-subscribe-btn{background:var(--teal);color:#fff;border:none;border-radius:7px;padding:0.45rem 1.1rem;font-size:0.85rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:background 0.2s}
+.pp-subscribe-btn:hover{background:var(--blue)}
+
+/* ── PRINT STYLES ── */
+@media print{
+  #nav,#got-btn,#got-overlay,#got-panel,.ticker-wrap,.hero-ctas,.scroll-hint,#sticky-cta,#lead-box,.btn-restart,.bp-unlock-overlay,button.lead-btn,.lead-skip{display:none!important}
+  body{background:#fff;color:#000}
+  .sim-output{box-shadow:none}
+  #bg-canvas{display:none}
+  .budget-section,.yearly-section,.incentives-section,.banking-section,.risks-grid,.actions-list,.pithonix-rec,.insight-box{break-inside:avoid}
+}
+
+/* ── SELECT OPTION LIGHT THEME (fix dark remnant) ── */
+select option{background:#ffffff;color:#061209}
 </style>
 </head>
 <body>
@@ -855,8 +922,25 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
       <a href="/partner-portal" style="font-size:0.82rem;color:var(--tmed);text-decoration:none;border:1px solid rgba(29,184,104,0.12);padding:0.35rem 0.9rem;border-radius:6px;transition:border-color 0.2s" onmouseover="this.style.borderColor='rgba(255,255,255,0.3)'" onmouseout="this.style.borderColor='rgba(29,184,104,0.12)'">Partner Login</a>
       <a href="#contact" class="nav-cta">Book a Call →</a>
     </div>
+    <button class="nav-hamburger" id="nav-hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#simulator" onclick="toggleMobileMenu()">Simulator</a>
+  <a href="#journey" onclick="toggleMobileMenu()">Playbook</a>
+  <a href="#fdi-hero" onclick="toggleMobileMenu()">Govt Benefits</a>
+  <a href="#cities" onclick="toggleMobileMenu()">India Intel</a>
+  <a href="#whitepaper" onclick="toggleMobileMenu()">White Paper</a>
+  <a href="#partners" onclick="toggleMobileMenu()">Partners</a>
+  <a href="#contact" onclick="toggleMobileMenu()">Book a Call →</a>
+</div>
+<div id="sticky-cta" class="sticky-cta">
+  <span class="sticky-cta-text"><strong>2,117+ GCCs in India.</strong> Get your custom blueprint in 2 minutes.</span>
+  <a href="#simulator" class="sticky-cta-btn" onclick="document.getElementById('sticky-cta').classList.remove('visible')">Generate Blueprint →</a>
+  <button class="sticky-cta-close" onclick="document.getElementById('sticky-cta').classList.remove('visible');document.getElementById('sticky-cta').style.display='none'" aria-label="Close">✕</button>
+</div>
 
 <!-- HERO -->
 <section id="hero">
@@ -945,6 +1029,12 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
       </div>
     </div>
     <p class="pp-footer">Source: Telangana CM High-Level Review Meeting, MCR HRD Institute, May 2026. Chaired by CM A. Revanth Reddy. IT and Industries Minister Duddilla Sridhar Babu present, along with Chief Secretary K. Ramakrishna Rao and senior IT, Finance, and Industries officials.</p>
+    <div class="pp-subscribe" id="pp-subscribe">
+      <span class="pp-subscribe-label">&#128276; Get GCC Policy Alerts</span>
+      <input type="email" id="pp-email" class="pp-subscribe-input" placeholder="your@email.com">
+      <button class="pp-subscribe-btn" onclick="subscribePolicyPulse()">Subscribe Free</button>
+    </div>
+    <div id="pp-subscribe-success" style="display:none;margin-top:1rem;font-size:0.85rem;color:var(--teal);font-weight:600">&#10003; You're subscribed. We'll alert you on major GCC policy changes.</div>
   </div>
 </div>
 
@@ -1528,17 +1618,21 @@ if(document.readyState==="loading"){
         <h2>Build Your Custom GCC Blueprint</h2>
         <p>Takes 2 minutes · Powered by Gemini AI · Based on real India GCC data</p>
       </div>
-      <!-- Gate: shown before step tabs, captures identity upfront -->
+      <!-- Simplified gate: just company name for personalisation -->
       <div id="sim-gate" class="sim-gate">
-        <div class="sim-gate-title">Who is this GCC Blueprint for?</div>
-        <div class="sim-gate-sub">We personalise your blueprint to your company. Takes 2 minutes — powered by Gemini AI and real India GCC data.</div>
-        <div class="sim-gate-fields">
-          <input type="text" id="gate-company" class="sim-gate-input" placeholder="Company name *" autocomplete="organization">
-          <input type="text" id="gate-name" class="sim-gate-input" placeholder="Your name *" autocomplete="name">
-          <input type="email" id="gate-email" class="sim-gate-input" placeholder="Work email *" autocomplete="email">
+        <div class="sim-gate-title">Build Your Custom GCC Blueprint</div>
+        <div class="sim-gate-sub">Enter your company name to personalise the report. Takes 2 minutes. Free. No login required.</div>
+        <div class="sim-gate-fields" style="grid-template-columns:1fr">
+          <input type="text" id="gate-company" class="sim-gate-input" placeholder="Company name (optional)" autocomplete="organization">
         </div>
-        <button class="sim-gate-btn" onclick="startSimulator()">Build My GCC Blueprint →</button>
-        <div class="sim-gate-note">Your information is kept confidential and used only to personalise this blueprint.</div>
+        <button class="sim-gate-btn" onclick="startSimulator()">Start — Build My Blueprint →</button>
+        <div class="sim-gate-note">Powered by Gemini AI. Based on data from 2,117+ India GCCs.</div>
+      </div>
+
+      <!-- Progress bar (shown after gate) -->
+      <div class="sim-progress-wrap" id="sim-progress-wrap">
+        <div class="sim-progress-track"><div class="sim-progress-fill" id="sim-progress-fill"></div></div>
+        <div class="sim-progress-label" id="sim-progress-label">Step 1 of 4</div>
       </div>
 
       <div class="sim-steps" id="sim-steps-tabs" style="display:none">
@@ -1702,45 +1796,50 @@ if(document.readyState==="loading"){
               <div class="budget-breakdown" id="out-budget-breakdown"></div>
             </div>
             <div class="yearly-section" id="out-yearly-wrap"></div>
-            <div class="chart-wrap">
-              <h3>5-Year Financial Projection (Operating Cost vs Savings)</h3>
-              <canvas id="projChart" height="120"></canvas>
+            <!-- Blueprint PDF export -->
+            <div style="display:flex;justify-content:flex-end;margin-bottom:1rem">
+              <button onclick="window.print()" style="background:rgba(12,112,64,0.08);border:1px solid rgba(12,112,64,0.25);border-radius:7px;color:var(--teal);font-size:0.78rem;font-weight:700;padding:0.4rem 1rem;cursor:pointer;letter-spacing:0.05em" onmouseover="this.style.background='rgba(12,112,64,0.15)'" onmouseout="this.style.background='rgba(12,112,64,0.08)'">&#128438; Print Blueprint as PDF</button>
             </div>
-            <div class="incentives-section" id="out-incentives-wrap"></div>
-            <div class="banking-section" id="out-banking-wrap"></div>
-            <h3 style="margin-bottom:1rem;font-size:1rem">Top Risks & Mitigations</h3>
-            <div class="risks-grid" id="out-risks"></div>
-            <h3 style="margin-bottom:0.75rem;font-size:1rem">Phase 0 Priority Actions (First 90 Days)</h3>
-            <ul class="actions-list" id="out-actions"></ul>
-            <div class="pithonix-rec" id="out-pithonix">
-              <h3>Pithonix Delivery Role — What We Do On This Project</h3>
-              <div class="pmod-row" id="out-pmods"></div>
-              <p id="out-pfit" style="font-size:0.88rem;color:var(--tmed)"></p>
-            </div>
-            <div class="insight-box">
-              <div class="insight-label">◉ HIDDEN INSIGHT — WHAT MOST CONSULTANTS MISS</div>
-              <p id="out-insight"></p>
-            </div>
-            <div class="lead-capture-box" id="lead-box">
-              <div class="lead-capture-inner">
-                <div class="lead-left">
-                  <div class="lead-title">Get this blueprint in your inbox</div>
-                  <div class="lead-sub">We'll send you a copy of this blueprint + our India GCC market report. No spam — one email, that's it.</div>
-                </div>
-                <div class="lead-right" id="lead-form-area">
-                  <div class="lead-fields">
-                    <input type="text" id="lead-name" placeholder="Your name" class="lead-input">
-                    <input type="email" id="lead-email" placeholder="Work email" class="lead-input">
-                    <input type="text" id="lead-company" placeholder="Company name" class="lead-input">
-                    <button class="lead-btn" onclick="submitLead()">Send me the blueprint →</button>
+            <!-- Gated section: locked until email captured -->
+            <div class="bp-gated locked" id="bp-gated">
+              <div class="chart-wrap">
+                <h3>5-Year Financial Projection (Operating Cost vs Savings)</h3>
+                <canvas id="projChart" height="120"></canvas>
+              </div>
+              <div class="incentives-section" id="out-incentives-wrap"></div>
+              <div class="banking-section" id="out-banking-wrap"></div>
+              <h3 style="margin-bottom:1rem;font-size:1rem">Top Risks &amp; Mitigations</h3>
+              <div class="risks-grid" id="out-risks"></div>
+              <h3 style="margin-bottom:0.75rem;font-size:1rem">Phase 0 Priority Actions (First 90 Days)</h3>
+              <ul class="actions-list" id="out-actions"></ul>
+              <div class="pithonix-rec" id="out-pithonix">
+                <h3>Pithonix Delivery Role — What We Do On This Project</h3>
+                <div class="pmod-row" id="out-pmods"></div>
+                <p id="out-pfit" style="font-size:0.88rem;color:var(--tmed)"></p>
+              </div>
+              <div class="insight-box">
+                <div class="insight-label">&#9685; HIDDEN INSIGHT — WHAT MOST CONSULTANTS MISS</div>
+                <p id="out-insight"></p>
+              </div>
+              <!-- Blueprint unlock overlay -->
+              <div class="bp-unlock-overlay" id="bp-unlock-overlay">
+                <div class="bp-unlock-box">
+                  <div class="bp-unlock-icon">&#128274;</div>
+                  <h3>Unlock Your Full GCC Blueprint</h3>
+                  <p>You've seen the city, budget, and 5-year plan. Enter your details to unlock government incentives, banking support, risk map, 90-day launch actions, and Pithonix's delivery plan for your company.</p>
+                  <div class="bp-unlock-fields">
+                    <input type="text" id="bp-unlock-name" class="sim-gate-input" placeholder="Your name *" autocomplete="name">
+                    <input type="email" id="bp-unlock-email" class="sim-gate-input" placeholder="Work email *" autocomplete="email">
                   </div>
-                  <div class="lead-skip" onclick="document.getElementById('lead-box').style.display='none'">Skip →</div>
+                  <button class="bp-unlock-btn" onclick="unlockBlueprint()">Unlock Full Blueprint →</button>
+                  <div class="bp-unlock-note">Your blueprint will be emailed to you. No spam.</div>
                 </div>
               </div>
             </div>
-            <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
-              <button class="btn-restart" onclick="restartSim()">← Build Another Blueprint</button>
-              <a href="#contact" class="btn-primary" style="font-size:0.88rem;padding:0.65rem 1.5rem">Speak to Pithonix GCC Team →</a>
+            <div id="lead-box" style="display:none"><!-- lead box replaced by bp-unlock-overlay --></div>
+            <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-top:1.5rem" id="bp-restart-row" style="display:none">
+              <button class="btn-restart" onclick="restartSim()">&#8592; Build Another Blueprint</button>
+              <a href="#contact" class="btn-primary" style="font-size:0.88rem;padding:0.65rem 1.5rem">Speak to Pithonix GCC Team &#8594;</a>
             </div>
           </div>
         </div>
@@ -2296,13 +2395,13 @@ if(kwMeta)kwMeta.content=kwMeta.content.replace('GCC 2025 2026','GCC '+dynPrevYe
       if(p.x<0)p.x=W;if(p.x>W)p.x=0;
       if(p.y<0)p.y=H;if(p.y>H)p.y=0;
       ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle='rgba(29,184,104,'+p.o+')';ctx.fill();
+      ctx.fillStyle='rgba(12,112,64,'+p.o+')';ctx.fill();
       for(var j=i+1;j<pts.length;j++){
         var q=pts[j],dx=p.x-q.x,dy=p.y-q.y,d=Math.sqrt(dx*dx+dy*dy);
         if(d<130){
           ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);
           var alpha=(1-d/130)*0.12;
-          ctx.strokeStyle='rgba(29,184,104,'+alpha+')';ctx.lineWidth=0.6;ctx.stroke();
+          ctx.strokeStyle='rgba(12,112,64,'+alpha+')';ctx.lineWidth=0.6;ctx.stroke();
         }
       }
     }
@@ -2311,9 +2410,23 @@ if(kwMeta)kwMeta.content=kwMeta.content.replace('GCC 2025 2026','GCC '+dynPrevYe
   draw();
 })();
 
-// ── NAV SCROLL ──
+// ── NAV SCROLL + STICKY CTA ──
+var stickyCTAShown=false;
 window.addEventListener('scroll',function(){
   document.getElementById('nav').classList.toggle('scrolled',window.scrollY>40);
+  // Show sticky CTA after scrolling past hero
+  var hero=document.getElementById('hero');
+  var sim=document.getElementById('simulator');
+  if(hero&&sim&&!stickyCTAShown){
+    var heroBottom=hero.getBoundingClientRect().bottom;
+    var simTop=sim.getBoundingClientRect().top;
+    var stickyCta=document.getElementById('sticky-cta');
+    if(stickyCta){
+      // Show when past hero but not yet at simulator
+      var show=(heroBottom<0&&simTop>window.innerHeight);
+      stickyCta.classList.toggle('visible',show);
+    }
+  }
 });
 
 // ── TICKER ──
@@ -2406,7 +2519,8 @@ function renderCities(tierFilter){
     var tierBadge={'1':'<span style="background:rgba(232,184,75,0.2);color:var(--gold);font-size:0.65rem;font-weight:700;padding:0.15rem 0.5rem;border-radius:4px;letter-spacing:0.05em">TIER 1</span>',
       '2':'<span style="background:rgba(40,168,136,0.15);color:var(--teal);font-size:0.65rem;font-weight:700;padding:0.15rem 0.5rem;border-radius:4px;letter-spacing:0.05em">TIER 2</span>',
       '3':'<span style="background:rgba(136,96,212,0.15);color:#b090e4;font-size:0.65rem;font-weight:700;padding:0.15rem 0.5rem;border-radius:4px;letter-spacing:0.05em">TIER 3</span>'}[c.tier]||'';
-    return '<div class="city-block reveal" id="city-'+c.name.replace(/[^a-z]/gi,'')+'" data-tier="'+c.tier+'">'+
+    var isPrimary=(c.name==='Hyderabad'||c.name==='Bengaluru');
+    return '<div class="city-block reveal'+(isPrimary?' primary':'')+'" id="city-'+c.name.replace(/[^a-z]/gi,'')+'" data-tier="'+c.tier+'">'+
     '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem">'+
     '<div><h3 style="margin:0 0 0.2rem">'+c.name+'</h3><div class="city-state">'+c.state+'</div></div>'+
     tierBadge+'</div>'+
@@ -2753,29 +2867,15 @@ function selectPriority(el,val){
 
 function startSimulator(){
   var company=(document.getElementById('gate-company').value||'').trim();
-  var name=(document.getElementById('gate-name').value||'').trim();
-  var email=(document.getElementById('gate-email').value||'').trim();
-  var ok=true;
-  ['gate-company','gate-name','gate-email'].forEach(function(id){
-    var el=document.getElementById(id);
-    if(!el.value.trim()){el.classList.add('err');ok=false;}
-    else el.classList.remove('err');
-  });
-  if(!ok){return;}
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-    document.getElementById('gate-email').classList.add('err');return;
-  }
-  simData.companyName=company;
-  simData.contactName=name;
-  simData.contactEmail=email;
+  simData.companyName=company||'Your Company';
   document.getElementById('sim-gate').style.display='none';
+  document.getElementById('sim-progress-wrap').style.display='block';
   document.getElementById('sim-steps-tabs').style.display='flex';
   document.getElementById('sim-body-panes').style.display='block';
   goStep(1);
 }
 
 function goStep(n){
-  // Lock scroll position so pane height changes don't jump the page
   var sy=window.scrollY;
   var tabs=document.querySelectorAll('.sim-step-tab');
   var panes=document.querySelectorAll('.sim-pane');
@@ -2786,7 +2886,12 @@ function goStep(n){
     if(i+1===n)t.classList.add('active');
   });
   panes.forEach(function(p,i){p.classList.toggle('active',i+1===n);});
-  // Restore scroll position after layout settles
+  // Update progress bar
+  var pct=[0,25,50,75,100][n]||0;
+  var fill=document.getElementById('sim-progress-fill');
+  if(fill)fill.style.width=pct+'%';
+  var lbl=document.getElementById('sim-progress-label');
+  if(lbl)lbl.textContent=n<4?'Step '+n+' of 4':'Generating Blueprint…';
   requestAnimationFrame(function(){window.scrollTo({top:sy,behavior:'instant'});});
 }
 
@@ -2893,6 +2998,11 @@ function fmt(n){if(!n)return'–';if(n>=1000000)return'$'+(n/1000000).toFixed(1)
 function renderBlueprint(bp){
   document.getElementById('sim-loading').style.display='none';
   document.getElementById('sim-output').style.display='block';
+  // Update progress bar to complete
+  var fill=document.getElementById('sim-progress-fill');
+  if(fill)fill.style.width='100%';
+  var lbl=document.getElementById('sim-progress-label');
+  if(lbl)lbl.textContent='Blueprint ready';
 
   var cityFlags={'Hyderabad':'🏙️','Bengaluru':'🌳','Pune':'🌆','Chennai':'🌊','Mumbai':'🌇','NCR':'🏛️','Delhi':'🏛️'};
   document.getElementById('out-flag').textContent=cityFlags[bp.city_primary]||'🏙️';
@@ -3032,11 +3142,11 @@ function clearGOT(){
 }
 
 function silentCaptureLead(){
-  // Fires automatically when blueprint renders — captures lead even if end form is skipped
+  // Fires on blueprint render — captures form selections even without email
   try{
     fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
       name:simData.contactName||'',
-      email:simData.contactEmail||'',
+      email:simData.contactEmail||'(pending unlock)',
       company:simData.companyName||'',
       industry:simData.industry||'',
       country:simData.country||'',
@@ -3044,7 +3154,7 @@ function silentCaptureLead(){
       fte:simData.fte||'',
       timeline:simData.timeline||'',
       priority:simData.priority||'',
-      source:'sim_auto'
+      source:'sim_auto_pre_unlock'
     })});
   }catch(e){}
 }
@@ -3086,16 +3196,75 @@ function restartSim(){
   document.querySelectorAll('.priority-card').forEach(function(c){c.classList.remove('selected');});
   document.querySelectorAll('.sim-step-tab').forEach(function(t){t.classList.remove('active','done');});
   document.querySelector('.sim-step-tab').classList.add('active');
-  // Clear gate fields and go back to gate
-  ['gate-company','gate-name','gate-email'].forEach(function(id){
-    var el=document.getElementById(id);
-    el.value='';el.classList.remove('err');
-  });
+  var gc=document.getElementById('gate-company');
+  if(gc){gc.value='';gc.classList.remove('err');}
+  // Re-lock blueprint gated section
+  var gated=document.getElementById('bp-gated');
+  if(gated)gated.classList.add('locked');
+  var overlay=document.getElementById('bp-unlock-overlay');
+  if(overlay)overlay.classList.remove('hidden');
+  ['bp-unlock-name','bp-unlock-email'].forEach(function(id){var el=document.getElementById(id);if(el){el.value='';el.classList.remove('err');}});
   document.getElementById('sim-gate').style.display='flex';
   document.getElementById('sim-gate').style.flexDirection='column';
   document.getElementById('sim-gate').style.alignItems='center';
+  document.getElementById('sim-progress-wrap').style.display='none';
   document.getElementById('sim-steps-tabs').style.display='none';
   document.getElementById('sim-body-panes').style.display='none';
+}
+
+function unlockBlueprint(){
+  var nameEl=document.getElementById('bp-unlock-name');
+  var emailEl=document.getElementById('bp-unlock-email');
+  var name=(nameEl.value||'').trim();
+  var email=(emailEl.value||'').trim();
+  if(!name){nameEl.classList.add('err');nameEl.focus();return;}
+  if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){emailEl.classList.add('err');emailEl.focus();return;}
+  simData.contactName=name;
+  simData.contactEmail=email;
+  // Remove gate + blur
+  var gated=document.getElementById('bp-gated');
+  if(gated)gated.classList.remove('locked');
+  var overlay=document.getElementById('bp-unlock-overlay');
+  if(overlay)overlay.classList.add('hidden');
+  // Show restart row
+  var row=document.getElementById('bp-restart-row');
+  if(row)row.style.display='flex';
+  // Fire enriched lead
+  try{
+    fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      name:name,email:email,company:simData.companyName||'',
+      industry:simData.industry||'',country:simData.country||'',
+      functions:(simData.functions||[]).join(', '),
+      fte:simData.fte||'',timeline:simData.timeline||'',priority:simData.priority||'',
+      internal_setup_range:'$'+(simData.internalVariance&&simData.internalVariance.setup_low?simData.internalVariance.setup_low.toLocaleString():'-')+' – $'+(simData.internalVariance&&simData.internalVariance.setup_high?simData.internalVariance.setup_high.toLocaleString():'-'),
+      blueprint:JSON.stringify(simData.blueprint||{}),
+      source:'bp_unlock'
+    })});
+  }catch(e){}
+}
+
+function toggleMobileMenu(){
+  var menu=document.getElementById('mobile-menu');
+  var btn=document.getElementById('nav-hamburger');
+  menu.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+
+function subscribePolicyPulse(){
+  var email=(document.getElementById('pp-email').value||'').trim();
+  if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    document.getElementById('pp-email').style.borderColor='var(--red)';
+    return;
+  }
+  try{
+    fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      name:'Policy Pulse Subscriber',email:email,company:'',
+      industry:'Policy Alert',source:'policy_pulse',
+      functions:'GCC Policy Alerts'
+    })});
+  }catch(e){}
+  document.getElementById('pp-subscribe').style.display='none';
+  document.getElementById('pp-subscribe-success').style.display='block';
 }
 </script>
 </body>
