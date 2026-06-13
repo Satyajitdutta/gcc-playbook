@@ -823,7 +823,7 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
 .bp-gated.locked>*:not(.bp-unlock-overlay){filter:blur(5px);pointer-events:none;user-select:none}
 .bp-unlock-overlay{position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:flex-start;justify-content:center;padding-top:3rem;z-index:10;background:linear-gradient(to bottom,rgba(207,224,213,0.2) 0%,rgba(207,224,213,0.92) 15%,rgba(207,224,213,0.96) 100%)}
 .bp-unlock-overlay.hidden{display:none}
-.bp-unlock-box{background:#fff;border:1px solid rgba(232,184,75,0.4);border-radius:16px;padding:2rem 2.5rem;max-width:440px;width:100%;text-align:center;box-shadow:0 8px 40px rgba(10,110,56,0.12)}
+.bp-unlock-box{background:var(--s2);border:1px solid rgba(212,164,56,0.4);border-radius:16px;padding:2rem 2.5rem;max-width:440px;width:100%;text-align:center;box-shadow:0 8px 40px rgba(0,0,0,0.4)}
 .bp-unlock-box .bp-unlock-icon{font-size:2rem;margin-bottom:0.75rem}
 .bp-unlock-box h3{font-size:1.15rem;color:var(--txt);margin-bottom:0.5rem}
 .bp-unlock-box p{font-size:0.85rem;color:var(--tmed);margin-bottom:1.25rem;line-height:1.6}
@@ -861,23 +861,38 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
 }
 
 /* ── POLICY PULSE SUBSCRIBE ── */
-.pp-subscribe{margin-top:1.5rem;background:rgba(255,255,255,0.5);border:1px solid rgba(10,110,56,0.2);border-radius:10px;padding:1rem 1.2rem;display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+.pp-subscribe{margin-top:1.5rem;background:rgba(13,31,24,0.7);border:1px solid var(--bd);border-radius:10px;padding:1rem 1.2rem;display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
 .pp-subscribe-label{font-size:0.85rem;color:var(--txt);font-weight:600;flex-shrink:0}
-.pp-subscribe-input{flex:1;min-width:200px;padding:0.45rem 0.9rem;border:1px solid var(--bd);border-radius:7px;background:#fff;font-size:0.85rem;color:var(--txt);font-family:'DM Sans',sans-serif}
+.pp-subscribe-input{flex:1;min-width:200px;padding:0.45rem 0.9rem;border:1px solid var(--bd);border-radius:7px;background:var(--s3);font-size:0.85rem;color:var(--txt);font-family:'Outfit',sans-serif}
 .pp-subscribe-btn{background:var(--teal);color:#fff;border:none;border-radius:7px;padding:0.45rem 1.1rem;font-size:0.85rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:background 0.2s}
 .pp-subscribe-btn:hover{background:var(--blue)}
 
 /* ── PRINT STYLES ── */
 @media print{
-  #nav,#got-btn,#got-overlay,#got-panel,.ticker-wrap,.hero-ctas,.scroll-hint,#sticky-cta,#lead-box,.btn-restart,.bp-unlock-overlay,button.lead-btn,.lead-skip{display:none!important}
-  body{background:#fff;color:#000}
-  .sim-output{box-shadow:none}
-  #bg-canvas{display:none}
+  /* Hide everything except the blueprint output */
+  body > *{display:none!important}
+  #bg-canvas{display:none!important}
+  #simulator{display:block!important}
+  #simulator .wrap{display:block!important}
+  .sim-wrap{display:block!important;box-shadow:none!important;border:none!important}
+  .sim-output{display:block!important;box-shadow:none}
+  /* Hide nav, gate, steps, controls inside simulator */
+  #nav,#got-btn,#got-overlay,#got-panel,.ticker-wrap,#sticky-cta,
+  .sim-gate,.sim-progress-wrap,.sim-steps-tabs,#sim-steps-tabs,
+  .sim-body,.sim-nav,.btn-restart,#bp-restart-row,
+  .bp-unlock-overlay,.lead-capture-box,#lead-box,
+  .scroll-hint,#simulator .section-label,#simulator .section-title,
+  #simulator .section-sub,#simulator .sim-header{display:none!important}
+  /* Blueprint print styles */
+  body{background:#fff!important;color:#000!important;font-family:'Outfit',sans-serif}
+  .sim-output *{color:#111!important}
   .budget-section,.yearly-section,.incentives-section,.banking-section,.risks-grid,.actions-list,.pithonix-rec,.insight-box{break-inside:avoid}
+  .city-card,.blueprint-header,.budget-total,.chart-wrap{break-inside:avoid}
+  @page{margin:1.5cm;size:A4}
 }
 
 /* ── SELECT OPTION LIGHT THEME (fix dark remnant) ── */
-select option{background:#ffffff;color:#061209}
+select option{background:#112219;color:#e8f5ed}
 
 /* ── DESIGN POLISH LAYER ── */
 /* Typography */
@@ -1632,7 +1647,7 @@ if(document.readyState==="loading"){
         <button class="city-tier-btn" onclick="filterCities('2',this)">Tier 2</button>
         <button class="city-tier-btn" onclick="filterCities('3',this)">Tier 3</button>
       </div>
-      <select id="city-select" onchange="jumpToCity(this.value)" style="margin-left:auto;background:#ffffff;border:1px solid rgba(232,184,75,0.3);border-radius:8px;color:var(--txt);padding:0.5rem 1rem;font-size:0.85rem;cursor:pointer">
+      <select id="city-select" onchange="jumpToCity(this.value)" style="margin-left:auto;background:var(--s2);border:1px solid var(--bd);border-radius:8px;color:var(--txt);padding:0.5rem 1rem;font-size:0.85rem;cursor:pointer">
         <option value="">— Jump to city —</option>
       </select>
     </div>
@@ -2354,13 +2369,13 @@ if(document.readyState==="loading"){
         <div style="font-size:0.82rem;font-weight:700;color:var(--gold);margin-bottom:0.3rem">&#9889; 4-Day Lead Advantage</div>
         <div style="font-size:0.78rem;color:var(--tmed)">Direct 20-min pitch to clients. Monthly win rate reports. Rs 12–25L/year + 0.5–1.5% success fee.</div>
       </div>
-      <div style="background:rgba(255,255,255,0.4);border:1px solid rgba(10,110,56,0.25);border-radius:10px;padding:1rem 1.2rem">
+      <div style="background:rgba(13,31,24,0.8);border:1px solid var(--bd);border-radius:10px;padding:1rem 1.2rem">
         <div style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:2px;color:var(--teal);font-weight:700;margin-bottom:0.4rem">GOLD</div>
         <div style="font-size:0.84rem;font-weight:600;color:var(--txt);margin-bottom:0.3rem">Included in Blueprints</div>
         <div style="font-size:0.82rem;font-weight:700;color:var(--teal);margin-bottom:0.3rem">&#9889; 1-Day Lead Advantage</div>
         <div style="font-size:0.78rem;color:var(--tmed)">Profile-matched referrals. Quarterly win data. Rs 5–10L/year + 1–2% success fee.</div>
       </div>
-      <div style="background:rgba(255,255,255,0.25);border:1px solid rgba(10,110,56,0.15);border-radius:10px;padding:1rem 1.2rem">
+      <div style="background:rgba(13,31,24,0.6);border:1px solid var(--bd);border-radius:10px;padding:1rem 1.2rem">
         <div style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:2px;color:var(--tdim);font-weight:700;margin-bottom:0.4rem">SILVER</div>
         <div style="font-size:0.84rem;font-weight:600;color:var(--txt);margin-bottom:0.3rem">Ecosystem Directory</div>
         <div style="font-size:0.82rem;font-weight:700;color:var(--tdim);margin-bottom:0.3rem">&#128338; Leads on Request</div>
