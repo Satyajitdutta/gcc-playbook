@@ -869,23 +869,19 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
 
 /* ── PRINT STYLES ── */
 @media print{
-  /* Hide everything except the blueprint output */
-  body > *{display:none!important}
-  #bg-canvas{display:none!important}
-  #simulator{display:block!important}
-  #simulator .wrap{display:block!important}
-  .sim-wrap{display:block!important;box-shadow:none!important;border:none!important}
-  .sim-output{display:block!important;box-shadow:none}
-  /* Hide nav, gate, steps, controls inside simulator */
-  #nav,#got-btn,#got-overlay,#got-panel,.ticker-wrap,#sticky-cta,
-  .sim-gate,.sim-progress-wrap,.sim-steps-tabs,#sim-steps-tabs,
-  .sim-body,.sim-nav,.btn-restart,#bp-restart-row,
-  .bp-unlock-overlay,.lead-capture-box,#lead-box,
-  .scroll-hint,#simulator .section-label,#simulator .section-title,
-  #simulator .section-sub,#simulator .sim-header{display:none!important}
-  /* Blueprint print styles */
-  body{background:#fff!important;color:#000!important;font-family:'Outfit',sans-serif}
-  .sim-output *{color:#111!important}
+  /* Visibility approach: hide everything, then reveal only the blueprint */
+  *{visibility:hidden!important}
+  .sim-output,.sim-output *{visibility:visible!important}
+  /* Position blueprint at top of page */
+  .sim-output{position:fixed!important;top:0!important;left:0!important;right:0!important;bottom:0!important;overflow:visible!important;padding:1.5cm!important;box-shadow:none!important}
+  /* Remove gate blur and hide the lock overlay */
+  .bp-gated.locked>*{filter:none!important}
+  .bp-unlock-overlay{display:none!important;visibility:hidden!important}
+  /* White page, dark text */
+  body{background:#fff!important}
+  .sim-output{background:#fff!important}
+  .sim-output *{color:#111!important;border-color:#ddd!important;background:transparent!important}
+  .city-card,.blueprint-header,.budget-total,.budget-row,.risk-card,.yearly-card,.incentive-card,.banking-card{background:#f9f9f9!important;border:1px solid #ddd!important}
   .budget-section,.yearly-section,.incentives-section,.banking-section,.risks-grid,.actions-list,.pithonix-rec,.insight-box{break-inside:avoid}
   .city-card,.blueprint-header,.budget-total,.chart-wrap{break-inside:avoid}
   @page{margin:1.5cm;size:A4}
@@ -3070,7 +3066,7 @@ currentYear+' INDIA COST BENCHMARKS (use these as base, adjust for city tier and
 '{"city_primary":"city name","city_primary_reason":"2 sentences — why this city for this company profile","city_alt":"alternative city","city_alt_reason":"1 sentence","hidden_insight":"1 non-obvious, data-backed insight most GCC consultants miss — specific to this company, industry, and HQ country","setup_budget_total_usd":number,"setup_budget_breakdown":[{"category":"Entity Formation & Legal (PvtLtd incorporation, CA, company secretary)","cost_usd":number,"timeline":"Month 1-2","notes":"specific vendors/actions"},{"category":"Office Space & Infrastructure (fit-out, furniture, lease deposit)","cost_usd":number,"timeline":"Month 2-4","notes":"Grade-A area recommendation"},{"category":"IT & Technology Setup (laptops, servers, network, licenses)","cost_usd":number,"timeline":"Month 2-5","notes":"key items"},{"category":"Talent Acquisition Year 1 (recruitment fees, ESOP, onboarding)","cost_usd":number,"timeline":"Month 1-12","notes":"avg cost per hire"},{"category":"Compliance & Regulatory (STPI/SEZ registration, audit, payroll setup)","cost_usd":number,"timeline":"Month 1-3","notes":"key registrations"},{"category":"Pithonix Setup Management Fee (project management, JEET+HARI+GOT deployment)","cost_usd":number,"timeline":"Full project","notes":"milestone-based billing"}],"yearly_budget":[{"year":"Year 1 — Setup + Ramp","budget_usd":number,"focus":"Entity setup, first hires, infrastructure"},{"year":"Year 2 — Scale","budget_usd":number,"focus":"Scale to full headcount, process migration"},{"year":"Year 3 — Optimize","budget_usd":number,"focus":"Efficiency, automation, CoE development"}],"govt_incentives":[{"scheme":"exact scheme name","benefit":"specific benefit with quantified numbers — e.g. 100% tax holiday for 5 years, ~Rs X crore saved","eligibility":"who qualifies","agency":"STPI / SEZ / State IT Dept / MeitY / DPIIT","priority":"central","est_value_usd":number},{"scheme":"...","benefit":"...","eligibility":"...","agency":"...","priority":"state","est_value_usd":number},{"scheme":"...","benefit":"...","eligibility":"...","agency":"...","priority":"central","est_value_usd":number},{"scheme":"...","benefit":"...","eligibility":"...","agency":"...","priority":"state","est_value_usd":number}],"banking_support":[{"bank":"State Bank of India (SBI) — always include as first entry given its unmatched network, govt scheme access, and pan-India payroll reach","offering":"specific SBI program name","benefit":"what SBI offers to a new GCC entity"},{"bank":"HDFC or ICICI or Kotak based on company profile","offering":"specific program name","benefit":"what it offers"},{"bank":"third bank relevant to company HQ country or industry","offering":"specific program name","benefit":"what it offers"}],"headcount":[y1,y2,y3,y4,y5],"savings_usd":[y1,y2,y3,y4,y5],"cost_usd":[y1,y2,y3,y4,y5],"break_even_months":number,"total_5yr_savings_usd":number,"risks":[{"risk":"name","probability":"High/Medium/Low","mitigation":"specific action"},{"risk":"...","probability":"...","mitigation":"..."},{"risk":"...","probability":"...","mitigation":"..."}],"phase0_actions":["specific action 1","specific action 2","specific action 3","specific action 4","specific action 5"],"pithonix_role":"2 sentences on exactly what Pithonix delivers as the setup contractor for this company — not generic, specific to their profile"}';
 
   try{
-    var resp=await fetch('/api/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({_model:'gemini-2.5-flash',contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:1.0,maxOutputTokens:8000,thinkingConfig:{thinkingBudget:0}}})});
+    var resp=await fetch('/api/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({_model:'gemini-2.5-flash',contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:1.0,maxOutputTokens:12000,thinkingConfig:{thinkingBudget:0}}})});
     var data=await resp.json();
     var raw=data.candidates&&data.candidates[0]&&data.candidates[0].content&&data.candidates[0].content.parts[0].text||'{}';
     var m=raw.match(/\{[\s\S]*\}/);
