@@ -1693,22 +1693,17 @@ if(document.readyState==="loading"){
 <section id="simulator" style="overflow-anchor:auto">
   <div class="wrap">
     <div class="section-label">GCC SETUP PROJECT ESTIMATOR</div>
-    <h2 class="section-title">GCC Project <span class="gold">Blueprint</span></h2>
-    <p class="section-sub">Tell us about your company. Get a full GCC Setup Project Plan — total setup budget, year-wise investment, government incentives, banking support, and 90-day launch actions. Pithonix delivers it.</p>
+    <h2 class="section-title">Your GCC Setup <span class="gold">Blueprint</span></h2>
+    <p class="section-sub">Tell us about your company. Get a full GCC Setup Project Plan: total setup budget, year-wise investment, government incentives, banking support, and 90-day launch actions. Pithonix delivers it.</p>
     <div class="sim-wrap reveal">
-      <div class="sim-header">
-        <h2>Build Your Custom GCC Blueprint</h2>
-        <p>Takes 2 minutes · Powered by Gemini AI · Based on real India GCC data</p>
-      </div>
-      <!-- Simplified gate: just company name for personalisation -->
-      <div id="sim-gate" class="sim-gate">
-        <div class="sim-gate-title">Build Your Custom GCC Blueprint</div>
-        <div class="sim-gate-sub">Enter your company name to personalise the report. Takes 2 minutes. Free. No login required.</div>
-        <div class="sim-gate-fields" style="grid-template-columns:1fr">
+      <div id="sim-gate" class="sim-gate" style="padding:3rem 2.5rem">
+        <div class="sim-gate-title" style="font-size:1.5rem;margin-bottom:0.5rem">Build Your Custom GCC Blueprint</div>
+        <div class="sim-gate-sub" style="margin-bottom:1.5rem">Takes 2 minutes. Powered by Gemini AI. Based on data from 2,117+ India GCCs. Free, no login required.</div>
+        <div class="sim-gate-fields" style="grid-template-columns:1fr;max-width:400px">
           <input type="text" id="gate-company" class="sim-gate-input" placeholder="Company name (optional)" autocomplete="organization">
         </div>
         <button class="sim-gate-btn" onclick="startSimulator()">Start — Build My Blueprint →</button>
-        <div class="sim-gate-note">Powered by Gemini AI. Based on data from 2,117+ India GCCs.</div>
+        <div class="sim-gate-note" style="margin-top:1rem">Your data stays private. No spam.</div>
       </div>
 
       <!-- Progress bar (shown after gate) -->
