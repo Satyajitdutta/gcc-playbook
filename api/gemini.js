@@ -4,12 +4,41 @@
 
 import https from 'https';
 
+const ALLOWED_ORIGINS = [
+  'https://gcc-playbook.pithonix.ai',
+  'https://pithonix.ai',
+  'https://www.pithonix.ai',
+  'https://wealth.pithonix.ai',
+  'https://jeva.pithonix.ai',
+];
+
+function isAllowedOrigin(origin) {
+  if (!origin) return false;
+  if (ALLOWED_ORIGINS.includes(origin)) return true;
+  // Allow all Vercel preview deployments for this project
+  if (/^https:\/\/gcc-playbook-[a-z0-9]+-satyajit-duttas-projects\.vercel\.app$/.test(origin)) return true;
+  if (/^https:\/\/[a-z0-9-]+-satyajit-duttas-projects\.vercel\.app$/.test(origin)) return true;
+  return false;
+}
+
 export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  const origin = req.headers['origin'] || '';
+
+  if (isAllowedOrigin(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Vary', 'Origin');
+  }
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
   if (req.method === 'OPTIONS') { res.status(204).end(); return; }
   if (req.method !== 'POST') { res.status(405).json({ error: 'POST only' }); return; }
+
+  // Block requests from disallowed origins
+  if (origin && !isAllowedOrigin(origin)) {
+    res.status(403).json({ error: 'Forbidden' });
+    return;
+  }
 
   let body;
   try {
@@ -22,11 +51,17 @@ export default async function handler(req, res) {
     }
   } catch(e) { res.status(400).json({ error: 'Invalid JSON' }); return; }
 
-  const model = body._model || 'gemini-2.5-pro';
+  const model = body._model || 'gemini-2.5-flash';
   const apiKey = process.env.GEMINI_API_KEY || '';
   if (!apiKey) { res.status(500).json({ error: 'GEMINI_API_KEY not configured' }); return; }
 
   const { _model, ...geminiBody } = body;
+
+  // Remove maxOutputTokens cap — let Gemini return full responses
+  if (geminiBody.generationConfig) {
+    delete geminiBody.generationConfig.maxOutputTokens;
+  }
+
   const data = JSON.stringify(geminiBody);
   const path = `/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
