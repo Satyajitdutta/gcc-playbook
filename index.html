@@ -249,7 +249,7 @@ h1,h2,h3{line-height:1.2;font-weight:700;font-family:'Cormorant Garamond',serif}
 .mono{font-family:'JetBrains Mono',monospace}
 
 /* ── NAV ── */
-#nav{position:fixed;top:34px;left:0;right:0;z-index:100;transition:background 0.4s var(--ease-standard),border-color 0.4s var(--ease-standard),backdrop-filter 0.4s var(--ease-standard);border-bottom:1px solid transparent;backdrop-filter:blur(0px)}
+#nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:background 0.4s var(--ease-standard),border-color 0.4s var(--ease-standard),backdrop-filter 0.4s var(--ease-standard);border-bottom:1px solid transparent;backdrop-filter:blur(0px)}
 #nav.scrolled{background:rgba(8,21,16,0.97);border-color:var(--bd);backdrop-filter:blur(20px)}
 .nav-inner{max-width:1280px;margin:0 auto;padding:0 2rem;height:64px;display:flex;align-items:center;gap:2rem}
 .nav-brand{display:flex;align-items:center;gap:0.6rem;text-decoration:none}
@@ -942,10 +942,10 @@ section{transition:opacity 0.01s}
 <body>
 
 <!-- MAINTENANCE BANNER — remove once API is restored -->
-<div id="maintenance-banner" style="position:fixed;top:0;left:0;right:0;z-index:9999;background:linear-gradient(90deg,#7a3800,#b85000);color:#fff;font-family:'Outfit',sans-serif;font-size:0.82rem;font-weight:500;padding:0.55rem 1.5rem;display:flex;align-items:center;justify-content:center;gap:0.75rem;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,0.4)">
-  <span style="font-size:1rem">🔧</span>
+<div id="maintenance-banner" style="position:relative;top:0;left:0;right:0;z-index:9999;background:linear-gradient(90deg,#7a3800,#b85000);color:#fff;font-family:'Outfit',sans-serif;font-size:0.85rem;font-weight:500;padding:0.7rem 1.5rem;display:flex;align-items:center;justify-content:center;gap:0.75rem;text-align:center;box-shadow:0 2px 16px rgba(0,0,0,0.5)">
+  <span style="font-size:1.1rem">🔧</span>
   <span><strong>Site under maintenance.</strong> Our AI backend is being updated. The GCC Blueprint Simulator and City Intelligence are temporarily unavailable. All other content is live. We will be back shortly.</span>
-  <button onclick="document.getElementById('maintenance-banner').style.display='none'" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:#fff;border-radius:5px;padding:0.15rem 0.6rem;cursor:pointer;font-size:0.8rem;flex-shrink:0;margin-left:0.5rem">✕</button>
+  <button onclick="document.getElementById('maintenance-banner').style.display='none'" style="background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);color:#fff;border-radius:5px;padding:0.2rem 0.7rem;cursor:pointer;font-size:0.8rem;flex-shrink:0;margin-left:0.5rem">✕</button>
 </div>
 <canvas id="bg-canvas"></canvas>
 
