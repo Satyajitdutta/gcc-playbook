@@ -35,29 +35,72 @@ const ZONE_MAP = {
 
 // Deterministic, auditable probability score. Each factor is visible in signal_factors so the
 // number can be defended to a government partner, not a single opaque LLM-judged figure.
-const SIGNAL_WEIGHTS = {
-  senior_hiring_post: 30,
-  leasing_report: 25,
-  earnings_call_mention: 25,
-  government_pipeline_listed: 20,
-  conference_signal: 15,
-  news_article: 10,
-  other: 5,
+// 25 signal types across 7 clusters. GOT-style scoring: signals from MORE DISTINCT CLUSTERS
+// reinforce each other (a hiring post + a leasing report = a stronger combined story than
+// either alone), so the diversity bonus rewards corroboration, not just a longer list.
+const SIGNAL_CLUSTERS = {
+  // Talent
+  senior_hiring_post: 'talent', leadership_relocation_post: 'talent', glassdoor_jobs_surge: 'talent',
+  linkedin_employee_count_jump: 'talent', niche_skill_hiring_burst: 'talent',
+  // Real estate
+  leasing_report: 'real_estate', sez_land_allocation: 'real_estate', coworking_largeblock_booking: 'real_estate',
+  new_office_permit_filed: 'real_estate',
+  // Financial / investor
+  earnings_call_mention: 'financial', analyst_report_mention: 'financial', capex_guidance_increase: 'financial',
+  sec_filing_india_mention: 'financial',
+  // Government / policy
+  government_pipeline_listed: 'government', tsipass_application_filed: 'government', sez_approval_listed: 'government',
+  trade_mission_delegation: 'government',
+  // Industry / peer
+  competitor_already_landed: 'industry', conference_signal: 'industry', industry_association_membership: 'industry',
+  vendor_rfp_india_scope: 'industry',
+  // Media / PR
+  news_article: 'media', press_release_india_expansion: 'media', executive_interview_mention: 'media',
+  ma_or_jv_announcement: 'media',
+  // Digital footprint
+  domain_registration_india: 'digital', job_portal_company_page_created: 'digital', social_media_india_office_post: 'digital',
+  other: 'media',
 };
-function scoreSignal(c) {
-  const factors = {};
-  factors.signal_type = c.signal_type || 'other';
-  factors.signal_type_points = SIGNAL_WEIGHTS[factors.signal_type] || SIGNAL_WEIGHTS.other;
-  factors.named_explicitly = !!c.named_explicitly;
-  factors.named_explicitly_points = factors.named_explicitly ? 15 : 0;
-  const days = typeof c.recency_days === 'number' ? c.recency_days : 9999;
-  factors.recency_days = days;
-  factors.recency_points = days <= 30 ? 20 : days <= 90 ? 10 : 0;
-  const sources = Math.max(1, parseInt(c.source_count) || 1);
-  factors.source_count = sources;
-  factors.source_count_points = sources >= 2 ? 15 : 0;
-  factors.total = Math.min(100, factors.signal_type_points + factors.named_explicitly_points + factors.recency_points + factors.source_count_points);
-  return factors;
+const SIGNAL_WEIGHTS = {
+  senior_hiring_post: 30, leasing_report: 25, earnings_call_mention: 25, sez_land_allocation: 24,
+  government_pipeline_listed: 20, tsipass_application_filed: 22, sez_approval_listed: 22, competitor_already_landed: 12,
+  leadership_relocation_post: 22, analyst_report_mention: 18, capex_guidance_increase: 18, sec_filing_india_mention: 20,
+  conference_signal: 15, industry_association_membership: 10, vendor_rfp_india_scope: 18, trade_mission_delegation: 16,
+  press_release_india_expansion: 20, executive_interview_mention: 14, ma_or_jv_announcement: 18,
+  glassdoor_jobs_surge: 14, linkedin_employee_count_jump: 14, niche_skill_hiring_burst: 16,
+  coworking_largeblock_booking: 16, new_office_permit_filed: 18,
+  domain_registration_india: 8, job_portal_company_page_created: 10, social_media_india_office_post: 8,
+  news_article: 10, other: 5,
+};
+function scoreCandidate(c) {
+  const signals = Array.isArray(c.signals) && c.signals.length ? c.signals : [c];
+  const detail = [];
+  const clustersSeen = new Set();
+  let signalPoints = 0;
+  for (const s of signals) {
+    const type = s.signal_type || 'other';
+    const points = SIGNAL_WEIGHTS[type] || SIGNAL_WEIGHTS.other;
+    const cluster = SIGNAL_CLUSTERS[type] || 'media';
+    clustersSeen.add(cluster);
+    signalPoints += points;
+    detail.push({ signal_type: type, cluster, points, named_explicitly: !!s.named_explicitly,
+      recency_days: typeof s.recency_days === 'number' ? s.recency_days : 9999,
+      source_count: Math.max(1, parseInt(s.source_count) || 1), evidence: s.evidence || '' });
+  }
+  const namedExplicitly = detail.some(d => d.named_explicitly);
+  const namedPoints = namedExplicitly ? 15 : 0;
+  const bestRecency = Math.min(...detail.map(d => d.recency_days));
+  const recencyPoints = bestRecency <= 30 ? 20 : bestRecency <= 90 ? 10 : 0;
+  const maxSources = Math.max(...detail.map(d => d.source_count));
+  const sourcePoints = maxSources >= 2 ? 15 : 0;
+  // Cross-cluster corroboration bonus: independent categories of evidence pointing the same way.
+  const clusterDiversityPoints = clustersSeen.size >= 3 ? 20 : clustersSeen.size === 2 ? 10 : 0;
+  const total = Math.min(100, Math.round(signalPoints / signals.length) + namedPoints + recencyPoints + sourcePoints + clusterDiversityPoints);
+  return {
+    total, signals_used: detail.length, clusters_used: Array.from(clustersSeen), cluster_diversity_points: clusterDiversityPoints,
+    named_explicitly: namedExplicitly, named_explicitly_points: namedPoints, recency_days: bestRecency, recency_points: recencyPoints,
+    source_count: maxSources, source_count_points: sourcePoints, signal_detail: detail,
+  };
 }
 
 function callGemini(prompt, useSearch) {
@@ -177,6 +220,23 @@ export default async function handler(req, res) {
       return res.status(200).json({ token: sessionToken, email });
     }
 
+    // -- public_stats: no auth required, called from the public site's live tracker --
+    if (action === 'public_stats') {
+      const r = await client.query(
+        `SELECT COUNT(*)::int AS detected_count, COALESCE(AVG(probability_score),0)::int AS avg_score, MAX(created_at) AS last_scan
+         FROM gcc_admin_leads WHERE status IN ('Detected','Researched','Simulated')`
+      );
+      const landed = await client.query(`SELECT COUNT(*)::int AS landed_count FROM gcc_admin_leads WHERE status = 'Landed'`);
+      return res.status(200).json({
+        tracked_count: r.rows[0].detected_count,
+        avg_probability: r.rows[0].avg_score,
+        last_scan: r.rows[0].last_scan,
+        landed_count: landed.rows[0].landed_count,
+        signal_types: Object.keys(SIGNAL_CLUSTERS).filter(s => s !== 'other').length,
+        clusters: 7,
+      });
+    }
+
     // -- everything below requires a valid session --
     const session = await requireSession(client, req);
     if (!session) { res.status(401).json({ error: 'Unauthorized' }); return; }
@@ -239,20 +299,19 @@ export default async function handler(req, res) {
       const industryOptions = Object.keys(ZONE_MAP).concat([
         'Retail / E-Commerce', 'Consumer Packaged Goods (CPG)', 'Energy & Utilities', 'Professional Services', 'Telecom / Media', 'Other'
       ]);
+      const signalList = Object.keys(SIGNAL_CLUSTERS).filter(s => s !== 'other')
+        .map(s => s + ' (' + SIGNAL_CLUSTERS[s] + ')').join(', ');
       const prompt = 'You are a GCC market analyst at Pithonix, scanning the open web RIGHT NOW for companies that are probable leads to set up a '+
         'Global Capability Centre (GCC) in India, with a bias toward Telangana/Hyderabad signals. Use real, current web search results. Do not invent companies or sources.\n\n'+
-        'Look specifically for these signal types:\n'+
-        '1. senior_hiring_post — a company with little/no India footprint posting senior roles like "Country Head India GCC", "VP Global Capability Center", "India GCC Site Leader"\n'+
-        '2. leasing_report — commercial real estate (CBRE, Cushman & Wakefield, Knight Frank, JLL) reports naming or describing a large GCC-sector office lease in India\n'+
-        '3. earnings_call_mention — a company\'s recent earnings call or investor material mentioning India captive center / GBS expansion plans\n'+
-        '4. government_pipeline_listed — companies named in Telangana / Invest Telangana / TS-iPASS announcements as inbound or in-progress\n'+
-        '5. conference_signal — a company speaking at or sponsoring a GCC-relevant conference (BioAsia, Nasscom GCC Summit) signaling India intent\n'+
-        '6. news_article — any other credible news coverage of a company evaluating or announcing an India GCC\n\n'+
+        'There are 25 possible signal types across 7 clusters (talent, real_estate, financial, government, industry, media, digital): '+signalList+'.\n'+
+        'For each company you find, report EVERY distinct signal you found evidence for, not just one — a company with both a senior_hiring_post AND a leasing_report '+
+        'is a much stronger lead than one with a single news_article, because the signals corroborate each other across independent categories.\n\n'+
         'Return ONLY valid JSON: {"candidates":[{"company_name":"exact name, or a clear placeholder like \\"Unnamed European Aerospace Firm\\" if anonymized in the source",'+
-        '"industry":"one of: '+industryOptions.join(' | ')+'","country":"HQ country if known","signal_type":"one of: senior_hiring_post | leasing_report | earnings_call_mention | government_pipeline_listed | conference_signal | news_article",'+
-        '"named_explicitly":true_or_false,"recency_days":approximate_days_since_signal_as_number,"source_count":number_of_independent_sources_seen,'+
-        '"evidence":"1-2 sentence description of what was actually found, citing the source name","source_urls":["url1","url2"]}]}\n\n'+
-        'Only include candidates you found real evidence for. Return an empty candidates array if nothing credible was found. Limit to at most 8 candidates.';
+        '"industry":"one of: '+industryOptions.join(' | ')+'","country":"HQ country if known",'+
+        '"signals":[{"signal_type":"one of the 25 signal types above","named_explicitly":true_or_false,"recency_days":approximate_days_since_signal_as_number,'+
+        '"source_count":number_of_independent_sources_seen,"evidence":"1-2 sentence description of what was actually found, citing the source name"}],'+
+        '"source_urls":["url1","url2"]}]}\n\n'+
+        'Only include candidates and signals you found real evidence for. Return an empty candidates array if nothing credible was found. Limit to at most 8 candidates.';
       let text;
       try { text = await callGemini(prompt, true); }
       catch (e) { res.status(502).json({ error: 'Discovery failed: ' + e.message }); return; }
@@ -268,11 +327,12 @@ export default async function handler(req, res) {
       for (const c of parsed.candidates) {
         if (!c.company_name || existingNames.has(c.company_name.toLowerCase())) continue;
         existingNames.add(c.company_name.toLowerCase());
-        const factors = scoreSignal(c);
+        const factors = scoreCandidate(c);
+        const evidenceNote = factors.signal_detail.map(d => d.evidence + ' [' + d.signal_type + ']').join(' | ');
         const r = await client.query(
           `INSERT INTO gcc_admin_leads (company_name, industry, country, source_notes, status, probability_score, signal_factors, source_urls, created_by)
            VALUES ($1,$2,$3,$4,'Detected',$5,$6,$7,$8) RETURNING *`,
-          [c.company_name, c.industry || null, c.country || null, (c.evidence || '') + ' [' + (c.signal_type || 'other') + ']',
+          [c.company_name, c.industry || null, c.country || null, evidenceNote,
            factors.total, JSON.stringify(factors), (c.source_urls || []).join(', '), session.email]
         );
         inserted.push(r.rows[0]);

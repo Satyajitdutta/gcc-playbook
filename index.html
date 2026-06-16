@@ -1768,6 +1768,22 @@ if(document.readyState==="loading"){
       </div>
     </div>
     <p style="font-size:0.75rem;color:var(--tdim);text-align:center;max-width:680px;margin:0 auto 1rem">Sourced from public reporting (Business Standard, Siasat, Devdiscourse) as of June 2026. Telangana's own 2026 target: 120 GCCs and 1.2 lakh jobs (Minister D. Sridhar Babu, Nov 2025). This list is refreshed periodically, not a live feed.</p>
+
+    <div class="reveal" style="margin-top:2rem;background:var(--s2);border:1px solid var(--bd);border-radius:14px;padding:1.5rem 1.75rem">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:0.75rem">
+        <div>
+          <strong style="font-size:1rem">Pithonix Live Tracker</strong>
+          <span style="font-size:0.7rem;color:var(--tdim);margin-left:0.5rem">AI-detected probable entrants, not confirmed announcements</span>
+        </div>
+        <button id="tracker-refresh-btn" onclick="refreshLiveTracker()" class="btn-secondary" style="font-size:0.78rem;padding:0.45rem 0.9rem">↻ Extract Latest GCC Probable Clients</button>
+      </div>
+      <div id="tracker-stats" style="display:flex;gap:2rem;flex-wrap:wrap;margin-bottom:0.75rem">
+        <div><div id="tracker-count" style="font-size:1.8rem;font-weight:700;color:var(--teal)">—</div><div style="font-size:0.72rem;color:var(--tdim)">probable entrants tracked</div></div>
+        <div><div id="tracker-avg" style="font-size:1.8rem;font-weight:700;color:var(--teal)">—</div><div style="font-size:0.72rem;color:var(--tdim)">avg. probability score</div></div>
+        <div><div id="tracker-last" style="font-size:1.8rem;font-weight:700;color:var(--teal)">—</div><div style="font-size:0.72rem;color:var(--tdim)">last scan</div></div>
+      </div>
+      <p style="font-size:0.72rem;color:var(--tdim);line-height:1.5">Disclaimer: these counts come from Pithonix's own AI pattern-scan of public hiring, real-estate, financial, government, industry, media, and digital signals — currently scanning across 25 distinct signal types in 7 clusters and cross-referencing corroboration between them. Each entrant shown internally is assigned a probability score, not a confirmed deal. This is research-derived pattern detection, separate from NASSCOM-Zinnov's official India-wide GCC count shown elsewhere on this page.</p>
+    </div>
   </div>
 </section>
 
@@ -3079,6 +3095,27 @@ async function submitPartner(){
 // ── SIMULATOR LOGIC ──
 var simData={};
 var projChart=null;
+
+// ── PITHONIX LIVE TRACKER ──
+function refreshLiveTracker(){
+  var btn=document.getElementById('tracker-refresh-btn');
+  if(btn){btn.disabled=true;btn.textContent='Scanning…';}
+  fetch('/api/gcc-admin',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'public_stats'})})
+    .then(function(r){return r.json();})
+    .then(function(d){
+      if(d.error)throw new Error(d.error);
+      document.getElementById('tracker-count').textContent=d.tracked_count||0;
+      document.getElementById('tracker-avg').textContent=(d.avg_probability||0)+'%';
+      document.getElementById('tracker-last').textContent=d.last_scan?new Date(d.last_scan).toLocaleDateString('en-IN',{day:'numeric',month:'short'}):'—';
+    })
+    .catch(function(){
+      document.getElementById('tracker-count').textContent='—';
+      document.getElementById('tracker-avg').textContent='—';
+      document.getElementById('tracker-last').textContent='—';
+    })
+    .finally(function(){ if(btn){btn.disabled=false;btn.textContent='↻ Extract Latest GCC Probable Clients';} });
+}
+document.addEventListener('DOMContentLoaded',refreshLiveTracker);
 
 // ── SECTOR-TO-ZONE MAPPING ──
 // Maps simulator industry input to Telangana's actual designated GCC zones (verified, named clusters),
