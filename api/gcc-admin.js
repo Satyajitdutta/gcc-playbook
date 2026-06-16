@@ -33,14 +33,43 @@ const ZONE_MAP = {
     benefit: 'Largest concentration of GCC and IT campuses in the state, deepest entry-to-mid talent pool for engineering roles.' },
 };
 
-function callGemini(prompt) {
+// Deterministic, auditable probability score. Each factor is visible in signal_factors so the
+// number can be defended to a government partner, not a single opaque LLM-judged figure.
+const SIGNAL_WEIGHTS = {
+  senior_hiring_post: 30,
+  leasing_report: 25,
+  earnings_call_mention: 25,
+  government_pipeline_listed: 20,
+  conference_signal: 15,
+  news_article: 10,
+  other: 5,
+};
+function scoreSignal(c) {
+  const factors = {};
+  factors.signal_type = c.signal_type || 'other';
+  factors.signal_type_points = SIGNAL_WEIGHTS[factors.signal_type] || SIGNAL_WEIGHTS.other;
+  factors.named_explicitly = !!c.named_explicitly;
+  factors.named_explicitly_points = factors.named_explicitly ? 15 : 0;
+  const days = typeof c.recency_days === 'number' ? c.recency_days : 9999;
+  factors.recency_days = days;
+  factors.recency_points = days <= 30 ? 20 : days <= 90 ? 10 : 0;
+  const sources = Math.max(1, parseInt(c.source_count) || 1);
+  factors.source_count = sources;
+  factors.source_count_points = sources >= 2 ? 15 : 0;
+  factors.total = Math.min(100, factors.signal_type_points + factors.named_explicitly_points + factors.recency_points + factors.source_count_points);
+  return factors;
+}
+
+function callGemini(prompt, useSearch) {
   return new Promise((resolve, reject) => {
     const apiKey = process.env.GEMINI_API_KEY || '';
     if (!apiKey) { reject(new Error('GEMINI_API_KEY not configured')); return; }
-    const body = JSON.stringify({
+    const reqBody = {
       contents: [{ parts: [{ text: prompt }] }],
       generationConfig: { temperature: 0.9, thinkingConfig: { thinkingBudget: 0 } }
-    });
+    };
+    if (useSearch) reqBody.tools = [{ google_search: {} }];
+    const body = JSON.stringify(reqBody);
     const req = https.request({
       hostname: 'generativelanguage.googleapis.com',
       path: `/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
@@ -204,6 +233,51 @@ export default async function handler(req, res) {
          (parsed.research_summary || '') + (parsed.confidence_level ? '\n\nConfidence: ' + parsed.confidence_level : ''), body.id]
       );
       return res.status(200).json({ lead: r2.rows[0] });
+    }
+
+    if (action === 'discover') {
+      const industryOptions = Object.keys(ZONE_MAP).concat([
+        'Retail / E-Commerce', 'Consumer Packaged Goods (CPG)', 'Energy & Utilities', 'Professional Services', 'Telecom / Media', 'Other'
+      ]);
+      const prompt = 'You are a GCC market analyst at Pithonix, scanning the open web RIGHT NOW for companies that are probable leads to set up a '+
+        'Global Capability Centre (GCC) in India, with a bias toward Telangana/Hyderabad signals. Use real, current web search results. Do not invent companies or sources.\n\n'+
+        'Look specifically for these signal types:\n'+
+        '1. senior_hiring_post — a company with little/no India footprint posting senior roles like "Country Head India GCC", "VP Global Capability Center", "India GCC Site Leader"\n'+
+        '2. leasing_report — commercial real estate (CBRE, Cushman & Wakefield, Knight Frank, JLL) reports naming or describing a large GCC-sector office lease in India\n'+
+        '3. earnings_call_mention — a company\'s recent earnings call or investor material mentioning India captive center / GBS expansion plans\n'+
+        '4. government_pipeline_listed — companies named in Telangana / Invest Telangana / TS-iPASS announcements as inbound or in-progress\n'+
+        '5. conference_signal — a company speaking at or sponsoring a GCC-relevant conference (BioAsia, Nasscom GCC Summit) signaling India intent\n'+
+        '6. news_article — any other credible news coverage of a company evaluating or announcing an India GCC\n\n'+
+        'Return ONLY valid JSON: {"candidates":[{"company_name":"exact name, or a clear placeholder like \\"Unnamed European Aerospace Firm\\" if anonymized in the source",'+
+        '"industry":"one of: '+industryOptions.join(' | ')+'","country":"HQ country if known","signal_type":"one of: senior_hiring_post | leasing_report | earnings_call_mention | government_pipeline_listed | conference_signal | news_article",'+
+        '"named_explicitly":true_or_false,"recency_days":approximate_days_since_signal_as_number,"source_count":number_of_independent_sources_seen,'+
+        '"evidence":"1-2 sentence description of what was actually found, citing the source name","source_urls":["url1","url2"]}]}\n\n'+
+        'Only include candidates you found real evidence for. Return an empty candidates array if nothing credible was found. Limit to at most 8 candidates.';
+      let text;
+      try { text = await callGemini(prompt, true); }
+      catch (e) { res.status(502).json({ error: 'Discovery failed: ' + e.message }); return; }
+      const m = text.match(/\{[\s\S]*\}/);
+      let parsed;
+      try { parsed = m ? JSON.parse(m[0]) : null; } catch { parsed = null; }
+      if (!parsed || !Array.isArray(parsed.candidates)) { res.status(502).json({ error: 'Could not parse discovery output' }); return; }
+
+      const existing = await client.query('SELECT LOWER(company_name) AS n FROM gcc_admin_leads');
+      const existingNames = new Set(existing.rows.map(r => r.n));
+
+      const inserted = [];
+      for (const c of parsed.candidates) {
+        if (!c.company_name || existingNames.has(c.company_name.toLowerCase())) continue;
+        existingNames.add(c.company_name.toLowerCase());
+        const factors = scoreSignal(c);
+        const r = await client.query(
+          `INSERT INTO gcc_admin_leads (company_name, industry, country, source_notes, status, probability_score, signal_factors, source_urls, created_by)
+           VALUES ($1,$2,$3,$4,'Detected',$5,$6,$7,$8) RETURNING *`,
+          [c.company_name, c.industry || null, c.country || null, (c.evidence || '') + ' [' + (c.signal_type || 'other') + ']',
+           factors.total, JSON.stringify(factors), (c.source_urls || []).join(', '), session.email]
+        );
+        inserted.push(r.rows[0]);
+      }
+      return res.status(200).json({ inserted, scanned: parsed.candidates.length });
     }
 
     if (action === 'run_simulation') {

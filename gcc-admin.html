@@ -74,6 +74,13 @@
       <button onclick="saveLead()">Add Lead</button>
     </div>
 
+    <div class="card">
+      <div class="section-title">Auto-Discover Leads</div>
+      <p class="sub" style="margin-bottom:1rem">Scans the open web for hiring posts, leasing reports, earnings call mentions, government pipeline listings, conference signals, and news, then scores each find against visible factors (signal type, named explicitly, recency, source count). On-demand only, nothing runs in the background.</p>
+      <button id="btn-scan" onclick="scanNow()">Scan Now</button>
+      <span id="scan-status" style="margin-left:0.8rem;font-size:0.85rem;color:#94a3b8"></span>
+    </div>
+
     <div class="section-title">Leads<span style="font-size:0.8rem;color:#64748b;font-weight:500" id="lead-count"></span></div>
     <div id="leads-wrap"></div>
   </div>
@@ -135,17 +142,21 @@ function renderLeads(){
   wrap.innerHTML=leads.map(function(l){
     var badgeCls=l.blueprint_json?'simulated':l.research_summary?'researched':'new';
     var badgeTxt=l.blueprint_json?'Simulated':l.research_summary?'Researched':'New';
+    var scoreColor=l.probability_score>=70?'#86efac':l.probability_score>=40?'#fde68a':'#fca5a5';
     return '<div class="card" style="margin-bottom:1rem">'+
       '<div style="display:flex;justify-content:space-between;align-items:flex-start"><div>'+
       '<strong style="font-size:1.05rem">'+esc(l.company_name)+'</strong> '+
-      '<span class="badge '+badgeCls+'">'+badgeTxt+'</span><br>'+
-      '<span style="color:#64748b;font-size:0.8rem">'+esc(l.industry||'—')+' · '+esc(l.country||'—')+' · added by '+esc(l.created_by||'—')+'</span>'+
+      '<span class="badge '+badgeCls+'">'+badgeTxt+'</span> '+
+      (typeof l.probability_score==='number'?'<span class="badge" style="background:rgba(255,255,255,0.06);color:'+scoreColor+'">'+l.probability_score+'% probability</span>':'')+
+      '<br><span style="color:#64748b;font-size:0.8rem">'+esc(l.industry||'—')+' · '+esc(l.country||'—')+' · added by '+esc(l.created_by||'—')+'</span>'+
       '</div><div class="lead-actions">'+
       '<button class="secondary" onclick="runResearch('+l.id+')">'+(l.research_summary?'Re-Research':'Research')+'</button>'+
       '<button onclick="runSim('+l.id+')" '+(l.industry?'':'disabled title="Run Research first"')+'>Run Simulation</button>'+
       '<button class="danger" onclick="delLead('+l.id+')">Delete</button>'+
       '</div></div>'+
       (l.source_notes?'<div class="detail" style="margin-top:0.8rem"><strong>Source:</strong> '+esc(l.source_notes)+'</div>':'')+
+      (l.signal_factors?renderSignalFactors(l.signal_factors):'')+
+      (l.source_urls?'<div class="detail"><strong>Sources:</strong> '+esc(l.source_urls)+'</div>':'')+
       (l.research_summary?renderResearchedFields(l):'')+
       (l.research_summary?'<div class="detail"><strong>Research Brief:</strong>\n'+esc(l.research_summary)+'</div>':'')+
       (l.blueprint_json?renderBlueprintBlock(l.blueprint_json):'')+
@@ -175,6 +186,15 @@ function renderResearchedFields(l){
   '</div>';
 }
 
+function renderSignalFactors(sf){
+  if(typeof sf==='string'){try{sf=JSON.parse(sf);}catch(e){return'';}}
+  return '<div class="detail"><strong>Score Breakdown ('+sf.total+'%):</strong>\n'+
+    'Signal type: '+sf.signal_type+' (+'+sf.signal_type_points+')\n'+
+    'Named explicitly: '+(sf.named_explicitly?'Yes':'No')+' (+'+sf.named_explicitly_points+')\n'+
+    'Recency: ~'+sf.recency_days+' days ago (+'+sf.recency_points+')\n'+
+    'Independent sources: '+sf.source_count+' (+'+sf.source_count_points+')</div>';
+}
+
 function renderBlueprintBlock(bp){
   if(typeof bp==='string'){try{bp=JSON.parse(bp);}catch(e){return'';}}
   var zone=bp.designated_zone?bp.designated_zone.name+' ('+bp.designated_zone.type+') — '+bp.designated_zone.benefit:'No designated zone match — generic city-tier model used';
@@ -188,6 +208,19 @@ function renderBlueprintBlock(bp){
 }
 
 function esc(s){return (s||'').replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+
+async function scanNow(){
+  document.getElementById('btn-scan').disabled=true;
+  document.getElementById('scan-status').textContent='Scanning the web, this can take 20-40 seconds...';
+  try{
+    var r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','X-Admin-Token':token},body:JSON.stringify({action:'discover'})});
+    var d=await r.json();
+    if(!r.ok)throw new Error(d.error||'Scan failed');
+    document.getElementById('scan-status').textContent=d.scanned+' candidate(s) found, '+d.inserted.length+' new (duplicates skipped).';
+    loadLeads();
+  }catch(e){document.getElementById('scan-status').textContent='Error: '+e.message;}
+  document.getElementById('btn-scan').disabled=false;
+}
 
 async function saveLead(){
   var fields={

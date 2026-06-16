@@ -14,6 +14,9 @@ CREATE TABLE IF NOT EXISTS gcc_admin_leads (
   blueprint_json JSONB,
   status TEXT DEFAULT 'New',
   created_by TEXT,
+  probability_score INT,
+  signal_factors JSONB,
+  source_urls TEXT,
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW()
 );
