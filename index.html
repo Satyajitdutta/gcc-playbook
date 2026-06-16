@@ -941,12 +941,6 @@ section{transition:opacity 0.01s}
 </head>
 <body>
 
-<!-- MAINTENANCE BANNER — remove once API is restored -->
-<div id="maintenance-banner" style="position:sticky;top:0;left:0;right:0;z-index:9999;background:linear-gradient(90deg,#7a3800,#b85000);color:#fff;font-family:'Outfit',sans-serif;font-size:0.85rem;font-weight:500;padding:0.7rem 1.5rem;display:flex;align-items:center;justify-content:center;gap:0.75rem;text-align:center;box-shadow:0 2px 16px rgba(0,0,0,0.5)">
-  <span style="font-size:1.1rem">🔧</span>
-  <span><strong>Site under maintenance.</strong> Our AI backend is being updated. The GCC Blueprint Simulator and City Intelligence are temporarily unavailable. All other content is live. We will be back shortly.</span>
-  <button onclick="document.getElementById('maintenance-banner').style.display='none'" style="background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);color:#fff;border-radius:5px;padding:0.2rem 0.7rem;cursor:pointer;font-size:0.8rem;flex-shrink:0;margin-left:0.5rem">✕</button>
-</div>
 <canvas id="bg-canvas"></canvas>
 
 <!-- GOT ADVISOR WIDGET -->
@@ -1710,11 +1704,6 @@ if(document.readyState==="loading"){
         </div>
         <button class="sim-gate-btn" onclick="startSimulator()">Start — Build My Blueprint →</button>
         <div class="sim-gate-note" style="margin-top:1rem">Your data stays private. No spam.</div>
-        <!-- MAINTENANCE NOTICE — remove once API is restored -->
-        <div style="margin-top:1.5rem;background:rgba(184,80,0,0.12);border:1px solid rgba(184,80,0,0.4);border-radius:10px;padding:0.85rem 1.2rem;max-width:440px;display:flex;gap:0.6rem;align-items:flex-start">
-          <span style="font-size:1rem;flex-shrink:0">⚠️</span>
-          <div style="font-size:0.8rem;color:var(--tmed);line-height:1.6;text-align:left"><strong style="color:#e8a060">Simulator temporarily offline.</strong> Our AI backend is under maintenance due to an API update. Blueprint generation is paused. You can still explore all other sections. We will notify you once the simulator is back up. <a href="#contact" style="color:var(--teal)">Contact us</a> if you need a blueprint urgently.</div>
-        </div>
       </div>
 
       <!-- Progress bar (shown after gate) -->
