@@ -872,8 +872,9 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
   /* Visibility approach: hide everything, then reveal only the blueprint */
   *{visibility:hidden!important}
   .sim-output,.sim-output *{visibility:visible!important}
-  /* Position blueprint at top of page */
-  .sim-output{position:fixed!important;top:0!important;left:0!important;right:0!important;bottom:0!important;overflow:visible!important;padding:1.5cm!important;box-shadow:none!important}
+  /* Let blueprint flow naturally across pages — position:fixed clips to one viewport height and prints blank pages */
+  .sim-output{position:static!important;overflow:visible!important;height:auto!important;max-height:none!important;padding:0!important;margin:0!important;box-shadow:none!important}
+  html,body{height:auto!important;overflow:visible!important}
   /* Remove gate blur and hide the lock overlay */
   .bp-gated.locked>*{filter:none!important}
   .bp-unlock-overlay{display:none!important;visibility:hidden!important}
