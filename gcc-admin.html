@@ -214,7 +214,8 @@ async function scanNow(){
   document.getElementById('scan-status').textContent='Scanning the web, this can take 20-40 seconds...';
   try{
     var r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','X-Admin-Token':token},body:JSON.stringify({action:'discover'})});
-    var d=await r.json();
+    var raw=await r.text();
+    var d; try{d=JSON.parse(raw);}catch(e){throw new Error(r.status===504||/timeout/i.test(raw)?'Scan timed out, try again (fewer candidates next attempt)':'Scan failed: server returned a non-JSON error');}
     if(!r.ok)throw new Error(d.error||'Scan failed');
     document.getElementById('scan-status').textContent=d.scanned+' candidate(s) found, '+d.inserted.length+' new (duplicates skipped).';
     loadLeads();

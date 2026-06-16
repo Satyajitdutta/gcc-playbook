@@ -299,19 +299,17 @@ export default async function handler(req, res) {
       const industryOptions = Object.keys(ZONE_MAP).concat([
         'Retail / E-Commerce', 'Consumer Packaged Goods (CPG)', 'Energy & Utilities', 'Professional Services', 'Telecom / Media', 'Other'
       ]);
-      const signalList = Object.keys(SIGNAL_CLUSTERS).filter(s => s !== 'other')
-        .map(s => s + ' (' + SIGNAL_CLUSTERS[s] + ')').join(', ');
+      const signalList = Object.keys(SIGNAL_CLUSTERS).filter(s => s !== 'other').join(', ');
       const prompt = 'You are a GCC market analyst at Pithonix, scanning the open web RIGHT NOW for companies that are probable leads to set up a '+
-        'Global Capability Centre (GCC) in India, with a bias toward Telangana/Hyderabad signals. Use real, current web search results. Do not invent companies or sources.\n\n'+
-        'There are 25 possible signal types across 7 clusters (talent, real_estate, financial, government, industry, media, digital): '+signalList+'.\n'+
-        'For each company you find, report EVERY distinct signal you found evidence for, not just one — a company with both a senior_hiring_post AND a leasing_report '+
-        'is a much stronger lead than one with a single news_article, because the signals corroborate each other across independent categories.\n\n'+
-        'Return ONLY valid JSON: {"candidates":[{"company_name":"exact name, or a clear placeholder like \\"Unnamed European Aerospace Firm\\" if anonymized in the source",'+
+        'Global Capability Centre (GCC) in India, with a bias toward Telangana/Hyderabad signals. Use real, current web search results. Do not invent companies or sources. Be fast and concise.\n\n'+
+        'Possible signal types (7 clusters: talent, real_estate, financial, government, industry, media, digital): '+signalList+'.\n'+
+        'For each company, report every distinct signal type you found real evidence for — a company with 2 signals from different clusters is a stronger lead than one with a single news_article.\n\n'+
+        'Return ONLY valid JSON, no markdown: {"candidates":[{"company_name":"exact name, or a placeholder like \\"Unnamed European Aerospace Firm\\" if anonymized in the source",'+
         '"industry":"one of: '+industryOptions.join(' | ')+'","country":"HQ country if known",'+
-        '"signals":[{"signal_type":"one of the 25 signal types above","named_explicitly":true_or_false,"recency_days":approximate_days_since_signal_as_number,'+
-        '"source_count":number_of_independent_sources_seen,"evidence":"1-2 sentence description of what was actually found, citing the source name"}],'+
-        '"source_urls":["url1","url2"]}]}\n\n'+
-        'Only include candidates and signals you found real evidence for. Return an empty candidates array if nothing credible was found. Limit to at most 8 candidates.';
+        '"signals":[{"signal_type":"one of the types above","named_explicitly":true_or_false,"recency_days":number,'+
+        '"source_count":number,"evidence":"1 short sentence, citing the source"}],'+
+        '"source_urls":["url1"]}]}\n\n'+
+        'Only include candidates and signals you found real evidence for. Return an empty candidates array if nothing credible was found. Limit to at most 4 candidates, max 3 signals each, to keep this fast.';
       let text;
       try { text = await callGemini(prompt, true); }
       catch (e) { res.status(502).json({ error: 'Discovery failed: ' + e.message }); return; }
