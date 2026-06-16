@@ -3405,6 +3405,7 @@ function unlockBlueprint(){
   if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){emailEl.classList.add('err');emailEl.focus();return;}
   simData.contactName=name;
   simData.contactEmail=email;
+  var sy=window.scrollY;
   // Remove gate + blur
   var gated=document.getElementById('bp-gated');
   if(gated)gated.classList.remove('locked');
@@ -3413,6 +3414,7 @@ function unlockBlueprint(){
   // Show restart row
   var row=document.getElementById('bp-restart-row');
   if(row)row.style.display='flex';
+  requestAnimationFrame(function(){window.scrollTo({top:sy,behavior:'instant'});});
   // Fire enriched lead
   try{
     fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
