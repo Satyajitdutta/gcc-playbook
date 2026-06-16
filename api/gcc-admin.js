@@ -9,6 +9,8 @@
 // POST { action: 'research', id } + X-Admin-Token          — AI research pass on a lead
 // POST { action: 'run_simulation', id } + X-Admin-Token    — zone-aware tentative blueprint
 // POST { action: 'delete_lead', id } + X-Admin-Token       — remove a lead
+// POST { action: 'archive_leads', ids:[...] } + X-Admin-Token   — manually archive selected leads
+// POST { action: 'unarchive_leads', ids:[...] } + X-Admin-Token — bring selected leads back to active
 
 import { Resend } from 'resend';
 import https from 'https';
@@ -266,6 +268,20 @@ export default async function handler(req, res) {
     if (action === 'delete_lead') {
       await client.query('DELETE FROM gcc_admin_leads WHERE id=$1', [body.id]);
       return res.status(200).json({ success: true });
+    }
+
+    if (action === 'archive_leads') {
+      const ids = Array.isArray(body.ids) ? body.ids.map(Number).filter(Boolean) : [];
+      if (ids.length === 0) { res.status(400).json({ error: 'No leads selected' }); return; }
+      await client.query(`UPDATE gcc_admin_leads SET status='Archived', updated_at=NOW() WHERE id = ANY($1::int[])`, [ids]);
+      return res.status(200).json({ success: true, archived: ids.length });
+    }
+
+    if (action === 'unarchive_leads') {
+      const ids = Array.isArray(body.ids) ? body.ids.map(Number).filter(Boolean) : [];
+      if (ids.length === 0) { res.status(400).json({ error: 'No leads selected' }); return; }
+      await client.query(`UPDATE gcc_admin_leads SET status='Detected', updated_at=NOW() WHERE id = ANY($1::int[])`, [ids]);
+      return res.status(200).json({ success: true, unarchived: ids.length });
     }
 
     if (action === 'research') {

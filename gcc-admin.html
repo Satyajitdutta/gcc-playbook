@@ -81,9 +81,12 @@
       <span id="scan-status" style="margin-left:0.8rem;font-size:0.85rem;color:#94a3b8"></span>
     </div>
 
-    <div class="section-title" style="display:flex;justify-content:space-between;align-items:center">
+    <div class="section-title" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.6rem">
       <span>Leads <span style="font-size:0.85rem;color:#22c55e;font-weight:700;background:rgba(34,197,94,0.12);border-radius:6px;padding:0.15rem 0.55rem" id="lead-count"></span></span>
-      <button id="btn-archived-toggle" class="secondary" style="font-size:0.78rem;padding:0.45rem 0.9rem" onclick="toggleArchived()" title="Leads are auto-archived every Monday after the pipeline report email goes out">View Archived Leads</button>
+      <div style="display:flex;gap:0.6rem;align-items:center">
+        <button id="btn-bulk-archive" class="secondary" style="font-size:0.78rem;padding:0.45rem 0.9rem;display:none" onclick="bulkArchiveToggle()">Archive Selected</button>
+        <button id="btn-archived-toggle" class="secondary" style="font-size:0.78rem;padding:0.45rem 0.9rem" onclick="toggleArchived()" title="Leads are auto-archived every Monday after the pipeline report email goes out, or manually using the checkboxes below">View Archived Leads</button>
+      </div>
     </div>
     <div id="leads-wrap"></div>
   </div>
@@ -131,9 +134,31 @@ function enterDash(){
 }
 
 var showArchived=false;
+var selectedIds=new Set();
+
 function toggleArchived(){
   showArchived=!showArchived;
+  selectedIds.clear();
   document.getElementById('btn-archived-toggle').textContent=showArchived?'View Active Leads':'View Archived Leads';
+  document.getElementById('btn-bulk-archive').textContent='Archive Selected';
+  loadLeads();
+}
+
+function toggleSelect(id,checked){
+  if(checked)selectedIds.add(id);else selectedIds.delete(id);
+  var btn=document.getElementById('btn-bulk-archive');
+  btn.style.display=selectedIds.size>0?'inline-block':'none';
+  btn.textContent=(showArchived?'Unarchive Selected (':'Archive Selected (')+selectedIds.size+')';
+}
+
+async function bulkArchiveToggle(){
+  if(selectedIds.size===0)return;
+  var ids=Array.from(selectedIds);
+  var r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','X-Admin-Token':token},
+    body:JSON.stringify({action:showArchived?'unarchive_leads':'archive_leads',ids:ids})});
+  if(!r.ok){alert('Action failed');return;}
+  selectedIds.clear();
+  document.getElementById('btn-bulk-archive').style.display='none';
   loadLeads();
 }
 
@@ -141,25 +166,27 @@ async function loadLeads(){
   var r=await fetch(API+(showArchived?'?archived=1':''),{headers:{'X-Admin-Token':token}});
   if(r.status===401){localStorage.removeItem('gcc_admin_token');location.reload();return;}
   var d=await r.json();
-  leads=d.leads||[];
+  leads=showArchived?(d.leads||[]).filter(function(l){return l.status==='Archived';}):d.leads||[];
   renderLeads();
 }
 
 function renderLeads(){
   document.getElementById('lead-count').textContent=leads.length+' Total';
   var wrap=document.getElementById('leads-wrap');
-  if(leads.length===0){wrap.innerHTML='<p class="sub">No leads yet. Add one above.</p>';return;}
+  if(leads.length===0){wrap.innerHTML='<p class="sub">'+(showArchived?'No archived leads.':'No leads yet. Add one above.')+'</p>';return;}
   wrap.innerHTML=leads.map(function(l){
     var badgeCls=l.blueprint_json?'simulated':l.research_summary?'researched':'new';
     var badgeTxt=l.blueprint_json?'Simulated':l.research_summary?'Researched':'New';
     var scoreColor=l.probability_score>=70?'#86efac':l.probability_score>=40?'#fde68a':'#fca5a5';
     return '<div class="card" style="margin-bottom:1rem">'+
-      '<div style="display:flex;justify-content:space-between;align-items:flex-start"><div>'+
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start"><div style="display:flex;align-items:flex-start;gap:0.6rem">'+
+      '<input type="checkbox" style="margin-top:0.3rem" onchange="toggleSelect('+l.id+',this.checked)" '+(selectedIds.has(l.id)?'checked':'')+'>'+
+      '<div>'+
       '<strong style="font-size:1.05rem">'+esc(l.company_name)+'</strong> '+
       '<span class="badge '+badgeCls+'">'+badgeTxt+'</span> '+
       (typeof l.probability_score==='number'?'<span class="badge" style="background:rgba(255,255,255,0.06);color:'+scoreColor+'">'+l.probability_score+'% probability</span>':'')+
       '<br><span style="color:#64748b;font-size:0.8rem">'+esc(l.industry||'—')+' · '+esc(l.country||'—')+' · added by '+esc(l.created_by||'—')+'</span>'+
-      '</div><div class="lead-actions">'+
+      '</div></div><div class="lead-actions">'+
       '<button class="secondary" onclick="runResearch('+l.id+')">'+(l.research_summary?'Re-Research':'Research')+'</button>'+
       '<button onclick="runSim('+l.id+')" '+(l.industry?'':'disabled title="Run Research first"')+'>Run Simulation</button>'+
       '<button class="danger" onclick="delLead('+l.id+')">Delete</button>'+
