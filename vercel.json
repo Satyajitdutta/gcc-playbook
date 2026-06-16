@@ -10,12 +10,17 @@
     "api/partner-portal.js": { "maxDuration": 30 },
     "api/weekly-digest.js": { "maxDuration": 30 },
     "api/llms.js": { "maxDuration": 5 },
-    "api/gcc-admin.js": { "maxDuration": 60 }
+    "api/gcc-admin.js": { "maxDuration": 60 },
+    "api/gcc-weekly-report.js": { "maxDuration": 30 }
   },
   "crons": [
     {
       "path": "/api/weekly-digest",
       "schedule": "0 4 * * 1"
+    },
+    {
+      "path": "/api/gcc-weekly-report",
+      "schedule": "30 4 * * 1"
     }
   ],
   "rewrites": [

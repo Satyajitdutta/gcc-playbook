@@ -164,7 +164,10 @@ export default async function handler(req, res) {
     if (req.method === 'GET') {
       const session = await requireSession(client, req);
       if (!session) { res.status(401).json({ error: 'Unauthorized' }); return; }
-      const r = await client.query('SELECT * FROM gcc_admin_leads ORDER BY created_at DESC');
+      const showArchived = req.query && req.query.archived === '1';
+      const r = showArchived
+        ? await client.query('SELECT * FROM gcc_admin_leads ORDER BY updated_at DESC')
+        : await client.query("SELECT * FROM gcc_admin_leads WHERE status != 'Archived' ORDER BY created_at DESC");
       return res.status(200).json({ leads: r.rows });
     }
 

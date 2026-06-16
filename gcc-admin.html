@@ -81,7 +81,12 @@
       <span id="scan-status" style="margin-left:0.8rem;font-size:0.85rem;color:#94a3b8"></span>
     </div>
 
-    <div class="section-title">Leads<span style="font-size:0.8rem;color:#64748b;font-weight:500" id="lead-count"></span></div>
+    <div class="section-title" style="display:flex;justify-content:space-between;align-items:center">
+      <span>Leads<span style="font-size:0.8rem;color:#64748b;font-weight:500" id="lead-count"></span></span>
+      <label style="font-size:0.78rem;color:#94a3b8;font-weight:500;display:flex;align-items:center;gap:0.4rem;cursor:pointer">
+        <input type="checkbox" id="show-archived" onchange="loadLeads()"> Show archived (auto-archived after each Monday report)
+      </label>
+    </div>
     <div id="leads-wrap"></div>
   </div>
 </div>
@@ -128,7 +133,8 @@ function enterDash(){
 }
 
 async function loadLeads(){
-  var r=await fetch(API,{headers:{'X-Admin-Token':token}});
+  var showArchived=document.getElementById('show-archived')&&document.getElementById('show-archived').checked;
+  var r=await fetch(API+(showArchived?'?archived=1':''),{headers:{'X-Admin-Token':token}});
   if(r.status===401){localStorage.removeItem('gcc_admin_token');location.reload();return;}
   var d=await r.json();
   leads=d.leads||[];
