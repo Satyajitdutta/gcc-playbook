@@ -82,10 +82,8 @@
     </div>
 
     <div class="section-title" style="display:flex;justify-content:space-between;align-items:center">
-      <span>Leads<span style="font-size:0.8rem;color:#64748b;font-weight:500" id="lead-count"></span></span>
-      <label style="font-size:0.78rem;color:#94a3b8;font-weight:500;display:flex;align-items:center;gap:0.4rem;cursor:pointer">
-        <input type="checkbox" id="show-archived" onchange="loadLeads()"> Show archived (auto-archived after each Monday report)
-      </label>
+      <span>Leads <span style="font-size:0.85rem;color:#22c55e;font-weight:700;background:rgba(34,197,94,0.12);border-radius:6px;padding:0.15rem 0.55rem" id="lead-count"></span></span>
+      <button id="btn-archived-toggle" class="secondary" style="font-size:0.78rem;padding:0.45rem 0.9rem" onclick="toggleArchived()" title="Leads are auto-archived every Monday after the pipeline report email goes out">View Archived Leads</button>
     </div>
     <div id="leads-wrap"></div>
   </div>
@@ -132,8 +130,14 @@ function enterDash(){
   loadLeads();
 }
 
+var showArchived=false;
+function toggleArchived(){
+  showArchived=!showArchived;
+  document.getElementById('btn-archived-toggle').textContent=showArchived?'View Active Leads':'View Archived Leads';
+  loadLeads();
+}
+
 async function loadLeads(){
-  var showArchived=document.getElementById('show-archived')&&document.getElementById('show-archived').checked;
   var r=await fetch(API+(showArchived?'?archived=1':''),{headers:{'X-Admin-Token':token}});
   if(r.status===401){localStorage.removeItem('gcc_admin_token');location.reload();return;}
   var d=await r.json();
@@ -142,7 +146,7 @@ async function loadLeads(){
 }
 
 function renderLeads(){
-  document.getElementById('lead-count').textContent=leads.length+' total';
+  document.getElementById('lead-count').textContent=leads.length+' Total';
   var wrap=document.getElementById('leads-wrap');
   if(leads.length===0){wrap.innerHTML='<p class="sub">No leads yet. Add one above.</p>';return;}
   wrap.innerHTML=leads.map(function(l){
