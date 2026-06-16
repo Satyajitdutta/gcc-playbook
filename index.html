@@ -869,9 +869,18 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
 
 /* ── PRINT STYLES ── */
 @media print{
-  /* Visibility approach: hide everything, then reveal only the blueprint */
+  /* visibility:hidden alone keeps hidden elements in the layout flow (still reserve page height) —
+     that's what was causing blank leading pages. Use display:none on every sibling of the output
+     so they take zero space, and only fall back to the visibility trick inside .sim-output itself. */
+  body>*{display:none!important}
+  #simulator{display:block!important}
   *{visibility:hidden!important}
   .sim-output,.sim-output *{visibility:visible!important}
+  #sim-gate,.sim-progress-wrap,#sim-steps-tabs,#sim-loading,#pane1,#pane2,#pane3,
+  .section-label,.section-title,.section-sub{display:none!important}
+  #pane4{display:block!important}
+  .sim-wrap{overflow:visible!important;border:none!important;box-shadow:none!important;padding:0!important;background:#fff!important}
+  .sim-body{padding:0!important}
   /* Let blueprint flow naturally across pages — position:fixed clips to one viewport height and prints blank pages */
   .sim-output{position:static!important;overflow:visible!important;height:auto!important;max-height:none!important;padding:0!important;margin:0!important;box-shadow:none!important}
   html,body{height:auto!important;overflow:visible!important}
