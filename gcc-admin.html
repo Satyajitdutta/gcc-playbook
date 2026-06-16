@@ -36,7 +36,7 @@
   .badge.new{background:rgba(148,163,184,0.15);color:#cbd5e1}
   .badge.researched{background:rgba(59,130,246,0.15);color:#93c5fd}
   .badge.simulated{background:rgba(34,197,94,0.15);color:#86efac}
-  .detail{background:#0a0f1e;border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:1rem 1.2rem;margin-top:0.5rem;font-size:0.85rem;color:#cbd5e1;line-height:1.6;white-space:pre-wrap}
+  .detail{background:#0a0f1e;border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:1rem 1.2rem;margin-top:0.5rem;font-size:0.85rem;color:#cbd5e1;line-height:1.6;white-space:pre-wrap;word-break:break-word;overflow-wrap:anywhere}
   .section-title{font-size:1rem;font-weight:700;margin:2rem 0 0.8rem;display:flex;justify-content:space-between;align-items:center}
   a{color:#22c55e}
 </style>
@@ -162,7 +162,7 @@ function renderLeads(){
       '</div></div>'+
       (l.source_notes?'<div class="detail" style="margin-top:0.8rem"><strong>Source:</strong> '+esc(l.source_notes)+'</div>':'')+
       (l.signal_factors?renderSignalFactors(l.signal_factors):'')+
-      (l.source_urls?'<div class="detail"><strong>Sources:</strong> '+esc(l.source_urls)+'</div>':'')+
+      (l.source_urls?'<div class="detail"><strong>Sources:</strong> '+l.source_urls.split(',').map(function(u){u=u.trim();return u?'<a href="'+esc(u)+'" target="_blank" rel="noopener" style="color:#38bdf8;word-break:break-all">'+esc(u)+'</a>':'';}).filter(Boolean).join('<br>')+'</div>':'')+
       (l.research_summary?renderResearchedFields(l):'')+
       (l.research_summary?'<div class="detail"><strong>Research Brief:</strong>\n'+esc(l.research_summary)+'</div>':'')+
       (l.blueprint_json?renderBlueprintBlock(l.blueprint_json):'')+
@@ -194,11 +194,21 @@ function renderResearchedFields(l){
 
 function renderSignalFactors(sf){
   if(typeof sf==='string'){try{sf=JSON.parse(sf);}catch(e){return'';}}
+  if(Array.isArray(sf.signal_detail)){
+    var sigLines=sf.signal_detail.map(function(d){return '  • '+d.signal_type+' ['+d.cluster+'] (+'+d.points+')';}).join('\n');
+    return '<div class="detail"><strong>Score Breakdown ('+sf.total+'%):</strong>\n'+
+      'Signals found ('+sf.signals_used+'):\n'+sigLines+'\n'+
+      'Cross-cluster corroboration: '+sf.clusters_used.join(', ')+' (+'+sf.cluster_diversity_points+')\n'+
+      'Named explicitly: '+(sf.named_explicitly?'Yes':'No')+' (+'+sf.named_explicitly_points+')\n'+
+      'Recency: ~'+sf.recency_days+' days ago (+'+sf.recency_points+')\n'+
+      'Independent sources: '+sf.source_count+' (+'+sf.source_count_points+')</div>';
+  }
+  // legacy single-signal shape from leads scored before the 25-signal model
   return '<div class="detail"><strong>Score Breakdown ('+sf.total+'%):</strong>\n'+
-    'Signal type: '+sf.signal_type+' (+'+sf.signal_type_points+')\n'+
-    'Named explicitly: '+(sf.named_explicitly?'Yes':'No')+' (+'+sf.named_explicitly_points+')\n'+
-    'Recency: ~'+sf.recency_days+' days ago (+'+sf.recency_points+')\n'+
-    'Independent sources: '+sf.source_count+' (+'+sf.source_count_points+')</div>';
+    'Signal type: '+(sf.signal_type||'—')+' (+'+(sf.signal_type_points||0)+')\n'+
+    'Named explicitly: '+(sf.named_explicitly?'Yes':'No')+' (+'+(sf.named_explicitly_points||0)+')\n'+
+    'Recency: ~'+sf.recency_days+' days ago (+'+(sf.recency_points||0)+')\n'+
+    'Independent sources: '+sf.source_count+' (+'+(sf.source_count_points||0)+')</div>';
 }
 
 function renderBlueprintBlock(bp){
