@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GCC Lead Admin — Pithonix</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{font-family:'DM Sans',Arial,sans-serif;background:#0a0f1e;color:#f1f5f9;margin:0;min-height:100vh}
+  .wrap{max-width:1100px;margin:0 auto;padding:2.5rem 1.5rem}
+  .brand{display:flex;align-items:center;gap:0.6rem;margin-bottom:2rem;font-weight:700}
+  .brand img{height:28px}
+  .brand span{color:#64748b;font-size:0.85rem;font-weight:500}
+  h1{font-size:1.5rem;margin:0 0 0.4rem}
+  .sub{color:#94a3b8;font-size:0.9rem;margin-bottom:2rem}
+  .card{background:#0d1426;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:2rem}
+  input,select,textarea{width:100%;background:#0a0f1e;border:1px solid rgba(255,255,255,0.12);color:#f1f5f9;padding:0.65rem 0.8rem;border-radius:8px;font-size:0.9rem;font-family:inherit}
+  label{display:block;font-size:0.78rem;color:#94a3b8;margin:0 0 0.3rem;font-weight:600}
+  .field{margin-bottom:1rem}
+  .row{display:flex;gap:1rem;flex-wrap:wrap}
+  .row .field{flex:1;min-width:180px}
+  button{background:#22c55e;color:#06150c;border:none;padding:0.65rem 1.3rem;border-radius:8px;font-weight:700;font-size:0.88rem;cursor:pointer}
+  button.secondary{background:#0f172a;color:#f1f5f9;border:1px solid rgba(255,255,255,0.15)}
+  button.danger{background:rgba(239,68,68,0.15);color:#fca5a5;border:1px solid rgba(239,68,68,0.4)}
+  button:disabled{opacity:0.5;cursor:not-allowed}
+  #login-card{max-width:400px;margin:4rem auto}
+  #err{color:#fca5a5;font-size:0.85rem;margin-top:0.6rem;min-height:1em}
+  #dash{display:none}
+  table{width:100%;border-collapse:collapse;font-size:0.85rem;margin-top:1.5rem}
+  th,td{text-align:left;padding:0.65rem 0.7rem;border-bottom:1px solid rgba(255,255,255,0.07)}
+  th{color:#64748b;font-weight:600;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.04em}
+  .lead-actions{display:flex;gap:0.4rem;flex-wrap:wrap}
+  .lead-actions button{padding:0.35rem 0.7rem;font-size:0.78rem}
+  .badge{display:inline-block;padding:0.15rem 0.55rem;border-radius:5px;font-size:0.72rem;font-weight:700}
+  .badge.new{background:rgba(148,163,184,0.15);color:#cbd5e1}
+  .badge.researched{background:rgba(59,130,246,0.15);color:#93c5fd}
+  .badge.simulated{background:rgba(34,197,94,0.15);color:#86efac}
+  .detail{background:#0a0f1e;border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:1rem 1.2rem;margin-top:0.5rem;font-size:0.85rem;color:#cbd5e1;line-height:1.6;white-space:pre-wrap}
+  .section-title{font-size:1rem;font-weight:700;margin:2rem 0 0.8rem;display:flex;justify-content:space-between;align-items:center}
+  a{color:#22c55e}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand"><img src="/logo.png" alt="Pithonix"><span>GCC LEAD ADMIN · INTERNAL ONLY</span></div>
+
+  <div id="login-card" class="card">
+    <h1>Sign in</h1>
+    <p class="sub">Restricted to @pithonix.ai accounts.</p>
+    <div class="field"><label>Email</label><input id="login-email" type="email" placeholder="you@pithonix.ai"></div>
+    <button id="btn-send" onclick="sendOtp()">Send Code</button>
+    <div id="otp-block" style="display:none;margin-top:1rem">
+      <div class="field"><label>6-digit code</label><input id="login-otp" maxlength="6"></div>
+      <button id="btn-verify" onclick="verifyOtp()">Verify & Sign In</button>
+    </div>
+    <div id="err"></div>
+  </div>
+
+  <div id="dash">
+    <h1>GCC Lead Identification</h1>
+    <p class="sub">Internal pattern-analysis pipeline. Identify a probable lead, research its likely setup approach, then run a tentative zone-aware blueprint to share with government partners.</p>
+
+    <div class="card">
+      <div class="section-title">Add a Lead</div>
+      <p class="sub" style="margin-bottom:1rem">Just the name and the signal that flagged it. Industry, country, functions, FTE, timeline and priority are filled in by the Research step below, not guessed by hand.</p>
+      <div class="row">
+        <div class="field" style="flex:1"><label>Company Name</label><input id="f-company" placeholder="e.g. Lonza Group"></div>
+        <div class="field" style="flex:2"><label>Source / Signal Notes</label><input id="f-notes" placeholder="e.g. senior India hiring post seen on LinkedIn, June 2026"></div>
+      </div>
+      <button onclick="saveLead()">Add Lead</button>
+    </div>
+
+    <div class="section-title">Leads<span style="font-size:0.8rem;color:#64748b;font-weight:500" id="lead-count"></span></div>
+    <div id="leads-wrap"></div>
+  </div>
+</div>
+
+<script>
+var API='/api/gcc-admin';
+var token=localStorage.getItem('gcc_admin_token')||'';
+var leads=[];
+
+function showErr(msg){document.getElementById('err').textContent=msg||'';}
+
+async function sendOtp(){
+  showErr('');
+  var email=document.getElementById('login-email').value.trim();
+  if(!email.endsWith('@pithonix.ai')){showErr('Use your @pithonix.ai email.');return;}
+  document.getElementById('btn-send').disabled=true;
+  try{
+    var r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'send',email:email})});
+    var d=await r.json();
+    if(!r.ok)throw new Error(d.error||'Failed to send code');
+    document.getElementById('otp-block').style.display='block';
+  }catch(e){showErr(e.message);}
+  document.getElementById('btn-send').disabled=false;
+}
+
+async function verifyOtp(){
+  showErr('');
+  var email=document.getElementById('login-email').value.trim();
+  var otp=document.getElementById('login-otp').value.trim();
+  try{
+    var r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'verify',email:email,otp:otp})});
+    var d=await r.json();
+    if(!r.ok)throw new Error(d.error||'Invalid code');
+    token=d.token;
+    localStorage.setItem('gcc_admin_token',token);
+    enterDash();
+  }catch(e){showErr(e.message);}
+}
+
+function enterDash(){
+  document.getElementById('login-card').style.display='none';
+  document.getElementById('dash').style.display='block';
+  loadLeads();
+}
+
+async function loadLeads(){
+  var r=await fetch(API,{headers:{'X-Admin-Token':token}});
+  if(r.status===401){localStorage.removeItem('gcc_admin_token');location.reload();return;}
+  var d=await r.json();
+  leads=d.leads||[];
+  renderLeads();
+}
+
+function renderLeads(){
+  document.getElementById('lead-count').textContent=leads.length+' total';
+  var wrap=document.getElementById('leads-wrap');
+  if(leads.length===0){wrap.innerHTML='<p class="sub">No leads yet. Add one above.</p>';return;}
+  wrap.innerHTML=leads.map(function(l){
+    var badgeCls=l.blueprint_json?'simulated':l.research_summary?'researched':'new';
+    var badgeTxt=l.blueprint_json?'Simulated':l.research_summary?'Researched':'New';
+    return '<div class="card" style="margin-bottom:1rem">'+
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start"><div>'+
+      '<strong style="font-size:1.05rem">'+esc(l.company_name)+'</strong> '+
+      '<span class="badge '+badgeCls+'">'+badgeTxt+'</span><br>'+
+      '<span style="color:#64748b;font-size:0.8rem">'+esc(l.industry||'—')+' · '+esc(l.country||'—')+' · added by '+esc(l.created_by||'—')+'</span>'+
+      '</div><div class="lead-actions">'+
+      '<button class="secondary" onclick="runResearch('+l.id+')">'+(l.research_summary?'Re-Research':'Research')+'</button>'+
+      '<button onclick="runSim('+l.id+')" '+(l.industry?'':'disabled title="Run Research first"')+'>Run Simulation</button>'+
+      '<button class="danger" onclick="delLead('+l.id+')">Delete</button>'+
+      '</div></div>'+
+      (l.source_notes?'<div class="detail" style="margin-top:0.8rem"><strong>Source:</strong> '+esc(l.source_notes)+'</div>':'')+
+      (l.research_summary?renderResearchedFields(l):'')+
+      (l.research_summary?'<div class="detail"><strong>Research Brief:</strong>\n'+esc(l.research_summary)+'</div>':'')+
+      (l.blueprint_json?renderBlueprintBlock(l.blueprint_json):'')+
+      '</div>';
+  }).join('');
+}
+
+var INDUSTRY_OPTS=['BFSI (Banking, Financial Services, Insurance)','Technology / SaaS','Healthcare & Life Sciences','Retail / E-Commerce','Automotive / Manufacturing','Consumer Packaged Goods (CPG)','Energy & Utilities','Professional Services','Telecom / Media','Other'];
+
+function renderResearchedFields(l){
+  var id=l.id;
+  var opts=INDUSTRY_OPTS.map(function(o){return '<option'+(o===l.industry?' selected':'')+'>'+o+'</option>';}).join('');
+  return '<div class="detail" style="margin-top:0.8rem"><strong>Researched Fields (review and override before running the simulation):</strong>'+
+    '<div class="row" style="margin-top:0.6rem">'+
+      '<div class="field"><label>Industry</label><select id="edit-industry-'+id+'">'+opts+'</select></div>'+
+      '<div class="field"><label>HQ Country</label><input id="edit-country-'+id+'" value="'+esc(l.country)+'"></div>'+
+    '</div>'+
+    '<div class="row">'+
+      '<div class="field" style="flex:2"><label>Functions Needed</label><input id="edit-functions-'+id+'" value="'+esc(l.functions_needed)+'"></div>'+
+      '<div class="field"><label>Year 1 FTE</label><input id="edit-fte-'+id+'" value="'+esc(l.year1_fte)+'"></div>'+
+    '</div>'+
+    '<div class="row">'+
+      '<div class="field"><label>Timeline</label><input id="edit-timeline-'+id+'" value="'+esc(l.timeline)+'"></div>'+
+      '<div class="field"><label>Top Priority</label><input id="edit-priority-'+id+'" value="'+esc(l.top_priority)+'"></div>'+
+    '</div>'+
+    '<button class="secondary" onclick="saveLeadFields('+id+')">Save Overrides</button>'+
+  '</div>';
+}
+
+function renderBlueprintBlock(bp){
+  if(typeof bp==='string'){try{bp=JSON.parse(bp);}catch(e){return'';}}
+  var zone=bp.designated_zone?bp.designated_zone.name+' ('+bp.designated_zone.type+') — '+bp.designated_zone.benefit:'No designated zone match — generic city-tier model used';
+  return '<div class="detail"><strong>Tentative Blueprint:</strong>\n'+
+    'City: '+(bp.city_primary||'—')+'\n'+
+    'Designated Zone: '+zone+'\n'+
+    'Setup Budget: $'+(bp.setup_budget_total_usd||0).toLocaleString()+'\n'+
+    'Year 1 FTE Estimate: '+(bp.year1_fte_estimate||'—')+'\n'+
+    'Confidence: '+(bp.confidence_level||'—')+'\n\n'+
+    'Govt Pitch Summary:\n'+(bp.govt_pitch_summary||'—')+'</div>';
+}
+
+function esc(s){return (s||'').replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+
+async function saveLead(){
+  var fields={
+    company_name:document.getElementById('f-company').value.trim(),
+    source_notes:document.getElementById('f-notes').value.trim()
+  };
+  if(!fields.company_name){alert('Company name required');return;}
+  var r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','X-Admin-Token':token},body:JSON.stringify({action:'save_lead',fields:fields})});
+  if(!r.ok){alert('Save failed');return;}
+  document.getElementById('f-company').value='';
+  document.getElementById('f-notes').value='';
+  loadLeads();
+}
+
+async function saveLeadFields(id){
+  var fields={
+    company_name:leads.find(function(l){return l.id===id;}).company_name,
+    industry:document.getElementById('edit-industry-'+id).value,
+    country:document.getElementById('edit-country-'+id).value.trim(),
+    functions_needed:document.getElementById('edit-functions-'+id).value.trim(),
+    year1_fte:document.getElementById('edit-fte-'+id).value.trim(),
+    timeline:document.getElementById('edit-timeline-'+id).value.trim(),
+    top_priority:document.getElementById('edit-priority-'+id).value.trim(),
+    source_notes:leads.find(function(l){return l.id===id;}).source_notes
+  };
+  var r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','X-Admin-Token':token},body:JSON.stringify({action:'save_lead',id:id,fields:fields})});
+  if(!r.ok){alert('Save failed');return;}
+  loadLeads();
+}
+
+async function runResearch(id){
+  var r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','X-Admin-Token':token},body:JSON.stringify({action:'research',id:id})});
+  var d=await r.json();
+  if(!r.ok){alert(d.error||'Research failed');return;}
+  loadLeads();
+}
+
+async function runSim(id){
+  var r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','X-Admin-Token':token},body:JSON.stringify({action:'run_simulation',id:id})});
+  var d=await r.json();
+  if(!r.ok){alert(d.error||'Simulation failed');return;}
+  loadLeads();
+}
+
+async function delLead(id){
+  if(!confirm('Delete this lead?'))return;
+  await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','X-Admin-Token':token},body:JSON.stringify({action:'delete_lead',id:id})});
+  loadLeads();
+}
+
+if(token)enterDash();
+</script>
+</body>
+</html>

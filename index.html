@@ -1023,6 +1023,7 @@ section{transition:opacity 0.01s}
     </div>
     <div style="display:flex;align-items:center;gap:0.75rem">
       <a href="/partner-portal" style="font-size:0.82rem;color:var(--tmed);text-decoration:none;border:1px solid rgba(29,184,104,0.12);padding:0.35rem 0.9rem;border-radius:6px;transition:border-color 0.2s" onmouseover="this.style.borderColor='rgba(255,255,255,0.3)'" onmouseout="this.style.borderColor='rgba(29,184,104,0.12)'">Partner Login</a>
+      <a href="/gcc-admin" style="font-size:0.82rem;color:var(--tmed);text-decoration:none;border:1px solid rgba(29,184,104,0.12);padding:0.35rem 0.9rem;border-radius:6px;transition:border-color 0.2s" onmouseover="this.style.borderColor='rgba(255,255,255,0.3)'" onmouseout="this.style.borderColor='rgba(29,184,104,0.12)'">GCC Lead (Admin)</a>
       <a href="#contact" class="nav-cta">Book a Call →</a>
     </div>
     <button class="nav-hamburger" id="nav-hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
@@ -1967,6 +1968,7 @@ if(document.readyState==="loading"){
                 <div class="city-name" id="out-city">—</div>
                 <div class="city-tag">PRIMARY RECOMMENDATION</div>
                 <div class="city-reason" id="out-city-reason">—</div>
+                <div class="city-reason" id="out-zone" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.12)"></div>
               </div>
               <div class="blueprint-meta" id="out-meta"></div>
             </div>
@@ -3078,6 +3080,23 @@ async function submitPartner(){
 var simData={};
 var projChart=null;
 
+// ── SECTOR-TO-ZONE MAPPING ──
+// Maps simulator industry input to Telangana's actual designated GCC zones (verified, named clusters),
+// not just a generic city. Each entry lists the matching zone plus the alt city option to keep visible.
+var ZONE_MAP={
+  'Healthcare & Life Sciences':{zone:'Genome Valley',city:'Hyderabad',type:'Life Sciences & Pharma Cluster',
+    benefit:'200+ resident life-sciences companies (incl. Novartis, GSK, Lonza), ~15,000-strong scientific workforce, plus the newly announced dedicated GCC zone at Bharat Future City for clinical analytics, drug design, and AI-led drug discovery.'},
+  'Automotive / Manufacturing':{zone:'Hardware Park (Shamshabad SEZ)',city:'Hyderabad',type:'Electronics & Hardware Manufacturing SEZ',
+    benefit:'1,700-acre dedicated SEZ for electronics and hardware manufacturing with established supply-chain and logistics infrastructure.'},
+  'BFSI (Banking, Financial Services, Insurance)':{zone:'Financial District, Gachibowli',city:'Hyderabad',type:'BFSI & Fintech Corridor',
+    benefit:'Existing BFSI GCC concentration (incl. Vanguard, LPL Financial), Grade-A office supply, and proximity to the broader Gachibowli talent and leasing corridor.'},
+  'Technology / SaaS':{zone:'HITEC City / Gachibowli',city:'Hyderabad',type:'IT & Software Corridor',
+    benefit:'Largest concentration of GCC and IT campuses in the state, deepest entry-to-mid talent pool for engineering roles.'}
+};
+function getZoneMatch(industry){
+  return ZONE_MAP[industry]||null;
+}
+
 function toggleChip(el){
   el.classList.toggle('checked',el.querySelector('input').checked===false);
   el.querySelector('input').checked=!el.querySelector('input').checked;
@@ -3145,7 +3164,9 @@ async function generateBlueprint(){
   var fteTier=isSmall?'small (≤30 FTE)':isMid?'mid-size (31–100 FTE)':isLarge?'large (101–300 FTE)':'enterprise (300+ FTE)';
   var cityTier=(simData.city&&['Ahmedabad','Kochi','Jaipur','Indore','Chandigarh','Coimbatore','Nagpur','Visakhapatnam','Bhubaneswar'].indexOf(simData.city)>-1)?'2':(simData.city&&['Thiruvananthapuram','Mysuru','Vadodara','Lucknow','Bhopal','Mangaluru','Raipur','Patna','Guwahati','Dehradun'].indexOf(simData.city)>-1)?'3':'1';
   var currentYear=dynYear,prevYear=dynPrevYear;
+  var zoneMatch=getZoneMatch(simData.industry);
   var prompt='You are an India GCC setup cost expert at Pithonix.ai — a full-contract GCC delivery firm. Generate a precise, market-accurate GCC Setup Project Blueprint using CURRENT '+currentYear+' INDIA MARKET RATES.\n\n'+
+(zoneMatch?'TELANGANA DESIGNATED ZONE MATCH (use this as the primary recommendation unless the client has a preferred city above):\nFor a '+simData.industry+' company, Telangana has a purpose-built zone: '+zoneMatch.zone+' in '+zoneMatch.city+' ('+zoneMatch.type+'). Why it fits: '+zoneMatch.benefit+' Still list a non-Telangana alternative city as city_alt, and populate designated_zone in the output. If the client has a CLIENT PREFERRED CITY above, respect that instead and leave designated_zone null.\n\n':'')+
 'COMPANY PROFILE:\n'+(simData.companyName?'Company: '+simData.companyName+'\n':'')+'Industry: '+simData.industry+'\nHQ Country: '+simData.country+'\n'+(simData.city?'CLIENT PREFERRED CITY: '+simData.city+' (Tier '+cityTier+') — use as primary city.\n':'')+
 'Annual Revenue: '+simData.revenue+'\nGCC Maturity: '+simData.maturity+'\nFunctions: '+simData.functions.join(', ')+'\nYear 1 FTE: '+simData.fte+' ('+fteTier+')\nTimeline: '+simData.timeline+'\nTop Priority: '+simData.priority+'\n\n'+
 currentYear+' INDIA COST BENCHMARKS (use these as base, adjust for city tier and industry):\n'+
@@ -3184,7 +3205,7 @@ currentYear+' INDIA COST BENCHMARKS (use these as base, adjust for city tier and
 '10. Each run must produce DIFFERENT numbers — vary based on ALL inputs above\n\n'+
 'Data sources to reference: NASSCOM GCC Report '+(currentYear-2)+'-'+(currentYear-2001)+', Zinnov GCC Landscape '+prevYear+', CBRE India Office Market Q4 '+prevYear+', Mercer India Compensation Survey '+prevYear+'-'+(currentYear-2000)+', TeamLease India Employment Report Q1 '+currentYear+'\n\n'+
 'All costs in USD. Return ONLY valid JSON starting with { and ending with }:\n'+
-'{"city_primary":"city name","city_primary_reason":"2 sentences — why this city for this company profile","city_alt":"alternative city","city_alt_reason":"1 sentence","hidden_insight":"1 non-obvious, data-backed insight most GCC consultants miss — specific to this company, industry, and HQ country","setup_budget_total_usd":number,"setup_budget_breakdown":[{"category":"Entity Formation & Legal (PvtLtd incorporation, CA, company secretary)","cost_usd":number,"timeline":"Month 1-2","notes":"specific vendors/actions"},{"category":"Office Space & Infrastructure (fit-out, furniture, lease deposit)","cost_usd":number,"timeline":"Month 2-4","notes":"Grade-A area recommendation"},{"category":"IT & Technology Setup (laptops, servers, network, licenses)","cost_usd":number,"timeline":"Month 2-5","notes":"key items"},{"category":"Talent Acquisition Year 1 (recruitment fees, ESOP, onboarding)","cost_usd":number,"timeline":"Month 1-12","notes":"avg cost per hire"},{"category":"Compliance & Regulatory (STPI/SEZ registration, audit, payroll setup)","cost_usd":number,"timeline":"Month 1-3","notes":"key registrations"},{"category":"Pithonix Setup Management Fee (project management, JEET+HARI+GOT deployment)","cost_usd":number,"timeline":"Full project","notes":"milestone-based billing"}],"yearly_budget":[{"year":"Year 1 — Setup + Ramp","budget_usd":number,"focus":"Entity setup, first hires, infrastructure"},{"year":"Year 2 — Scale","budget_usd":number,"focus":"Scale to full headcount, process migration"},{"year":"Year 3 — Optimize","budget_usd":number,"focus":"Efficiency, automation, CoE development"}],"govt_incentives":[{"scheme":"exact scheme name","benefit":"specific benefit with quantified numbers — e.g. 100% tax holiday for 5 years, ~Rs X crore saved","eligibility":"who qualifies","agency":"STPI / SEZ / State IT Dept / MeitY / DPIIT","priority":"central","est_value_usd":number},{"scheme":"...","benefit":"...","eligibility":"...","agency":"...","priority":"state","est_value_usd":number},{"scheme":"...","benefit":"...","eligibility":"...","agency":"...","priority":"central","est_value_usd":number},{"scheme":"...","benefit":"...","eligibility":"...","agency":"...","priority":"state","est_value_usd":number}],"banking_support":[{"bank":"State Bank of India (SBI) — always include as first entry given its unmatched network, govt scheme access, and pan-India payroll reach","offering":"specific SBI program name","benefit":"what SBI offers to a new GCC entity"},{"bank":"HDFC or ICICI or Kotak based on company profile","offering":"specific program name","benefit":"what it offers"},{"bank":"third bank relevant to company HQ country or industry","offering":"specific program name","benefit":"what it offers"}],"headcount":[y1,y2,y3,y4,y5],"savings_usd":[y1,y2,y3,y4,y5],"cost_usd":[y1,y2,y3,y4,y5],"break_even_months":number,"total_5yr_savings_usd":number,"risks":[{"risk":"name","probability":"High/Medium/Low","mitigation":"specific action"},{"risk":"...","probability":"...","mitigation":"..."},{"risk":"...","probability":"...","mitigation":"..."}],"phase0_actions":["specific action 1","specific action 2","specific action 3","specific action 4","specific action 5"],"pithonix_role":"2 sentences on exactly what Pithonix delivers as the setup contractor for this company — not generic, specific to their profile"}';
+'{"city_primary":"city name","city_primary_reason":"2 sentences — why this city for this company profile","city_alt":"alternative city","city_alt_reason":"1 sentence","designated_zone":'+(zoneMatch?'{"name":"'+zoneMatch.zone+'","type":"'+zoneMatch.type+'","benefit":"why this specific zone, not just the city, fits this company"}':'null')+',"hidden_insight":"1 non-obvious, data-backed insight most GCC consultants miss — specific to this company, industry, and HQ country","setup_budget_total_usd":number,"setup_budget_breakdown":[{"category":"Entity Formation & Legal (PvtLtd incorporation, CA, company secretary)","cost_usd":number,"timeline":"Month 1-2","notes":"specific vendors/actions"},{"category":"Office Space & Infrastructure (fit-out, furniture, lease deposit)","cost_usd":number,"timeline":"Month 2-4","notes":"Grade-A area recommendation"},{"category":"IT & Technology Setup (laptops, servers, network, licenses)","cost_usd":number,"timeline":"Month 2-5","notes":"key items"},{"category":"Talent Acquisition Year 1 (recruitment fees, ESOP, onboarding)","cost_usd":number,"timeline":"Month 1-12","notes":"avg cost per hire"},{"category":"Compliance & Regulatory (STPI/SEZ registration, audit, payroll setup)","cost_usd":number,"timeline":"Month 1-3","notes":"key registrations"},{"category":"Pithonix Setup Management Fee (project management, JEET+HARI+GOT deployment)","cost_usd":number,"timeline":"Full project","notes":"milestone-based billing"}],"yearly_budget":[{"year":"Year 1 — Setup + Ramp","budget_usd":number,"focus":"Entity setup, first hires, infrastructure"},{"year":"Year 2 — Scale","budget_usd":number,"focus":"Scale to full headcount, process migration"},{"year":"Year 3 — Optimize","budget_usd":number,"focus":"Efficiency, automation, CoE development"}],"govt_incentives":[{"scheme":"exact scheme name","benefit":"specific benefit with quantified numbers — e.g. 100% tax holiday for 5 years, ~Rs X crore saved","eligibility":"who qualifies","agency":"STPI / SEZ / State IT Dept / MeitY / DPIIT","priority":"central","est_value_usd":number},{"scheme":"...","benefit":"...","eligibility":"...","agency":"...","priority":"state","est_value_usd":number},{"scheme":"...","benefit":"...","eligibility":"...","agency":"...","priority":"central","est_value_usd":number},{"scheme":"...","benefit":"...","eligibility":"...","agency":"...","priority":"state","est_value_usd":number}],"banking_support":[{"bank":"State Bank of India (SBI) — always include as first entry given its unmatched network, govt scheme access, and pan-India payroll reach","offering":"specific SBI program name","benefit":"what SBI offers to a new GCC entity"},{"bank":"HDFC or ICICI or Kotak based on company profile","offering":"specific program name","benefit":"what it offers"},{"bank":"third bank relevant to company HQ country or industry","offering":"specific program name","benefit":"what it offers"}],"headcount":[y1,y2,y3,y4,y5],"savings_usd":[y1,y2,y3,y4,y5],"cost_usd":[y1,y2,y3,y4,y5],"break_even_months":number,"total_5yr_savings_usd":number,"risks":[{"risk":"name","probability":"High/Medium/Low","mitigation":"specific action"},{"risk":"...","probability":"...","mitigation":"..."},{"risk":"...","probability":"...","mitigation":"..."}],"phase0_actions":["specific action 1","specific action 2","specific action 3","specific action 4","specific action 5"],"pithonix_role":"2 sentences on exactly what Pithonix delivers as the setup contractor for this company — not generic, specific to their profile"}';
 
   try{
     var resp=await fetch('/api/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({_model:'gemini-2.5-flash',contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:1.0,thinkingConfig:{thinkingBudget:0}}})});
@@ -3247,6 +3268,13 @@ function renderBlueprint(bp){
   document.getElementById('out-flag').textContent=cityFlags[bp.city_primary]||'🏙️';
   document.getElementById('out-city').textContent=bp.city_primary||'Hyderabad';
   document.getElementById('out-city-reason').textContent=bp.city_primary_reason||'';
+  var zoneEl=document.getElementById('out-zone');
+  if(bp.designated_zone&&bp.designated_zone.name){
+    zoneEl.style.display='block';
+    zoneEl.innerHTML='<strong>Designated Zone Match: '+bp.designated_zone.name+'</strong> ('+(bp.designated_zone.type||'')+')<br>'+(bp.designated_zone.benefit||'');
+  }else{
+    zoneEl.style.display='none';
+  }
 
   var hc=bp.headcount||[50,150,300,500,750];
   var sav=bp.savings_usd||[2e6,7e6,15e6,24e6,35e6];
