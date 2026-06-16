@@ -819,7 +819,7 @@ footer{background:var(--s1);border-top:1px solid var(--bd);padding:3rem 0 2rem;z
 .sim-progress-label{font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--tdim);letter-spacing:1px;text-align:right}
 
 /* ── BLUEPRINT GATE ── */
-.bp-gated{position:relative}
+.bp-gated{position:relative;overflow-anchor:none}
 .bp-gated.locked>*:not(.bp-unlock-overlay){filter:blur(5px);pointer-events:none;user-select:none}
 .bp-unlock-overlay{position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:flex-start;justify-content:center;padding-top:3rem;z-index:10;background:linear-gradient(to bottom,rgba(207,224,213,0.2) 0%,rgba(207,224,213,0.92) 15%,rgba(207,224,213,0.96) 100%)}
 .bp-unlock-overlay.hidden{display:none}
