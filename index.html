@@ -1936,19 +1936,16 @@ if(document.readyState==="loading"){
                         <th style="text-align:left;padding:0.5rem 0.6rem;color:var(--tmed);font-weight:600">Category</th>
                         <th style="text-align:left;padding:0.5rem 0.6rem;color:var(--tmed);font-weight:600">Coverage in This Blueprint</th>
                         <th style="text-align:right;padding:0.5rem 0.6rem;color:var(--tmed);font-weight:600">Real-World Variance</th>
+                        <th style="text-align:right;padding:0.5rem 0.6rem;color:var(--tmed);font-weight:600">Est. Cost for Your Profile</th>
                       </tr>
                     </thead>
                     <tbody id="out-hidden-cost-rows" style="color:var(--txt)"></tbody>
                   </table>
                 </div>
+                <div id="out-hidden-cost-total" style="font-size:0.82rem;font-weight:700;color:var(--gold);margin-bottom:1rem"></div>
                 <div style="background:rgba(184,80,0,0.1);border:1px solid rgba(184,80,0,0.35);border-radius:8px;padding:0.85rem 1.1rem">
-                  <div style="font-size:0.75rem;font-weight:700;color:#e8a060;margin-bottom:0.4rem;letter-spacing:0.04em">NOT MODELLED ANYWHERE IN THIS ESTIMATE — BUDGET FOR THESE SEPARATELY</div>
-                  <ul style="margin:0;padding-left:1.1rem;font-size:0.8rem;color:var(--tmed);line-height:1.7">
-                    <li><strong style="color:var(--txt)">Attrition-driven rehiring:</strong> at typical 18–20% annual attrition, a 20-person team needs 4 replacement hires a year — headhunter fees, notice-period buyouts, and the productivity dip while new hires ramp.</li>
-                    <li><strong style="color:var(--txt)">Knowledge transfer cost:</strong> 4–8 weeks of documentation plus 2–3 months of supervised operation, during which the transferring team runs at 20–30% reduced capacity.</li>
-                    <li><strong style="color:var(--txt)">HQ-to-GCC leadership travel:</strong> recurring visits for governance reviews, stakeholder alignment, and crisis response in Year 1–2.</li>
-                    <li><strong style="color:var(--txt)">Salary escalation compounding:</strong> India GCC salary hikes are running close to 10% a year — a static benchmark is roughly 10% off by Year 2 and 20% off by Year 3 if not compounded.</li>
-                  </ul>
+                  <div style="font-size:0.75rem;font-weight:700;color:#e8a060;margin-bottom:0.4rem;letter-spacing:0.04em">NOT MODELLED ABOVE — QUANTIFIED HERE SO YOU CAN BUDGET FOR THEM</div>
+                  <ul id="out-hidden-cost-bullets" style="margin:0;padding-left:1.1rem;font-size:0.8rem;color:var(--tmed);line-height:1.7"></ul>
                 </div>
               </div>
               <!-- Blueprint unlock overlay -->
@@ -3268,22 +3265,53 @@ function renderBlueprint(bp){
     bankWrap.style.display='block';
   } else { bankWrap.style.display='none'; }
 
-  // Hidden Cost Radar — static disclosure, same for every blueprint
+  // Hidden Cost Radar — quantified against THIS blueprint's own headcount/budget, not a generic disclaimer
+  var y1hc=hc[0]||50, y2hc=hc[1]||137, y3hc=hc[2]||268;
+  var y1cost=cost[0]||2.5e6, y2cost=cost[1]||5e6, y3cost=cost[2]||8e6;
+  var avgCostPerFte=y1cost/y1hc;
+  var setupBudget=bp.setup_budget_total_usd||(y1cost*0.35);
+
+  var attritionRate=0.19;
+  var replacedHires=Math.max(1,Math.round(y1hc*attritionRate));
+  var attritionCostLow=replacedHires*avgCostPerFte*0.4;
+  var attritionCostHigh=replacedHires*avgCostPerFte*0.6;
+
+  var ktCostLow=setupBudget*0.08, ktCostHigh=setupBudget*0.12;
+
+  var travelCost=Math.max(40000,Math.min(150000,Math.round(y1hc*450)));
+
+  var salaryShare=0.65;
+  var y2EscalationCost=y2cost*salaryShare*0.10;
+  var y3EscalationCost=y3cost*salaryShare*0.20;
+
   var hcRows=[
-    ['Office space & infrastructure','Strong','±10–15%','#1db868'],
-    ['Technology setup (hardware/network)','Good','±15–20%','#1db868'],
-    ['Legal & entity registration (one-time)','Strong','±10%','#1db868'],
-    ['Ongoing compliance (transfer pricing, DPDP)','Weak — recurring cost underweighted','±25–30%','#e8a060'],
-    ['Salary benchmarks (Year 1 base)','Good','±10–15%','#1db868'],
-    ['Talent acquisition (first hire only)','Good','±15%','#1db868'],
-    ['Attrition-driven rehiring cost','Not modelled','100% gap','#e05050'],
-    ['Knowledge transfer / transition cost','Not modelled','100% gap','#e05050'],
-    ['HQ-to-GCC leadership travel','Not modelled','100% gap','#e05050'],
-    ['Salary escalation, Year 2–3 compounding','Not modelled','±20% by Year 3','#e05050'],
+    ['Office space & infrastructure','Strong','±10–15%','—','#1db868'],
+    ['Technology setup (hardware/network)','Good','±15–20%','—','#1db868'],
+    ['Legal & entity registration (one-time)','Strong','±10%','—','#1db868'],
+    ['Ongoing compliance (transfer pricing, DPDP)','Weak — recurring cost underweighted','±25–30%','—','#e8a060'],
+    ['Salary benchmarks (Year 1 base)','Good','±10–15%','—','#1db868'],
+    ['Talent acquisition (first hire only)','Good','±15%','—','#1db868'],
+    ['Attrition-driven rehiring ('+replacedHires+' hires/yr at '+y1hc+' FTEs)','Not modelled','Recurring, annual','+'+fmt(attritionCostLow)+' to '+fmt(attritionCostHigh)+'/yr','#e05050'],
+    ['Knowledge transfer / transition cost','Not modelled','One-time, Yr 1','+'+fmt(ktCostLow)+' to '+fmt(ktCostHigh)+'','#e05050'],
+    ['HQ-to-GCC leadership travel','Not modelled','Recurring, annual','+'+fmt(travelCost)+'/yr (Yr 1–2)','#e05050'],
+    ['Salary escalation, Year 2–3 compounding','Not modelled','vs. static benchmark','+'+fmt(y2EscalationCost)+' (Yr2), +'+fmt(y3EscalationCost)+' (Yr3)','#e05050'],
   ];
+  var hiddenTotalLow=attritionCostLow+ktCostLow+travelCost+y2EscalationCost;
+  var hiddenTotalHigh=attritionCostHigh+ktCostHigh+travelCost+y2EscalationCost+y3EscalationCost;
   document.getElementById('out-hidden-cost-rows').innerHTML=hcRows.map(function(r){
-    return'<tr style="border-bottom:1px solid var(--bd)"><td style="padding:0.55rem 0.6rem">'+r[0]+'</td><td style="padding:0.55rem 0.6rem;color:'+r[3]+'">'+r[1]+'</td><td style="padding:0.55rem 0.6rem;text-align:right;font-weight:600;color:'+r[3]+'">'+r[2]+'</td></tr>';
+    return'<tr style="border-bottom:1px solid var(--bd)"><td style="padding:0.55rem 0.6rem">'+r[0]+'</td><td style="padding:0.55rem 0.6rem;color:'+r[4]+'">'+r[1]+'</td><td style="padding:0.55rem 0.6rem;text-align:right;color:'+r[4]+'">'+r[2]+'</td><td style="padding:0.55rem 0.6rem;text-align:right;font-weight:600;color:'+r[4]+'">'+r[3]+'</td></tr>';
   }).join('');
+  var totalEl=document.getElementById('out-hidden-cost-total');
+  if(totalEl)totalEl.textContent='Estimated unmodelled cost exposure for your profile: '+fmt(hiddenTotalLow)+' – '+fmt(hiddenTotalHigh)+' across Year 1–3, on top of the budget shown above.';
+  var bulletEl=document.getElementById('out-hidden-cost-bullets');
+  if(bulletEl){
+    bulletEl.innerHTML=[
+      '<strong style="color:var(--txt)">Attrition-driven rehiring — est. '+fmt(attritionCostLow)+' to '+fmt(attritionCostHigh)+'/year:</strong> at 18–20% annual attrition, your '+y1hc+'-FTE Year 1 team needs roughly '+replacedHires+' replacement hires a year — headhunter fees, notice-period buyouts, and the productivity dip while new hires ramp.',
+      '<strong style="color:var(--txt)">Knowledge transfer cost — est. '+fmt(ktCostLow)+' to '+fmt(ktCostHigh)+' one-time:</strong> 4–8 weeks of documentation plus 2–3 months of supervised operation, during which the transferring team runs at 20–30% reduced capacity.',
+      '<strong style="color:var(--txt)">HQ-to-GCC leadership travel — est. '+fmt(travelCost)+'/year:</strong> recurring visits for governance reviews, stakeholder alignment, and crisis response in Year 1–2.',
+      '<strong style="color:var(--txt)">Salary escalation compounding — est. +'+fmt(y2EscalationCost)+' in Year 2, +'+fmt(y3EscalationCost)+' in Year 3:</strong> India GCC salary hikes are running close to 10% a year; this blueprint\'s Year 2–3 cost figures assume a flat benchmark unless compounded.'
+    ].map(function(li){return'<li>'+li+'</li>';}).join('');
+  }
 }
 
 // ── GOT ADVISOR ──
