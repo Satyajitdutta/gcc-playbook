@@ -74,15 +74,22 @@ const SIGNAL_WEIGHTS = {
   domain_registration_india: 8, job_portal_company_page_created: 10, social_media_india_office_post: 8,
   news_article: 10, other: 5,
 };
+// Only these exact slugs are valid signal types. A value like "talent" or "real_estate" (a
+// cluster name, not a signal) gets dropped rather than silently scored as a weak "other" signal —
+// that mismatch is what let low-quality candidates slip through with misleading low scores.
+const VALID_SIGNAL_TYPES = new Set(Object.keys(SIGNAL_CLUSTERS).filter(s => s !== 'other'));
+
 function scoreCandidate(c) {
-  const signals = Array.isArray(c.signals) && c.signals.length ? c.signals : [c];
+  const rawSignals = Array.isArray(c.signals) && c.signals.length ? c.signals : [c];
+  const signals = rawSignals.filter(s => VALID_SIGNAL_TYPES.has(s.signal_type));
+  if (signals.length === 0) return null;
   const detail = [];
   const clustersSeen = new Set();
   let signalPoints = 0;
   for (const s of signals) {
-    const type = s.signal_type || 'other';
+    const type = s.signal_type;
     const points = SIGNAL_WEIGHTS[type] || SIGNAL_WEIGHTS.other;
-    const cluster = SIGNAL_CLUSTERS[type] || 'media';
+    const cluster = SIGNAL_CLUSTERS[type];
     clustersSeen.add(cluster);
     signalPoints += points;
     detail.push({ signal_type: type, cluster, points, named_explicitly: !!s.named_explicitly,
@@ -319,16 +326,23 @@ export default async function handler(req, res) {
         'Retail / E-Commerce', 'Consumer Packaged Goods (CPG)', 'Energy & Utilities', 'Professional Services', 'Telecom / Media', 'Other'
       ]);
       const signalList = Object.keys(SIGNAL_CLUSTERS).filter(s => s !== 'other').join(', ');
-      const prompt = 'You are a GCC market analyst at Pithonix, scanning the open web RIGHT NOW for companies that are probable leads to set up a '+
+      const prompt = 'You are a GCC market analyst at Pithonix, scanning the open web RIGHT NOW for companies that are PROBABLE, NOT-YET-CONFIRMED leads to set up a '+
         'Global Capability Centre (GCC) in India, with a bias toward Telangana/Hyderabad signals. Use real, current web search results. Do not invent companies or sources. Be fast and concise.\n\n'+
-        'Possible signal types (7 clusters: talent, real_estate, financial, government, industry, media, digital): '+signalList+'.\n'+
-        'For each company, report every distinct signal type you found real evidence for — a company with 2 signals from different clusters is a stronger lead than one with a single news_article.\n\n'+
+        'CRITICAL EXCLUSION RULE: Do NOT include any company that has already made a public, confirmed announcement of establishing, launching, or opening a GCC in India '+
+        '(e.g. a press release or news article stating the company "is establishing", "has launched", "will open", "plans to set up" a GCC with named city and headcount). '+
+        'Those are CONFIRMED deals, not probable leads, and must be excluded entirely — showing a probability score on already-public news misrepresents it. '+
+        'Only include companies where the GCC intent must be INFERRED from indirect evidence: senior India-hiring job posts with no public GCC announcement, '+
+        'unconfirmed leasing/real-estate chatter, earnings-call language about "evaluating" or "exploring" India options, government pipeline lists of inbound-but-unannounced companies, '+
+        'or conference/industry signals without a formal company statement.\n\n'+
+        'Each signal_type value you report MUST be EXACTLY one of these exact strings (do not use the cluster name, use the specific signal): '+signalList+'.\n'+
+        'For each company, report every distinct signal type you found real evidence for — a company with 2 signals from different clusters is a stronger lead than one with a single signal.\n\n'+
         'Return ONLY valid JSON, no markdown: {"candidates":[{"company_name":"exact name, or a placeholder like \\"Unnamed European Aerospace Firm\\" if anonymized in the source",'+
         '"industry":"one of: '+industryOptions.join(' | ')+'","country":"HQ country if known",'+
-        '"signals":[{"signal_type":"one of the types above","named_explicitly":true_or_false,"recency_days":number,'+
+        '"signals":[{"signal_type":"EXACTLY one of: '+signalList+'","named_explicitly":true_or_false,"recency_days":number,'+
         '"source_count":number,"evidence":"1 short sentence, citing the source"}],'+
         '"source_urls":["url1"]}]}\n\n'+
-        'Only include candidates and signals you found real evidence for. Return an empty candidates array if nothing credible was found. Limit to at most 4 candidates, max 3 signals each, to keep this fast.';
+        'Only include candidates and signals you found real evidence for, and only if the company has NOT already publicly confirmed the GCC. '+
+        'Return an empty candidates array if nothing credible was found. Limit to at most 4 candidates, max 3 signals each, to keep this fast.';
       let text;
       try { text = await callGemini(prompt, true); }
       catch (e) { res.status(502).json({ error: 'Discovery failed: ' + e.message }); return; }
@@ -341,10 +355,12 @@ export default async function handler(req, res) {
       const existingNames = new Set(existing.rows.map(r => r.n));
 
       const inserted = [];
+      let rejectedInvalidSignal = 0;
       for (const c of parsed.candidates) {
         if (!c.company_name || existingNames.has(c.company_name.toLowerCase())) continue;
-        existingNames.add(c.company_name.toLowerCase());
         const factors = scoreCandidate(c);
+        if (!factors) { rejectedInvalidSignal++; continue; }
+        existingNames.add(c.company_name.toLowerCase());
         const evidenceNote = factors.signal_detail.map(d => d.evidence + ' [' + d.signal_type + ']').join(' | ');
         const r = await client.query(
           `INSERT INTO gcc_admin_leads (company_name, industry, country, source_notes, status, probability_score, signal_factors, source_urls, created_by)
@@ -354,7 +370,7 @@ export default async function handler(req, res) {
         );
         inserted.push(r.rows[0]);
       }
-      return res.status(200).json({ inserted, scanned: parsed.candidates.length });
+      return res.status(200).json({ inserted, scanned: parsed.candidates.length, rejectedInvalidSignal });
     }
 
     if (action === 'run_simulation') {
