@@ -965,6 +965,59 @@ section{transition:opacity 0.01s}
 /* Restart btn */
 .btn-restart{transition:border-color 0.25s var(--ease-standard),color 0.25s var(--ease-standard),transform 0.2s var(--ease-spring)!important}
 .btn-restart:active{transform:scale(0.96)!important}
+
+/* ── BEYOND CURE CORRIDOR EXPLORER ── */
+#beyond-cure{background:linear-gradient(180deg,var(--s1) 0%,var(--bg) 100%);border-top:1px solid var(--bd)}
+.bc-policy-banner{background:linear-gradient(135deg,rgba(0,180,90,0.07) 0%,rgba(122,88,0,0.06) 100%);border:1px solid rgba(0,180,90,0.22);border-radius:14px;padding:1.5rem 2rem;margin-bottom:2.5rem;position:relative}
+.bc-banner-top{display:flex;align-items:flex-start;gap:1.5rem;flex-wrap:wrap;margin-bottom:1rem}
+.bc-zone-pills{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.75rem}
+.bc-zone-pill{font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:2px;font-weight:700;padding:0.3rem 0.85rem;border-radius:20px;border:1px solid}
+.bc-zone-pill.cure{color:#00d46e;border-color:rgba(0,212,110,0.4);background:rgba(0,212,110,0.08)}
+.bc-zone-pill.pure{color:var(--gold);border-color:rgba(232,184,75,0.4);background:rgba(232,184,75,0.08)}
+.bc-zone-pill.rare{color:#b090e4;border-color:rgba(176,144,228,0.4);background:rgba(176,144,228,0.08)}
+.bc-banner-title{font-size:1rem;font-weight:700;color:var(--txt);margin-bottom:0.35rem}
+.bc-banner-sub{font-size:0.82rem;color:var(--tmed);line-height:1.6;max-width:700px}
+.bc-citation{font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--tdim);margin-top:0.75rem;line-height:1.6}
+.bc-disclaimer{font-size:0.72rem;color:var(--tdim);font-style:italic;margin-top:0.6rem;padding-top:0.6rem;border-top:1px solid var(--bd)}
+.bc-corridor-tabs{display:flex;gap:0;border:1px solid var(--bd);border-radius:10px;overflow:hidden;margin-bottom:2rem;flex-wrap:wrap}
+.bc-tab{flex:1;padding:0.85rem 0.5rem;text-align:center;cursor:pointer;font-size:0.82rem;font-weight:600;color:var(--tdim);transition:all 0.2s;border-right:1px solid var(--bd);min-width:80px;letter-spacing:0.02em}
+.bc-tab:last-child{border-right:none}
+.bc-tab.active{background:rgba(0,212,110,0.07);color:var(--teal)}
+.bc-tab .bc-tab-icon{font-size:1rem;display:block;margin-bottom:0.2rem}
+.bc-size-tabs{display:flex;gap:0.5rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.bc-size-btn{font-family:'JetBrains Mono',monospace;font-size:0.72rem;letter-spacing:1px;padding:0.4rem 1rem;border:1px solid var(--bd);border-radius:6px;background:var(--s2);color:var(--tmed);cursor:pointer;transition:all 0.2s;font-weight:700}
+.bc-size-btn.active{background:rgba(232,184,75,0.1);border-color:rgba(232,184,75,0.5);color:var(--gold)}
+.bc-cost-table{width:100%;border-collapse:collapse;font-size:0.82rem;margin-bottom:0.75rem}
+.bc-cost-table th{text-align:left;padding:0.65rem 0.9rem;font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:1.5px;color:var(--tmed);text-transform:uppercase;border-bottom:2px solid var(--bd);font-weight:600}
+.bc-cost-table th.baseline{color:var(--teal)}
+.bc-cost-table td{padding:0.65rem 0.9rem;border-bottom:1px solid var(--bd);color:var(--txt);line-height:1.4;vertical-align:top}
+.bc-cost-table tr:last-child td{border-bottom:none;font-weight:700;color:var(--gold)}
+.bc-cost-table .est-flag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.5px;color:var(--tdim);border:1px solid var(--bd);border-radius:3px;padding:1px 4px;margin-left:4px;vertical-align:middle;white-space:nowrap}
+.bc-cost-table .saving{color:var(--teal);font-size:0.75rem;display:block}
+.bc-cost-note{font-size:0.72rem;color:var(--tdim);font-style:italic;margin-bottom:2rem}
+.bc-anchor-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-bottom:2.5rem}
+.bc-anchor-card{background:var(--s2);border:1px solid var(--bd);border-radius:10px;padding:1.2rem}
+.bc-anchor-name{font-size:1rem;font-weight:700;color:var(--teal);margin-bottom:0.25rem}
+.bc-anchor-tag{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:2px;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:0.5rem}
+.bc-anchor-items{list-style:none;margin:0;padding:0}
+.bc-anchor-items li{font-size:0.8rem;color:var(--tmed);padding:0.2rem 0;border-bottom:1px solid var(--bd);display:flex;align-items:flex-start;gap:0.4rem}
+.bc-anchor-items li:last-child{border-bottom:none}
+.bc-anchor-items li::before{content:'→';color:var(--teal);flex-shrink:0}
+.bc-incentive-table{width:100%;border-collapse:collapse;font-size:0.8rem;margin-bottom:0.75rem}
+.bc-incentive-table th{text-align:left;padding:0.65rem 0.9rem;font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:1.5px;color:var(--tmed);text-transform:uppercase;border-bottom:2px solid var(--bd);font-weight:600}
+.bc-incentive-table td{padding:0.75rem 0.9rem;border-bottom:1px solid var(--bd);color:var(--txt);line-height:1.5;vertical-align:top}
+.bc-incentive-table tr:last-child td{border-bottom:none}
+.bc-pending{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.5px;color:var(--orange);border:1px solid rgba(255,140,66,0.4);border-radius:3px;padding:1px 5px;vertical-align:middle;white-space:nowrap;background:rgba(255,140,66,0.07)}
+.bc-pending.confirmed{color:var(--teal);border-color:rgba(0,212,110,0.4);background:rgba(0,212,110,0.07)}
+.bc-pending.formulating{color:#b090e4;border-color:rgba(176,144,228,0.4);background:rgba(176,144,228,0.07)}
+.bc-verify-src{font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--tdim);display:block;margin-top:0.3rem}
+.bc-signal-table{width:100%;border-collapse:collapse;font-size:0.8rem;margin-bottom:0.75rem}
+.bc-signal-table th{text-align:left;padding:0.6rem 0.9rem;font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:1.5px;color:var(--tmed);text-transform:uppercase;border-bottom:2px solid var(--bd);font-weight:600}
+.bc-signal-table td{padding:0.65rem 0.9rem;border-bottom:1px solid var(--bd);color:var(--txt);font-size:0.8rem;vertical-align:top}
+.bc-signal-table tr:last-child td{border-bottom:none}
+.bc-signal-count{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:1.4rem;font-weight:700;color:var(--teal)}
+.bc-sub-label{font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:2px;font-weight:700;text-transform:uppercase;color:var(--gold);margin:2rem 0 0.75rem}
+@media(max-width:768px){.bc-cost-table,.bc-incentive-table,.bc-signal-table{display:block;overflow-x:auto}}
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -1023,6 +1076,7 @@ section{transition:opacity 0.01s}
     <div class="nav-links">
       <a href="#simulator">Simulator</a>
       <a href="#gcc-pipeline">Live Pipeline</a>
+      <a href="#beyond-cure">Beyond CURE</a>
       <a href="#journey">Playbook</a>
       <a href="#fdi-hero">Govt Benefits</a>
       <a href="#cities">India Intel</a>
@@ -1042,6 +1096,7 @@ section{transition:opacity 0.01s}
 </nav>
 <div class="mobile-menu" id="mobile-menu">
   <a href="#simulator" onclick="toggleMobileMenu()">Simulator</a>
+  <a href="#beyond-cure" onclick="toggleMobileMenu()">Beyond CURE</a>
   <a href="#journey" onclick="toggleMobileMenu()">Playbook</a>
   <a href="#fdi-hero" onclick="toggleMobileMenu()">Govt Benefits</a>
   <a href="#cities" onclick="toggleMobileMenu()">India Intel</a>
@@ -2076,6 +2131,317 @@ if(document.readyState==="loading"){
 
       </div>
     </div>
+  </div>
+</section>
+
+<!-- BEYOND CURE CORRIDOR EXPLORER -->
+<section id="beyond-cure" aria-label="Beyond CURE Corridor Explorer — Warangal, Karimnagar, Nizamabad">
+  <div class="wrap">
+    <div class="section-label">BEYOND CURE CORRIDOR EXPLORER</div>
+    <h2 class="section-title">Telangana's Next GCC Frontier: <span class="gold">Beyond Hyderabad.</span></h2>
+    <p class="section-sub" style="max-width:780px">Mapped to the Telangana Rising 2047 CURE-PURE-RARE framework. Built for the Warangal, Karimnagar, and Nizamabad highway corridors named in the Government of Telangana's decentralisation directive.</p>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--tdim);margin-bottom:2.5rem;line-height:1.7">Reference: Telangana Rising 2047 Vision Document; CM A. Revanth Reddy review directive on GCC decentralisation to Beyond CURE corridors, MCR HRD Institute, May 2026.</div>
+
+    <!-- POLICY ALIGNMENT BANNER -->
+    <div class="bc-policy-banner">
+      <div class="bc-zone-pills">
+        <span class="bc-zone-pill cure">CURE — Core Urban Region Economy</span>
+        <span class="bc-zone-pill pure">PURE — Peri-Urban Region Economy</span>
+        <span class="bc-zone-pill rare">RARE — Rural Agri Region Economy</span>
+      </div>
+      <div class="bc-banner-title">Telangana Rising 2047: Three-Zone Economic Framework</div>
+      <div class="bc-banner-sub">The Telangana Rising 2047 Vision Document formally divides the state into three economic zones. <strong>CURE</strong> (within the Outer Ring Road) covers Hyderabad services and GCCs, with net-zero mandates. <strong>PURE</strong> (between the ORR and the proposed Regional Ring Road) is manufacturing-focused. <strong>RARE</strong> (beyond the RRR) covers agriculture and allied sectors. The CM's directive designates Warangal, Karimnagar, and Nizamabad as extensions of services and GCC activity outside the CURE boundary, referred to as <strong>Beyond CURE</strong> corridors.</div>
+      <div class="bc-citation">Source: CM A. Revanth Reddy, High-Level Review Meeting, MCR HRD Institute, May 2026. IT and Industries Minister D. Sridhar Babu and Chief Secretary K. Ramakrishna Rao present. Officials directed to formulate a dedicated GCC policy for Beyond CURE areas with special incentives along the Nizamabad, Karimnagar, and Warangal highway corridors. TGIIC named as coordinating agency alongside the Chief Secretary.</div>
+      <div class="bc-disclaimer">Zone classifications per Telangana Rising 2047 Vision Document. Incentive figures pending departmental confirmation. Verify exact CURE/PURE/RARE boundary definitions and the formal "Beyond CURE" designation status directly with the ITE&amp;C Department before referencing in any official document.</div>
+    </div>
+
+    <!-- CORRIDOR ANCHOR SUPPLY DATA -->
+    <div class="bc-sub-label">Established Presence and Talent Anchors by Corridor</div>
+    <div class="bc-anchor-grid">
+      <div class="bc-anchor-card">
+        <div class="bc-anchor-tag">Corridor</div>
+        <div class="bc-anchor-name">Warangal</div>
+        <ul class="bc-anchor-items">
+          <li>NIT Warangal — engineering and technology talent pipeline</li>
+          <li>LTI Mindtree — established GCC presence (NASSCOM, Nov 2024)</li>
+          <li>Genpact — established operations presence</li>
+          <li>Cyient — engineering services GCC unit</li>
+          <li>Kakatiya University and Warangal Institute of Technology talent pool</li>
+        </ul>
+      </div>
+      <div class="bc-anchor-card">
+        <div class="bc-anchor-tag">Corridor</div>
+        <div class="bc-anchor-name">Karimnagar</div>
+        <ul class="bc-anchor-items">
+          <li>Karimnagar IT Tower — government-built office infrastructure anchor</li>
+          <li>Smaller current GCC footprint, growing BPO and IT services base</li>
+          <li>Rajiv Gandhi University of Knowledge Technologies (RGUKT) nearby talent supply</li>
+          <li>Lower commercial real estate cost vs. Hyderabad and Warangal</li>
+        </ul>
+      </div>
+      <div class="bc-anchor-card">
+        <div class="bc-anchor-tag">Corridor</div>
+        <div class="bc-anchor-name">Nizamabad</div>
+        <ul class="bc-anchor-items">
+          <li>Existing IT incubation centre — early-stage infrastructure presence</li>
+          <li>Smallest current GCC footprint of the three corridors</li>
+          <li>Strong logistics and highway connectivity to Hyderabad (NH-44/NH-65)</li>
+          <li>Emerging data centre interest per Beyond CURE directive</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- COST COMPARISON -->
+    <div class="bc-sub-label">Cost Comparison vs. Hyderabad (CURE Baseline)</div>
+    <div class="bc-size-tabs">
+      <button class="bc-size-btn active" onclick="bcShowSize('small',this)">SMALL — 50 FTE</button>
+      <button class="bc-size-btn" onclick="bcShowSize('mid',this)">MID — 150 FTE</button>
+      <button class="bc-size-btn" onclick="bcShowSize('large',this)">LARGE — 300 FTE</button>
+    </div>
+
+    <div id="bc-cost-small" class="bc-cost-panel">
+      <div style="overflow-x:auto">
+        <table class="bc-cost-table">
+          <thead>
+            <tr>
+              <th>Cost Category</th>
+              <th class="baseline">Hyderabad (CURE)</th>
+              <th>Warangal</th>
+              <th>Karimnagar</th>
+              <th>Nizamabad</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Office Space</strong><br><span style="font-size:0.72rem;color:var(--tdim)">Per sq ft/month (fitted)</span></td>
+              <td>Rs 65–90<br><span style="font-size:0.72rem;color:var(--tmed)">HITEC City / Gachibowli</span></td>
+              <td>Rs 25–38 <span class="est-flag">ESTIMATED</span><br><span class="saving">~55% lower</span></td>
+              <td>Rs 18–28 <span class="est-flag">ESTIMATED</span><br><span class="saving">~65% lower</span></td>
+              <td>Rs 15–24 <span class="est-flag">ESTIMATED</span><br><span class="saving">~70% lower</span></td>
+            </tr>
+            <tr>
+              <td><strong>Tech Talent (Mid-Level)</strong><br><span style="font-size:0.72rem;color:var(--tdim)">Software Engineer, 3–6 yrs, CTC p.a.</span></td>
+              <td>Rs 12–22L</td>
+              <td>Rs 8–15L <span class="est-flag">ESTIMATED</span><br><span class="saving">~30–35% lower</span></td>
+              <td>Rs 7–13L <span class="est-flag">ESTIMATED</span><br><span class="saving">~35–40% lower</span></td>
+              <td>Rs 7–12L <span class="est-flag">ESTIMATED</span><br><span class="saving">~35–45% lower</span></td>
+            </tr>
+            <tr>
+              <td><strong>Ops/Support Talent</strong><br><span style="font-size:0.72rem;color:var(--tdim)">Finance, HR, Procurement analyst, CTC p.a.</span></td>
+              <td>Rs 5–9L</td>
+              <td>Rs 3.5–6.5L <span class="est-flag">ESTIMATED</span><br><span class="saving">~28–30% lower</span></td>
+              <td>Rs 3–5.5L <span class="est-flag">ESTIMATED</span><br><span class="saving">~35–40% lower</span></td>
+              <td>Rs 3–5L <span class="est-flag">ESTIMATED</span><br><span class="saving">~35–45% lower</span></td>
+            </tr>
+            <tr>
+              <td><strong>Technology Infrastructure</strong><br><span style="font-size:0.72rem;color:var(--tdim)">Connectivity, cloud, fit-out tech delta vs. HYD</span></td>
+              <td>Baseline</td>
+              <td>+5–10% premium <span class="est-flag">ESTIMATED</span><br><span style="font-size:0.72rem;color:var(--orange)">Lower vendor density</span></td>
+              <td>+8–15% premium <span class="est-flag">ESTIMATED</span></td>
+              <td>+10–18% premium <span class="est-flag">ESTIMATED</span></td>
+            </tr>
+            <tr>
+              <td><strong>Partner Costs</strong><br><span style="font-size:0.72rem;color:var(--tdim)">Legal, real estate, payroll, staffing, IT vendors</span></td>
+              <td>Baseline (dense ecosystem)</td>
+              <td>+10–20% premium <span class="est-flag">ESTIMATED</span><br><span style="font-size:0.72rem;color:var(--orange)">Fewer local vendors</span></td>
+              <td>+15–25% premium <span class="est-flag">ESTIMATED</span></td>
+              <td>+20–30% premium <span class="est-flag">ESTIMATED</span></td>
+            </tr>
+            <tr>
+              <td><strong>Estimated Year 1 Total (50 FTE)</strong></td>
+              <td>Rs 18–24 Cr</td>
+              <td>Rs 12–16 Cr <span class="est-flag">ESTIMATED</span><br><span class="saving">~30–35% saving</span></td>
+              <td>Rs 11–15 Cr <span class="est-flag">ESTIMATED</span><br><span class="saving">~35–40% saving</span></td>
+              <td>Rs 10–14 Cr <span class="est-flag">ESTIMATED</span><br><span class="saving">~38–42% saving</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="bc-cost-mid" class="bc-cost-panel" style="display:none">
+      <div style="overflow-x:auto">
+        <table class="bc-cost-table">
+          <thead>
+            <tr>
+              <th>Cost Category</th>
+              <th class="baseline">Hyderabad (CURE)</th>
+              <th>Warangal</th>
+              <th>Karimnagar</th>
+              <th>Nizamabad</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Office Space</strong><br><span style="font-size:0.72rem;color:var(--tdim)">~15,000 sq ft fitted</span></td>
+              <td>Rs 1.2–1.6 Cr/yr</td>
+              <td>Rs 45–68L/yr <span class="est-flag">ESTIMATED</span><br><span class="saving">~55% lower</span></td>
+              <td>Rs 32–50L/yr <span class="est-flag">ESTIMATED</span><br><span class="saving">~65% lower</span></td>
+              <td>Rs 27–43L/yr <span class="est-flag">ESTIMATED</span><br><span class="saving">~70% lower</span></td>
+            </tr>
+            <tr>
+              <td><strong>Total Payroll (150 FTE)</strong><br><span style="font-size:0.72rem;color:var(--tdim)">Blended tech and ops CTC</span></td>
+              <td>Rs 22–32 Cr/yr</td>
+              <td>Rs 15–22 Cr/yr <span class="est-flag">ESTIMATED</span><br><span class="saving">~30–32% lower</span></td>
+              <td>Rs 13–20 Cr/yr <span class="est-flag">ESTIMATED</span><br><span class="saving">~35–37% lower</span></td>
+              <td>Rs 13–19 Cr/yr <span class="est-flag">ESTIMATED</span><br><span class="saving">~38–40% lower</span></td>
+            </tr>
+            <tr>
+              <td><strong>Tech Infrastructure + Partner Costs</strong></td>
+              <td>Baseline</td>
+              <td>~5–15% higher <span class="est-flag">ESTIMATED</span></td>
+              <td>~12–20% higher <span class="est-flag">ESTIMATED</span></td>
+              <td>~15–25% higher <span class="est-flag">ESTIMATED</span></td>
+            </tr>
+            <tr>
+              <td><strong>Estimated Year 1 Total (150 FTE)</strong></td>
+              <td>Rs 42–55 Cr</td>
+              <td>Rs 28–38 Cr <span class="est-flag">ESTIMATED</span><br><span class="saving">~30–33% saving</span></td>
+              <td>Rs 24–34 Cr <span class="est-flag">ESTIMATED</span><br><span class="saving">~35–38% saving</span></td>
+              <td>Rs 23–32 Cr <span class="est-flag">ESTIMATED</span><br><span class="saving">~38–42% saving</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="bc-cost-large" class="bc-cost-panel" style="display:none">
+      <div style="overflow-x:auto">
+        <table class="bc-cost-table">
+          <thead>
+            <tr>
+              <th>Cost Category</th>
+              <th class="baseline">Hyderabad (CURE)</th>
+              <th>Warangal</th>
+              <th>Karimnagar</th>
+              <th>Nizamabad</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Office Space</strong><br><span style="font-size:0.72rem;color:var(--tdim)">~30,000 sq ft fitted</span></td>
+              <td>Rs 2.3–3.2 Cr/yr</td>
+              <td>Rs 90L–1.4 Cr/yr <span class="est-flag">ESTIMATED</span><br><span class="saving">~55% lower</span></td>
+              <td>Rs 65L–1.0 Cr/yr <span class="est-flag">ESTIMATED</span><br><span class="saving">~65% lower</span></td>
+              <td>Rs 54L–86L/yr <span class="est-flag">ESTIMATED</span><br><span class="saving">~70% lower</span></td>
+            </tr>
+            <tr>
+              <td><strong>Total Payroll (300 FTE)</strong><br><span style="font-size:0.72rem;color:var(--tdim)">Blended tech and ops CTC</span></td>
+              <td>Rs 44–62 Cr/yr</td>
+              <td>Rs 30–43 Cr/yr <span class="est-flag">ESTIMATED</span><br><span class="saving">~30–32% lower</span></td>
+              <td>Rs 27–39 Cr/yr <span class="est-flag">ESTIMATED</span><br><span class="saving">~35–37% lower</span></td>
+              <td>Rs 26–37 Cr/yr <span class="est-flag">ESTIMATED</span><br><span class="saving">~38–40% lower</span></td>
+            </tr>
+            <tr>
+              <td><strong>Tech Infrastructure + Partner Costs</strong></td>
+              <td>Baseline</td>
+              <td>~5–15% higher <span class="est-flag">ESTIMATED</span></td>
+              <td>~12–20% higher <span class="est-flag">ESTIMATED</span></td>
+              <td>~15–25% higher <span class="est-flag">ESTIMATED</span></td>
+            </tr>
+            <tr>
+              <td><strong>Estimated Year 1 Total (300 FTE)</strong></td>
+              <td>Rs 82–108 Cr</td>
+              <td>Rs 55–75 Cr <span class="est-flag">ESTIMATED</span><br><span class="saving">~30–33% saving</span></td>
+              <td>Rs 48–66 Cr <span class="est-flag">ESTIMATED</span><br><span class="saving">~35–38% saving</span></td>
+              <td>Rs 46–62 Cr <span class="est-flag">ESTIMATED</span><br><span class="saving">~38–42% saving</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p class="bc-cost-note">All corridor figures are benchmarked from nearest tier-2 city data and adjusted for known cost differentials. They are directional estimates only, not town-specific confirmed quotes. Salary data benchmarked from Warangal, Karimnagar, and Nizamabad district averages (NASSCOM Telangana GCC Playbook, Nov 2024; Naukri JobSpeak Tier-2 India, 2025). Office rental benchmarked from Anarock/JLL tier-2 Telangana city data. All figures must be validated through local site visits before use in a business case.</p>
+
+    <!-- INCENTIVE ESTIMATOR -->
+    <div class="bc-sub-label">Incentive Estimator — Telangana Beyond CURE Corridors</div>
+    <p style="font-size:0.85rem;color:var(--tmed);margin-bottom:1.5rem;max-width:700px">Every figure in this table carries a visible status tag. Numbers marked <span class="bc-pending" style="display:inline">PENDING CONFIRMATION</span> must not be quoted to a company or a government stakeholder until verified in writing from the source listed. This distinction is the actual trust mechanism a government audience will respect.</p>
+    <div style="overflow-x:auto;margin-bottom:0.75rem">
+      <table class="bc-incentive-table">
+        <thead>
+          <tr>
+            <th>Incentive Category</th>
+            <th>Likely Governing Scheme</th>
+            <th>Reported / Estimated Benefit</th>
+            <th>Verification Source</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Capital Subsidy on Fixed Investment</strong><br><span style="font-size:0.75rem;color:var(--tmed)">On plant, equipment, and civil works</span></td>
+            <td>T-IDEA (Telangana State Industrial Development and Entrepreneur Advancement)</td>
+            <td>15–25% of eligible fixed capital investment, subject to category and zone<br><span class="bc-verify-src">Secondary sources only — confirm exact slab for IT/ITES specifically</span></td>
+            <td>Commissionerate of Industries, GoT; TS-iPASS portal (ipass.telangana.gov.in)</td>
+            <td><span class="bc-pending">PENDING CONFIRMATION</span></td>
+          </tr>
+          <tr>
+            <td><strong>Power Cost Reimbursement</strong><br><span style="font-size:0.75rem;color:var(--tmed)">Per unit electricity cost subsidy</span></td>
+            <td>T-IDEA scheme</td>
+            <td>Approx. Rs 1 per unit for 5 years, reported for industrial categories<br><span class="bc-verify-src">Confirm if this rate applies to IT/ITES or only manufacturing</span></td>
+            <td>TS-iPASS portal; relevant G.O. (Government Order) reference number to be obtained</td>
+            <td><span class="bc-pending">PENDING CONFIRMATION</span></td>
+          </tr>
+          <tr>
+            <td><strong>Stamp Duty / SGST Reimbursement</strong><br><span style="font-size:0.75rem;color:var(--tmed)">On land and building transactions</span></td>
+            <td>T-IDEA scheme</td>
+            <td>Reported as 100% stamp duty exemption (manufacturing zones); applicability to services-sector GCCs to be confirmed</td>
+            <td>TS-iPASS portal; confirm eligibility for services-sector establishments specifically</td>
+            <td><span class="bc-pending">PENDING CONFIRMATION</span></td>
+          </tr>
+          <tr>
+            <td><strong>IT and ITES Sector-Specific Incentives</strong><br><span style="font-size:0.75rem;color:var(--tmed)">Separate channel from general T-IDEA</span></td>
+            <td>ITE&amp;C Department, GoT — distinct from general T-IDEA; sanctioned via "Sanction of Incentives IT&amp;C" service (National Government Services Portal)</td>
+            <td>Quantum not confirmed in public domain. This is the most critical category to chase directly since GCCs are services activity and may not qualify under general industries scheme at all.</td>
+            <td>ITE&amp;C Department, GoT, directly. Contact IT Advisor's office or D. Sridhar Babu's office.</td>
+            <td><span class="bc-pending">PENDING CONFIRMATION</span></td>
+          </tr>
+          <tr>
+            <td><strong>Employment-Linked Corridor Decentralisation Incentive</strong><br><span style="font-size:0.75rem;color:var(--tmed)">New, tied to 2026 CM directive specifically</span></td>
+            <td>New scheme — not yet codified in older T-IDEA documentation. Named in the CM's review meeting in the context of TGIIC.</td>
+            <td>Quantum and structure in formulation. Do not state any figure until a written scheme notification is issued.</td>
+            <td>TGIIC (Telangana Government Infrastructure and Investment Corporation) directly; or ITE&amp;C Department. Ask the IT Advisor's office which document is authoritative.</td>
+            <td><span class="bc-pending formulating">IN FORMULATION — NO FIGURES YET</span></td>
+          </tr>
+          <tr>
+            <td><strong>STPI Registration Benefits</strong><br><span style="font-size:0.75rem;color:var(--tmed)">Central scheme, available in all corridors</span></td>
+            <td>Software Technology Parks of India (central)</td>
+            <td>100% income tax exemption on export profits (100% EOU); duty-free import of capital goods; single-window clearance</td>
+            <td>stpi.in / STPI Hyderabad nodal office (covers Telangana)</td>
+            <td><span class="bc-pending confirmed">AVAILABLE — VERIFY STPI NODE FOR EACH CORRIDOR</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="bc-cost-note">TGIIC full name: Telangana Government Infrastructure and Investment Corporation. Named as coordinating agency in the CM's review meeting minutes. Confirm current mandate and contact before citing in any official document. All incentive figures above must be replaced with confirmed amounts and a "last verified on [date], source: [department/contact name]" line before this module is shown to any government official.</p>
+
+    <!-- LIVE SIGNAL TRACKER -->
+    <div class="bc-sub-label">Beyond CURE Corridor: Live Company Signals</div>
+    <p style="font-size:0.85rem;color:var(--tmed);margin-bottom:1.25rem;max-width:680px">Companies showing indirect signals of GCC interest in the Beyond CURE corridors. Sources checked: GCC Pulse, GCC Rise, Savanna HR, Wisemonk, Ceipal, Nasscom Telangana reports, and government pipeline listings. Confirmed active GCCs are excluded. Only unconfirmed inferred signals (hiring posts, leasing chatter, earnings language) are listed here.</p>
+    <div style="overflow-x:auto;margin-bottom:0.75rem">
+      <table class="bc-signal-table">
+        <thead>
+          <tr>
+            <th>Company</th>
+            <th>Corridor of Interest</th>
+            <th>Signal Type</th>
+            <th>Source</th>
+            <th>Date Added</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody id="bc-signal-rows">
+          <tr>
+            <td colspan="6" style="text-align:center;color:var(--tdim);padding:2rem;font-size:0.82rem">No signals logged yet. The first 5 real signals from permitted sources will appear here once manually verified and added. A small manually maintained list is more credible than an empty automated dashboard.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;margin-bottom:0.5rem">
+      <div><span class="bc-signal-count" id="bc-signal-count">0</span><div style="font-size:0.72rem;color:var(--tdim)">signals tracked</div></div>
+      <div style="font-size:0.78rem;color:var(--tdim)">Last updated: <span id="bc-signal-updated" style="color:var(--tmed)">Not yet updated</span></div>
+    </div>
+    <p class="bc-cost-note">Sources with robots.txt restrictions or terms prohibiting automated access are monitored manually only. Scraping will be added only for sources that explicitly permit automated access or provide an official API or RSS feed. No claim of formal site-selection intent is made unless a source explicitly states it.</p>
+
   </div>
 </section>
 
@@ -3606,6 +3972,13 @@ function unlockBlueprint(){
       source:'bp_unlock'
     })});
   }catch(e){}
+}
+
+function bcShowSize(size,btn){
+  document.querySelectorAll('.bc-cost-panel').forEach(function(p){p.style.display='none';});
+  document.getElementById('bc-cost-'+size).style.display='block';
+  document.querySelectorAll('.bc-size-btn').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
 }
 
 function toggleMobileMenu(){
