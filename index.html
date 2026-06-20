@@ -1018,6 +1018,30 @@ section{transition:opacity 0.01s}
 .bc-signal-count{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:1.4rem;font-weight:700;color:var(--teal)}
 .bc-sub-label{font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:2px;font-weight:700;text-transform:uppercase;color:var(--gold);margin:2rem 0 0.75rem}
 @media(max-width:768px){.bc-cost-table,.bc-incentive-table,.bc-signal-table{display:block;overflow-x:auto}}
+
+/* ── STATE GCC POLICY DRAWER ── */
+.city-policy-btn{width:100%;margin-top:0.5rem;padding:0.42rem;background:transparent;border:1px solid var(--bd);border-radius:7px;color:var(--tmed);font-size:0.75rem;font-weight:600;cursor:pointer;letter-spacing:0.04em;transition:border-color 0.2s,color 0.2s,background 0.2s;display:flex;align-items:center;justify-content:center;gap:0.4rem;font-family:'Outfit',sans-serif}
+.city-policy-btn:hover{border-color:var(--teal);color:var(--teal);background:rgba(0,212,110,0.05)}
+.city-policy-btn .cpb-arrow{display:inline-block;transition:transform 0.3s var(--ease-expo);font-size:0.68rem}
+.city-policy-btn.open .cpb-arrow{transform:rotate(180deg)}
+.city-policy-drawer{display:none;margin-top:0.75rem;border-top:1px solid var(--bd);padding-top:0.85rem;animation:fadeIn 0.25s ease}
+.city-policy-drawer.open{display:block}
+.cpd-loading{display:flex;align-items:center;gap:0.6rem;font-size:0.78rem;color:var(--tdim);padding:0.5rem 0}
+.cpd-loading .sp{width:14px;height:14px;border:2px solid var(--bd);border-top-color:var(--teal);border-radius:50%;animation:spin 0.7s linear infinite;flex-shrink:0}
+.cpd-policy-name{font-size:0.88rem;font-weight:700;color:var(--txt);margin-bottom:0.15rem}
+.cpd-policy-year{font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--gold);letter-spacing:1px;margin-bottom:0.65rem;font-weight:700}
+.cpd-incentives{list-style:none;padding:0;margin:0 0 0.65rem}
+.cpd-incentives li{font-size:0.78rem;color:var(--tmed);padding:0.22rem 0;border-bottom:1px solid var(--bd);display:flex;align-items:flex-start;gap:0.4rem;line-height:1.5}
+.cpd-incentives li:last-child{border-bottom:none}
+.cpd-incentives li::before{content:'→';color:var(--teal);flex-shrink:0;font-size:0.72rem;margin-top:2px}
+.cpd-row{display:flex;justify-content:space-between;font-size:0.75rem;padding:0.2rem 0;border-bottom:1px solid var(--bd)}
+.cpd-row:last-of-type{border-bottom:none}
+.cpd-row .cpd-k{color:var(--tdim);font-weight:500}
+.cpd-row .cpd-v{color:var(--txt);font-weight:600;text-align:right;max-width:55%}
+.cpd-portal{display:inline-flex;align-items:center;gap:0.3rem;font-size:0.7rem;font-weight:700;color:var(--teal);text-decoration:none;padding:0.2rem 0.6rem;border:1px solid rgba(0,212,110,0.3);border-radius:5px;background:rgba(0,212,110,0.06);margin-top:0.65rem;transition:all 0.2s}
+.cpd-portal:hover{background:rgba(0,212,110,0.15);border-color:rgba(0,212,110,0.6)}
+.cpd-source{font-size:0.65rem;color:var(--tdim);margin-top:0.5rem;font-style:italic}
+.cpd-nd{color:var(--tdim);font-style:italic}
 .bc-signal-registry{display:flex;flex-direction:column;gap:1rem;margin-bottom:0.75rem}
 .bc-sig-cat{background:var(--s2);border:1px solid var(--bd);border-radius:12px;overflow:hidden}
 .bc-sig-cat-header{display:flex;gap:1.1rem;align-items:flex-start;padding:1.1rem 1.4rem;cursor:pointer;user-select:none;transition:background 0.2s}
@@ -3308,6 +3332,8 @@ function renderCities(tierFilter){
     (c.govtSchemes&&c.govtSchemes.length?'<div class="city-schemes">'+c.govtSchemes.map(function(s){return'<span class="city-scheme-pill '+s.type+'">'+s.name+'</span>';}).join('')+'</div>':'')+
     '<div class="city-tags">'+c.tags.map(function(t){return'<span class="city-tag-pill">'+t+'</span>';}).join('')+'</div>'+
     '<button onclick="runSimulatorForCity(\''+c.name+'\')" style="width:100%;margin-top:0.75rem;padding:0.45rem;background:rgba(232,184,75,0.12);border:1px solid rgba(232,184,75,0.35);border-radius:7px;color:var(--gold);font-size:0.78rem;font-weight:700;cursor:pointer;letter-spacing:0.05em" onmouseover="this.style.background=\'rgba(232,184,75,0.25)\'" onmouseout="this.style.background=\'rgba(232,184,75,0.12)\'">Build Blueprint for '+c.name+' →</button>'+
+    '<button class="city-policy-btn" onclick="toggleStatePolicy(this,\''+c.name+'\',\''+c.state+'\')"><span>&#127963; State GCC Policy</span><span class="cpb-arrow">&#9660;</span></button>'+
+    '<div class="city-policy-drawer" id="policy-drawer-'+c.name.replace(/[^a-z]/gi,'').toLowerCase()+'"></div>'+
     '</div>';
   }).join('');
   // Populate dropdown with all cities
@@ -3349,6 +3375,83 @@ function runSimulatorForCity(cityName){
 }
 
 renderCities('all');
+
+// ── STATE GCC POLICY ENGINE ──
+var STATE_POLICY_TTL=86400000; // 24h
+
+function toggleStatePolicy(btn,cityName,stateName){
+  var drawerId='policy-drawer-'+cityName.replace(/[^a-z]/gi,'').toLowerCase();
+  var drawer=document.getElementById(drawerId);
+  if(!drawer)return;
+  var isOpen=drawer.classList.contains('open');
+  if(isOpen){drawer.classList.remove('open');btn.classList.remove('open');return;}
+  drawer.classList.add('open');
+  btn.classList.add('open');
+  if(drawer.dataset.loaded)return; // already fetched
+  fetchStatePolicy(drawer,stateName);
+}
+
+async function fetchStatePolicy(drawer,stateName){
+  drawer.innerHTML='<div class="cpd-loading"><div class="sp"></div><span>Fetching official state GCC policy from government sources...</span></div>';
+  var cacheKey='state_policy_v2_'+stateName.replace(/[^a-z0-9]/gi,'_').toLowerCase();
+  try{
+    var raw=sessionStorage.getItem(cacheKey);
+    if(raw){var obj=JSON.parse(raw);if(obj._ts&&(Date.now()-obj._ts<STATE_POLICY_TTL)){renderStatePolicy(drawer,obj);return;}}
+  }catch(e){}
+  var prompt=
+    'You are a government policy research assistant. Your task is to find and return ONLY officially published information about the GCC (Global Capability Centre) or IT/ITES investment policy for the state of '+stateName+', India.\n\n'+
+    'Search government websites, official press releases, NASSCOM publications, and reputable news sources (Economic Times, Business Standard, LiveMint, Hindu BusinessLine) that are reporting on official government announcements.\n\n'+
+    'STRICT RULES:\n'+
+    '- Return ONLY information that appears in an official government source or a credible news report citing an official announcement.\n'+
+    '- If you cannot find confirmed official data for any field, write exactly: "Not officially declared"\n'+
+    '- Do NOT invent, estimate, or extrapolate any figures.\n'+
+    '- Do NOT return information from generic directories, Wikipedia, or third-party aggregators.\n\n'+
+    'Return ONLY valid JSON, no markdown, no explanation:\n'+
+    '{"policy_name":"","policy_year":"","gcc_target":"","investment_target":"","key_incentives":["","",""],"notable_corridors":"","official_portal":"","source_name":"","last_updated":""}';
+  try{
+    var resp=await fetch('/api/gemini',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        _model:'gemini-2.5-flash',
+        tools:[{google_search:{}}],
+        contents:[{parts:[{text:prompt}]}],
+        generationConfig:{temperature:0.1,thinkingConfig:{thinkingBudget:0}}
+      })
+    });
+    var data=await resp.json();
+    var txt=(data.candidates&&data.candidates[0]&&data.candidates[0].content&&data.candidates[0].content.parts&&data.candidates[0].content.parts[0]&&data.candidates[0].content.parts[0].text)||'';
+    var m=txt.match(/\{[\s\S]*\}/);
+    if(!m)throw new Error('no json');
+    var d=JSON.parse(m[0]);
+    d._ts=Date.now();
+    d._state=stateName;
+    try{sessionStorage.setItem(cacheKey,JSON.stringify(d));}catch(e){}
+    renderStatePolicy(drawer,d);
+  }catch(e){
+    drawer.innerHTML='<div style="font-size:0.78rem;color:var(--tdim);padding:0.5rem 0">Could not fetch policy data. <button onclick="fetchStatePolicy(this.closest(\'.city-policy-drawer\'),\''+stateName+'\')" style="color:var(--teal);background:none;border:none;cursor:pointer;font-size:0.75rem;text-decoration:underline">Retry</button></div>';
+  }
+}
+
+function renderStatePolicy(drawer,d){
+  var nd='<span class="cpd-nd">Not officially declared</span>';
+  var incentivesHtml=(d.key_incentives&&d.key_incentives.filter(function(i){return i&&i!=='Not officially declared';}).length)
+    ?'<ul class="cpd-incentives">'+d.key_incentives.filter(function(i){return i;}).map(function(i){return'<li>'+i+'</li>';}).join('')+'</ul>'
+    :'<ul class="cpd-incentives"><li>'+nd+'</li></ul>';
+  var portalHtml=d.official_portal&&d.official_portal!=='Not officially declared'
+    ?'<a href="'+d.official_portal+'" target="_blank" rel="noopener" class="cpd-portal">&#127760; Official Portal ↗</a>'
+    :'';
+  drawer.innerHTML=
+    '<div class="cpd-policy-name">'+(d.policy_name||nd)+'</div>'+
+    '<div class="cpd-policy-year">'+(d.policy_year&&d.policy_year!=='Not officially declared'?'Published '+d.policy_year:'Year not declared')+'</div>'+
+    incentivesHtml+
+    '<div class="cpd-row"><span class="cpd-k">GCC Target</span><span class="cpd-v">'+(d.gcc_target&&d.gcc_target!=='Not officially declared'?d.gcc_target:nd)+'</span></div>'+
+    '<div class="cpd-row"><span class="cpd-k">Investment Target</span><span class="cpd-v">'+(d.investment_target&&d.investment_target!=='Not officially declared'?d.investment_target:nd)+'</span></div>'+
+    (d.notable_corridors&&d.notable_corridors!=='Not officially declared'?'<div class="cpd-row"><span class="cpd-k">Notable Corridors</span><span class="cpd-v">'+d.notable_corridors+'</span></div>':'')+
+    portalHtml+
+    '<div class="cpd-source">Source: '+(d.source_name&&d.source_name!=='Not officially declared'?d.source_name:'Official government source')+(d.last_updated&&d.last_updated!=='Not officially declared'?' · '+d.last_updated:'')+'</div>';
+  drawer.dataset.loaded='1';
+}
 
 // ── CITY LIVE DATA ENGINE ──
 var CITY_CACHE_KEY="city_live_data_v1";
