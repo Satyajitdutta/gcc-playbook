@@ -89,6 +89,58 @@
       </div>
     </div>
     <div id="leads-wrap"></div>
+
+    <!-- BEYOND CURE SIGNAL TRACKER -->
+    <div style="margin-top:2.5rem;border-top:1px solid rgba(255,255,255,0.08);padding-top:2rem">
+      <h1 style="font-size:1.2rem;margin:0 0 0.3rem">Beyond CURE Corridor Signals</h1>
+      <p class="sub">Companies showing indirect, unconfirmed signals of GCC interest in Warangal, Karimnagar, or Nizamabad. Only inferred signals qualify. Confirmed active GCCs are excluded.</p>
+
+      <div class="card" style="margin-bottom:1rem">
+        <div class="section-title">Auto-Discover Signals</div>
+        <p class="sub" style="margin-bottom:1rem">Scans the open web using Gemini + Google Search grounding for hiring posts, leasing chatter, regulatory filings, and other indirect signals in the three Beyond CURE corridors. On-demand only.</p>
+        <button id="bc-scan-btn" onclick="bcScanNow()">Scan Beyond CURE Corridors</button>
+        <span id="bc-scan-status" style="margin-left:0.8rem;font-size:0.85rem;color:#94a3b8"></span>
+      </div>
+
+      <div class="card" style="margin-bottom:1rem">
+        <div class="section-title">Add Signal Manually</div>
+        <div class="row">
+          <div class="field" style="flex:2"><label>Company</label><input id="bc-company" placeholder="e.g. Hexaware Technologies"></div>
+          <div class="field" style="flex:1"><label>Corridor</label>
+            <select id="bc-corridor">
+              <option value="warangal">Warangal</option>
+              <option value="karimnagar">Karimnagar</option>
+              <option value="nizamabad">Nizamabad</option>
+            </select>
+          </div>
+          <div class="field" style="flex:1"><label>Signal Category</label>
+            <select id="bc-sigcat">
+              <option value="talent">Talent / Hiring</option>
+              <option value="regulatory">Regulatory Filing</option>
+              <option value="real_estate">Real Estate</option>
+              <option value="infrastructure">Infrastructure / Utility</option>
+              <option value="government_policy">Government / Policy Pipeline</option>
+              <option value="earnings">Earnings / Investor Comms</option>
+              <option value="vendor_ecosystem">Vendor Ecosystem</option>
+              <option value="digital_footprint">Digital Footprint / IP</option>
+              <option value="informal_network">Informal Network</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field" style="flex:3"><label>Signal Detail</label><input id="bc-detail" placeholder="What was found — 1 or 2 sentences"></div>
+          <div class="field" style="flex:2"><label>Source</label><input id="bc-source" placeholder="e.g. LinkedIn job post, June 2026"></div>
+          <div class="field" style="flex:1"><label>Probability (0-100)</label><input id="bc-prob" type="number" min="0" max="100" value="40"></div>
+        </div>
+        <button onclick="bcAddManual()">Add Signal</button>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.6rem;margin-bottom:0.75rem">
+        <span style="font-weight:700">Active Signals <span id="bc-signal-count-admin" style="font-size:0.85rem;color:#22c55e;font-weight:700;background:rgba(34,197,94,0.12);border-radius:6px;padding:0.15rem 0.55rem"></span></span>
+        <button class="secondary" style="font-size:0.78rem;padding:0.45rem 0.9rem" id="bc-arch-toggle" onclick="bcToggleArchived()">View Archived</button>
+      </div>
+      <div id="bc-signals-wrap"></div>
+    </div>
   </div>
 </div>
 
@@ -320,6 +372,94 @@ async function delLead(id){
 }
 
 if(token)enterDash();
+
+// ── BEYOND CURE SIGNAL TRACKER ────────────────────────────────────────────────
+var BC_API='/api/beyond-cure-signals';
+var bcShowingArchived=false;
+var bcSignals=[];
+
+async function bcLoad(){
+  var r=await fetch(BC_API,{method:'POST',headers:{'Content-Type':'application/json','X-Admin-Token':token},body:JSON.stringify({action:bcShowingArchived?'list':'list',archived:bcShowingArchived})});
+  var d=await r.json();
+  bcSignals=d.signals||[];
+  document.getElementById('bc-signal-count-admin').textContent=bcSignals.length;
+  bcRender();
+}
+
+function bcRender(){
+  var wrap=document.getElementById('bc-signals-wrap');
+  if(!bcSignals.length){wrap.innerHTML='<p style="color:#64748b;font-size:0.85rem">No signals yet.</p>';return;}
+  var corrLabel={warangal:'Warangal',karimnagar:'Karimnagar',nizamabad:'Nizamabad'};
+  var catLabel={talent:'Talent',regulatory:'Regulatory',real_estate:'Real Estate',infrastructure:'Infrastructure',government_policy:'Govt / Policy',earnings:'Earnings',vendor_ecosystem:'Vendor',digital_footprint:'Digital',informal_network:'Informal'};
+  wrap.innerHTML='<table><thead><tr><th>Company</th><th>Corridor</th><th>Category</th><th>Signal</th><th>Source</th><th>Date</th><th>Prob</th><th></th></tr></thead><tbody>'+
+    bcSignals.map(function(s){
+      return '<tr>'+
+        '<td style="font-weight:600">'+s.company+'</td>'+
+        '<td><span style="font-size:0.72rem;background:rgba(0,212,110,0.12);color:#22c55e;padding:2px 7px;border-radius:4px;font-weight:700">'+(corrLabel[s.corridor]||s.corridor)+'</span></td>'+
+        '<td style="font-size:0.78rem;color:#94a3b8">'+(catLabel[s.signal_cat]||s.signal_cat)+'</td>'+
+        '<td style="font-size:0.8rem;max-width:260px;word-break:break-word">'+(s.signal_detail||'')+'</td>'+
+        '<td style="font-size:0.78rem;color:#94a3b8">'+(s.source||'')+'</td>'+
+        '<td style="font-size:0.78rem;color:#94a3b8">'+(s.added_date?s.added_date.toString().slice(0,10):'')+'</td>'+
+        '<td><span style="font-weight:700;color:'+(s.probability>=60?'#22c55e':s.probability>=35?'#f59e0b':'#94a3b8')+'">'+s.probability+'</span></td>'+
+        '<td class="lead-actions">'+
+          '<button class="secondary" style="font-size:0.72rem;padding:0.3rem 0.6rem" onclick="bcArchive('+s.id+','+bcShowingArchived+')">'+(bcShowingArchived?'Restore':'Archive')+'</button>'+
+          '<button class="danger" style="font-size:0.72rem;padding:0.3rem 0.6rem" onclick="bcDelete('+s.id+')">Del</button>'+
+        '</td></tr>';
+    }).join('')+'</tbody></table>';
+}
+
+async function bcScanNow(){
+  var btn=document.getElementById('bc-scan-btn');
+  var st=document.getElementById('bc-scan-status');
+  btn.disabled=true;st.textContent='Scanning...';
+  try{
+    var r=await fetch(BC_API,{method:'POST',headers:{'Content-Type':'application/json','X-Admin-Token':token},body:JSON.stringify({action:'discover'})});
+    var d=await r.json();
+    if(!r.ok){st.textContent='Error: '+(d.error||'failed');return;}
+    st.textContent='Done. Found '+d.candidates+' candidates, added '+d.added+' new signals.';
+    bcLoad();
+  }catch(e){st.textContent='Error: '+e.message;}
+  finally{btn.disabled=false;}
+}
+
+async function bcAddManual(){
+  var company=document.getElementById('bc-company').value.trim();
+  if(!company){alert('Company name required');return;}
+  await fetch(BC_API,{method:'POST',headers:{'Content-Type':'application/json','X-Admin-Token':token},body:JSON.stringify({
+    action:'add',
+    company:company,
+    corridor:document.getElementById('bc-corridor').value,
+    signal_cat:document.getElementById('bc-sigcat').value,
+    signal_detail:document.getElementById('bc-detail').value.trim(),
+    source:document.getElementById('bc-source').value.trim(),
+    probability:parseInt(document.getElementById('bc-prob').value)||40
+  })});
+  document.getElementById('bc-company').value='';
+  document.getElementById('bc-detail').value='';
+  document.getElementById('bc-source').value='';
+  bcLoad();
+}
+
+async function bcArchive(id,isArchived){
+  await fetch(BC_API,{method:'POST',headers:{'Content-Type':'application/json','X-Admin-Token':token},body:JSON.stringify({action:isArchived?'unarchive':'archive',id:id})});
+  bcLoad();
+}
+
+async function bcDelete(id){
+  if(!confirm('Delete this signal permanently?'))return;
+  await fetch(BC_API,{method:'POST',headers:{'Content-Type':'application/json','X-Admin-Token':token},body:JSON.stringify({action:'delete',id:id})});
+  bcLoad();
+}
+
+function bcToggleArchived(){
+  bcShowingArchived=!bcShowingArchived;
+  document.getElementById('bc-arch-toggle').textContent=bcShowingArchived?'View Active':'View Archived';
+  bcLoad();
+}
+
+// Load BC signals when dashboard opens
+var _origEnterDash=enterDash;
+enterDash=function(){_origEnterDash();bcLoad();};
 </script>
 </body>
 </html>

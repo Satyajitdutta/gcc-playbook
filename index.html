@@ -2464,8 +2464,8 @@ if(document.readyState==="loading"){
           </tr>
         </thead>
         <tbody id="bc-signal-rows">
-          <tr>
-            <td colspan="6" style="text-align:center;color:var(--tdim);padding:2rem;font-size:0.82rem">No signals logged yet. Add the first verified, unconfirmed signal using the 9 source categories below.</td>
+          <tr id="bc-signal-placeholder">
+            <td colspan="6" style="text-align:center;color:var(--tdim);padding:2rem;font-size:0.82rem">Loading signals...</td>
           </tr>
         </tbody>
       </table>
@@ -4237,6 +4237,54 @@ function unlockBlueprint(){
     })});
   }catch(e){}
 }
+
+// ── BEYOND CURE PUBLIC SIGNAL FETCH ──
+(function(){
+  var corrLabel={warangal:'Warangal',karimnagar:'Karimnagar',nizamabad:'Nizamabad'};
+  var catLabel={talent:'Talent / Hiring',regulatory:'Regulatory Filing',real_estate:'Real Estate',infrastructure:'Infrastructure',government_policy:'Govt / Policy',earnings:'Earnings / Investor',vendor_ecosystem:'Vendor Ecosystem',digital_footprint:'Digital Footprint',informal_network:'Informal Network'};
+
+  async function loadBCSignals(){
+    try{
+      var r=await fetch('/api/beyond-cure-signals?action=public_stats');
+      var stats=await r.json();
+      var countEl=document.getElementById('bc-signal-count');
+      var updEl=document.getElementById('bc-signal-updated');
+      if(countEl)countEl.textContent=stats.total||'0';
+      if(updEl&&stats.last_updated)updEl.textContent=new Date(stats.last_updated).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+      else if(updEl&&!stats.last_updated)updEl.textContent='Not yet updated';
+
+      if(stats.total>0){
+        var r2=await fetch('/api/beyond-cure-signals?action=list_public');
+        var data=await r2.json();
+        var rows=data.signals||[];
+        var tbody=document.getElementById('bc-signal-rows');
+        var placeholder=document.getElementById('bc-signal-placeholder');
+        if(placeholder)placeholder.remove();
+        if(tbody&&rows.length){
+          tbody.innerHTML=rows.map(function(s){
+            return'<tr>'+
+              '<td style="font-weight:600;font-size:0.82rem">'+s.company+'</td>'+
+              '<td><span style="font-family:\'JetBrains Mono\',monospace;font-size:0.65rem;background:rgba(0,212,110,0.1);color:var(--teal);padding:2px 7px;border-radius:4px;font-weight:700">'+(corrLabel[s.corridor]||s.corridor)+'</span></td>'+
+              '<td style="font-size:0.78rem;color:var(--tmed)">'+(catLabel[s.signal_cat]||s.signal_cat)+'</td>'+
+              '<td style="font-size:0.78rem;color:var(--tmed);max-width:220px">'+s.signal_detail+'</td>'+
+              '<td style="font-size:0.75rem;color:var(--tdim)">'+s.source+'</td>'+
+              '<td style="font-family:\'JetBrains Mono\',monospace;font-size:0.72rem;color:var(--tdim)">'+(s.added_date?s.added_date.toString().slice(0,10):'')+'</td>'+
+            '</tr>';
+          }).join('');
+        }
+      }else{
+        var ph=document.getElementById('bc-signal-placeholder');
+        if(ph)ph.querySelector('td').textContent='No signals logged yet. Pithonix monitors 9 signal categories across these corridors. Verified signals appear here.';
+      }
+    }catch(e){
+      var ph=document.getElementById('bc-signal-placeholder');
+      if(ph)ph.querySelector('td').textContent='Signal data unavailable.';
+    }
+  }
+
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',loadBCSignals);}
+  else{loadBCSignals();}
+})();
 
 function bcShowSize(size,btn){
   document.querySelectorAll('.bc-cost-panel').forEach(function(p){p.style.display='none';});
