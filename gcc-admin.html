@@ -416,7 +416,7 @@ async function bcScanNow(){
     var r=await fetch(BC_API,{method:'POST',headers:{'Content-Type':'application/json','X-Admin-Token':token},body:JSON.stringify({action:'discover'})});
     var d=await r.json();
     if(!r.ok){st.textContent='Error: '+(d.error||'failed');return;}
-    st.textContent='Done. Found '+d.candidates+' candidates, added '+d.added+' new signals.';
+    st.textContent='Scan complete. Scanned: '+d.scanned+' | Added: '+d.added+' | Rejected (known India GCC): '+d.rejected_exclusion+' | Rejected (Pass 2 validation): '+d.rejected_validation+'.';
     bcLoad();
   }catch(e){st.textContent='Error: '+e.message;}
   finally{btn.disabled=false;}
