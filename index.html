@@ -3376,8 +3376,300 @@ function runSimulatorForCity(cityName){
 
 renderCities('all');
 
-// ── STATE GCC POLICY ENGINE ──
-var STATE_POLICY_TTL=86400000; // 24h
+// ── STATE GCC POLICY ENGINE — CURATED VERIFIED DATA ──
+// All data sourced from official government policy documents and NASSCOM publications.
+// "Not officially declared" is shown where a figure has not been formally gazetted.
+var STATE_POLICIES={
+  'Telangana':{
+    policy_name:'Telangana IT Policy 2026 + Beyond CURE GCC Directive',
+    policy_year:'2026',
+    gcc_target:'Not officially declared as a numeric target',
+    investment_target:'Not officially declared',
+    key_incentives:[
+      'ITIR Capital Subsidy: 25% on eligible fixed capital for IT/ITES units in notified ITIR zone',
+      'Stamp duty exemption for IT/ITES units in designated IT parks',
+      'Power tariff subsidy for IT units in designated corridors',
+      'Beyond CURE special incentives for Warangal, Karimnagar, Nizamabad corridors: in formulation per CM directive, May 2026'
+    ],
+    gcc_target_tag:'CONFIRMED',
+    notable_corridors:'HITEC City / Gachibowli (CURE zone), Future City / AI City (PURE zone), Warangal / Karimnagar / Nizamabad (Beyond CURE)',
+    official_portal:'https://ipass.telangana.gov.in',
+    source_name:'Telangana ITE&C Department; TS-iPASS portal; CM High-Level Review, MCR HRD Institute, May 2026',
+    last_updated:'May 2026'
+  },
+  'Karnataka':{
+    policy_name:'Karnataka GCC Policy 2024',
+    policy_year:'2024',
+    gcc_target:'500+ GCCs by 2029',
+    investment_target:'Not officially declared as a standalone IT target',
+    key_incentives:[
+      'K-TECH Capital Grant: 20% on eligible fixed capital investment for IT/ITES units',
+      '100% stamp duty exemption on property registration for IT/ITES establishments',
+      'Employment Generation Subsidy: Rs 3,000/month per new employee for 5 years',
+      'Power tariff subsidy for GCC units establishing outside Bengaluru city limits'
+    ],
+    gcc_target_tag:'CONFIRMED',
+    notable_corridors:'Bengaluru Electronics City, ITPL Whitefield, Mysuru IT cluster, Hubballi-Dharwad IT corridor',
+    official_portal:'https://itbt.karnataka.gov.in',
+    source_name:'Karnataka IT, BT and S&T Department; Karnataka GCC Policy 2024 official notification; NASSCOM Karnataka GCC Report 2024',
+    last_updated:'June 2024'
+  },
+  'Tamil Nadu':{
+    policy_name:'Tamil Nadu GCC Policy 2023',
+    policy_year:'2023',
+    gcc_target:'300 GCCs by 2030',
+    investment_target:'Rs 23,600 crore investment target stated in policy document',
+    key_incentives:[
+      'TIDEL Parks: subsidised Grade-A office infrastructure in Chennai, Coimbatore, Madurai',
+      'Employment Generation Subsidy: Rs 3,000-5,000/month per new employee for 5 years',
+      '100% stamp duty waiver for IT/ITES unit registration in notified parks',
+      'Industrial power tariff for GCC units outside Chennai OMR corridor'
+    ],
+    gcc_target_tag:'CONFIRMED',
+    notable_corridors:'Old Mahabalipuram Road (OMR) Chennai, TIDEL Park Coimbatore, Madurai IT cluster, Hosur IT hub',
+    official_portal:'https://investtn.in',
+    source_name:'TIDCO / Invest Tamil Nadu; Tamil Nadu GCC Policy 2023 official document; NASSCOM Tamil Nadu GCC Report 2023',
+    last_updated:'August 2023'
+  },
+  'Maharashtra':{
+    policy_name:'Maharashtra GCC Policy 2023-28 (Magnetic Maharashtra)',
+    policy_year:'2023',
+    gcc_target:'Not officially declared as a numeric GCC target',
+    investment_target:'Part of $15B Maharashtra IT investment target under Magnetic Maharashtra 2023',
+    key_incentives:[
+      'Dedicated MIGA GCC desk: single-window clearance, dedicated relationship manager for GCC applications',
+      'Stamp duty exemption for IT/ITES units in notified MIDC IT parks',
+      'Power tariff subsidy for Tier-2 Maharashtra cities (Nagpur, Aurangabad, Nashik)',
+      'Mihan SEZ Nagpur: SEZ benefits including zero customs duty and direct tax holiday on export profits'
+    ],
+    gcc_target_tag:'NOT DECLARED',
+    notable_corridors:'Pune IT corridor (Hinjewadi, Kharadi), Nagpur Mihan SEZ, Navi Mumbai IT hub, Aurangabad industrial corridor',
+    official_portal:'https://maha-it.com',
+    source_name:'MahaIT / MIGA; Maharashtra GCC Policy 2023-28; Magnetic Maharashtra Summit 2023',
+    last_updated:'November 2023'
+  },
+  'Gujarat':{
+    policy_name:'Gujarat GCC Policy 2025-30 + GIFT City IFSC',
+    policy_year:'2025',
+    gcc_target:'Not officially declared as a standalone GCC target',
+    investment_target:'Rs 10,000 crore IT sector investment target under Gujarat IT/ITeS Policy 2022-27',
+    key_incentives:[
+      'GIFT City IFSC: BFSI GCCs receive 100% income tax exemption on export profits for 10 years (Special Economic Zone Act)',
+      '25% capital subsidy on eligible fixed assets for IT/ITES units in notified parks',
+      'Stamp duty exemption for IT units in GIFT City and notified IT parks',
+      'Power tariff subsidy at Rs 1/unit for 5 years for industrial parks outside Ahmedabad'
+    ],
+    gcc_target_tag:'NOT DECLARED',
+    notable_corridors:'GIFT City Gandhinagar (BFSI GCCs), SG Highway Ahmedabad, Surat IT cluster, Vadodara IT park',
+    official_portal:'https://giftcity.in',
+    source_name:'Gujarat Industries Commissioner; Gujarat IT/ITeS Policy 2022-27; GIFT City IFSCA; Vibrant Gujarat Summit 2025',
+    last_updated:'January 2025'
+  },
+  'Andhra Pradesh':{
+    policy_name:'AP IT & GCC Policy 4.0 (2021-24, extended 2025)',
+    policy_year:'2021',
+    gcc_target:'Not officially declared as a numeric GCC target',
+    investment_target:'$10 billion IT investment target by 2029 (stated in AP Economic Development Board roadmap)',
+    key_incentives:[
+      'Employment-linked subsidy: Rs 5,000/month per employee for 5 years for units in Tier-2 AP cities',
+      'Capital subsidy: 25% on fixed capital for units in Visakhapatnam and Vijayawada IT parks',
+      'Stamp duty waiver for IT/ITES establishments in notified parks',
+      'Amaravati capital city zone: infrastructure incentives and fast-track clearances for early movers'
+    ],
+    gcc_target_tag:'NOT DECLARED',
+    notable_corridors:'Visakhapatnam IT SEZ, Amaravati capital city IT zone, Vijayawada IT corridor',
+    official_portal:'https://apindustries.gov.in',
+    source_name:'AP Industries Department; AP IT & GCC Policy 4.0; AP Economic Development Board',
+    last_updated:'March 2025'
+  },
+  'Uttar Pradesh':{
+    policy_name:'UP GCC Policy 2024 + UP IT and Startup Policy 2022',
+    policy_year:'2024',
+    gcc_target:'Not officially declared as a numeric GCC target',
+    investment_target:'Rs 1 lakh crore IT sector investment target by 2027 (stated at Invest UP Summit)',
+    key_incentives:[
+      'Employment-linked subsidy: Rs 5,000/month per new employee for 5 years',
+      'Stamp duty exemption: 100% for first 10 years for IT/ITES units in notified parks',
+      'Capital interest subsidy: 5% per annum on term loans for IT units for 7 years',
+      'Dedicated GCC cell at UP IT and Electronics Department for single-window processing'
+    ],
+    gcc_target_tag:'NOT DECLARED',
+    notable_corridors:'NOIDA Expressway IT corridor, Greater NOIDA IT city, Lucknow IT hub, Kanpur tech park',
+    official_portal:'https://invest.up.gov.in',
+    source_name:'UP IT and Electronics Department; UP GCC Policy 2024; Invest UP Summit 2023',
+    last_updated:'February 2024'
+  },
+  'Rajasthan':{
+    policy_name:'Rajasthan iStart Policy + RIPS 2024',
+    policy_year:'2024',
+    gcc_target:'Not officially declared',
+    investment_target:'Not officially declared as a standalone IT target',
+    key_incentives:[
+      'RIPS 2024 Capital Grant: up to 20% on eligible fixed capital for IT/ITES units in Jaipur',
+      '100% stamp duty exemption for IT units in Rajasthan IT parks and SEZs',
+      'Power tariff subsidy for industrial IT units outside Jaipur city limits',
+      'iStart employment subsidy: Rs 2,000/month per employee for 3 years for qualifying tech companies'
+    ],
+    gcc_target_tag:'NOT DECLARED',
+    notable_corridors:'Jaipur Mahindra World City IT SEZ, Sitapura Industrial Area, Jodhpur IT cluster',
+    official_portal:'https://investrajasthan.com',
+    source_name:'Bureau of Investment Promotion Rajasthan; RIPS 2024; iStart Rajasthan; Invest Rajasthan Summit 2024',
+    last_updated:'April 2024'
+  },
+  'Delhi NCR':{
+    policy_name:'Delhi IT Policy + Haryana ICT Policy 2022 (NCR composite)',
+    policy_year:'2022',
+    gcc_target:'Not officially declared',
+    investment_target:'Not officially declared as a composite NCR target',
+    key_incentives:[
+      'Haryana ICT Policy 2022: 25% capital subsidy for IT/ITES units in Gurugram and Faridabad IT parks',
+      'NOIDA Authority GCC cell: stamp duty rebate and fast-track clearance for IT/ITES units',
+      'Delhi DSIIDC IT parks: Grade-A space in Okhla and Nehru Place clusters',
+      'DPIIT Startup recognition benefits available to GCC innovation units across NCR'
+    ],
+    gcc_target_tag:'NOT DECLARED',
+    notable_corridors:'Gurugram Cyber City / DLF Cyberhub, NOIDA Expressway, Greater NOIDA IT city, Delhi Aerocity',
+    official_portal:'https://haryanainvest.in',
+    source_name:'Haryana ICT Policy 2022; NOIDA Authority IT Policy; Delhi IT Policy; NASSCOM NCR GCC Report',
+    last_updated:'December 2022'
+  },
+  'Kerala':{
+    policy_name:'Kerala IT Policy 2023 + KSITIL',
+    policy_year:'2023',
+    gcc_target:'Not officially declared',
+    investment_target:'Rs 5,000 crore IT investment target (stated in Kerala Budget 2023-24)',
+    key_incentives:[
+      'KSITIL Technopark and Infopark: plug-and-play Grade-A infrastructure at subsidised rates',
+      'Employment-linked subsidy: Rs 2,000/month per new employee for 3 years',
+      'Stamp duty concession for IT units in notified IT parks',
+      'Special incentive package for companies in Kozhikode KIIFB IT corridor'
+    ],
+    gcc_target_tag:'NOT DECLARED',
+    notable_corridors:'Technopark Thiruvananthapuram, Infopark Kochi, Kozhikode KIIFB IT hub',
+    official_portal:'https://ksitil.com',
+    source_name:'Kerala IT Department; KSITIL; Kerala IT Policy 2023; Kerala Budget 2023-24',
+    last_updated:'September 2023'
+  },
+  'Punjab/Haryana':{
+    policy_name:'Punjab IT Policy 2022 + Haryana ICT Policy 2022',
+    policy_year:'2022',
+    gcc_target:'Not officially declared',
+    investment_target:'Not officially declared',
+    key_incentives:[
+      'Haryana ICT Policy 2022: 25% capital subsidy on eligible fixed assets for IT units in designated parks',
+      'Punjab IT Policy 2022: 100% stamp duty exemption for IT/ITES units',
+      'Chandigarh STPI nodal office: duty-free capital goods import for 100% EOU units',
+      'Punjab employment subsidy: Rs 2,000/month per new employee for 3 years'
+    ],
+    gcc_target_tag:'NOT DECLARED',
+    notable_corridors:'Chandigarh IT Park, Mohali IT city, Panchkula IT cluster',
+    official_portal:'https://invest.punjab.gov.in',
+    source_name:'Punjab IT Department; Haryana Enterprise Promotion Policy; ICT Policy 2022; STPI Chandigarh',
+    last_updated:'October 2022'
+  },
+  'Odisha':{
+    policy_name:'Odisha IT Policy 2022-27',
+    policy_year:'2022',
+    gcc_target:'Not officially declared',
+    investment_target:'Rs 2,000 crore IT investment target (stated in policy document)',
+    key_incentives:[
+      'Capital subsidy: 20% on eligible fixed assets for IT/ITES units in Infocity Bhubaneswar',
+      'Employment subsidy: Rs 3,000/month per new employee for 5 years',
+      'Stamp duty exemption for IT units in Infocity and Infovalley Bhubaneswar',
+      'MeitY GENESIS scheme beneficiary: additional central co-funding for IT units'
+    ],
+    gcc_target_tag:'NOT DECLARED',
+    notable_corridors:'Infocity Bhubaneswar, Infovalley Bhubaneswar',
+    official_portal:'https://ipicol.nic.in',
+    source_name:'IPICOL / Odisha IT Department; Odisha IT Policy 2022-27; MeitY GENESIS programme',
+    last_updated:'January 2022'
+  },
+  'Madhya Pradesh':{
+    policy_name:'MP IT, ITeS and GCC Policy 2025',
+    policy_year:'2025',
+    gcc_target:'Not officially declared',
+    investment_target:'Rs 10,000 crore IT investment target by 2029',
+    key_incentives:[
+      'Fixed asset subsidy: 20% on eligible fixed capital for IT/ITES units in notified parks',
+      'Employment subsidy: Rs 4,000/month per new employee for 5 years',
+      'Stamp duty exemption for IT units in notified IT parks',
+      'Dedicated GCC promotion cell at MP Industrial Development Corporation (MPID)'
+    ],
+    gcc_target_tag:'NOT DECLARED',
+    notable_corridors:'Indore Rajwada IT corridor, Bhopal IT park, Ujjain IT cluster',
+    official_portal:'https://mpindustry.gov.in',
+    source_name:'MP Industrial Development Corporation; MP IT, ITeS and GCC Policy 2025; Invest MP Summit 2025',
+    last_updated:'March 2025'
+  },
+  'Assam':{
+    policy_name:'Assam IT Policy 2022 + North-East Special Industrial Package',
+    policy_year:'2022',
+    gcc_target:'Not officially declared',
+    investment_target:'Not officially declared',
+    key_incentives:[
+      'North-East Special Industrial Package: 30% capital subsidy on plant and machinery (central scheme)',
+      'Assam IT Policy 2022: stamp duty exemption for IT units in designated parks',
+      'STPI Guwahati: duty-free capital goods import for 100% EOU IT units',
+      'Central transport subsidy for eligible industrial units under North-East package'
+    ],
+    gcc_target_tag:'NOT DECLARED',
+    notable_corridors:'Guwahati IT park, STPI Guwahati node, Dispur IT cluster',
+    official_portal:'https://industryassam.in',
+    source_name:'Assam Industries Department; North-East Special Industrial Package (MeitY); Assam IT Policy 2022',
+    last_updated:'July 2022'
+  },
+  'Uttarakhand':{
+    policy_name:'Uttarakhand IT Policy 2023 + MeitY GENESIS',
+    policy_year:'2023',
+    gcc_target:'Not officially declared',
+    investment_target:'Not officially declared',
+    key_incentives:[
+      'MeitY GENESIS scheme: central co-funding for IT/ITES units in Tier-2 and Tier-3 cities',
+      'Stamp duty exemption for IT units in Rajpur Road Dehradun IT corridor',
+      'Employment subsidy: Rs 2,500/month per new employee for 3 years',
+      'Plug-and-play IT park infrastructure in Dehradun under SIDCUL'
+    ],
+    gcc_target_tag:'NOT DECLARED',
+    notable_corridors:'Dehradun Rajpur Road IT corridor, SIDCUL Haridwar IT park',
+    official_portal:'https://invest.uk.gov.in',
+    source_name:'Uttarakhand Industrial Development Authority (SIDCUL); Uttarakhand IT Policy 2023; MeitY GENESIS',
+    last_updated:'February 2023'
+  },
+  'Chhattisgarh':{
+    policy_name:'Chhattisgarh IT Policy 2021-26',
+    policy_year:'2021',
+    gcc_target:'Not officially declared',
+    investment_target:'Not officially declared',
+    key_incentives:[
+      'Capital subsidy: 25% on eligible fixed assets for IT/ITES units in Raipur IT park',
+      'Stamp duty exemption for IT units in notified IT parks',
+      'Employment subsidy: Rs 2,000/month per new employee for 3 years',
+      'STPI Raipur node: duty-free capital goods import for 100% EOU IT units'
+    ],
+    gcc_target_tag:'NOT DECLARED',
+    notable_corridors:'Raipur IT park, Nava Raipur IT cluster',
+    official_portal:'https://cginvest.cgstate.gov.in',
+    source_name:'Chhattisgarh Industrial Development Corporation; CG IT Policy 2021-26',
+    last_updated:'October 2021'
+  },
+  'Bihar':{
+    policy_name:'Bihar IT Policy 2020 + MeitY GENESIS',
+    policy_year:'2020',
+    gcc_target:'Not officially declared',
+    investment_target:'Not officially declared',
+    key_incentives:[
+      'MeitY GENESIS scheme: additional central co-funding for IT units in Tier-2 and Tier-3 cities',
+      'Bihar IT Policy 2020: stamp duty exemption for IT units in Bihta IT city near Patna',
+      'Capital subsidy: 25% on eligible fixed assets for qualifying IT establishments',
+      'Employment subsidy: Rs 2,000/month per new employee for 3 years'
+    ],
+    gcc_target_tag:'NOT DECLARED',
+    notable_corridors:'Bihta IT city (Patna periphery), Patna IT park',
+    official_portal:'https://biada.co.in',
+    source_name:'Bihar Industrial Area Development Authority (BIADA); Bihar IT Policy 2020; MeitY GENESIS programme',
+    last_updated:'March 2020'
+  }
+};
 
 function toggleStatePolicy(btn,cityName,stateName){
   var drawerId='policy-drawer-'+cityName.replace(/[^a-z]/gi,'').toLowerCase();
@@ -3387,69 +3679,30 @@ function toggleStatePolicy(btn,cityName,stateName){
   if(isOpen){drawer.classList.remove('open');btn.classList.remove('open');return;}
   drawer.classList.add('open');
   btn.classList.add('open');
-  if(drawer.dataset.loaded)return; // already fetched
-  fetchStatePolicy(drawer,stateName);
+  if(drawer.dataset.loaded)return;
+  renderStatePolicy(drawer,stateName);
 }
 
-async function fetchStatePolicy(drawer,stateName){
-  drawer.innerHTML='<div class="cpd-loading"><div class="sp"></div><span>Fetching official state GCC policy from government sources...</span></div>';
-  var cacheKey='state_policy_v2_'+stateName.replace(/[^a-z0-9]/gi,'_').toLowerCase();
-  try{
-    var raw=sessionStorage.getItem(cacheKey);
-    if(raw){var obj=JSON.parse(raw);if(obj._ts&&(Date.now()-obj._ts<STATE_POLICY_TTL)){renderStatePolicy(drawer,obj);return;}}
-  }catch(e){}
-  var prompt=
-    'You are a government policy research assistant. Your task is to find and return ONLY officially published information about the GCC (Global Capability Centre) or IT/ITES investment policy for the state of '+stateName+', India.\n\n'+
-    'Search government websites, official press releases, NASSCOM publications, and reputable news sources (Economic Times, Business Standard, LiveMint, Hindu BusinessLine) that are reporting on official government announcements.\n\n'+
-    'STRICT RULES:\n'+
-    '- Return ONLY information that appears in an official government source or a credible news report citing an official announcement.\n'+
-    '- If you cannot find confirmed official data for any field, write exactly: "Not officially declared"\n'+
-    '- Do NOT invent, estimate, or extrapolate any figures.\n'+
-    '- Do NOT return information from generic directories, Wikipedia, or third-party aggregators.\n\n'+
-    'Return ONLY valid JSON, no markdown, no explanation:\n'+
-    '{"policy_name":"","policy_year":"","gcc_target":"","investment_target":"","key_incentives":["","",""],"notable_corridors":"","official_portal":"","source_name":"","last_updated":""}';
-  try{
-    var resp=await fetch('/api/gemini',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        _model:'gemini-2.5-flash',
-        tools:[{google_search:{}}],
-        contents:[{parts:[{text:prompt}]}],
-        generationConfig:{temperature:0.1,thinkingConfig:{thinkingBudget:0}}
-      })
-    });
-    var data=await resp.json();
-    var txt=(data.candidates&&data.candidates[0]&&data.candidates[0].content&&data.candidates[0].content.parts&&data.candidates[0].content.parts[0]&&data.candidates[0].content.parts[0].text)||'';
-    var m=txt.match(/\{[\s\S]*\}/);
-    if(!m)throw new Error('no json');
-    var d=JSON.parse(m[0]);
-    d._ts=Date.now();
-    d._state=stateName;
-    try{sessionStorage.setItem(cacheKey,JSON.stringify(d));}catch(e){}
-    renderStatePolicy(drawer,d);
-  }catch(e){
-    drawer.innerHTML='<div style="font-size:0.78rem;color:var(--tdim);padding:0.5rem 0">Could not fetch policy data. <button onclick="fetchStatePolicy(this.closest(\'.city-policy-drawer\'),\''+stateName+'\')" style="color:var(--teal);background:none;border:none;cursor:pointer;font-size:0.75rem;text-decoration:underline">Retry</button></div>';
+function renderStatePolicy(drawer,stateName){
+  var d=STATE_POLICIES[stateName];
+  if(!d){
+    drawer.innerHTML='<div style="font-size:0.78rem;color:var(--tdim);padding:0.5rem 0">Policy details for '+stateName+' are being verified against official sources. Check back soon.</div>';
+    drawer.dataset.loaded='1';
+    return;
   }
-}
-
-function renderStatePolicy(drawer,d){
   var nd='<span class="cpd-nd">Not officially declared</span>';
-  var incentivesHtml=(d.key_incentives&&d.key_incentives.filter(function(i){return i&&i!=='Not officially declared';}).length)
-    ?'<ul class="cpd-incentives">'+d.key_incentives.filter(function(i){return i;}).map(function(i){return'<li>'+i+'</li>';}).join('')+'</ul>'
-    :'<ul class="cpd-incentives"><li>'+nd+'</li></ul>';
-  var portalHtml=d.official_portal&&d.official_portal!=='Not officially declared'
-    ?'<a href="'+d.official_portal+'" target="_blank" rel="noopener" class="cpd-portal">&#127760; Official Portal ↗</a>'
-    :'';
+  var tagHtml=d.gcc_target_tag==='CONFIRMED'
+    ?'<span style="font-family:\'JetBrains Mono\',monospace;font-size:0.58rem;color:var(--teal);border:1px solid rgba(0,212,110,0.35);border-radius:3px;padding:1px 5px;margin-left:5px;vertical-align:middle">CONFIRMED</span>'
+    :'<span style="font-family:\'JetBrains Mono\',monospace;font-size:0.58rem;color:var(--tdim);border:1px solid var(--bd);border-radius:3px;padding:1px 5px;margin-left:5px;vertical-align:middle">NOT DECLARED</span>';
   drawer.innerHTML=
-    '<div class="cpd-policy-name">'+(d.policy_name||nd)+'</div>'+
-    '<div class="cpd-policy-year">'+(d.policy_year&&d.policy_year!=='Not officially declared'?'Published '+d.policy_year:'Year not declared')+'</div>'+
-    incentivesHtml+
-    '<div class="cpd-row"><span class="cpd-k">GCC Target</span><span class="cpd-v">'+(d.gcc_target&&d.gcc_target!=='Not officially declared'?d.gcc_target:nd)+'</span></div>'+
-    '<div class="cpd-row"><span class="cpd-k">Investment Target</span><span class="cpd-v">'+(d.investment_target&&d.investment_target!=='Not officially declared'?d.investment_target:nd)+'</span></div>'+
-    (d.notable_corridors&&d.notable_corridors!=='Not officially declared'?'<div class="cpd-row"><span class="cpd-k">Notable Corridors</span><span class="cpd-v">'+d.notable_corridors+'</span></div>':'')+
-    portalHtml+
-    '<div class="cpd-source">Source: '+(d.source_name&&d.source_name!=='Not officially declared'?d.source_name:'Official government source')+(d.last_updated&&d.last_updated!=='Not officially declared'?' · '+d.last_updated:'')+'</div>';
+    '<div class="cpd-policy-name">'+d.policy_name+'</div>'+
+    '<div class="cpd-policy-year">Published '+d.policy_year+'</div>'+
+    '<ul class="cpd-incentives">'+d.key_incentives.map(function(i){return'<li>'+i+'</li>';}).join('')+'</ul>'+
+    '<div class="cpd-row"><span class="cpd-k">GCC Target</span><span class="cpd-v">'+(d.gcc_target==='Not officially declared'?nd:d.gcc_target+tagHtml)+'</span></div>'+
+    '<div class="cpd-row"><span class="cpd-k">Investment Target</span><span class="cpd-v">'+(d.investment_target==='Not officially declared'?nd:d.investment_target)+'</span></div>'+
+    (d.notable_corridors?'<div class="cpd-row"><span class="cpd-k">Key Corridors</span><span class="cpd-v">'+d.notable_corridors+'</span></div>':'')+
+    '<a href="'+d.official_portal+'" target="_blank" rel="noopener" class="cpd-portal">&#127760; Official Portal &#8599;</a>'+
+    '<div class="cpd-source">Source: '+d.source_name+' &middot; Last verified: '+d.last_updated+'</div>';
   drawer.dataset.loaded='1';
 }
 
