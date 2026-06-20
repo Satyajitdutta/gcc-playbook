@@ -1018,6 +1018,16 @@ section{transition:opacity 0.01s}
 .bc-signal-count{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:1.4rem;font-weight:700;color:var(--teal)}
 .bc-sub-label{font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:2px;font-weight:700;text-transform:uppercase;color:var(--gold);margin:2rem 0 0.75rem}
 @media(max-width:768px){.bc-cost-table,.bc-incentive-table,.bc-signal-table{display:block;overflow-x:auto}}
+.bc-signal-registry{display:flex;flex-direction:column;gap:1rem;margin-bottom:0.75rem}
+.bc-sig-cat{background:var(--s2);border:1px solid var(--bd);border-radius:12px;overflow:hidden}
+.bc-sig-cat-header{display:flex;gap:1.1rem;align-items:flex-start;padding:1.1rem 1.4rem;cursor:pointer;user-select:none;transition:background 0.2s}
+.bc-sig-cat-header:hover{background:var(--s3)}
+.bc-sig-num{font-family:'JetBrains Mono',monospace;font-size:0.72rem;font-weight:700;color:var(--teal);background:rgba(0,212,110,0.09);border:1px solid rgba(0,212,110,0.2);border-radius:4px;padding:3px 8px;flex-shrink:0;margin-top:2px;letter-spacing:1px}
+.bc-sig-cat-name{font-size:0.95rem;font-weight:700;color:var(--txt);margin-bottom:0.2rem}
+.bc-sig-cat-tag{font-size:0.78rem;color:var(--tmed);line-height:1.5}
+.bc-sig-sources{padding:0 1.4rem 1.2rem;display:flex;flex-direction:column;gap:0.6rem;border-top:1px solid var(--bd)}
+.bc-sig-source{padding:0.65rem 0.85rem;background:var(--s3);border-radius:8px;font-size:0.8rem;color:var(--tmed);line-height:1.6}
+.bc-sig-src-name{display:block;font-weight:700;color:var(--txt);font-size:0.83rem;margin-bottom:0.2rem}
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -2415,32 +2425,186 @@ if(document.readyState==="loading"){
     <p class="bc-cost-note">TGIIC full name: Telangana Government Infrastructure and Investment Corporation. Named as coordinating agency in the CM's review meeting minutes. Confirm current mandate and contact before citing in any official document. All incentive figures above must be replaced with confirmed amounts and a "last verified on [date], source: [department/contact name]" line before this module is shown to any government official.</p>
 
     <!-- LIVE SIGNAL TRACKER -->
-    <div class="bc-sub-label">Beyond CURE Corridor: Live Company Signals</div>
-    <p style="font-size:0.85rem;color:var(--tmed);margin-bottom:1.25rem;max-width:680px">Companies showing indirect signals of GCC interest in the Beyond CURE corridors. Sources checked: GCC Pulse, GCC Rise, Savanna HR, Wisemonk, Ceipal, Nasscom Telangana reports, and government pipeline listings. Confirmed active GCCs are excluded. Only unconfirmed inferred signals (hiring posts, leasing chatter, earnings language) are listed here.</p>
+    <div class="bc-sub-label">Beyond CURE Corridor: Tracked Company Signals</div>
+    <p style="font-size:0.85rem;color:var(--tmed);margin-bottom:1.25rem;max-width:700px">Companies showing indirect, unconfirmed signals of GCC or data centre interest in the Warangal, Karimnagar, or Nizamabad corridors. Confirmed active GCCs are excluded entirely. Only inferred signals (unconfirmed hiring, leasing chatter, earnings language, regulatory filings) qualify. Sources cover 9 signal categories described below.</p>
     <div style="overflow-x:auto;margin-bottom:0.75rem">
       <table class="bc-signal-table">
         <thead>
           <tr>
             <th>Company</th>
-            <th>Corridor of Interest</th>
-            <th>Signal Type</th>
+            <th>Corridor</th>
+            <th>Signal Category</th>
+            <th>Signal Detail</th>
             <th>Source</th>
-            <th>Date Added</th>
-            <th>Notes</th>
+            <th>Date</th>
           </tr>
         </thead>
         <tbody id="bc-signal-rows">
           <tr>
-            <td colspan="6" style="text-align:center;color:var(--tdim);padding:2rem;font-size:0.82rem">No signals logged yet. The first 5 real signals from permitted sources will appear here once manually verified and added. A small manually maintained list is more credible than an empty automated dashboard.</td>
+            <td colspan="6" style="text-align:center;color:var(--tdim);padding:2rem;font-size:0.82rem">No signals logged yet. Add the first verified, unconfirmed signal using the 9 source categories below.</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div style="display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;margin-bottom:0.5rem">
+    <div style="display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;margin-bottom:2rem">
       <div><span class="bc-signal-count" id="bc-signal-count">0</span><div style="font-size:0.72rem;color:var(--tdim)">signals tracked</div></div>
       <div style="font-size:0.78rem;color:var(--tdim)">Last updated: <span id="bc-signal-updated" style="color:var(--tmed)">Not yet updated</span></div>
     </div>
-    <p class="bc-cost-note">Sources with robots.txt restrictions or terms prohibiting automated access are monitored manually only. Scraping will be added only for sources that explicitly permit automated access or provide an official API or RSS feed. No claim of formal site-selection intent is made unless a source explicitly states it.</p>
+
+    <!-- SIGNAL SOURCE REGISTRY -->
+    <div class="bc-sub-label">Signal Source Registry — 9 Categories</div>
+    <p style="font-size:0.83rem;color:var(--tmed);margin-bottom:1.5rem;max-width:700px">Each category below is a distinct intelligence channel. The strongest signals come from at least two different categories pointing at the same company. That cross-category corroboration is what makes a case credible enough to show a government partner.</p>
+    <div class="bc-signal-registry">
+
+      <div class="bc-sig-cat">
+        <div class="bc-sig-cat-header">
+          <span class="bc-sig-num">01</span>
+          <div>
+            <div class="bc-sig-cat-name">Talent and Hiring Signals</div>
+            <div class="bc-sig-cat-tag">Job postings are the earliest visible signal of intent — companies hire before they announce.</div>
+          </div>
+        </div>
+        <div class="bc-sig-sources">
+          <div class="bc-sig-source"><span class="bc-sig-src-name">LinkedIn Jobs</span>Filter by city: Warangal / Karimnagar / Nizamabad. Look for roles posted by companies with no existing Telangana office. "India expansion" or "new site" in JD is strong.</div>
+          <div class="bc-sig-source"><span class="bc-sig-src-name">Naukri.com / Foundit</span>District-level job volume growth. A company suddenly posting 10+ roles in Warangal with no prior presence is a strong signal.</div>
+          <div class="bc-sig-source"><span class="bc-sig-src-name">NIT Warangal Placement Brochure</span>Companies visiting NIT Warangal campus for the first time for bulk lateral or campus hiring — available from the Training and Placement Cell annually.</div>
+          <div class="bc-sig-source"><span class="bc-sig-src-name">RGUKT Basar / Karimnagar Campus Drives</span>Multinational or large Indian IT company arriving at RGUKT for a bulk hire drive with no prior presence in that corridor.</div>
+          <div class="bc-sig-source"><span class="bc-sig-src-name">Ceipal / Savanna HR / Wisemonk</span>GCC-specific staffing platforms. Look for mandates being activated for roles located in these corridors rather than Hyderabad.</div>
+          <div class="bc-sig-source"><span class="bc-sig-src-name">TeamLease / Quess Corp / ManpowerGroup</span>Staffing majors opening new branch offices in Warangal or Karimnagar, or fielding mandates from a client for volume hiring there, often precede a formal GCC announcement by 4 to 6 months.</div>
+          <div class="bc-sig-source"><span class="bc-sig-src-name">Glassdoor / AmbitionBox Reviews</span>"New office opening," "joining Warangal office," or "relocation to tier-2" in company reviews often surfaces before any press release.</div>
+        </div>
+      </div>
+
+      <div class="bc-sig-cat">
+        <div class="bc-sig-cat-header">
+          <span class="bc-sig-num">02</span>
+          <div>
+            <div class="bc-sig-cat-name">Regulatory and Company Filing Signals</div>
+            <div class="bc-sig-cat-tag">The most reliable signals: a company cannot fake a regulatory filing. These are facts, not opinions.</div>
+          </div>
+        </div>
+        <div class="bc-sig-sources">
+          <div class="bc-sig-source"><span class="bc-sig-src-name">MCA21 / ROC Filings</span>New subsidiary or branch office incorporated with a registered address in Warangal, Karimnagar, or Nizamabad district. Check via mca.gov.in or Zauba Corp (free). MCA data is public and legally reliable.</div>
+          <div class="bc-sig-source"><span class="bc-sig-src-name">EPFO New Establishment Registrations</span>Any employer hiring 20+ employees must register with EPFO. New establishment registrations by district are accessible via the EPFO unified portal. A foreign-parent-linked entity appearing in Warangal or Karimnagar is a near-certain signal.</div>
+          <div class="bc-sig-source"><span class="bc-sig-src-name">GST New Registration (District-Level)</span>GST registration by commercial category in Warangal/Karimnagar/Nizamabad pin codes. IT/ITES category registrations from new entities are filterable via GST portal public search.</div>
+          <div class="bc-sig-source"><span class="bc-sig-src-name">TS-iPASS Applications</span>Telangana's single-window investment portal. Application filings are partially disclosed; TGIIC may share a pipeline list for government engagement. Ask the ITE&amp;C Department directly for pending applications in these districts.</div>
+          <div class="bc-sig-source"><span class="bc-sig-src-name">STPI New Unit Registrations</span>STPI Hyderabad covers all of Telangana. New IT/ITES unit registrations in Warangal or Karimnagar would appear in STPI's annual report or via RTI. STPI Hyderabad nodal office is the contact point.</div>
+        </div>
+      </div>
+
+      <div class="bc-sig-cat">
+        <div class="bc-sig-cat-header">
+          <span class="bc-sig-num">03</span>
+          <div>
+            <div class="bc-sig-cat-name">Commercial Real Estate Signals</div>
+            <div class="bc-sig-cat-tag">Site selection consultants are hired 6 to 18 months before a GCC is announced. Their RFPs are the earliest upstream signal.</div>
+          </div>
+        </div>
+        <div class="bc-sig-sources">
+          <div class="bc-sig-source"><span class="bc-sig-src-name">JLL India / CBRE India / Anarock Commercial</span>Grade-A commercial leasing absorption reports for Telangana tier-2 cities. A sudden absorption spike in Warangal IT Tower or a new commercial park pre-lease in Karimnagar is a strong leading signal. JLL publishes quarterly India office market reports; request the Telangana tier-2 appendix directly.</div>
+          <div class="bc-sig-source"><span class="bc-sig-src-name">Knight Frank / Colliers India</span>Commercial occupier mandates — when a Fortune 500 company sends out an RFP for 50,000+ sq ft in a tier-2 Telangana city, these firms handle it. Their research teams sometimes reference active mandates in market reports without naming the client.</div>
+          <div class="bc-sig-source"><span class="bc-sig-src-name">TSRERA Commercial Registrations</span>Telangana RERA requires registration of commercial real estate projects above a threshold. A new commercial park registered near Warangal with a technology park classification is a supply-side signal that demand is expected.</div>
+          <div class="bc-sig-source"><span class="bc-sig-src-name">Local Municipal Corporation Building Permits</span>Warangal Municipal Corporation (GWMC) and Karimnagar Municipal Corporation. Large commercial construction permits — 1 lakh sq ft plus — indicate a developer has pre-commitment from a named anchor tenant in most cases.</div>
+        </div>
+      </div>
+
+      <div class="bc-sig-cat">
+        <div class="bc-sig-cat-header">
+          <span class="bc-sig-num">04</span>
+          <div>
+            <div class="bc-sig-cat-name">Infrastructure and Utility Signals</div>
+            <div class="bc-sig-cat-tag">Large commercial power and fibre connections are applied for before construction begins. No GCC sets up without them.</div>
+          </div>
+        </div>
+        <div class="bc-sig-sources">
+          <div class="bc-sig-source"><span class="bc-sig-src-name">TSSPDCL / TSNPDCL New HT Connections</span>Telangana Southern and Northern Power Distribution Company. High-tension commercial power connection applications above 100 KVA in Warangal or Karimnagar districts. Accessible via RTI or through the TGIIC pipeline review if shared with the department.</div>
+          <div class="bc-sig-source"><span class="bc-sig-src-name">T-Fiber Commercial Connections (TSFIBER)</span>The CM directed all government offices to T-Fiber within 3 months, and T-Fiber is being extended to commercial parks. A new commercial campus connection order placed in Karimnagar or Nizamabad under T-Fiber is publicly reportable — follow TSFIBER press releases and district-level rollout updates.</div>
+          <div class="bc-sig-source"><span class="bc-sig-src-name">NHAI / NHIDCL Corridor Development</span>New road and interchange approvals along NH-163 (Hyderabad-Warangal), NH-65 (Hyderabad-Nizamabad), and NH-563 (Karimnagar connectivity). These are planning-horizon signals: where highway capacity is expanding, GCC site selection follows within 24 to 36 months.</div>
+        </div>
+      </div>
+
+      <div class="bc-sig-cat">
+        <div class="bc-sig-cat-header">
+          <span class="bc-sig-num">05</span>
+          <div>
+            <div class="bc-sig-cat-name">Government and Policy Pipeline Signals</div>
+            <div class="bc-sig-cat-tag">MoU signings, investment summit commitments, and assembly question responses often name companies and corridors before any press release.</div>
+          </div>
+        </div>
+        <div class="bc-sig-sources">
+          <div class="bc-sig-source"><span class="bc-sig-src-name">Invest Telangana / TGIIC Press Releases</span>The new Invest Telangana agency (announced in the same CM review meeting) will assign an Escort Officer to each investor. Their press releases will name the investor and the intended location. Subscribe to Invest Telangana communications directly.</div>
+          <div class="bc-sig-source"><span class="bc-sig-src-name">World GCC Summit and NASSCOM GCC Conclave</span>Speaker and sponsor lists, and the corridor-specific roundtables. A company sending a VP-level delegate to a session specifically titled "Beyond Hyderabad: Tier-2 GCC Expansion" is signalling internal evaluation.</div>
+          <div class="bc-sig-source"><span class="bc-sig-src-name">Telangana Assembly Question Responses</span>MLAs from Warangal, Karimnagar, and Nizamabad constituencies regularly raise questions about employment and investment. Government responses sometimes name companies under negotiation. Accessible via the Telangana Assembly website and PRS Legislative Research.</div>
+          <div class="bc-sig-source"><span class="bc-sig-src-name">CII Telangana / FICCI Telangana Chapter Events</span>Working group memberships and event sponsorships by companies that have no current Telangana presence. Companies evaluating a location often join the local industry body first as a low-commitment way to meet government officials.</div>
+          <div class="bc-sig-source"><span class="bc-sig-src-name">GCC Pulse / GCC Rise Telangana Filters</span>Apply a Telangana tier-2 geographic filter specifically. Both platforms aggregate announcements and signals; their value here is as an aggregator for signals that have already been published elsewhere, not as primary sources.</div>
+        </div>
+      </div>
+
+      <div class="bc-sig-cat">
+        <div class="bc-sig-cat-header">
+          <span class="bc-sig-num">06</span>
+          <div>
+            <div class="bc-sig-cat-name">Earnings Call and Investor Communication Signals</div>
+            <div class="bc-sig-cat-tag">CFOs and CEOs mention India tier-2 expansion in earnings calls before HR or real estate teams act on it. These are the highest-credibility signal of intent at the C-suite level.</div>
+          </div>
+        </div>
+        <div class="bc-sig-sources">
+          <div class="bc-sig-source"><span class="bc-sig-src-name">Earnings Call Transcripts (Motilal / Refinitiv / Seeking Alpha)</span>Search for "India tier-2," "cost optimisation," "beyond Hyderabad," "Warangal," "Karimnagar," or "second location India" in transcripts of Q-series calls from US, EU, and Australian listed companies with existing India presence. A single mention is a weak signal; two consecutive quarters is a strong one.</div>
+          <div class="bc-sig-source"><span class="bc-sig-src-name">Annual Report Geographic Expansion Disclosures</span>Under IFRS/GAAP disclosures, companies with new India subsidiaries or branch expansions must disclose the entity and location. Scan the "principal subsidiaries" schedule in annual filings of companies that already have GCCs in Hyderabad.</div>
+          <div class="bc-sig-source"><span class="bc-sig-src-name">RBI / FEMA Reporting (Inward FDI by District)</span>Reserve Bank of India requires FDI inflows above a threshold to be reported by district. DPIIT FDI data is available at state level; district-level data requires RTI or direct query to RBI's Department of Statistics and Information Management.</div>
+        </div>
+      </div>
+
+      <div class="bc-sig-cat">
+        <div class="bc-sig-cat-header">
+          <span class="bc-sig-num">07</span>
+          <div>
+            <div class="bc-sig-cat-name">Supply Chain and Vendor Ecosystem Signals</div>
+            <div class="bc-sig-cat-tag">When a GCC is 12 months from launch, its vendors start appearing first — caterers, security firms, IT hardware suppliers, and fit-out contractors all get RFPs before the company makes any public announcement.</div>
+          </div>
+        </div>
+        <div class="bc-sig-sources">
+          <div class="bc-sig-source"><span class="bc-sig-src-name">GeM (Government e-Marketplace) Bids</span>Large enterprises using GeM for procurement sometimes create district-specific delivery requirements. A company placing a bid for office furniture delivery or IT hardware to a Warangal address is a concrete, datable signal.</div>
+          <div class="bc-sig-source"><span class="bc-sig-src-name">Interior Fit-Out and MEP Contractors (Local)</span>Warangal and Karimnagar have a small number of commercial interior and mechanical/electrical/plumbing contractors capable of a 30,000+ sq ft office fit-out. An RFP circulating among these contractors for a named or anonymous MNC client is a near-certain 6-month lead indicator.</div>
+          <div class="bc-sig-source"><span class="bc-sig-src-name">Manpower Aggregators Opening New Branches</span>When Quess Corp, TeamLease, or Adecco open a new branch office in Karimnagar or Nizamabad, it is almost always because a named anchor client has placed a volume staffing mandate for that city. Branch opening press releases are published on these companies' LinkedIn pages.</div>
+        </div>
+      </div>
+
+      <div class="bc-sig-cat">
+        <div class="bc-sig-cat-header">
+          <span class="bc-sig-num">08</span>
+          <div>
+            <div class="bc-sig-cat-name">Digital Footprint and IP Signals</div>
+            <div class="bc-sig-cat-tag">Companies leave quiet digital signals months before any hiring or real estate action: domain registrations, IP filings, and LinkedIn page updates.</div>
+          </div>
+        </div>
+        <div class="bc-sig-sources">
+          <div class="bc-sig-source"><span class="bc-sig-src-name">Indian Patent Office Filings — New India Address</span>When a company files a patent from a new India address that was not used in prior filings, it reveals where a new R&amp;D or engineering unit has quietly been set up. Searchable via ipindia.gov.in. Useful for ER&amp;D and engineering-heavy GCCs specifically.</div>
+          <div class="bc-sig-source"><span class="bc-sig-src-name">LinkedIn Company Page "Locations" Tab</span>When a company quietly adds "Warangal, Telangana" or "Karimnagar, Telangana" as a new office location on their LinkedIn company page before any announcement, this almost always reflects a real, confirmed decision. Check monthly for companies known to be evaluating tier-2 India.</div>
+          <div class="bc-sig-source"><span class="bc-sig-src-name">Domain Registrations (WHOIS)</span>Companies sometimes register India-specific or city-specific domains (e.g., companywarangal.in or companyindia-gcc.com) months before launch. Monitor via WHOIS lookups on company-name variants combined with "warangal," "karimnagar," or "nizamabad."</div>
+          <div class="bc-sig-source"><span class="bc-sig-src-name">GitHub / GitLab Organisation Location Data</span>Engineering GCCs often create a new GitHub or GitLab organisation for the India team, sometimes with a city-level location tag, before the official launch. Useful for tech-heavy GCCs specifically.</div>
+        </div>
+      </div>
+
+      <div class="bc-sig-cat">
+        <div class="bc-sig-cat-header">
+          <span class="bc-sig-num">09</span>
+          <div>
+            <div class="bc-sig-cat-name">Professional Community and Informal Network Signals</div>
+            <div class="bc-sig-cat-tag">The people who actually know about a GCC before it is announced — site selection advisors, local property brokers, and staffing leads — talk about it in informal channels first.</div>
+          </div>
+        </div>
+        <div class="bc-sig-sources">
+          <div class="bc-sig-source"><span class="bc-sig-src-name">Blind App (Team Blind)</span>Anonymous professional forum widely used by Indian tech and finance employees. Search for "Warangal office," "Karimnagar GCC," or company name combined with "new location India." Employees leak internal decisions here well before HR communicates externally.</div>
+          <div class="bc-sig-source"><span class="bc-sig-src-name">Reddit r/IndiaTechJobs / r/cscareerquestionsIN</span>Users frequently post about "just got an offer for the new Warangal office" or "my company is opening in [city]." These are early signals from employees who have already accepted offers for unreleased locations.</div>
+          <div class="bc-sig-source"><span class="bc-sig-src-name">WhatsApp Groups — Warangal / Karimnagar IT Professional Networks</span>District-level IT professional WhatsApp groups (often linked to NIT Warangal alumni, local startup ecosystems, or CII Telangana tier-2 chapters). Local brokers and staffing leads in these groups are usually the first to know when a named company is looking for space or talent in the corridor.</div>
+          <div class="bc-sig-source"><span class="bc-sig-src-name">NIT Warangal Alumni Network (LinkedIn / WhatsApp)</span>NIT Warangal has a strong alumni network in GCC leadership roles. Alumni accepting internal transfers back to Warangal, or posting about "exciting new project in my hometown," is a quiet but specific signal worth tracking.</div>
+          <div class="bc-sig-source"><span class="bc-sig-src-name">Local Newspaper Coverage — Hans India / Telangana Today / Deccan Chronicle Warangal Edition</span>District editions of these papers cover local business news that national outlets miss entirely — including company delegation visits, MLA meetings with corporate delegations, and land acquisition near IT parks. Often the best signal for Karimnagar and Nizamabad specifically where national press has zero coverage.</div>
+        </div>
+      </div>
+
+    </div>
+    <p class="bc-cost-note" style="margin-top:1.5rem">Sources with robots.txt restrictions or terms prohibiting automated access are monitored manually only. No claim of formal site-selection intent is made unless a source explicitly states it. Cross-category corroboration — signals from two or more distinct categories above pointing at the same company — is the threshold for logging a company in the signal table.</p>
 
   </div>
 </section>
