@@ -326,23 +326,33 @@ export default async function handler(req, res) {
         'Retail / E-Commerce', 'Consumer Packaged Goods (CPG)', 'Energy & Utilities', 'Professional Services', 'Telecom / Media', 'Other'
       ]);
       const signalList = Object.keys(SIGNAL_CLUSTERS).filter(s => s !== 'other').join(', ');
-      const prompt = 'You are a GCC market analyst at Pithonix, scanning the open web RIGHT NOW for companies that are PROBABLE, NOT-YET-CONFIRMED leads to set up a '+
-        'Global Capability Centre (GCC) in India, with a bias toward Telangana/Hyderabad signals. Use real, current web search results. Do not invent companies or sources. Be fast and concise.\n\n'+
-        'CRITICAL EXCLUSION RULE: Do NOT include any company that has already made a public, confirmed announcement of establishing, launching, or opening a GCC in India '+
-        '(e.g. a press release or news article stating the company "is establishing", "has launched", "will open", "plans to set up" a GCC with named city and headcount). '+
-        'Those are CONFIRMED deals, not probable leads, and must be excluded entirely — showing a probability score on already-public news misrepresents it. '+
-        'Only include companies where the GCC intent must be INFERRED from indirect evidence: senior India-hiring job posts with no public GCC announcement, '+
-        'unconfirmed leasing/real-estate chatter, earnings-call language about "evaluating" or "exploring" India options, government pipeline lists of inbound-but-unannounced companies, '+
-        'or conference/industry signals without a formal company statement.\n\n'+
-        'Each signal_type value you report MUST be EXACTLY one of these exact strings (do not use the cluster name, use the specific signal): '+signalList+'.\n'+
-        'For each company, report every distinct signal type you found real evidence for — a company with 2 signals from different clusters is a stronger lead than one with a single signal.\n\n'+
-        'Return ONLY valid JSON, no markdown: {"candidates":[{"company_name":"exact name, or a placeholder like \\"Unnamed European Aerospace Firm\\" if anonymized in the source",'+
-        '"industry":"one of: '+industryOptions.join(' | ')+'","country":"HQ country if known",'+
-        '"signals":[{"signal_type":"EXACTLY one of: '+signalList+'","named_explicitly":true_or_false,"recency_days":number,'+
-        '"source_count":number,"evidence":"1 short sentence, citing the source"}],'+
-        '"source_urls":["url1"]}]}\n\n'+
-        'Only include candidates and signals you found real evidence for, and only if the company has NOT already publicly confirmed the GCC. '+
-        'Return an empty candidates array if nothing credible was found. Limit to at most 4 candidates, max 3 signals each, to keep this fast.';
+      const prompt = 'You are a GCC market intelligence analyst at Pithonix. Your job is to find companies that DO NOT YET HAVE a GCC in India but show early, indirect signals of intent to set one up — specifically in Hyderabad/Telangana.\n\n'+
+        'STEP 1 — GCC STATUS GATE (do this FIRST for every company you consider, before anything else):\n'+
+        'Search for "[Company Name] GCC India" and "[Company Name] Global Capability Centre India" and "[Company Name] India operations center". Determine which of these three statuses applies:\n'+
+        '  STATUS-A: OPERATIONAL — The company already has a live, running GCC or captive center in India. ANY evidence of an existing office, delivery center, or GCC already open = STATUS-A. DISCARD immediately. Do not score, do not include.\n'+
+        '  STATUS-B: FORMALLY ANNOUNCED — The company has issued a press release, public statement, or news article naming a city and/or headcount for a GCC they are setting up. DISCARD immediately.\n'+
+        '  STATUS-C: NO GCC YET — No public GCC or captive center in India confirmed. Only STATUS-C companies may proceed to Step 2.\n\n'+
+        'STEP 2 — SIGNAL SEARCH (only for STATUS-C companies):\n'+
+        'Look for indirect intent signals: senior India-based hiring in strategy/leadership roles (not just support), real-estate leasing chatter without public GCC announcement, earnings-call language about "evaluating" or "exploring" India, government inbound-pipeline mentions, or industry conference signals. '+
+        'Each signal must be from a real, findable source. Do not infer from the company\'s general size or peer behavior alone.\n\n'+
+        'Each signal_type value MUST be EXACTLY one of these strings: '+signalList+'.\n'+
+        'Report every distinct signal type found — multiple signals from different clusters make a stronger lead.\n\n'+
+        'STEP 3 — OUTPUT (STATUS-C companies with real signals only):\n'+
+        'Return ONLY valid JSON, no markdown:\n'+
+        '{"candidates":[{\n'+
+        '  "company_name":"exact legal name, or \\"Unnamed European Aerospace Firm\\" if genuinely anonymized in the source",\n'+
+        '  "gcc_status":"must be STATUS-C",\n'+
+        '  "gcc_status_reasoning":"1 sentence: what you searched and what confirmed no existing GCC",\n'+
+        '  "industry":"one of: '+industryOptions.join(' | ')+'",\n'+
+        '  "country":"HQ country",\n'+
+        '  "signals":[{"signal_type":"EXACTLY one of: '+signalList+'","named_explicitly":true_or_false,"recency_days":number,"source_count":number,"evidence":"1 sentence citing the source"}],\n'+
+        '  "source_urls":["url1"]\n'+
+        '}]}\n\n'+
+        'HARD RULES:\n'+
+        '- If a company already has employees in India, delivery centers, or any captive operation — even small ones — it is STATUS-A. Discard.\n'+
+        '- If you are uncertain whether a company is STATUS-A or STATUS-C, discard. False positives waste analyst time more than false negatives.\n'+
+        '- Return an empty candidates array if nothing credible was found.\n'+
+        '- Limit to at most 4 candidates, max 3 signals each.';
       let text;
       try { text = await callGemini(prompt, true); }
       catch (e) { res.status(502).json({ error: 'Discovery failed: ' + e.message }); return; }
@@ -356,8 +366,10 @@ export default async function handler(req, res) {
 
       const inserted = [];
       let rejectedInvalidSignal = 0;
+      let rejectedOperational = 0;
       for (const c of parsed.candidates) {
         if (!c.company_name || existingNames.has(c.company_name.toLowerCase())) continue;
+        if (!c.gcc_status || c.gcc_status !== 'STATUS-C') { rejectedOperational++; continue; }
         const factors = scoreCandidate(c);
         if (!factors) { rejectedInvalidSignal++; continue; }
         existingNames.add(c.company_name.toLowerCase());
@@ -370,7 +382,7 @@ export default async function handler(req, res) {
         );
         inserted.push(r.rows[0]);
       }
-      return res.status(200).json({ inserted, scanned: parsed.candidates.length, rejectedInvalidSignal });
+      return res.status(200).json({ inserted, scanned: parsed.candidates.length, rejectedInvalidSignal, rejectedOperational });
     }
 
     if (action === 'run_simulation') {
