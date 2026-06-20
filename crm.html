@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pithonix GCC CRM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #081510;
+    --bg2: #0d1f18;
+    --bg3: #112418;
+    --border: rgba(0,212,110,0.12);
+    --green: #00d46e;
+    --green-dim: rgba(0,212,110,0.15);
+    --text: #e8f4ee;
+    --text-dim: #7a9e8a;
+    --sidebar-w: 220px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Outfit', sans-serif; font-size: 14px; min-height: 100vh; }
+
+  /* Login */
+  #login-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(ellipse at 50% 0%, rgba(0,212,110,0.06) 0%, transparent 60%);
+  }
+  .login-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px 36px;
+    width: 380px;
+    text-align: center;
+  }
+  .login-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .login-sub { color: var(--text-dim); font-size: 12px; margin-bottom: 28px; }
+  .login-input {
+    width: 100%;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    padding: 12px 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    margin-bottom: 12px;
+  }
+  .login-input:focus { border-color: var(--green); }
+  .btn-primary {
+    width: 100%;
+    background: var(--green);
+    border: none;
+    border-radius: 8px;
+    color: #061008;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 12px;
+    transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.88; }
+  .btn-primary:disabled { opacity: 0.4; cursor: default; }
+  .login-msg { font-size: 12px; margin-top: 10px; min-height: 18px; }
+  .login-msg.err { color: #f87171; }
+  .login-msg.ok { color: var(--green); }
+
+  /* Dashboard layout */
+  #dashboard {
+    display: flex;
+    min-height: 100vh;
+  }
+  #sidebar {
+    width: var(--sidebar-w);
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  .sidebar-brand {
+    padding: 22px 18px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sidebar-brand-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--green);
+  }
+  .sidebar-brand-sub { font-size: 10px; color: var(--text-dim); margin-top: 2px; }
+  .sidebar-nav { padding: 12px 10px; flex: 1; }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--text-dim);
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.15s;
+    margin-bottom: 2px;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+  }
+  .nav-item:hover { background: var(--green-dim); color: var(--text); }
+  .nav-item.active { background: var(--green-dim); color: var(--green); }
+  .nav-icon { font-size: 15px; width: 20px; text-align: center; }
+  .sidebar-user {
+    padding: 12px 14px;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+  .sidebar-user span { display: block; color: var(--text); font-size: 12px; margin-bottom: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .btn-logout {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-dim);
+    cursor: pointer;
+    font-size: 11px;
+    font-family: 'Outfit', sans-serif;
+    margin-top: 8px;
+    padding: 5px 10px;
+    width: 100%;
+  }
+  .btn-logout:hover { border-color: #f87171; color: #f87171; }
+
+  /* Main content */
+  #main { flex: 1; padding: 28px 32px; overflow-y: auto; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* Metrics bar */
+  .metrics-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .metric-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+  .metric-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px; }
+  .metric-value { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 700; color: var(--green); line-height: 1; }
+  .metric-sub { font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+
+  /* Section header */
+  .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700; }
+
+  /* Kanban */
+  .kanban {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    padding-bottom: 12px;
+  }
+  .kanban-col {
+    min-width: 230px;
+    flex-shrink: 0;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+  }
+  .kanban-col-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .kanban-col-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); }
+  .kanban-col-count {
+    background: var(--green-dim);
+    color: var(--green);
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 1px 7px;
+  }
+  .kanban-cards { display: flex; flex-direction: column; gap: 8px; min-height: 40px; }
+  .lead-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 13px;
+    cursor: pointer;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  .lead-card:hover { border-color: var(--green); transform: translateY(-1px); }
+  .lead-card-name { font-weight: 600; font-size: 13px; margin-bottom: 5px; color: var(--text); }
+  .lead-card-meta { font-size: 11px; color: var(--text-dim); display: flex; gap: 8px; flex-wrap: wrap; }
+  .lead-card-score {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .score-bar { flex: 1; height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+  .score-fill { height: 100%; background: var(--green); border-radius: 2px; }
+  .score-num { font-size: 11px; color: var(--green); font-weight: 600; min-width: 28px; text-align: right; }
+
+  /* Partner table */
+  .data-table { width: 100%; border-collapse: collapse; }
+  .data-table th {
+    background: var(--bg3);
+    border-bottom: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    padding: 10px 14px;
+    text-align: left;
+    text-transform: uppercase;
+  }
+  .data-table td {
+    border-bottom: 1px solid rgba(0,212,110,0.06);
+    color: var(--text);
+    font-size: 13px;
+    padding: 11px 14px;
+  }
+  .data-table tr:hover td { background: rgba(0,212,110,0.04); }
+  .badge {
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-block;
+  }
+  .badge-gold { background: rgba(234,179,8,0.15); color: #fbbf24; }
+  .badge-silver { background: rgba(148,163,184,0.15); color: #94a3b8; }
+  .badge-platinum { background: rgba(168,85,247,0.15); color: #c084fc; }
+  .badge-approved { background: rgba(0,212,110,0.15); color: var(--green); }
+  .badge-pending { background: rgba(251,191,36,0.15); color: #fbbf24; }
+  .badge-new { background: rgba(96,165,250,0.15); color: #60a5fa; }
+
+  /* Partner dashboard */
+  .partner-status-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  .partner-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--green-dim);
+    border: 2px solid var(--green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .partner-info h2 { font-family: 'Cormorant Garamond', serif; font-size: 20px; margin-bottom: 4px; }
+  .partner-info p { font-size: 12px; color: var(--text-dim); }
+  .checklist { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+  .checklist-title { font-size: 13px; font-weight: 600; color: var(--text-dim); margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.8px; }
+  .checklist-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid rgba(0,212,110,0.06); font-size: 13px; }
+  .checklist-item:last-child { border-bottom: none; }
+  .check-icon { font-size: 14px; width: 18px; text-align: center; }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(3px);
+  }
+  .modal {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    max-width: 540px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+  }
+  .modal-close {
+    position: absolute; top: 14px; right: 16px;
+    background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 18px;
+  }
+  .modal-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; margin-bottom: 16px; padding-right: 24px; }
+  .modal-row { display: flex; gap: 8px; margin-bottom: 10px; font-size: 13px; }
+  .modal-row .label { color: var(--text-dim); min-width: 130px; flex-shrink: 0; }
+  .modal-row .value { color: var(--text); }
+  .modal-divider { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
+
+  /* Loading */
+  .loading { color: var(--text-dim); text-align: center; padding: 40px; font-size: 13px; }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    #sidebar { display: none; }
+    #main { padding: 20px 16px; }
+    .kanban { flex-direction: column; }
+    .kanban-col { min-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Login Screen -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">PITHONIX GCC</div>
+    <div class="login-sub">CRM Intelligence Platform</div>
+    <input id="email-input" class="login-input" type="email" placeholder="Your email address" autocomplete="email">
+    <div id="otp-row" style="display:none">
+      <input id="otp-input" class="login-input" type="text" inputmode="numeric" maxlength="6" placeholder="6-digit code">
+    </div>
+    <button id="login-btn" class="btn-primary" onclick="loginStep()">Send Code</button>
+    <div id="login-msg" class="login-msg"></div>
+  </div>
+</div>
+
+<!-- Dashboard -->
+<div id="dashboard" style="display:none">
+  <nav id="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-name">Pithonix GCC</div>
+      <div class="sidebar-brand-sub">CRM Platform</div>
+    </div>
+    <div class="sidebar-nav" id="nav-admin" style="display:none">
+      <button class="nav-item active" onclick="showSection('pipeline')">
+        <span class="nav-icon">⬡</span> Pipeline
+      </button>
+      <button class="nav-item" onclick="showSection('partners')">
+        <span class="nav-icon">◈</span> Partners
+      </button>
+    </div>
+    <div class="sidebar-nav" id="nav-partner" style="display:none">
+      <button class="nav-item active" onclick="showSection('partner-home')">
+        <span class="nav-icon">⬡</span> My Dashboard
+      </button>
+    </div>
+    <div class="sidebar-user">
+      <span id="sidebar-email">Loading...</span>
+      <div id="sidebar-role" style="margin-bottom:2px"></div>
+      <button class="btn-logout" onclick="logout()">Sign out</button>
+    </div>
+  </nav>
+
+  <main id="main">
+    <!-- Admin Pipeline -->
+    <div class="section active" id="section-pipeline">
+      <div class="metrics-bar" id="metrics-bar">
+        <div class="metric-card"><div class="metric-label">Total Leads</div><div class="metric-value" id="m-total">0</div></div>
+        <div class="metric-card"><div class="metric-label">New</div><div class="metric-value" id="m-new">0</div></div>
+        <div class="metric-card"><div class="metric-label">Researched</div><div class="metric-value" id="m-researched">0</div></div>
+        <div class="metric-card"><div class="metric-label">Avg Score</div><div class="metric-value" id="m-score">0</div></div>
+      </div>
+      <div class="section-header">
+        <div class="section-title">Lead Pipeline</div>
+        <a href="gcc-admin.html" style="color:var(--text-dim);font-size:12px;text-decoration:none">Open full admin</a>
+      </div>
+      <div class="kanban" id="kanban-board">
+        <div class="loading">Loading leads...</div>
+      </div>
+    </div>
+
+    <!-- Admin Partners -->
+    <div class="section" id="section-partners">
+      <div class="section-header">
+        <div class="section-title">Partner Network</div>
+        <a href="partner-portal.html" style="color:var(--text-dim);font-size:12px;text-decoration:none">Partner portal</a>
+      </div>
+      <div id="partners-table-wrap">
+        <div class="loading">Loading partners...</div>
+      </div>
+    </div>
+
+    <!-- Partner Home -->
+    <div class="section" id="section-partner-home">
+      <div id="partner-home-content">
+        <div class="loading">Loading your dashboard...</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Lead Detail Modal -->
+<div id="lead-modal" class="modal-overlay" style="display:none" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+    <div class="modal-title" id="modal-title"></div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+const STAGES = ['New', 'Researched', 'Simulated', 'Converted'];
+let role = null, adminToken = null, partnerToken = null, leads = [], partners = [];
+
+// ---- Login flow ----
+let otpStep = false;
+
+function setMsg(msg, isErr) {
+  const el = document.getElementById('login-msg');
+  el.textContent = msg;
+  el.className = 'login-msg ' + (isErr ? 'err' : 'ok');
+}
+
+async function loginStep() {
+  const email = document.getElementById('email-input').value.trim().toLowerCase();
+  if (!email) { setMsg('Enter your email address.', true); return; }
+
+  const btn = document.getElementById('login-btn');
+  btn.disabled = true;
+
+  if (!otpStep) {
+    const isAdmin = email.endsWith('@pithonix.ai');
+    const endpoint = isAdmin ? '/api/gcc-admin' : '/api/partner-portal';
+    try {
+      const r = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'send', email })
+      });
+      const d = await r.json();
+      if (d.error) { setMsg(d.error, true); btn.disabled = false; return; }
+      document.getElementById('otp-row').style.display = 'block';
+      document.getElementById('login-btn').textContent = 'Verify Code';
+      setMsg('Code sent. Check your inbox.', false);
+      otpStep = true;
+    } catch(e) { setMsg('Network error. Try again.', true); }
+    btn.disabled = false;
+    return;
+  }
+
+  const otp = document.getElementById('otp-input').value.trim();
+  if (!otp) { setMsg('Enter the 6-digit code.', true); btn.disabled = false; return; }
+  const isAdmin = email.endsWith('@pithonix.ai');
+  const endpoint = isAdmin ? '/api/gcc-admin' : '/api/partner-portal';
+  try {
+    const r = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'verify', email, otp })
+    });
+    const d = await r.json();
+    if (d.error) { setMsg(d.error, true); btn.disabled = false; return; }
+    if (isAdmin) {
+      adminToken = d.token;
+      role = 'admin';
+      localStorage.setItem('gcc_crm_admin', adminToken);
+      localStorage.setItem('gcc_crm_email', email);
+    } else {
+      partnerToken = d.token;
+      role = 'partner';
+      localStorage.setItem('gcc_crm_partner', partnerToken);
+      localStorage.setItem('gcc_crm_email', email);
+    }
+    enterDashboard(email);
+  } catch(e) { setMsg('Network error. Try again.', true); }
+  btn.disabled = false;
+}
+
+document.getElementById('otp-input').addEventListener('keydown', e => { if (e.key === 'Enter') loginStep(); });
+document.getElementById('email-input').addEventListener('keydown', e => { if (e.key === 'Enter') loginStep(); });
+
+function enterDashboard(email) {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'flex';
+  document.getElementById('sidebar-email').textContent = email;
+  if (role === 'admin') {
+    document.getElementById('nav-admin').style.display = 'block';
+    document.getElementById('sidebar-role').innerHTML = '<span style="color:var(--green);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px">Admin</span>';
+    loadAdminData();
+  } else {
+    document.getElementById('nav-partner').style.display = 'block';
+    document.getElementById('sidebar-role').innerHTML = '<span style="color:#60a5fa;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px">Partner</span>';
+    showSection('partner-home');
+    loadPartnerData();
+  }
+}
+
+function logout() {
+  localStorage.removeItem('gcc_crm_admin');
+  localStorage.removeItem('gcc_crm_partner');
+  localStorage.removeItem('gcc_crm_email');
+  location.reload();
+}
+
+// ---- Restore session ----
+(function restoreSession() {
+  const email = localStorage.getItem('gcc_crm_email') || '';
+  const adminTok = localStorage.getItem('gcc_crm_admin');
+  const partnerTok = localStorage.getItem('gcc_crm_partner');
+  if (adminTok && email) { adminToken = adminTok; role = 'admin'; enterDashboard(email); }
+  else if (partnerTok && email) { partnerToken = partnerTok; role = 'partner'; enterDashboard(email); }
+})();
+
+// ---- Navigation ----
+function showSection(name) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('section-' + name).classList.add('active');
+  event && event.target && event.target.classList.add('active');
+}
+
+// ---- Admin data ----
+async function loadAdminData() {
+  try {
+    const [leadsRes, partnersRes] = await Promise.all([
+      fetch('/api/gcc-admin', { headers: { 'x-admin-token': adminToken } }),
+      fetch('/api/partners-list')
+    ]);
+    const ld = await leadsRes.json();
+    const pd = await partnersRes.json();
+    if (ld.error === 'Unauthorized') { logout(); return; }
+    leads = ld.leads || [];
+    partners = pd.partners || [];
+    renderPipeline();
+    renderPartners();
+  } catch(e) {
+    document.getElementById('kanban-board').innerHTML = '<div class="loading">Failed to load. <a href="#" onclick="loadAdminData()" style="color:var(--green)">Retry</a></div>';
+  }
+}
+
+function renderPipeline() {
+  const active = leads.filter(l => l.status !== 'Archived');
+  const scored = active.filter(l => l.probability_score > 0);
+  const avgScore = scored.length ? Math.round(scored.reduce((s, l) => s + l.probability_score, 0) / scored.length) : 0;
+  document.getElementById('m-total').textContent = active.length;
+  document.getElementById('m-new').textContent = active.filter(l => l.status === 'New' || !l.status).length;
+  document.getElementById('m-researched').textContent = active.filter(l => l.status === 'Researched').length;
+  document.getElementById('m-score').textContent = avgScore;
+
+  const board = document.getElementById('kanban-board');
+  board.innerHTML = STAGES.map(stage => {
+    const cards = active.filter(l => normaliseStatus(l.status) === stage);
+    return `
+    <div class="kanban-col">
+      <div class="kanban-col-header">
+        <span class="kanban-col-title">${stage}</span>
+        <span class="kanban-col-count">${cards.length}</span>
+      </div>
+      <div class="kanban-cards">
+        ${cards.length ? cards.map(lead => leadCard(lead)).join('') : '<div style="color:var(--text-dim);font-size:12px;padding:8px 0">No leads</div>'}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function normaliseStatus(s) {
+  if (!s || s === 'New') return 'New';
+  if (s === 'Researched') return 'Researched';
+  if (s === 'Simulated' || s === 'Blueprint Generated') return 'Simulated';
+  if (s === 'Converted' || s === 'Won') return 'Converted';
+  return 'New';
+}
+
+function leadCard(lead) {
+  const score = lead.probability_score || 0;
+  const date = lead.created_at ? new Date(lead.created_at).toLocaleDateString('en-IN', { day:'2-digit', month:'short' }) : '';
+  return `
+  <div class="lead-card" onclick="openLead(${lead.id})">
+    <div class="lead-card-name">${esc(lead.company_name)}</div>
+    <div class="lead-card-meta">
+      ${lead.industry ? `<span>${esc(lead.industry)}</span>` : ''}
+      ${lead.designated_zone ? `<span>${esc(lead.designated_zone)}</span>` : ''}
+      ${date ? `<span>${date}</span>` : ''}
+    </div>
+    ${score > 0 ? `
+    <div class="lead-card-score">
+      <div class="score-bar"><div class="score-fill" style="width:${score}%"></div></div>
+      <span class="score-num">${score}</span>
+    </div>` : ''}
+  </div>`;
+}
+
+function renderPartners() {
+  const wrap = document.getElementById('partners-table-wrap');
+  if (!partners.length) { wrap.innerHTML = '<div class="loading">No approved partners yet.</div>'; return; }
+  const tierBadge = t => {
+    if (!t) return '';
+    const cls = t === 'Platinum' ? 'badge-platinum' : t === 'Gold' ? 'badge-gold' : 'badge-silver';
+    return `<span class="badge ${cls}">${t}</span>`;
+  };
+  wrap.innerHTML = `
+  <table class="data-table">
+    <thead><tr>
+      <th>Company</th><th>Category</th><th>Tier</th><th>Cities</th><th>Since</th>
+    </tr></thead>
+    <tbody>
+      ${partners.map(p => `
+      <tr>
+        <td>${esc(p.company_name)}</td>
+        <td style="color:var(--text-dim)">${esc(p.partner_category || '')}</td>
+        <td>${tierBadge(p.partner_tier)}</td>
+        <td style="color:var(--text-dim);font-size:12px">${esc(p.cities || '')}</td>
+        <td style="color:var(--text-dim);font-size:12px">${p.approved_at ? new Date(p.approved_at).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}) : ''}</td>
+      </tr>`).join('')}
+    </tbody>
+  </table>`;
+}
+
+// ---- Lead modal ----
+function openLead(id) {
+  const lead = leads.find(l => l.id === id);
+  if (!lead) return;
+  document.getElementById('modal-title').textContent = lead.company_name;
+  const rows = [
+    ['Industry', lead.industry],
+    ['Country', lead.country],
+    ['Zone', lead.designated_zone],
+    ['Functions', lead.functions_needed],
+    ['Year 1 FTE', lead.year1_fte],
+    ['Timeline', lead.timeline],
+    ['Priority', lead.top_priority],
+    ['Status', lead.status],
+    ['Signal Score', lead.probability_score ? lead.probability_score + ' / 100' : null],
+    ['Added by', lead.created_by],
+    ['Created', lead.created_at ? new Date(lead.created_at).toLocaleDateString('en-IN') : null],
+  ].filter(r => r[1]);
+  document.getElementById('modal-body').innerHTML = `
+    ${rows.map(([label, value]) => `
+      <div class="modal-row"><span class="label">${label}</span><span class="value">${esc(String(value))}</span></div>
+    `).join('')}
+    ${lead.research_summary ? `<hr class="modal-divider"><div style="font-size:13px;color:var(--text-dim);line-height:1.6">${esc(lead.research_summary).replace(/\n/g,'<br>')}</div>` : ''}
+    <hr class="modal-divider">
+    <a href="gcc-admin.html" style="color:var(--green);font-size:12px;text-decoration:none">Open in full admin for research and simulation</a>
+  `;
+  document.getElementById('lead-modal').style.display = 'flex';
+}
+
+function closeModal() { document.getElementById('lead-modal').style.display = 'none'; }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ---- Partner data ----
+async function loadPartnerData() {
+  try {
+    const r = await fetch('/api/partner-portal', { headers: { 'x-partner-token': partnerToken } });
+    const d = await r.json();
+    if (d.error) { logout(); return; }
+    renderPartnerHome(d);
+  } catch(e) {
+    document.getElementById('partner-home-content').innerHTML = '<div class="loading">Failed to load. Try again.</div>';
+  }
+}
+
+function renderPartnerHome(d) {
+  const p = d.partner || d;
+  const checklist = d.checklist || [];
+  const projects = d.projects || [];
+  const statusBadge = s => {
+    if (s === 'Approved') return '<span class="badge badge-approved">Approved</span>';
+    if (s === 'Pending') return '<span class="badge badge-pending">Pending Review</span>';
+    return `<span class="badge badge-new">${esc(s||'Submitted')}</span>`;
+  };
+  const done = checklist.filter(c => c.completed).length;
+  const total = checklist.length;
+
+  document.getElementById('partner-home-content').innerHTML = `
+    <div class="partner-status-card">
+      <div class="partner-avatar">🏢</div>
+      <div class="partner-info">
+        <h2>${esc(p.company_name || '')}</h2>
+        <p>${esc(p.contact_name || '')} &bull; ${esc(p.designation || '')} &bull; ${esc(p.email || '')}</p>
+        <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
+          ${statusBadge(p.status)}
+          ${p.partner_category ? `<span style="font-size:12px;color:var(--text-dim)">${esc(p.partner_category)}</span>` : ''}
+          ${p.cities ? `<span style="font-size:12px;color:var(--text-dim)">${esc(p.cities)}</span>` : ''}
+        </div>
+      </div>
+    </div>
+
+    ${checklist.length ? `
+    <div class="checklist" style="margin-bottom:20px">
+      <div class="checklist-title">Onboarding Progress (${done} of ${total})</div>
+      ${checklist.map(c => `
+        <div class="checklist-item">
+          <span class="check-icon">${c.completed ? '&#10003;' : '&#9675;'}</span>
+          <span style="color:${c.completed ? 'var(--text)' : 'var(--text-dim)'}">${esc(c.label)}</span>
+          ${c.completed && c.completed_at ? `<span style="font-size:11px;color:var(--text-dim);margin-left:auto">${new Date(c.completed_at).toLocaleDateString('en-IN')}</span>` : ''}
+        </div>`).join('')}
+    </div>` : ''}
+
+    ${projects.length ? `
+    <div class="section-title" style="margin-bottom:14px">Active Projects</div>
+    <table class="data-table">
+      <thead><tr><th>Project</th><th>Status</th><th>GCC</th><th>Value</th></tr></thead>
+      <tbody>
+        ${projects.map(proj => `
+        <tr>
+          <td>${esc(proj.project_name || '')}</td>
+          <td><span class="badge badge-approved">${esc(proj.status || '')}</span></td>
+          <td style="color:var(--text-dim)">${esc(proj.gcc_company || '')}</td>
+          <td style="color:var(--text-dim)">${esc(proj.value || '')}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>` : `
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:24px;text-align:center;color:var(--text-dim);font-size:13px">
+      Projects and GCC mandates assigned to you will appear here once onboarding is complete.
+    </div>`}
+    <div style="margin-top:20px">
+      <a href="partner-portal.html" style="color:var(--text-dim);font-size:12px;text-decoration:none">Open full partner portal</a>
+    </div>
+  `;
+}
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>
