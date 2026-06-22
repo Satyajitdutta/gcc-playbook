@@ -160,7 +160,6 @@
       <div id="blog-posts-wrap"></div>
     </div>
   </div>
-  </div>
 </div>
 
 <!-- Blog Post Editor Modal -->
@@ -195,7 +194,7 @@
 </div>
 
 <!-- LinkedIn Share Modal -->
-<div id="li-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1001;display:none;align-items:center;justify-content:center;padding:1.5rem">
+<div id="li-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1001;align-items:center;justify-content:center;padding:1.5rem">
   <div style="max-width:620px;width:100%;background:#0d1426;border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:2rem">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem">
       <h2 style="margin:0;font-size:1.1rem">Share on LinkedIn</h2>
@@ -658,7 +657,7 @@ function openLiModal(slug,id){
   liPostUrl='https://gcc-playbook.pithonix.ai/blog/'+slug;
   document.getElementById('li-copy-text').value=(p&&p.linkedin_copy)||'';
   document.getElementById('li-copied').textContent='';
-  document.getElementById('li-modal').style.display='flex';
+  var m=document.getElementById('li-modal');m.style.display='flex';
 }
 
 function closeLiModal(){document.getElementById('li-modal').style.display='none';}
