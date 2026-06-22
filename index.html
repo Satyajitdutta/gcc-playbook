@@ -4583,7 +4583,7 @@ function subscribePolicyPulse(){
 // ── BLOG ──────────────────────────────────────────────────────────────────────
 (async function loadBlog(){
   try{
-    var r=await fetch('/api/blog');
+    var r=await fetch('/api/gcc-admin?blog=1');
     var d=await r.json();
     var posts=d.posts||[];
     var grid=document.getElementById('blog-grid');
