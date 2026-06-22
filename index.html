@@ -1116,6 +1116,7 @@ section{transition:opacity 0.01s}
       <a href="#cities">India Intel</a>
       <a href="#whitepaper">White Paper</a>
       <a href="#partners">Partners</a>
+      <a href="#blog">Blog</a>
       <a href="#contact">Contact</a>
     </div>
     <div style="display:flex;align-items:center;gap:0.75rem">
@@ -3095,6 +3096,15 @@ if(document.readyState==="loading"){
 </section>
 
 <!-- CONTACT -->
+<section id="blog" aria-label="Pithonix GCC Corridor Intelligence Blog">
+  <div class="section-label">CORRIDOR INTELLIGENCE</div>
+  <h2>GCC <span class="gold">Insights.</span></h2>
+  <p class="section-sub">Analysis, frameworks, and corridor intelligence from the Pithonix research desk. No names, no leaks. Just the thinking behind the next wave of GCCs.</p>
+  <div id="blog-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;margin-top:2rem">
+    <div style="color:#64748b;font-size:0.9rem">Loading posts...</div>
+  </div>
+</section>
+
 <section id="contact">
   <div class="section-label" style="text-align:center">READY TO BUILD YOUR GCC?</div>
   <h2>Let's Start Your <span class="gold">GCC Journey.</span></h2>
@@ -4569,6 +4579,39 @@ function subscribePolicyPulse(){
   document.getElementById('pp-subscribe').style.display='none';
   document.getElementById('pp-subscribe-success').style.display='block';
 }
+
+// ── BLOG ──────────────────────────────────────────────────────────────────────
+(async function loadBlog(){
+  try{
+    var r=await fetch('/api/blog');
+    var d=await r.json();
+    var posts=d.posts||[];
+    var grid=document.getElementById('blog-grid');
+    if(!grid)return;
+    if(!posts.length){grid.innerHTML='<p style="color:#64748b;font-size:0.9rem;grid-column:1/-1">No posts published yet. Check back soon.</p>';return;}
+    grid.innerHTML=posts.map(function(p){
+      var tags=(p.tags||[]).slice(0,3).map(function(t){return '<span style="font-size:0.7rem;background:rgba(0,212,110,0.1);color:#00d46e;padding:2px 8px;border-radius:4px">'+t+'</span>';}).join('');
+      var date=p.published_at?new Date(p.published_at).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}):'';
+      return '<a href="/blog/'+p.slug+'" style="text-decoration:none;color:inherit" target="_blank" rel="noopener">'+
+        '<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:1.5rem;transition:border-color 0.2s,transform 0.2s;cursor:pointer" '+
+          'onmouseover="this.style.borderColor=\'rgba(0,212,110,0.3)\';this.style.transform=\'translateY(-2px)\'" '+
+          'onmouseout="this.style.borderColor=\'rgba(255,255,255,0.08)\';this.style.transform=\'\'"'+
+        '>'+
+          '<div style="display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:0.9rem">'+tags+'</div>'+
+          '<h3 style="font-size:1rem;font-weight:700;margin:0 0 0.6rem;line-height:1.4;color:#f1f5f9">'+p.title+'</h3>'+
+          '<p style="font-size:0.83rem;color:#94a3b8;margin:0 0 1rem;line-height:1.5">'+((p.excerpt||'').slice(0,120))+(p.excerpt&&p.excerpt.length>120?'…':'')+'</p>'+
+          '<div style="display:flex;justify-content:space-between;align-items:center">'+
+            '<span style="font-size:0.75rem;color:#64748b">'+date+'</span>'+
+            '<span style="font-size:0.78rem;color:#00d46e;font-weight:600">Read →</span>'+
+          '</div>'+
+        '</div>'+
+      '</a>';
+    }).join('');
+  }catch(e){
+    var grid2=document.getElementById('blog-grid');
+    if(grid2)grid2.innerHTML='<p style="color:#64748b;font-size:0.9rem">Could not load posts.</p>';
+  }
+})();
 </script>
 </body>
 </html>

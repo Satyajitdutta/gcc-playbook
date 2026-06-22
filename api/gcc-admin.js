@@ -541,6 +541,343 @@ export default async function handler(req, res) {
       return res.status(200).json({ blueprint: bp });
     }
 
+    // ── BLOG POST MANAGEMENT ──────────────────────────────────────────────────────
+    if (action === 'blog_init') {
+      const session = await requireSession(client, req);
+      if (!session) { res.status(401).json({ error: 'Unauthorized' }); return; }
+      await client.query(`
+        CREATE TABLE IF NOT EXISTS gcc_blog_posts (
+          id SERIAL PRIMARY KEY,
+          title TEXT NOT NULL,
+          slug TEXT UNIQUE NOT NULL,
+          excerpt TEXT,
+          content TEXT,
+          linkedin_copy TEXT,
+          tags TEXT[],
+          status TEXT DEFAULT 'draft',
+          scheduled_at TIMESTAMPTZ,
+          published_at TIMESTAMPTZ,
+          created_by TEXT,
+          created_at TIMESTAMPTZ DEFAULT NOW(),
+          updated_at TIMESTAMPTZ DEFAULT NOW()
+        )
+      `);
+      return res.status(200).json({ ok: true });
+    }
+
+    if (action === 'blog_list') {
+      const session = await requireSession(client, req);
+      if (!session) { res.status(401).json({ error: 'Unauthorized' }); return; }
+      await client.query(`CREATE TABLE IF NOT EXISTS gcc_blog_posts (id SERIAL PRIMARY KEY, title TEXT NOT NULL, slug TEXT UNIQUE NOT NULL, excerpt TEXT, content TEXT, linkedin_copy TEXT, tags TEXT[], status TEXT DEFAULT 'draft', scheduled_at TIMESTAMPTZ, published_at TIMESTAMPTZ, created_by TEXT, created_at TIMESTAMPTZ DEFAULT NOW(), updated_at TIMESTAMPTZ DEFAULT NOW())`);
+      const r = await client.query('SELECT * FROM gcc_blog_posts ORDER BY created_at DESC');
+      return res.status(200).json({ posts: r.rows });
+    }
+
+    if (action === 'blog_save') {
+      const session = await requireSession(client, req);
+      if (!session) { res.status(401).json({ error: 'Unauthorized' }); return; }
+      await client.query(`CREATE TABLE IF NOT EXISTS gcc_blog_posts (id SERIAL PRIMARY KEY, title TEXT NOT NULL, slug TEXT UNIQUE NOT NULL, excerpt TEXT, content TEXT, linkedin_copy TEXT, tags TEXT[], status TEXT DEFAULT 'draft', scheduled_at TIMESTAMPTZ, published_at TIMESTAMPTZ, created_by TEXT, created_at TIMESTAMPTZ DEFAULT NOW(), updated_at TIMESTAMPTZ DEFAULT NOW())`);
+      const { id, title, slug, excerpt, content, linkedin_copy, tags, scheduled_at } = body;
+      if (!title || !slug) { res.status(400).json({ error: 'Title and slug required' }); return; }
+      const tagsArr = Array.isArray(tags) ? tags : [];
+      let r;
+      if (id) {
+        r = await client.query(
+          `UPDATE gcc_blog_posts SET title=$1,slug=$2,excerpt=$3,content=$4,linkedin_copy=$5,tags=$6,scheduled_at=$7,updated_at=NOW() WHERE id=$8 RETURNING *`,
+          [title, slug, excerpt||'', content||'', linkedin_copy||'', tagsArr, scheduled_at||null, id]
+        );
+      } else {
+        r = await client.query(
+          `INSERT INTO gcc_blog_posts (title,slug,excerpt,content,linkedin_copy,tags,scheduled_at,created_by) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *`,
+          [title, slug, excerpt||'', content||'', linkedin_copy||'', tagsArr, scheduled_at||null, session.email]
+        );
+      }
+      return res.status(200).json({ post: r.rows[0] });
+    }
+
+    if (action === 'blog_publish') {
+      const session = await requireSession(client, req);
+      if (!session) { res.status(401).json({ error: 'Unauthorized' }); return; }
+      const r = await client.query(
+        `UPDATE gcc_blog_posts SET status='published', published_at=NOW(), updated_at=NOW() WHERE id=$1 RETURNING *`,
+        [body.id]
+      );
+      return res.status(200).json({ post: r.rows[0] });
+    }
+
+    if (action === 'blog_unpublish') {
+      const session = await requireSession(client, req);
+      if (!session) { res.status(401).json({ error: 'Unauthorized' }); return; }
+      const r = await client.query(
+        `UPDATE gcc_blog_posts SET status='draft', published_at=NULL, updated_at=NOW() WHERE id=$1 RETURNING *`,
+        [body.id]
+      );
+      return res.status(200).json({ post: r.rows[0] });
+    }
+
+    if (action === 'blog_delete') {
+      const session = await requireSession(client, req);
+      if (!session) { res.status(401).json({ error: 'Unauthorized' }); return; }
+      await client.query('DELETE FROM gcc_blog_posts WHERE id=$1', [body.id]);
+      return res.status(200).json({ ok: true });
+    }
+
+    if (action === 'blog_seed') {
+      const session = await requireSession(client, req);
+      if (!session) { res.status(401).json({ error: 'Unauthorized' }); return; }
+      await client.query(`CREATE TABLE IF NOT EXISTS gcc_blog_posts (id SERIAL PRIMARY KEY, title TEXT NOT NULL, slug TEXT UNIQUE NOT NULL, excerpt TEXT, content TEXT, linkedin_copy TEXT, tags TEXT[], status TEXT DEFAULT 'draft', scheduled_at TIMESTAMPTZ, published_at TIMESTAMPTZ, created_by TEXT, created_at TIMESTAMPTZ DEFAULT NOW(), updated_at TIMESTAMPTZ DEFAULT NOW())`);
+      const SEED_POSTS = [
+        {
+          title: "Why Germany's BFSI Sector Is the Next GCC Wave for Hyderabad",
+          slug: "germany-bfsi-gcc-hyderabad",
+          excerpt: "The reinsurance and insurance cluster forming in Germany has all the right conditions for a Hyderabad GCC move. Here is why the financial services corridor between Frankfurt and Hyderabad is heating up.",
+          content: `<p>Hyderabad has quietly become a magnet for global financial services GCCs. The Financial District in Gachibowli is no longer just a name on a map. It is a functioning cluster, with a growing concentration of BFSI-focused GCCs that creates its own gravity.</p>
+
+<p>What is less discussed is where the next wave is coming from. The signals point clearly to Germany's financial services sector, particularly the insurance and reinsurance industry centred around Frankfurt and Munich.</p>
+
+<h3>Why Insurance and Reinsurance?</h3>
+
+<p>Germany's insurance sector is among the most analytically intensive in the world. The core functions that GCCs specialise in, such as actuarial modelling, claims technology, risk analytics, regulatory reporting, and digital transformation, are exactly the functions that large German insurers are looking to industrialise. India's talent supply in these areas is deep and growing.</p>
+
+<p>The cost differential is significant. Hyderabad offers a fully loaded FTE cost well below equivalent hubs in Germany or even Bengaluru. For a BFSI firm running multi-hundred-person analytics and technology teams, that arbitrage is not marginal. It is a material P&amp;L decision.</p>
+
+<h3>The Regulatory Fit</h3>
+
+<p>German financial services firms are highly sensitive to regulatory clarity. Telangana's rule-of-law framing, the ITE&C Department's track record of delivery on commitments, and India's improving data protection framework all matter to legal and compliance functions at these firms. The "predictability" argument resonates in ways it does not in other corridors.</p>
+
+<h3>Cluster Behavior Is Already Visible</h3>
+
+<p>Once one major firm from a sector establishes a GCC in a city, the follow-on wave from sector peers typically arrives within 18 to 36 months. This pattern has repeated across every major GCC cluster in Hyderabad. The German BFSI corridor is entering that window now.</p>
+
+<p>Pithonix is actively tracking this corridor as part of its Corridor Intelligence Series. The Germany-Telangana corridor brief is available to government and investment promotion partners on request.</p>`,
+          linkedin_copy: `Germany's insurance and reinsurance sector is the next GCC wave heading to Hyderabad.
+
+The signals are clear: Frankfurt's financial giants are looking at Hyderabad's Financial District for actuarial modelling, claims tech, risk analytics, and regulatory functions.
+
+Why Hyderabad specifically?
+- Deep BFSI talent cluster already in place
+- Cost well below both Germany and Bengaluru
+- Regulatory predictability that German firms specifically respond to
+- Cluster gravity: once a peer moves, the sector follows
+
+Pithonix has been tracking the Germany-Telangana GCC corridor closely. The window is open now.
+
+#GCCIndia #HyderabadGCC #Telangana #TelanganaRising #GCCEra #GCCPulse #GCCRise #GCCPros #BFSI #GermanyIndia #GlobalCapabilityCentre`,
+          tags: ['Germany', 'BFSI', 'Hyderabad', 'GCC', 'Insurance', 'Corridor Intelligence']
+        },
+        {
+          title: "The Mittelstand Opportunity: Germany's Hidden Champions and Telangana",
+          slug: "mittelstand-gcc-telangana",
+          excerpt: "Germany's Mittelstand, the world-class family-owned industrial companies that rarely make headlines, represent an underexplored GCC opportunity for Telangana. Understanding how they make decisions is the key.",
+          content: `<p>When people talk about German companies and India, the conversation defaults to the DAX 40 giants. That is where the opportunity is assumed to be. It is not the whole picture.</p>
+
+<p>Germany's Mittelstand, the several thousand family-owned and privately held companies that are often global leaders in highly specialised industrial niches, represent a quieter but potentially larger GCC opportunity for Telangana.</p>
+
+<h3>What Makes Mittelstand Different</h3>
+
+<p>These are not small companies. Many have revenues in the hundreds of millions to single-digit billions, with global customer bases and deep engineering heritage. What they share is a decision-making structure that is fundamentally different from publicly listed multinationals.</p>
+
+<p>There are no shareholder pressure cycles. No quarterly earnings calls to manage. No public announcement required before a commitment is made. When a Mittelstand owner-manager decides to set up a capability centre in India, the organisation moves. The decision takes longer to reach, but once made, it is not reversed.</p>
+
+<h3>The Functions That Fit</h3>
+
+<p>Mittelstand firms are increasingly digitising their engineering, design, and service operations. The functions that translate well to a Hyderabad GCC are engineering simulation and analysis, industrial IoT and data analytics, ERP and digital transformation support, and precision manufacturing process digitisation. These are not commodity IT roles. They require domain expertise that Hyderabad's talent pool, particularly in engineering and manufacturing analytics, is well-positioned to supply.</p>
+
+<h3>The Decision Timeline</h3>
+
+<p>This is where Telangana's engagement strategy needs to be calibrated carefully. Mittelstand firms are not responsive to generic India pitch decks. They respond to evidence. Peer referrals carry enormous weight. A conversation with another Mittelstand owner who has already set up in Hyderabad is worth more than any brochure.</p>
+
+<p>The engagement playbook for this segment: find the early movers, make them visible advocates, and let peer-to-peer testimony do the work. Works Council dynamics at these firms mean that internal buy-in for an India decision is a structured process. It is not something that can be rushed. But it also means the decision, once cleared, is durable.</p>
+
+<p>Pithonix is tracking the Mittelstand segment as part of its Germany-Telangana Corridor Intelligence Brief.</p>`,
+          linkedin_copy: `Germany's Mittelstand companies are an underexplored GCC opportunity for Hyderabad.
+
+These are not small companies. They are world-class industrial specialists with global customer bases, deep engineering heritage, and family-owned decision structures that move differently from listed multinationals.
+
+What makes them interesting for Telangana:
+- Engineering simulation, industrial IoT, digital transformation functions translate perfectly
+- No quarterly cycle pressure - decisions are slower but once made, they stick
+- Works Council approval means buy-in is genuine when it comes
+- Peer referrals carry more weight than any pitch deck
+
+The Germany-Telangana corridor is not just about the big names. The hidden champions are coming too.
+
+#GCCIndia #HyderabadGCC #Telangana #TelanganaRising #GCCEra #GCCGroup #GCCRise #GermanyIndia #Manufacturing #GlobalCapabilityCentre`,
+          tags: ['Germany', 'Mittelstand', 'Manufacturing', 'Hyderabad', 'GCC', 'Corridor Intelligence']
+        },
+        {
+          title: "Why German Life Sciences Companies Are Eyeing Genome Valley",
+          slug: "germany-life-sciences-genome-valley",
+          excerpt: "Genome Valley in Hyderabad is already home to over 200 life sciences companies. German pharma and medtech firms are starting to notice. Here is the corridor thesis.",
+          content: `<p>Genome Valley is one of the most concentrated life sciences clusters in Asia. Over 200 companies, a purpose-built research infrastructure, and a talent base that spans pharmaceutical sciences, clinical analytics, and bioprocess engineering. For German life sciences firms exploring India, it is the obvious destination.</p>
+
+<h3>Why German Life Sciences, Why Now</h3>
+
+<p>Germany has one of the most sophisticated life sciences sectors in the world. Pharmaceutical companies, specialty chemical firms, medical device manufacturers, and bioprocess technology companies make up a sector that employs millions and competes globally on R&amp;D intensity.</p>
+
+<p>The GCC gap in this segment is significant. Many of these firms have commercial operations in India but have not yet consolidated their R&amp;D support, clinical data functions, regulatory affairs analytics, or digital manufacturing capabilities into a structured GCC. The logic for doing so has only strengthened as India's scientific talent supply has matured.</p>
+
+<h3>The Functions That Travel Well</h3>
+
+<p>Clinical data management and biostatistics. Regulatory affairs and pharmacovigilance. Drug discovery support and cheminformatics. Manufacturing process analytics and quality systems. These are not peripheral functions. They are core to what German life sciences firms do, and they can be delivered from Hyderabad with access to deep domain talent that Germany cannot recruit at scale or cost.</p>
+
+<h3>Genome Valley's GCC Zone</h3>
+
+<p>The dedicated GCC zone at Bharat Future City adjacent to Genome Valley has been designed precisely for this use case: clinical analytics, AI-led drug discovery, and bioprocess digitisation. For a German pharma firm evaluating India, this is a turnkey proposition. Infrastructure, talent adjacency, and peer companies already in residence.</p>
+
+<p>Pithonix is tracking German life sciences as a priority segment in its Germany-Telangana Corridor Intelligence Brief. Several companies in this segment are at active evaluation stage.</p>`,
+          linkedin_copy: `Germany's life sciences sector is eyeing Genome Valley - and the case has never been stronger.
+
+200+ resident companies. Purpose-built R&D infrastructure. A talent base in clinical analytics, bioprocess engineering, and drug discovery that Germany cannot replicate domestically at scale or cost.
+
+The functions that are ready to move:
+- Clinical data management and biostatistics
+- Regulatory affairs and pharmacovigilance
+- Drug discovery support and cheminformatics
+- Manufacturing process analytics
+
+The dedicated GCC zone at Bharat Future City makes this a turnkey decision for any serious German pharma or medtech evaluator.
+
+Pithonix is tracking this corridor actively.
+
+#GCCIndia #HyderabadGCC #Telangana #TelanganaRising #GCCEra #GCCPulse #GCCRise #GermanyIndia #LifeSciences #GenomeValley #GlobalCapabilityCentre`,
+          tags: ['Germany', 'Life Sciences', 'Genome Valley', 'Pharma', 'GCC', 'Corridor Intelligence']
+        },
+        {
+          title: "The Nemawashi Factor: Why Japanese Companies Take 18-30 Months to Choose India",
+          slug: "nemawashi-japanese-gcc-india-decision",
+          excerpt: "Japanese companies follow a consensus-building decision process called nemawashi, followed by a formal approval chain called ringi. Understanding this is the difference between a productive engagement and a frustrating one.",
+          content: `<p>Anyone who has tried to move quickly with a Japanese corporate on an India decision knows the feeling. The meeting goes well. The interest seems genuine. And then nothing moves for months.</p>
+
+<p>This is not indecision. It is process. And understanding it is the single most important factor in successfully converting Japanese companies into Hyderabad GCC investors.</p>
+
+<h3>Nemawashi and Ringi</h3>
+
+<p>Nemawashi is the practice of building broad internal consensus before a decision is formally proposed. The word literally refers to preparing the roots of a tree before transplanting. Every stakeholder who will be affected by a decision is consulted individually and informally before anything is put to a formal meeting. This takes time. It is not negotiable.</p>
+
+<p>Ringi is the formal approval chain that follows. A proposal document circulates through the organisation, gathering stamps of approval from each relevant level. No one person makes the decision alone. The process is the decision.</p>
+
+<p>For India GCC evaluations, this typically means an 18 to 30 month cycle from first serious conversation to formal commitment. Rushing this process does not accelerate it. It ends it.</p>
+
+<h3>What Actually Moves the Needle</h3>
+
+<p>Three things are proven to accelerate the nemawashi process for Japan-India GCC decisions. First, ringi-ready evidence packages: structured documentation with cost benchmarks, talent availability data, regulatory clarity confirmations, and peer case studies that decision-makers can literally include in their internal proposal. Second, peer testimony: a meeting with another Japanese company's India GCC head carries more weight in the internal consensus process than any external pitch. Third, anchor company visibility: when a known, respected Japanese company has already moved and is visibly successful, the follow-on wave from sector peers comes faster.</p>
+
+<h3>The Agglomeration Effect</h3>
+
+<p>Japanese firms show strong follow-the-leader behavior within sectors. Once an insurer moves, other insurers take notice. Once a trading house establishes a capability centre, peers evaluate the same. The first mover creates the template. Subsequent movers use it.</p>
+
+<p>Hyderabad now has a Japanese anchor company in the financial services sector. The ringi clock has started for several sector peers.</p>`,
+          linkedin_copy: `Why do Japanese companies take 18-30 months to decide on India? It is not slow decision-making. It is a process called nemawashi and ringi.
+
+Nemawashi: building broad internal consensus before any formal proposal.
+Ringi: a formal approval chain where no one person decides alone.
+
+What this means for anyone trying to bring Japanese GCCs to Hyderabad:
+- Never rush. Pressure ends conversations, not accelerates them.
+- Provide ringi-ready evidence packages: cost benchmarks, talent data, regulatory clarity, peer case studies all structured for internal use
+- Peer testimony from other Japanese GCC heads in India is worth more than any external pitch
+- Once an anchor company moves, sector peers follow fast
+
+The nemawashi process is already running for several Japanese firms watching Hyderabad closely.
+
+#GCCIndia #HyderabadGCC #Telangana #TelanganaRising #GCCEra #GCCGroup #GCCPulse #JapanIndia #GlobalCapabilityCentre #GCCPros`,
+          tags: ['Japan', 'Nemawashi', 'Decision Framework', 'GCC Strategy', 'Corridor Intelligence']
+        },
+        {
+          title: "Why Japanese Insurance Companies Are Leading the Hyderabad GCC Story",
+          slug: "japan-insurance-gcc-hyderabad",
+          excerpt: "Japanese insurers are the most likely next wave of GCC investors in Hyderabad. The anchor is already here. The sector follows anchors. Here is the full thesis.",
+          content: `<p>Japan has the world's largest life insurance market by assets. The country's major insurers manage portfolios that rival the GDP of mid-sized economies, and they are all running the same challenge: how do you digitise actuarial operations, modernise claims systems, and build data analytics capabilities at scale, when domestic talent is expensive and increasingly scarce?</p>
+
+<p>The answer, for a growing number of Japanese insurers, is Hyderabad.</p>
+
+<h3>Why Insurance First</h3>
+
+<p>Insurance is analytically intensive in ways that map directly onto what Indian talent does well. Actuarial modelling, claims data processing, underwriting analytics, risk modelling, regulatory reporting, and digital customer experience are all functions with deep talent availability in Hyderabad. The cost arbitrage versus Tokyo or Osaka operations is significant, and the quality benchmark, particularly in quantitative and data roles, is high.</p>
+
+<p>Japanese insurers have been watching peer behaviour closely. The follow-the-leader dynamic in this sector is strong. When one major insurer demonstrates a successful Hyderabad GCC model, with visible headcount growth and measurable output quality, the ringi process at peers becomes easier to complete. The first mover creates the evidence package that subsequent movers need.</p>
+
+<h3>The Agglomeration Logic</h3>
+
+<p>Hyderabad's Financial District already has a functioning BFSI cluster. The talent, infrastructure, and regulatory familiarity built up by existing GCCs create a lower-friction entry point for new entrants in the same sector. A Japanese insurer arriving in Hyderabad today is not pioneering from scratch. They are joining a cluster.</p>
+
+<h3>The 60% Gap</h3>
+
+<p>Approximately 60 percent of Forbes Global 2000 Japanese companies have not yet established a GCC in India. For the insurance sector specifically, the gap between the scale of Japanese insurers and their current India GCC footprint is large. That gap is an opportunity. It is closing.</p>
+
+<p>Pithonix is tracking the Japan-Telangana corridor with a focus on the insurance and financial services segment. The window for Telangana to position as the preferred destination for this wave is open now.</p>`,
+          linkedin_copy: `Japan's insurance sector is the next major GCC wave for Hyderabad. The logic is clear.
+
+Japan has the world's largest life insurance market by assets. Every major insurer is running the same challenge: how do you digitise actuarial operations and build data analytics capability at scale when domestic talent is scarce and expensive?
+
+Why Hyderabad wins this:
+- Deep actuarial and data talent already in residence
+- Financial District cluster creates lower-friction entry
+- Follow-the-leader behavior means one anchor converts to sector wave
+- 60% of Forbes Global 2000 Japanese companies have not yet entered India
+
+The anchor is here. The ringi clocks are running at sector peers.
+
+Pithonix is tracking this corridor.
+
+#GCCIndia #HyderabadGCC #Telangana #TelanganaRising #GCCEra #GCCPulse #GCCRise #JapanIndia #Insurance #GlobalCapabilityCentre #GCCPros`,
+          tags: ['Japan', 'Insurance', 'BFSI', 'Hyderabad', 'GCC', 'Corridor Intelligence']
+        },
+        {
+          title: "The Sogo Shosha Opportunity: Japanese Trading Houses and the India GCC Case",
+          slug: "sogo-shosha-gcc-india",
+          excerpt: "Japan's sogo shosha are among the most globally diversified companies in the world. Their India GCC story is only beginning. Here is why the trading house corridor matters for Telangana.",
+          content: `<p>The sogo shosha, Japan's general trading companies, are among the most structurally interesting organisations in the global economy. They operate across commodities, infrastructure, finance, logistics, retail, and technology. They have significant commercial investments in India. And their shared services and analytics infrastructure in India is, in most cases, underdeveloped relative to the scale of their India exposure.</p>
+
+<h3>What Sogo Shosha Actually Do</h3>
+
+<p>These are not simple trading intermediaries. The major Japanese trading houses have evolved into diversified holding companies with investments spanning energy, food, metals, infrastructure, chemicals, and financial services. Managing this complexity requires significant analytical and operational capability.</p>
+
+<p>The functions that translate most naturally to a Hyderabad GCC are commodity analytics and market intelligence, supply chain optimisation and logistics analytics, shared financial services across portfolio companies, sustainability and ESG reporting, and digital transformation support for portfolio investments in India.</p>
+
+<h3>The India Angle</h3>
+
+<p>Japan's trading houses have been investing in India for decades. Infrastructure projects, energy investments, agricultural value chains, logistics networks. This creates an existing India management and commercial presence that a GCC can serve directly.</p>
+
+<p>The opportunity is to consolidate what is currently distributed across portfolio companies into a structured shared services and analytics centre. Rather than each India investment running its own support functions, a GCC creates a common platform. The cost and quality case is straightforward.</p>
+
+<h3>The Decision Dynamics</h3>
+
+<p>Trading house decisions on GCCs are typically driven by their corporate digital transformation programs rather than individual business unit demand. The key engagement is at the group level, not the subsidiary. Hyderabad's positioning as a technology and analytics hub, combined with the existing depth of Japan-India business relationships, makes it a strong candidate.</p>
+
+<p>Pithonix is tracking the sogo shosha segment as part of the Japan-Telangana Corridor Intelligence Brief. This segment represents a long-cycle but high-conviction opportunity for Telangana's GCC promotion strategy.</p>`,
+          linkedin_copy: `Japan's sogo shosha - the giant general trading houses - are an overlooked GCC opportunity for Hyderabad.
+
+These are not simple trading companies. They operate across commodities, infrastructure, finance, logistics, and technology, with significant India investments already in place.
+
+The GCC case is straightforward:
+- Commodity analytics and market intelligence
+- Supply chain optimisation across India portfolio investments
+- Shared financial services for India subsidiaries
+- Digital transformation support for Indian portfolio companies
+
+The India presence is already there. The GCC infrastructure to serve it is not.
+
+Pithonix is tracking this corridor.
+
+#GCCIndia #HyderabadGCC #Telangana #TelanganaRising #GCCEra #GCCGroup #GCCRise #JapanIndia #GlobalCapabilityCentre #GCCPros #SupplyChain`,
+          tags: ['Japan', 'Sogo Shosha', 'Trading', 'GCC Strategy', 'Corridor Intelligence']
+        }
+      ];
+      let inserted = 0;
+      for (const p of SEED_POSTS) {
+        try {
+          await client.query(
+            `INSERT INTO gcc_blog_posts (title,slug,excerpt,content,linkedin_copy,tags,created_by) VALUES ($1,$2,$3,$4,$5,$6,$7) ON CONFLICT (slug) DO NOTHING`,
+            [p.title, p.slug, p.excerpt, p.content, p.linkedin_copy, p.tags, session.email]
+          );
+          inserted++;
+        } catch(e) { /* skip conflicts */ }
+      }
+      return res.status(200).json({ ok: true, inserted });
+    }
+
     res.status(400).json({ error: 'Invalid action' });
 
   } catch (e) {

@@ -12,7 +12,8 @@
     "api/llms.js": { "maxDuration": 5 },
     "api/gcc-admin.js": { "maxDuration": 60 },
     "api/gcc-weekly-report.js": { "maxDuration": 30 },
-    "api/beyond-cure-signals.js": { "maxDuration": 60 }
+    "api/beyond-cure-signals.js": { "maxDuration": 60 },
+    "api/blog.js": { "maxDuration": 10 }
   },
   "crons": [
     {
