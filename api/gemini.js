@@ -34,8 +34,10 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') { res.status(204).end(); return; }
   if (req.method !== 'POST') { res.status(405).json({ error: 'POST only' }); return; }
 
-  // Block requests from disallowed origins
-  if (origin && !isAllowedOrigin(origin)) {
+  // Require either a valid browser origin OR a matching proxy secret (for server-side calls)
+  const proxySecret = req.headers['x-proxy-secret'] || '';
+  const validSecret = process.env.GEMINI_PROXY_SECRET && proxySecret === process.env.GEMINI_PROXY_SECRET;
+  if (!isAllowedOrigin(origin) && !validSecret) {
     res.status(403).json({ error: 'Forbidden' });
     return;
   }
