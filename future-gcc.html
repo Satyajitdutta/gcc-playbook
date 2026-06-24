@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Future GCC — Intelligence First | Pithonix AI</title>
+<meta name="description" content="The next wave of GCCs coming to India are not back-offices. They are Intelligence Centres. Pithonix AI has mapped the corridors, the companies, and the blueprint for what comes next.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://gcc-playbook.pithonix.ai/future-gcc">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://gcc-playbook.pithonix.ai/future-gcc">
+<meta property="og:title" content="The Future GCC — Intelligence First | Pithonix AI">
+<meta property="og:description" content="The next wave of GCCs coming to India are not back-offices. They are Intelligence Centres. Pithonix AI has mapped the corridors, the companies, and the blueprint for what comes next.">
+<meta property="og:image" content="https://gcc-playbook.pithonix.ai/logo.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #081510;
+  --s1: #0d1f18;
+  --s2: #112219;
+  --s3: #162b1f;
+  --bd: rgba(0,180,90,0.15);
+  --bd2: rgba(0,180,90,0.28);
+  --green: #00d46e;
+  --green2: #00b85a;
+  --gold: #d4a438;
+  --gold2: #e8b84b;
+  --txt: #e8f5ed;
+  --tmed: rgba(232,245,237,0.68);
+  --tdim: rgba(232,245,237,0.42);
+  --red: #ff4d6d;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--txt);
+  font-family:'Outfit',sans-serif;
+  font-weight:400;
+  line-height:1.7;
+  overflow-x:hidden;
+}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(8,21,16,0.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--bd);
+  padding:0 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  height:60px;
+}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-logo img{height:32px;width:auto}
+.nav-logo span{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--txt);letter-spacing:0.5px}
+.nav-links{display:flex;gap:1.5rem;align-items:center}
+.nav-links a{color:var(--tmed);text-decoration:none;font-size:0.85rem;font-weight:500;transition:color 0.2s}
+.nav-links a:hover{color:var(--green)}
+.nav-cta{
+  background:var(--green);color:#061010;
+  padding:0.45rem 1.1rem;border-radius:6px;
+  font-size:0.82rem;font-weight:600;
+  text-decoration:none;
+  transition:background 0.2s;
+}
+.nav-cta:hover{background:var(--green2);color:#061010!important}
+
+/* SECTIONS */
+section{padding:5rem 2rem}
+.container{max-width:1100px;margin:0 auto}
+.container-narrow{max-width:780px;margin:0 auto}
+
+/* HERO */
+.hero{
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+  padding:7rem 2rem 5rem;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 40%, rgba(0,212,110,0.07) 0%, transparent 70%);
+  pointer-events:none;
+}
+.hero-tag{
+  display:inline-block;
+  border:1px solid var(--bd2);
+  color:var(--green);
+  font-size:0.75rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;
+  padding:0.4rem 1rem;border-radius:20px;
+  margin-bottom:2rem;
+  background:rgba(0,212,110,0.06);
+}
+.hero h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.8rem,6vw,5rem);
+  font-weight:700;
+  line-height:1.1;
+  color:var(--txt);
+  margin-bottom:1.5rem;
+}
+.hero h1 em{
+  font-style:normal;
+  color:var(--green);
+}
+.hero-sub{
+  font-size:clamp(1rem,2vw,1.25rem);
+  color:var(--tmed);
+  max-width:680px;margin:0 auto 2.5rem;
+  font-weight:300;
+  line-height:1.8;
+}
+.hero-buttons{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn-primary{
+  background:var(--green);color:#061010;
+  padding:0.85rem 2rem;border-radius:8px;
+  font-size:0.95rem;font-weight:600;
+  text-decoration:none;
+  border:none;cursor:pointer;
+  transition:all 0.2s;
+  display:inline-block;
+}
+.btn-primary:hover{background:var(--green2);transform:translateY(-1px)}
+.btn-outline{
+  border:1px solid var(--bd2);color:var(--txt);
+  padding:0.85rem 2rem;border-radius:8px;
+  font-size:0.95rem;font-weight:500;
+  text-decoration:none;
+  background:transparent;
+  transition:all 0.2s;
+  display:inline-block;
+}
+.btn-outline:hover{border-color:var(--green);color:var(--green)}
+
+.hero-scroll{
+  position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);
+  color:var(--tdim);font-size:0.78rem;letter-spacing:1px;text-transform:uppercase;
+  display:flex;flex-direction:column;align-items:center;gap:0.5rem;
+}
+.scroll-line{width:1px;height:36px;background:linear-gradient(to bottom,var(--green),transparent)}
+
+/* STAT BAR */
+.stat-bar{
+  background:var(--s1);
+  border-top:1px solid var(--bd);
+  border-bottom:1px solid var(--bd);
+  padding:2rem;
+}
+.stat-bar .container{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:2rem;
+  text-align:center;
+}
+.stat-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.2rem;font-weight:700;
+  color:var(--green);
+  line-height:1.1;
+}
+.stat-label{
+  font-size:0.8rem;color:var(--tmed);
+  margin-top:0.3rem;
+  text-transform:uppercase;letter-spacing:0.8px;
+}
+
+/* SECTION HEADERS */
+.section-tag{
+  font-size:0.72rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+  color:var(--green);margin-bottom:0.75rem;
+}
+.section-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2rem,4vw,3rem);
+  font-weight:700;line-height:1.15;
+  color:var(--txt);
+  margin-bottom:1rem;
+}
+.section-lead{
+  font-size:1.05rem;color:var(--tmed);
+  line-height:1.8;max-width:680px;
+}
+
+/* SHIFT SECTION */
+.shift-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1.5rem;
+  margin-top:3rem;
+}
+@media(max-width:700px){.shift-grid{grid-template-columns:1fr}}
+.shift-card{
+  background:var(--s1);
+  border:1px solid var(--bd);
+  border-radius:12px;
+  padding:2rem;
+}
+.shift-card.before{border-left:3px solid rgba(255,77,109,0.4)}
+.shift-card.after{border-left:3px solid var(--green)}
+.shift-label{
+  font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:1rem;
+}
+.shift-card.before .shift-label{color:var(--red)}
+.shift-card.after .shift-label{color:var(--green)}
+.shift-card h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.4rem;font-weight:600;
+  margin-bottom:0.75rem;
+}
+.shift-card p{font-size:0.92rem;color:var(--tmed);line-height:1.7}
+.shift-list{list-style:none;margin-top:1rem}
+.shift-list li{
+  font-size:0.88rem;color:var(--tmed);
+  padding:0.4rem 0;
+  border-bottom:1px solid var(--bd);
+  display:flex;align-items:flex-start;gap:0.6rem;
+}
+.shift-list li:last-child{border-bottom:none}
+.shift-list li::before{
+  content:'';
+  width:5px;height:5px;border-radius:50%;
+  margin-top:0.5rem;flex-shrink:0;
+}
+.shift-card.before .shift-list li::before{background:rgba(255,77,109,0.6)}
+.shift-card.after .shift-list li::before{background:var(--green)}
+
+/* CORRIDORS SECTION */
+.corridors{background:var(--s1)}
+.corridor-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1.5rem;margin-top:3rem;
+}
+@media(max-width:700px){.corridor-grid{grid-template-columns:1fr}}
+.corridor-card{
+  background:var(--bg);
+  border:1px solid var(--bd);
+  border-radius:12px;
+  padding:2rem;
+  position:relative;overflow:hidden;
+}
+.corridor-card::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:3px;
+}
+.corridor-card.germany::before{background:linear-gradient(90deg,#000000,#DD0000,#FFCE00)}
+.corridor-card.japan::before{background:linear-gradient(90deg,#BC002D,#BC002D,rgba(188,0,45,0.2))}
+.corridor-flag{font-size:2rem;margin-bottom:1rem}
+.corridor-card h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.6rem;font-weight:700;
+  margin-bottom:0.5rem;
+}
+.corridor-card .anchor{
+  font-size:0.82rem;color:var(--green);
+  margin-bottom:1.2rem;
+  padding:0.5rem 0.75rem;
+  background:rgba(0,212,110,0.07);
+  border-radius:6px;
+  border-left:2px solid var(--green);
+}
+.corridor-card p{font-size:0.9rem;color:var(--tmed);line-height:1.75}
+.corridor-meta{
+  display:flex;gap:1rem;flex-wrap:wrap;
+  margin-top:1.2rem;
+}
+.corridor-badge{
+  font-size:0.75rem;color:var(--tmed);
+  border:1px solid var(--bd);
+  padding:0.3rem 0.7rem;border-radius:20px;
+  background:var(--s2);
+}
+.corridor-locked{
+  margin-top:1.5rem;
+  padding:1rem;
+  background:rgba(0,212,110,0.05);
+  border:1px dashed var(--bd2);
+  border-radius:8px;
+  font-size:0.82rem;color:var(--tdim);
+  text-align:center;
+}
+.corridor-locked strong{color:var(--green)}
+
+/* WHAT WE KNOW */
+.pillars-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.5rem;
+  margin-top:3rem;
+}
+.pillar-card{
+  background:var(--s1);
+  border:1px solid var(--bd);
+  border-radius:12px;
+  padding:2rem;
+}
+.pillar-icon{
+  font-size:1.8rem;margin-bottom:1rem;
+}
+.pillar-card h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.3rem;font-weight:600;
+  margin-bottom:0.6rem;
+}
+.pillar-card p{font-size:0.88rem;color:var(--tmed);line-height:1.75}
+.pillar-card .locked-note{
+  margin-top:0.8rem;
+  font-size:0.78rem;color:var(--tdim);
+  font-style:italic;
+}
+
+/* WHAT WE BUILD */
+.build-section{background:var(--s1)}
+.build-steps{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:0;
+  margin-top:3rem;
+  border:1px solid var(--bd);
+  border-radius:12px;
+  overflow:hidden;
+}
+.build-step{
+  padding:2rem 1.5rem;
+  border-right:1px solid var(--bd);
+  position:relative;
+}
+.build-step:last-child{border-right:none}
+@media(max-width:800px){
+  .build-steps{grid-template-columns:1fr 1fr}
+  .build-step:nth-child(2){border-right:none}
+  .build-step:nth-child(3){border-right:1px solid var(--bd)}
+}
+@media(max-width:500px){
+  .build-steps{grid-template-columns:1fr}
+  .build-step{border-right:none;border-bottom:1px solid var(--bd)}
+  .build-step:last-child{border-bottom:none}
+}
+.step-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:3rem;font-weight:700;
+  color:rgba(0,212,110,0.15);
+  line-height:1;
+  margin-bottom:0.5rem;
+}
+.build-step h3{
+  font-size:0.95rem;font-weight:600;
+  color:var(--txt);
+  margin-bottom:0.5rem;
+}
+.build-step p{font-size:0.83rem;color:var(--tmed);line-height:1.65}
+
+/* RESEARCH PAPER CTA */
+.research-cta-section{
+  background:var(--bg);
+  text-align:center;
+}
+.research-card{
+  background:var(--s1);
+  border:1px solid var(--bd2);
+  border-radius:16px;
+  padding:3.5rem 2.5rem;
+  max-width:780px;
+  margin:0 auto;
+  position:relative;
+  overflow:hidden;
+}
+.research-card::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--green),transparent);
+}
+.research-card h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.8rem,4vw,2.6rem);
+  font-weight:700;
+  margin-bottom:1rem;
+}
+.research-card p{
+  font-size:1rem;color:var(--tmed);
+  max-width:560px;margin:0 auto 2rem;
+  line-height:1.8;
+}
+.access-options{
+  display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;
+  margin-bottom:1.5rem;
+}
+.access-note{font-size:0.78rem;color:var(--tdim)}
+
+/* WHO WE WANT */
+.who-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:1.5rem;
+  margin-top:3rem;
+}
+.who-card{
+  background:var(--s1);
+  border:1px solid var(--bd);
+  border-radius:12px;
+  padding:1.8rem;
+}
+.who-card .who-icon{font-size:1.5rem;margin-bottom:0.75rem}
+.who-card h3{font-size:1rem;font-weight:600;margin-bottom:0.4rem}
+.who-card p{font-size:0.85rem;color:var(--tmed);line-height:1.65}
+
+/* CONNECT FORM */
+.connect-section{background:var(--s1)}
+.connect-wrap{
+  max-width:640px;margin:0 auto;
+  background:var(--bg);
+  border:1px solid var(--bd);
+  border-radius:16px;
+  padding:3rem 2.5rem;
+  margin-top:3rem;
+}
+.connect-wrap h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2rem;font-weight:700;
+  margin-bottom:0.5rem;text-align:center;
+}
+.connect-wrap .sub{
+  font-size:0.9rem;color:var(--tmed);text-align:center;
+  margin-bottom:2rem;
+}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+@media(max-width:500px){.form-row{grid-template-columns:1fr}}
+.form-group{margin-bottom:1rem}
+label{display:block;font-size:0.78rem;font-weight:600;color:var(--tmed);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:0.4rem}
+input,select,textarea{
+  width:100%;background:var(--s2);
+  border:1px solid var(--bd);
+  color:var(--txt);
+  padding:0.75rem 1rem;border-radius:8px;
+  font-family:'Outfit',sans-serif;font-size:0.92rem;
+  outline:none;transition:border-color 0.2s;
+}
+input:focus,select:focus,textarea:focus{border-color:var(--green)}
+textarea{resize:vertical;min-height:100px}
+select option{background:var(--s2)}
+.form-submit{
+  width:100%;background:var(--green);color:#061010;
+  border:none;border-radius:8px;
+  padding:0.9rem;font-size:1rem;font-weight:700;
+  cursor:pointer;transition:background 0.2s;
+  font-family:'Outfit',sans-serif;
+  margin-top:0.5rem;
+}
+.form-submit:hover{background:var(--green2)}
+.form-note{font-size:0.75rem;color:var(--tdim);text-align:center;margin-top:1rem}
+.form-success{
+  display:none;
+  text-align:center;padding:2rem;
+  color:var(--green);
+  font-size:1.05rem;font-weight:500;
+}
+
+/* FOOTER */
+footer{
+  background:var(--s1);
+  border-top:1px solid var(--bd);
+  padding:2rem;
+  text-align:center;
+}
+footer .footer-links{
+  display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;
+  margin-bottom:1rem;
+}
+footer .footer-links a{
+  color:var(--tdim);font-size:0.82rem;text-decoration:none;
+  transition:color 0.2s;
+}
+footer .footer-links a:hover{color:var(--green)}
+footer p{font-size:0.78rem;color:var(--tdim)}
+
+/* QUOTE BLOCK */
+.quote-block{
+  border-left:3px solid var(--green);
+  padding:1.5rem 2rem;
+  margin:2.5rem 0;
+  background:rgba(0,212,110,0.04);
+  border-radius:0 8px 8px 0;
+}
+.quote-block p{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.4rem;font-weight:600;
+  color:var(--txt);line-height:1.5;
+  font-style:italic;
+}
+.quote-block cite{
+  display:block;font-family:'Outfit',sans-serif;
+  font-size:0.8rem;color:var(--tmed);
+  margin-top:0.75rem;font-style:normal;
+}
+
+/* DIVIDER */
+.divider{height:1px;background:var(--bd);max-width:1100px;margin:0 auto}
+
+/* PARTICLE CANVAS */
+canvas#particles{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  pointer-events:none;z-index:0;opacity:0.35;
+}
+section,nav,footer{position:relative;z-index:1}
+
+/* RESPONSIVE NAV */
+@media(max-width:600px){
+  .nav-links{display:none}
+  nav{justify-content:space-between}
+}
+</style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+
+<nav>
+  <a href="/" class="nav-logo">
+    <img src="logo.png" alt="Pithonix AI">
+    <span>Pithonix AI</span>
+  </a>
+  <div class="nav-links">
+    <a href="/">GCC Playbook</a>
+    <a href="/indus-whitepaper">INDUS Framework</a>
+    <a href="#connect" class="nav-cta">Connect With Us</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="container-narrow">
+    <div class="hero-tag">Pithonix AI Research Series</div>
+    <h1>The Future GCC is an <em>Intelligence Centre</em></h1>
+    <p class="hero-sub">
+      The next wave of global companies coming to India will not build back-offices. They will build thinking centres.
+      Pithonix AI has researched, mapped, and built the architecture for what that looks like — and how to make it work from Day 1.
+    </p>
+    <div class="hero-buttons">
+      <a href="#connect" class="btn-primary">Request the Research Brief</a>
+      <a href="#corridors" class="btn-outline">See the Corridors</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- STAT BAR -->
+<div class="stat-bar">
+  <div class="container">
+    <div>
+      <div class="stat-num">2,117+</div>
+      <div class="stat-label">GCCs active in India</div>
+    </div>
+    <div>
+      <div class="stat-num">$105B</div>
+      <div class="stat-label">Market size by 2030</div>
+    </div>
+    <div>
+      <div class="stat-num">60%</div>
+      <div class="stat-label">Forbes Global 2000 yet to enter India</div>
+    </div>
+    <div>
+      <div class="stat-num">55-70%</div>
+      <div class="stat-label">Cost arbitrage vs US and UK</div>
+    </div>
+    <div>
+      <div class="stat-num">18 months</div>
+      <div class="stat-label">Average break-even</div>
+    </div>
+  </div>
+</div>
+
+<!-- THE SHIFT -->
+<section>
+  <div class="container">
+    <div class="section-tag">The Fundamental Shift</div>
+    <h2 class="section-title">This wave is different from the last one</h2>
+    <p class="section-lead">
+      The GCCs of the 2010s were cost plays. The GCCs arriving in India from 2024 onward are strategic bets.
+      The companies making those bets need a different kind of partner — one who understands both the intelligence architecture and the ground truth of India.
+    </p>
+
+    <div class="shift-grid">
+      <div class="shift-card before">
+        <div class="shift-label">Wave 1 — 2010 to 2020</div>
+        <h3>The Cost Centre Model</h3>
+        <p>Companies came to India for labour arbitrage. Functions were defined at HQ, handed down to India, and measured on cost per ticket.</p>
+        <ul class="shift-list">
+          <li>IT support and helpdesk offshoring</li>
+          <li>Finance and accounting process lift-and-shift</li>
+          <li>HR shared services and payroll</li>
+          <li>Dependent on HQ for every strategic decision</li>
+          <li>Seen as a cost line, not a value centre</li>
+        </ul>
+      </div>
+      <div class="shift-card after">
+        <div class="shift-label">Wave 2 — 2024 Onward</div>
+        <h3>The Intelligence Centre Model</h3>
+        <p>Companies are coming to India for strategic depth. The GCC is no longer a back-office. It is the enterprise's thinking engine in Asia.</p>
+        <ul class="shift-list">
+          <li>AI and data science as anchor functions</li>
+          <li>Product engineering and R&D — not just delivery</li>
+          <li>Global ownership of entire function P&Ls</li>
+          <li>Innovation Labs and IP creation on Indian soil</li>
+          <li>GCC as a recruiting brand, not a cost allocation</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="quote-block" style="margin-top:3rem">
+      <p>"70% of GCCs will integrate advanced AI capabilities by 2026. The companies that arrive ready will compound that advantage. The ones that arrive unprepared will spend 3 years catching up."</p>
+      <cite>Pithonix AI Research Desk, 2026 — based on NASSCOM-Zinnov industry data</cite>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- THE CORRIDORS -->
+<section class="corridors" id="corridors">
+  <div class="container">
+    <div class="section-tag">Corridor Intelligence</div>
+    <h2 class="section-title">We have mapped the corridors bringing the next wave</h2>
+    <p class="section-lead">
+      Through proprietary research, we have identified the specific geographies, sectors, and company profiles most likely to establish GCCs in Telangana and India over the next 24 to 36 months. Two corridors stand out.
+    </p>
+
+    <div class="corridor-grid">
+      <div class="corridor-card germany">
+        <div class="corridor-flag">🇩🇪</div>
+        <h3>The Germany — Telangana Corridor</h3>
+        <div class="anchor">Anchor established: First mover from Frankfurt's financial services cluster is already operational in Hyderabad.</div>
+        <p>
+          Germany has the second-largest GCC opportunity in Europe — yet the vast majority of its large-caps and Mittelstand companies have no India GCC presence today.
+          The corridor is opening. The anchor is set. The follower wave is predictable.
+        </p>
+        <p style="margin-top:0.8rem">
+          Our research covers both the DAX-listed corporates and the family-owned Mittelstand — a segment that moves differently, decides differently, and commits permanently once the decision is made.
+        </p>
+        <div class="corridor-meta">
+          <span class="corridor-badge">BFSI Corridor</span>
+          <span class="corridor-badge">Life Sciences / Genome Valley</span>
+          <span class="corridor-badge">Engineering & Manufacturing</span>
+          <span class="corridor-badge">Technology / SaaS</span>
+        </div>
+        <div class="corridor-locked">
+          <strong>Proprietary watchlist included in the research brief.</strong><br>
+          45 companies profiled across large-cap and Mittelstand segments, with decision-process intelligence and sector-to-zone mapping.
+        </div>
+      </div>
+
+      <div class="corridor-card japan">
+        <div class="corridor-flag">🇯🇵</div>
+        <h3>The Japan — Telangana Corridor</h3>
+        <div class="anchor">Anchor established: Japan's first life insurance GCC in Hyderabad is live and scaling from 60 to 600 professionals by 2027.</div>
+        <p>
+          60% of Forbes Global 2000 Japanese companies have no India presence yet. The anchor company's success is creating the ringi-ready case study that Japanese decision-makers need.
+          Follower behaviour in Japanese corporates is pronounced — once a peer moves, the rest follow sector by sector.
+        </p>
+        <p style="margin-top:0.8rem">
+          Our research maps the decision-making patterns unique to Japanese firms — the nemawashi consensus process, the ringi approval chain, and why the next 18 months are the right window to engage.
+        </p>
+        <div class="corridor-meta">
+          <span class="corridor-badge">Insurance / BFSI</span>
+          <span class="corridor-badge">Manufacturing / Automotive</span>
+          <span class="corridor-badge">Trading Houses</span>
+          <span class="corridor-badge">Healthcare & Pharma</span>
+        </div>
+        <div class="corridor-locked">
+          <strong>Proprietary watchlist included in the research brief.</strong><br>
+          30 companies profiled with sector intelligence, decision-cycle context, and Hyderabad zone recommendations.
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:3rem;text-align:center">
+      <p style="color:var(--tmed);font-size:0.9rem;margin-bottom:1.5rem">
+        The full corridor reports are available to strategic partners, government collaborators, and investors. They are not public documents.
+      </p>
+      <a href="#connect" class="btn-primary">Request Access to the Research</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WHAT WE KNOW THAT OTHERS DON'T -->
+<section>
+  <div class="container">
+    <div class="section-tag">Our Research Covers</div>
+    <h2 class="section-title">What we know that a standard consultant does not</h2>
+    <p class="section-lead">
+      The standard GCC advisory playbook tells you how to set up. Our research tells you what the new wave of companies actually needs to operate at intelligence-level from the start.
+    </p>
+
+    <div class="pillars-grid">
+      <div class="pillar-card">
+        <div class="pillar-icon">🗺</div>
+        <h3>Corridor-Level Intelligence</h3>
+        <p>
+          Which countries, which sectors, which companies are approaching the decision point. Not generic market data — specific, researched, signal-verified intelligence on who is coming and when.
+        </p>
+        <div class="locked-note">Full company-level data in the research brief.</div>
+      </div>
+
+      <div class="pillar-card">
+        <div class="pillar-icon">🧠</div>
+        <h3>The AI-First Architecture</h3>
+        <p>
+          How to wire an Intelligence Centre from Day 1 — not retrofit AI into a cost centre after 3 years. The tech stack, the data architecture, the governance model, and the talent profile for a GCC that compounds intelligence over time.
+        </p>
+        <div class="locked-note">Detailed architecture in the full brief.</div>
+      </div>
+
+      <div class="pillar-card">
+        <div class="pillar-icon">⚖</div>
+        <h3>Regulatory and Compliance Mapping</h3>
+        <p>
+          STPI, SEZ, DPDP Act, FEMA, and the emerging data localisation requirements. How new corridors — particularly Germany (GDPR-origin companies) and Japan (APPI compliance) — intersect with India's own data governance framework.
+        </p>
+        <div class="locked-note">Compliance matrix in the research brief.</div>
+      </div>
+
+      <div class="pillar-card">
+        <div class="pillar-icon">📍</div>
+        <h3>Zone-to-Function Matching</h3>
+        <p>
+          Telangana has purpose-built zones for specific industries. Genome Valley for life sciences. Hardware Park for manufacturing. Financial District for BFSI. HITEC City for tech. Our research maps which incoming companies belong where — and why it matters for talent, incentives, and cluster effects.
+        </p>
+        <div class="locked-note">Full zone mapping in the research brief.</div>
+      </div>
+
+      <div class="pillar-card">
+        <div class="pillar-icon">🎯</div>
+        <h3>Decision-Cycle Intelligence</h3>
+        <p>
+          German Mittelstand families take 12 to 18 months. Japanese corporates run nemawashi for 18 to 30 months. Understanding the decision process — not just the business case — is the difference between winning an engagement and being ignored.
+        </p>
+        <div class="locked-note">Decision intelligence per corridor in the brief.</div>
+      </div>
+
+      <div class="pillar-card">
+        <div class="pillar-icon">💰</div>
+        <h3>Cost Models That Hold</h3>
+        <p>
+          India FTE cost including all overhead must stay below 35% of the US equivalent to preserve value. We have built the cost model that accounts for salary escalation, attrition-driven rehiring, knowledge transfer, and HQ-India travel — not just the headline arbitrage number.
+        </p>
+        <div class="locked-note">Financial model framework in the brief.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WHAT WE BUILD -->
+<section class="build-section">
+  <div class="container">
+    <div class="section-tag">Our Role</div>
+    <h2 class="section-title">We do not just advise. We build the blueprint and execute it.</h2>
+    <p class="section-lead">
+      Pithonix AI acts as the end-to-end strategic partner for GCC setup and intelligence architecture. From the first feasibility conversation to the first 1,000 people.
+    </p>
+
+    <div class="build-steps">
+      <div class="build-step">
+        <div class="step-num">01</div>
+        <h3>Feasibility and Business Case</h3>
+        <p>Custom cost model, city selection, function mapping, and a board-ready business case with 5-year projections and break-even analysis.</p>
+      </div>
+      <div class="build-step">
+        <div class="step-num">02</div>
+        <h3>Legal Entity and Compliance</h3>
+        <p>Private Limited incorporation, STPI registration, SEZ evaluation, FEMA compliance, and all regulatory obligations handled end-to-end.</p>
+      </div>
+      <div class="build-step">
+        <div class="step-num">03</div>
+        <h3>Intelligence Architecture</h3>
+        <p>Deploying the JEET platform — our 26-agent enterprise nervous system — as the operational and intelligence layer of the GCC from Day 1.</p>
+      </div>
+      <div class="build-step">
+        <div class="step-num">04</div>
+        <h3>Talent and Ramp</h3>
+        <p>Zone-matched hiring strategy, leadership profiling, employer brand setup, and a month-by-month headcount ramp plan across all six GCC functions.</p>
+      </div>
+      <div class="build-step">
+        <div class="step-num">05</div>
+        <h3>Scale to Hub of Excellence</h3>
+        <p>From 50 to 1,000+. Governance structures, CoE setup, innovation lab architecture, and the transition from support centre to global capability owner.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- RESEARCH CTA -->
+<section class="research-cta-section">
+  <div class="container">
+    <div class="research-card">
+      <div class="section-tag" style="text-align:center">The Research</div>
+      <h2>Two corridor reports. One blueprint. Not available publicly.</h2>
+      <p>
+        The Germany-Telangana and Japan-Telangana Corridor Reports contain company-level intelligence, decision-cycle analysis, zone mapping, and a framework for building the Future GCC. We share them selectively with the right partners.
+      </p>
+      <div class="access-options">
+        <a href="#connect" class="btn-primary">Request Access</a>
+        <a href="/" class="btn-outline">See the GCC Simulator</a>
+      </div>
+      <p class="access-note">Access is granted to qualifying companies, investors, and government partners. No automated downloads.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WHO WE WANT TO TALK TO -->
+<section>
+  <div class="container">
+    <div class="section-tag">Who This Is For</div>
+    <h2 class="section-title">We want to talk to the right people</h2>
+    <p class="section-lead">
+      This is not a mass-market product. The companies that benefit most from our research are specific. If you recognise yourself in one of these descriptions, we should talk.
+    </p>
+
+    <div class="who-grid">
+      <div class="who-card">
+        <div class="who-icon">🏢</div>
+        <h3>Global Companies Evaluating India</h3>
+        <p>You are a mid-to-large corporation in Europe, Japan, North America, or the Middle East. India is on your radar. You want to understand the real cost, the right city, and how to build for intelligence — not just headcount.</p>
+      </div>
+      <div class="who-card">
+        <div class="who-icon">🤝</div>
+        <h3>Strategic Partners and Ecosystem Players</h3>
+        <p>You are a legal firm, real estate partner, talent firm, or technology provider who wants to be part of the Future GCC value chain. You bring capability. We bring the incoming pipeline and the blueprint.</p>
+      </div>
+      <div class="who-card">
+        <div class="who-icon">🏛</div>
+        <h3>Government and Policy Stakeholders</h3>
+        <p>You represent a state or national body working to attract investment. Our research on specific corridors and incoming companies is the kind of intelligence that shapes promotional strategy and incentive design.</p>
+      </div>
+      <div class="who-card">
+        <div class="who-icon">📈</div>
+        <h3>Investors in the GCC Ecosystem</h3>
+        <p>You are looking at India's GCC sector as an investment thesis. Pithonix AI is building the intelligence infrastructure for this wave. We are raising to scale our research, our platform, and our execution capability.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONNECT FORM -->
+<section class="connect-section" id="connect">
+  <div class="container">
+    <div class="section-tag" style="text-align:center">Get In Touch</div>
+    <div style="text-align:center;margin-bottom:0">
+      <h2 class="section-title">Let us start a conversation</h2>
+      <p class="section-lead" style="margin:0 auto">
+        Tell us who you are and what you are looking for. We will respond within 24 hours.
+      </p>
+    </div>
+
+    <div class="connect-wrap">
+      <h2>Connect With Pithonix AI</h2>
+      <p class="sub">Your information is kept confidential. No automated follow-up sequences — a real person will reply.</p>
+      <form id="connectForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" placeholder="Full name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Work Email</label>
+            <input type="email" id="email" name="email" placeholder="you@company.com" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="company">Company</label>
+            <input type="text" id="company" name="company" placeholder="Company name" required>
+          </div>
+          <div class="form-group">
+            <label for="country">Country / HQ</label>
+            <input type="text" id="country" name="country" placeholder="e.g. Germany, Japan, USA">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="interest">I am reaching out as</label>
+          <select id="interest" name="interest" required>
+            <option value="" disabled selected>Select your category</option>
+            <option value="company-evaluating">A company evaluating India for a GCC</option>
+            <option value="strategic-partner">A strategic or ecosystem partner</option>
+            <option value="government">A government or policy organisation</option>
+            <option value="investor">An investor in the GCC or AI sector</option>
+            <option value="research-access">I want access to the corridor research reports</option>
+            <option value="other">Something else</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="message">What would you like to explore?</label>
+          <textarea id="message" name="message" placeholder="A brief note on what you are working on and how we can help."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send Message</button>
+        <p class="form-note">By submitting this form you agree to Pithonix AI storing your contact details for the purpose of responding to your enquiry. We do not sell or share data.</p>
+      </form>
+      <div class="form-success" id="formSuccess">
+        Thank you. We have received your message and will be in touch within 24 hours.
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-links">
+    <a href="/">GCC Playbook</a>
+    <a href="/indus-whitepaper">INDUS Framework</a>
+    <a href="/partner-apply">Partner Programme</a>
+    <a href="https://pithonix.ai" target="_blank">Pithonix.ai</a>
+    <a href="mailto:info@pithonix.ai">info@pithonix.ai</a>
+  </div>
+  <p>PITHONIX AI INDIA PRIVATE LIMITED — CIN: U62090TS2026PTC213220 — Narsingi, Hyderabad, Telangana 500075</p>
+  <p style="margin-top:0.3rem">INFORMATION TO INTELLIGENCE</p>
+</footer>
+
+<script>
+// Particle canvas
+(function(){
+  const canvas = document.getElementById('particles');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, pts = [];
+  function resize(){ W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  for(let i=0;i<55;i++) pts.push({
+    x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,
+    vx:(Math.random()-0.5)*0.3,vy:(Math.random()-0.5)*0.3,
+    r:Math.random()*1.5+0.5
+  });
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(p=>{
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0||p.x>W) p.vx*=-1;
+      if(p.y<0||p.y>H) p.vy*=-1;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(0,212,110,0.5)';ctx.fill();
+    });
+    pts.forEach((a,i)=>{ pts.slice(i+1).forEach(b=>{
+      const d=Math.hypot(a.x-b.x,a.y-b.y);
+      if(d<120){ ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+        ctx.strokeStyle=`rgba(0,212,110,${0.08*(1-d/120)})`;ctx.stroke(); }
+    });});
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// Form submission
+document.getElementById('connectForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const btn = this.querySelector('.form-submit');
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+
+  const data = {
+    name: this.name.value,
+    email: this.email.value,
+    company: this.company.value,
+    country: this.country.value,
+    interest: this.interest.value,
+    message: this.message.value,
+    source: 'future-gcc-page'
+  };
+
+  try {
+    const res = await fetch('/api/lead', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(data)
+    });
+    if(res.ok){
+      this.style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    } else {
+      btn.textContent = 'Send Message';
+      btn.disabled = false;
+      alert('Something went wrong. Please email us directly at info@pithonix.ai');
+    }
+  } catch(err) {
+    btn.textContent = 'Send Message';
+    btn.disabled = false;
+    alert('Something went wrong. Please email us directly at info@pithonix.ai');
+  }
+});
+</script>
+</body>
+</html>

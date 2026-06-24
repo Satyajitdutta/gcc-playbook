@@ -31,7 +31,8 @@
     { "source": "/partner-deck", "destination": "/partner-deck.html" },
     { "source": "/indus-whitepaper", "destination": "/indus-whitepaper.html" },
     { "source": "/gcc-admin", "destination": "/gcc-admin.html" },
-    { "source": "/crm", "destination": "/crm.html" }
+    { "source": "/crm", "destination": "/crm.html" },
+    { "source": "/future-gcc", "destination": "/future-gcc.html" }
   ],
   "headers": [
     {
