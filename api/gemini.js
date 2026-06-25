@@ -34,10 +34,10 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') { res.status(204).end(); return; }
   if (req.method !== 'POST') { res.status(405).json({ error: 'POST only' }); return; }
 
-  // Require either a valid browser origin OR a matching proxy secret (for server-side calls)
-  const proxySecret = req.headers['x-proxy-secret'] || '';
-  const validSecret = process.env.GEMINI_PROXY_SECRET && proxySecret === process.env.GEMINI_PROXY_SECRET;
-  if (!isAllowedOrigin(origin) && !validSecret) {
+  // Block cross-origin requests from disallowed origins.
+  // Requests with no Origin header (same-origin browser calls, including mobile)
+  // are allowed through — mobile browsers often omit Origin on same-origin POSTs.
+  if (origin && !isAllowedOrigin(origin)) {
     res.status(403).json({ error: 'Forbidden' });
     return;
   }
