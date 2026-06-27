@@ -26,6 +26,7 @@
   ],
   "rewrites": [
     { "source": "/llms.txt", "destination": "/api/llms" },
+    { "source": "/blog/:slug", "destination": "/index.html" },
     { "source": "/partner-apply", "destination": "/partner-apply.html" },
     { "source": "/partner-portal", "destination": "/partner-portal.html" },
     { "source": "/partner-deck", "destination": "/partner-deck.html" },

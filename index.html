@@ -3140,7 +3140,10 @@ if(document.readyState==="loading"){
       <!-- Footer -->
       <div style="margin-top:2rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,0.07);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem">
         <span style="font-size:0.75rem;color:#475569">Pithonix AI Corridor Intelligence Series</span>
-        <span style="font-size:0.75rem;color:#475569">gcc-playbook.pithonix.ai</span>
+        <a id="blog-linkedin-share" href="#" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.4rem;background:#0077b5;color:#fff;font-size:0.75rem;font-weight:700;padding:0.35rem 0.9rem;border-radius:6px;text-decoration:none">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
       </div>
     </div>
   </div>
@@ -4663,6 +4666,7 @@ async function openBlogPost(slug){
   document.getElementById('blog-modal-date-val').textContent='';
   modal.style.display='block';
   document.body.style.overflow='hidden';
+  history.pushState({blogSlug:slug},'',' /blog/'+slug);
   try{
     var r=await fetch('/api/gcc-admin?blog=1&slug='+encodeURIComponent(slug));
     var d=await r.json();
@@ -4672,6 +4676,8 @@ async function openBlogPost(slug){
     document.getElementById('blog-modal-title').textContent=p.title;
     document.getElementById('blog-modal-date-val').textContent=p.published_at?new Date(p.published_at).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'}):'';
     document.getElementById('blog-modal-body').innerHTML=p.content||'';
+    var shareUrl='https://gcc-playbook.pithonix.ai/blog/'+encodeURIComponent(slug);
+    document.getElementById('blog-linkedin-share').href='https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(shareUrl);
   }catch(e){
     document.getElementById('blog-modal-title').textContent='Could not load post.';
   }
@@ -4680,7 +4686,14 @@ async function openBlogPost(slug){
 function closeBlogModal(){
   document.getElementById('blog-modal').style.display='none';
   document.body.style.overflow='';
+  if(window.location.pathname.startsWith('/blog/')){history.pushState({},'','/');}
 }
+
+// Auto-open post if page loaded via /blog/:slug
+(function(){
+  var m=window.location.pathname.match(/^\/blog\/(.+)$/);
+  if(m){openBlogPost(decodeURIComponent(m[1]));}
+})();
 </script>
 </body>
 </html>
